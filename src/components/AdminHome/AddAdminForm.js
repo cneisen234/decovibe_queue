@@ -15,11 +15,10 @@ import Swal from "sweetalert2";
 
 class AddAdminForm extends Component {
   state = {
-    placeholder_1: "",
-    placeholder_2: "",
-    placeholder_3: "",
-    placeholder_4: "",
-    placeholder_5: "",
+    brand: "",
+    sku: "",
+    sku_description: "",
+    qty: "",
     created_at: moment.utc().format(),
   };
   componentDidMount() {}
@@ -37,11 +36,11 @@ class AddAdminForm extends Component {
     console.log("we are about to send the state", this.state);
     //The if statement below validates the inputs, does not send them if any are empty
     if (
-      this.state.placeholder_1 &&
-      this.state.placeholder_2 &&
-      this.state.placeholder_3 &&
-      this.state.placeholder_4 &&
-      this.state.placeholder_5
+      this.state.brand &&
+      this.state.sku &&
+      this.state.sku_description &&
+      this.state.qty &&
+      this.state.created_at
     ) {
       //send the new admin to the server through a redux saga
     
@@ -49,13 +48,12 @@ class AddAdminForm extends Component {
       //If successful, it will route the user to the home page
        
          this.props.dispatch({
-           type: "REGISTER_ADMIN",
+           type: "ADD_NEW_ITEM",
            payload: {
-             first_name: this.state.placeholder_1,
-             last_name: this.state.placeholder_2,
-             role: this.state.placeholder_3,
-             email: this.state.placeholder_4,
-             password: this.state.placeholder_5,
+             brand: this.state.brand,
+             sku: this.state.sku,
+             sku_description: this.state.sku_description,
+             qty: this.state.qty,
              created_at: this.state.created_at,
            },
          });
@@ -81,60 +79,53 @@ class AddAdminForm extends Component {
           <Form className="addstudent">
             <Row>
               <Col>
-                <Form.Label>Placeholder 1</Form.Label>
+                <Form.Label>Category/Brand</Form.Label>
                 <Form.Control
-                  placeholder="Placeholder 1"
-                  type="text"
-                  name="Placeholder 1"
-                  value={this.state.placeholder_1}
-                  onChange={this.handleInputChangeFor("placeholder_1")}
-                />
+                  as="select"
+                  onChange={(event) =>
+                    this.setState({ brand: event.target.value })
+                  }
+                >
+                  <option value="">Pick From Below</option>
+                  <option value="Stock Rhinestones">Stock Rhinestones</option>
+                  <option value="Custom Sign Fashion">
+                    Custom Sign Fashion
+                  </option>
+                  <option value="Custom Digital">Custom Digital</option>
+                </Form.Control>
               </Col>
 
               <Col>
-                <Form.Label>Placeholder 2</Form.Label>
+                <Form.Label>SKU</Form.Label>
                 <Form.Control
-                  placeholder="Placeholder 2"
+                  placeholder="SKU"
                   type="text"
-                  name="Placeholder 2"
-                  value={this.state.placeholder_2}
-                  onChange={this.handleInputChangeFor("placeholder_2")}
+                  name="SKU"
+                  value={this.state.sku}
+                  onChange={this.handleInputChangeFor("sku")}
                 />
               </Col>
             </Row>
 
             <Row>
               <Col>
-                <Form.Label>Placeholder 3</Form.Label>
+                <Form.Label>SKU Description</Form.Label>
                 <Form.Control
-                  as="select"
-                  onChange={(event) =>
-                    this.setState({ placeholder_3: event.target.value })
-                  }
-                >
-                  <option value="">Pick From Below</option>
-                  <option value="admin">Option 1</option>
-                  <option value="admin">Option 2</option>
-                </Form.Control>
-              </Col>
-              <Col>
-                <Form.Label>Placeholder 4</Form.Label>
-                <Form.Control
-                  placeholder="Placeholder 4"
+                  placeholder="SKU Description"
                   type="text"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleInputChangeFor("email")}
+                  name="SKU Description"
+                  value={this.state.sku_description}
+                  onChange={this.handleInputChangeFor("sku_description")}
                 />
               </Col>
               <Col>
-                <Form.Label>Placeholder 5</Form.Label>
+                <Form.Label>QTY</Form.Label>
                 <Form.Control
-                  placeholder="Admin Password"
-                  type="password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.handleInputChangeFor("password")}
+                  placeholder="QTY"
+                  type="number"
+                  name="QTY"
+                  value={this.state.qty}
+                  onChange={this.handleInputChangeFor("qty")}
                 />
               </Col>
             </Row>
@@ -146,7 +137,7 @@ class AddAdminForm extends Component {
                   type="submit"
                   style={{ width: "20%", margin: "1%" }}
                 >
-                  Create New Admin Account
+                  Add New Item
                 </Button>
               </Link>
             </center>
@@ -158,8 +149,6 @@ class AddAdminForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  entries: state.students.studententriesadmin,
   admin: state.admin.adminlist,
 });
 

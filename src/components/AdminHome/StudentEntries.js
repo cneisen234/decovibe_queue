@@ -10,31 +10,11 @@ import moment from 'moment';
 
 class StudentEntries extends Component {
   componentDidMount() {
-    this.props.dispatch({
-      type: "GET_STUDENTS",
-    });
 
     this.props.dispatch({
       type: "GET_ADMIN",
     });
-
-    this.props.dispatch({
-      type: "FETCH_ENTRIES_FOR_ADMIN",
-    });
   }
-
-  //does dispatch to run calculations and then GET calculations to display on table
-  //(see calculationsSaga.js)
-  runReport() {
-    this.props.dispatch({ type: "FETCH_CALCULATIONS" });
-  }
-
-  redirectPage() {
-    if(this.props.redirect.redirect === true){
-      return <Redirect to='/opentransactions'/>
-    }
-  }
-  
 
   render() { //MUI tables for columns for the table
     const columns = [
@@ -203,28 +183,13 @@ class StudentEntries extends Component {
       pay_day = moment(pay_day).format("MMMM Do YYYY");
     return (
       <div><br/>
-         <center><h1 >Current Entries</h1></center>
-         <Button
-          style={{margin:'1%'}}
-          variant='success'
-          onClick={(event) => this.runReport(event)}
-        >
-          Run Report
-        </Button> 
-        {console.log(this.props.redirect)}
-        {this.redirectPage()}
+         <center><h1 >Current Entries</h1></center> 
         {/*PLEASE NOTE: instead of start date, we want to show latest activity on this table */}
         {/*This will be tied to whenever a student logs in, it will do a put on that column to show thier latest login */}
 
         {/*Blaine: one option, get rid of filter and map and handle in redux */}
         {/*Do map in redux and store the data for the table in redux */}
         <div style={{paddingRight:'2%', paddingLeft:'2%', paddingBottom:'6%'}}>
-        <MUITable
-          data={this.getStudentArray(this.props.entries)}
-          columns={columns}
-          title={`Entries for Current Pay Period: ${previous_pay_day} - ${pay_day}`}
-          
-        />
         </div>
         <br/>
         <br/>
@@ -232,42 +197,10 @@ class StudentEntries extends Component {
       </div>
     );
   }
-
-  // this IS A SELECTOR: it takes some state, and it
-  // returns some derived state. In other words, if you
-  // have students, you can always calculate the array
-  // that MUI needs from there.
-  getStudentArray = (entries) => {
-    const studentsArray = entries.map(
-      (entry, index) => [
-        entry.id,
-        entry.first_name,
-        entry.last_name,
-        entry.lcf_id,
-        // moment(entry.pay_day).format("MMMM Do YYYY"),
-        // moment(entry.date_submitted).format("MMMM Do YYYY"),
-        entry.grade,
-        entry.school_attend,
-        entry.pass_class,
-        entry.gpa,
-        entry.clean_attend,
-        entry.detent_hours,
-        entry.act_or_job,
-        entry.passed_ua,
-        entry.current_service_hours,
-        entry.hw_rm_attended,
-        entry.comments,
-      ]
-    );
-    return studentsArray;
-  };
 }
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  students: state.students.studentlist,
-  redirect: state.redirect,
-  entries: state.students.studententriesadmin,
 });
 
 export default withRouter(connect(mapStateToProps)(StudentEntries));

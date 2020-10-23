@@ -10,7 +10,15 @@ CREATE TABLE "user" (
     
 );
 
-
+CREATE TABLE "item"
+(
+	"id" serial NOT NULL,
+	"brand" varchar(255) NOT NULL,
+	"sku" varchar(255) NOT NULL,
+	"sku_description" VARCHAR (320) NOT NULL,
+	"qty" DECIMAL NOT NULL,
+	"created_at" DATE NOT NULL DEFAULT 'now()'
+);
 
 CREATE TABLE "admin" (
 	"id" serial NOT NULL,

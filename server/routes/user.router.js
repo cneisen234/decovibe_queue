@@ -20,55 +20,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
-//POST or sends out an email to a student and gives them a token so they can temporarily log in
-router.post("/forgot/:token/:email", (req, res) => {
-  let email = req.body.username
-  let token = crypto.randomBytes(16).toString("hex");
-  const queryText = `UPDATE "student" SET token=$1 WHERE student_email=$2 `;
-    pool
-      .query(queryText, [token, email])
-      .then((result) => {
-        const query2Text =
-          `UPDATE "user" SET token=$1 WHERE email=$2 `;
-        pool
-          .query(query2Text, [
-      token, email
-          ])
-          .then(() => { //set up information sent off in email to student
-              sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-              let domain = process.env.DOMAIN_NAME;
-              const msg = {
-                to: email,
-                from: "no.reply.legacyfoundation@gmail.com",
-                subject: "request to reset password",
-                html: `
-  <div>
-  <div style="background-color:black;"><img
-        src="https://legacychildrensfoundation.com/wp-content/uploads/2020/04/LCFLogo_H_RGB_kp.jpg"
-       width="150"
-      /></div>
-  <h2 style="text-align:center;">Click below to reset your password</h2>
-  <p style="text-align:center;"><a href="${domain}/#/forgotpassword/${token}/${email}" style="text-align:center;">Reset Password</a></p>
-  <p style="text-align:center;">If you did not request this email, please disregard it and delete it.</p>
-  </div>
-  `,
-              };
-              sgMail.send(msg);
-            res.status(201).send(result.rows)
-          })
-
-          .catch(function (error) {
-            console.log("Sorry, there was an error with your query: ", error);
-            res.sendStatus(500); // HTTP SERVER ERROR
-          });
-      })
-      .catch(function (error) {
-        console.log("Sorry, there is an error", error);
-        res.sendStatus(500);
-      });
-
-});
-
 //POST or create the email that is sent off to admins if they wish to reset their password
 //(without logging in)
 router.post("/forgot/admin/:token/:email", (req, res) => {
@@ -114,6 +65,32 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
 
 });
 
+router.post("/addnewitem", (req, res, next) => {
+  // pull out the incoming object data
+  const brand = req.body.brand;
+  const sku = req.body.sku;
+  const sku_description = req.body.sku_description;
+  const qty = req.body.qty;
+
+  console.log(brand, sku, sku_description, qty)
+
+  //now lets add admin information to the user table
+  const query2Text =
+    'INSERT INTO "item" (brand, sku, sku_description, qty ) VALUES ($1, $2, $3, $4) RETURNING id';
+  pool
+    .query(query2Text, [brand, sku, sku_description, qty])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
+
+    .catch(function (error) {
+      console.log("Sorry, there is an error", error);
+      res.sendStatus(500);
+    });
+});
+
 
 
 //Handles POST to add a new admin
@@ -149,135 +126,6 @@ router.post("/addadmin", (req, res, next) => {
       console.log("Sorry, there is an error", error);
       res.sendStatus(500);
     });
-});
-
-
-//Handles POST to the student table to add a new student
-//The password is encrypted before being inserted into the database
-router.post("/addstudent", rejectUnauthenticated, (req, res, next) => {
-
-  // pull out the incoming object data
-  const first_name = req.body.first_name;
-  const last_name = req.body.last_name;
-  const school_id = req.body.school_id || 0;
-  const grade = Number(req.body.grade);
-  const grad_year = req.body.grad_year;
-  const last_login = null;
-  const school_attend = req.body.school_attend;
-  const lcf_id = req.body.lcf_id;
-  const lcf_start_date = req.body.lcf_start_date;
-  const student_email = req.body.student_email;
-  const password = encryptLib.encryptPassword(req.body.password);
-  const password2 = req.body.password;
-  const pif_amount = Number(req.body.pif_amount).toFixed(2);
-  const savings = Number(req.body.savings).toFixed(2);
-  const created_at = moment.utc().format();
-  const role = "student";
-  const inactive = "no";
-  const strikes = 0;
-  const balance_due = 0; //just created an account, so no balance due
-  admin_id = null;
-
-  //initialize the id you will get from the student
-  //let lcf_id = "";
-
-  const queryText = `INSERT INTO "student" 
-                (lcf_id, first_name, last_name, school_attend, school_id, student_email, password, grade, grad_year, last_login, created_at,   lcf_start_date, role,   pif_amount, savings, strikes, inactive, balance_due)
-                VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING lcf_id `;
-  pool
-    .query(queryText, [
-      lcf_id,
-      first_name,
-      last_name,
-      school_attend,
-      school_id,
-      student_email,
-      password,
-      grade,
-      grad_year,
-      last_login,
-      created_at,
-      lcf_start_date,
-      role,
-      pif_amount,
-      savings,
-      strikes,
-      inactive,
-      balance_due
-    ])
-    .then((result) => {
-      //now lets add student information to the user table
-      const query2Text =
-        'INSERT INTO "user" (lcf_id, admin_id, email, password, role, last_login) VALUES ($1, $2, $3, $4, $5, $6)';
-      pool
-        .query(query2Text, [
-          lcf_id,
-          null,
-          student_email,
-          password,
-          'student',
-          new Date(),
-        ])
-        .then(() => { //upon adding a new student, want email to be automatically sent out prompting the student how to login
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-            let domain = process.env.DOMAIN_NAME;
-            const msg = {
-              to: student_email,
-              from: "no.reply.legacyfoundation@gmail.com",
-              subject: "Welcome!",
-              html: `
-  <div>
-  <div style="background-color:black;"><img
-        src="https://legacychildrensfoundation.com/wp-content/uploads/2020/04/LCFLogo_H_RGB_kp.jpg"
-       width="150"
-      /></div>
-  <h2 style="text-align:center;">Welcome ${first_name}!</h2>
-  <p style="text-align:center;">Your temporary password is <b>${password2}</b>, please login to your account and reset your password</p>
-  <p style="text-align:center;">If you did not request this email, please disregard it and delete it.</p>
-  </div>
-  `,
-            };
-            sgMail.send(msg);
-          res.status(201).send(result.rows)})
-        .catch(function (error) {
-          console.log("Sorry, there was an error with your query: ", error);
-          res.sendStatus(500); // HTTP SERVER ERROR
-        });
-    })
-    .catch(function (error) {
-      console.log("Sorry, there is an error", error);
-      res.sendStatus(500);
-    });
-});
-
-router.put("/checktrip", rejectUnauthenticated, (req, res, next) => {
-  // pull out the incoming object data
-  const lcf_id = req.body.lcf_id;
-  const trip = req.body.trip;
-  
-
-  //initialize the id you will get from the student
-  //let lcf_id = "";
-  console.log(lcf_id, trip)
-  const queryText = `UPDATE "student" SET trip=$2 WHERE lcf_id =$1`;
-  pool
-    .query(queryText, [
-      lcf_id,
-      trip,
-    ]).catch(function (error) {
-      console.log("Sorry, there is an error", error);
-      res.sendStatus(500);
-    });
-});
-
-router.put("/checkpaid", rejectUnauthenticated, (req, res, next) => {
-  //initialize the id you will get from the student
-  //let lcf_id = "";
-  const queryText = `UPDATE history SET did_we_pay = ( CASE WHEN (total = 0) THEN 'no' ELSE  'yes' END )`;
-  pool.query(queryText).catch(function (error) {
-    console.log("Sorry, there is an error", error);
-    res.sendStatus(500);
-  });
 });
 
 
@@ -358,70 +206,6 @@ router.put(`/adminpasswordreset/:admin_id`, rejectUnauthenticated, (req, res) =>
 
 
 
-//PUT or update the student password via the 'reset password' tab student side
-router.put(`/studentpasswordreset/:lcf_id`, rejectUnauthenticated, (req, res) => {
-  console.log('we are about to change the student password:', req.body);
-  const newPassword = encryptLib.encryptPassword(req.body.password);
-  const studentID = req.params.lcf_id;
-  const email = req.body.email;
-  // setting query text to update the username
-  const queryText = `UPDATE "student" SET password=$1 WHERE lcf_id=$2 `;
-
-  pool
-    .query(queryText, [newPassword, studentID])
-    .then((result) => {
-      console.log("Success in updating password or email for student!");
-//need double insert since pasword is found within user and student table
-      const query2Text = `UPDATE "user" SET password=$1 WHERE lcf_id=$2`;
-      const queryValue = [newPassword, studentID];
-      pool
-        .query(query2Text, queryValue)
-        .then(() => res.sendStatus(201).res.send(result.rows))
-        .catch(function (error) {
-          console.log("Sorry, there was an error with your query: ", error);
-          res.sendStatus(500); // HTTP SERVER ERROR
-        });
-
-    })
-    .catch((error) => {
-      console.log(`Error on PUT with query ${error}`);
-      console.log(studentID);
-      res.sendStatus(500); // if there is an error, send server error 500
-    });
-});
-// end PUT
-
-//Router used to reset student password and creates token for student
-router.put(`/passwordforgot`, (req, res) => {
-  console.log("we are about to change the student password:", req.body);
-  const newPassword = encryptLib.encryptPassword(req.body.password);
-  const email = req.body.email;
-  const token = req.body.token;
-  // setting query text to update the username
-  const queryText = `UPDATE "student" SET password=$1 WHERE token=$2 `;
-
-  pool
-    .query(queryText, [newPassword, token])
-    .then((result) => {
-      console.log("Success in updating password or email for student!");
-
-      const query2Text = `UPDATE "user" SET password=$1 WHERE token=$2`;
-      const queryValue = [newPassword, token];
-      pool
-        .query(query2Text, queryValue)
-        .then(() => res.status(201).send(result.rows))
-        .catch(function (error) {
-          console.log("Sorry, there was an error with your query: ", error);
-          res.sendStatus(500); // HTTP SERVER ERROR
-        });
-    })
-    .catch((error) => {
-      console.log(`Error on PUT with query ${error}`);
-      console.log(studentID);
-      res.sendStatus(500); // if there is an error, send server error 500
-    });
-});
-
 //route used to deal with forgot password for admins and creates token for them
 router.put(`/passwordforgot/admin`, (req, res) => {
   console.log("we are about to change the admin password:", req.body);
@@ -451,20 +235,6 @@ router.put(`/passwordforgot/admin`, (req, res) => {
     });
 });
 
-//DELETEs student from student table based off lcf_id
-//USED FOR TESTING PURPOSES
-//Ideally, all students are only 'soft deleted' or in this app, deactivated
-router.delete("/:id", rejectUnauthenticated, (req, res) => {
-  pool
-    .query('DELETE FROM "student" "user" WHERE lcf_id=$1', [req.params.id])
-    .then((result) => {
-      res.sendStatus(204); //No Content
-    })
-    .catch((error) => {
-      console.log("Error DELETE /api/order", error);
-      res.sendStatus(500);
-    });
-});
 
 
 module.exports = router;

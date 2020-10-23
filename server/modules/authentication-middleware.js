@@ -1,6 +1,4 @@
-//Brought in as part of project template
-//This helps protect routes against unauthorized users
-//We use the roles of 'admin' and 'student' to decide what the user can do
+
 
 const rejectUnauthenticated = (req, res, next) => {
   // check if logged in

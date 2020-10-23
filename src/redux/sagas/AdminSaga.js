@@ -2,6 +2,35 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+function* deleteItem(action) {
+  try {
+    //passes the incoming new admin user info from the payload to the server
+    console.log("we are about to delete an item", action.payload);
+    yield axios.delete(`/api/admin/deleteitem/${action.payload}`)
+
+    yield put({ type: "GET_ITEM_LIST" });
+
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
+function* addNewItem(action){
+     try{
+
+        //passes the incoming new admin user info from the payload to the server
+        console.log('we are about to add a new item', action.payload);
+        yield axios.post('/api/user/addnewitem', action.payload);
+
+         yield put({ type: "GET_ITEM_LIST"});
+      
+
+        console.log('we are about to add a new item', action.payload);
+    }catch(error){
+        console.log('Error with adding a new item:', error);
+    }
+  }
+
 function* registerAdmin(action){
      try{
         //clear any errors on the page before
@@ -60,6 +89,23 @@ function* getAdmin (action){
 }
 
 
+function* getitemlist(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/admin/itemlist`);
+
+    yield put({
+      type: "SET_ITEM",
+      payload: response.data,
+    });
+
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+
 function* resetAdminPassword(action){
     try{
             //clear any errors on the page before
@@ -81,8 +127,11 @@ function* resetAdminPassword(action){
 
 
 function* AdminSaga() {
+   yield takeLatest('ADD_NEW_ITEM', addNewItem);
     yield takeLatest('REGISTER_ADMIN', registerAdmin);
     yield takeLatest('GET_ADMIN', getAdmin);
+    yield takeLatest('GET_ITEM_LIST', getitemlist);
+    yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('RESET_ADMIN_PASSWORD', resetAdminPassword);
     yield takeLatest('FORGOT_ADMIN_PASSWORD', forgotAdminPassword);
 }

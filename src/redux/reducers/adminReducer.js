@@ -9,8 +9,18 @@ const adminlist = (state = [], action) => {
     }
 };
 
+const itemlist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_ITEM":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 
 export default combineReducers({
     adminlist,
+    itemlist,
     
 });
