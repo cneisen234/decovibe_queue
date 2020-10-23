@@ -305,13 +305,6 @@ class LoginPage extends Component {
           </center>
         </Grid>
         {/* shape images that appear on login page as decoration */}
-        <Grid item xs={12} sm={12} md={7} style={{ display: "block" }}>
-          <img
-            id="shapes"
-            src="https://legacychildrensfoundation.com/wp-content/uploads/2020/03/shapes-bg-color.png"
-            alt="Colored Shapes"
-          />
-        </Grid>
       </Grid>
     ); //end return
   } //end render

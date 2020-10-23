@@ -15,11 +15,11 @@ import Swal from "sweetalert2";
 
 class AddAdminForm extends Component {
   state = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    role: "",
+    placeholder_1: "",
+    placeholder_2: "",
+    placeholder_3: "",
+    placeholder_4: "",
+    placeholder_5: "",
     created_at: moment.utc().format(),
   };
   componentDidMount() {}
@@ -37,46 +37,30 @@ class AddAdminForm extends Component {
     console.log("we are about to send the state", this.state);
     //The if statement below validates the inputs, does not send them if any are empty
     if (
-      this.state.first_name &&
-      this.state.last_name &&
-      this.state.email &&
-      this.state.password &&
-      this.state.role
+      this.state.placeholder_1 &&
+      this.state.placeholder_2 &&
+      this.state.placeholder_3 &&
+      this.state.placeholder_4 &&
+      this.state.placeholder_5
     ) {
       //send the new admin to the server through a redux saga
     
       //This is a sweet alerts confirmation, there is a nested redux saga dispatch 
       //If successful, it will route the user to the home page
-       Swal.fire({
-         title: "Please confirm new admin details below",
-         html: `1. First Name: ${this.state.first_name} </br>
-          2. Last Name: ${this.state.last_name} </br>
-          3. Role: ${this.state.role} </br>
-          4. Email: ${this.state.email} </br>`,
-         icon: "question",
-         showCancelButton: true,
-         confirmButtonColor: "#5cb85c",
-         cancelButtonColor: "#d33",
-         confirmButtonText: "Confirm my entry",
-       }).then((result) => {
-         console.log("Here is result.value", result.value);
-         if (result.value) {
+       
          this.props.dispatch({
            type: "REGISTER_ADMIN",
            payload: {
-             first_name: this.state.first_name,
-             last_name: this.state.last_name,
-             role: this.state.role,
-             email: this.state.email,
-             password: this.state.password,
+             first_name: this.state.placeholder_1,
+             last_name: this.state.placeholder_2,
+             role: this.state.placeholder_3,
+             email: this.state.placeholder_4,
+             password: this.state.placeholder_5,
              created_at: this.state.created_at,
            },
          });
 
-           Swal.fire("Success!", "Your new admin has been added.", "success");
-           this.props.history.push("/home"); //send the user to the homepage
-         }
-       });
+         
     } else {
       this.props.dispatch({ type: "ADD_ADMIN_ERROR" });
     }
@@ -88,7 +72,7 @@ class AddAdminForm extends Component {
       <div>
         <br />
         <center>
-          <h1>Add An Admin</h1>
+          <h1>Add A New Item</h1>
         </center>
         <Paper
           elevation={5}
@@ -97,53 +81,54 @@ class AddAdminForm extends Component {
           <Form className="addstudent">
             <Row>
               <Col>
-                <Form.Label>First Name</Form.Label>
+                <Form.Label>Placeholder 1</Form.Label>
                 <Form.Control
-                  placeholder="First Name"
+                  placeholder="Placeholder 1"
                   type="text"
-                  name="first_name"
-                  value={this.state.first_name}
-                  onChange={this.handleInputChangeFor("first_name")}
+                  name="Placeholder 1"
+                  value={this.state.placeholder_1}
+                  onChange={this.handleInputChangeFor("placeholder_1")}
                 />
               </Col>
 
               <Col>
-                <Form.Label>Last Name</Form.Label>
+                <Form.Label>Placeholder 2</Form.Label>
                 <Form.Control
-                  placeholder="Last Name"
+                  placeholder="Placeholder 2"
                   type="text"
-                  name="last_name"
-                  value={this.state.last_name}
-                  onChange={this.handleInputChangeFor("last_name")}
+                  name="Placeholder 2"
+                  value={this.state.placeholder_2}
+                  onChange={this.handleInputChangeFor("placeholder_2")}
                 />
               </Col>
             </Row>
 
             <Row>
               <Col>
-                <Form.Label>Role</Form.Label>
+                <Form.Label>Placeholder 3</Form.Label>
                 <Form.Control
                   as="select"
                   onChange={(event) =>
-                    this.setState({ role: event.target.value })
+                    this.setState({ placeholder_3: event.target.value })
                   }
                 >
                   <option value="">Pick From Below</option>
-                  <option value="admin">Admin</option>
+                  <option value="admin">Option 1</option>
+                  <option value="admin">Option 2</option>
                 </Form.Control>
               </Col>
               <Col>
-                <Form.Label>Admin Email</Form.Label>
+                <Form.Label>Placeholder 4</Form.Label>
                 <Form.Control
-                  placeholder="Admin Email"
-                  type="email"
+                  placeholder="Placeholder 4"
+                  type="text"
                   name="email"
                   value={this.state.email}
                   onChange={this.handleInputChangeFor("email")}
                 />
               </Col>
               <Col>
-                <Form.Label>Admin Password</Form.Label>
+                <Form.Label>Placeholder 5</Form.Label>
                 <Form.Control
                   placeholder="Admin Password"
                   type="password"
@@ -159,7 +144,7 @@ class AddAdminForm extends Component {
                   onClick={(event) => this.registerAdmin(event)}
                   variant="success"
                   type="submit"
-                  style={{ width: "20%", margin:'1%' }}
+                  style={{ width: "20%", margin: "1%" }}
                 >
                   Create New Admin Account
                 </Button>

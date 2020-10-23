@@ -8,12 +8,7 @@ import AdminHome from '../AdminHome/AdminHome';
 // and then instead of `props.user.username` you could use `user.username`
 const UserPage = (props) => (
   <div>
-    {/* {JSON.stringify(props.user)} */}
-    {props.user.role === 'admin' ? ( //if role is found to be admin, show them this page
    <AdminHome/>
-    ) : ( //else if they are not an admin (i.e. student) they are shown this page
- <StudentHome/>
-    )}
   {/* <LogOutButton className="log-in" /> */}
   </div>
 );

@@ -17,15 +17,6 @@ import EditIcon from "@material-ui/icons/Edit";
 
 const Nav = (props) => (
   <div className="nav" style={{ display: "inline-block" }}>
-    <Link to="/home">
-      <img
-        className="logo"
-        src={logo}
-        alt="legacy foundation logo"
-        style={{ float: "left", maxWidth: "20%" }}
-      />
-    </Link>
-
     <div
       className="nav-right"
       style={{ diplay: "inline-block", float: "left", paddingTop: "1.5%" }}
@@ -45,66 +36,30 @@ const Nav = (props) => (
         )}
       </Link>
       {/* Show the link to the info page and the logout button if the user is logged in */}
-      {props.user.id && props.user.role === "admin" && (
-        <>
-          <Link className="nav-link" to="/totalstudententries">
-            <FormatListBulletedIcon></FormatListBulletedIcon>
-            Current Entries
-          </Link>
-          <Link className="nav-link" to="/adminmakeentry">
-            <EditIcon></EditIcon>
-            Make Student Entry
-          </Link>
-          <Link className="nav-link" to="/pastadminreports">
-            <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
-            Past Reports/Trip Eligibility
-          </Link>
 
-          <Link className="nav-link" to="/deductionlist">
-            <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
-            Past Deductions
-          </Link>
-
-          <Link className="nav-link" to="/chargestudent">
-            <CreditCardIcon></CreditCardIcon>
-            Create New Deduction
-          </Link>
-
-          <Link className="nav-link" to="/adminusers">
-            <SupervisorAccountIcon></SupervisorAccountIcon>
-            Admin Users
-          </Link>
-          <Link className="nav-link" to="/resetadminpassword">
-            <RotateLeftIcon></RotateLeftIcon>
-            Reset Password
-          </Link>
-
-          <Link className="nav-link" to="/instructions">
-            <DescriptionIcon></DescriptionIcon>
-            Instructions
-          </Link>
-          <LogOutButton className="nav-link" />
-        </>
-      )}
-
-      {props.user.id && props.user.role === "student" && (
-        <>
-          <Link className="nav-link" to="/makeentry">
-            <CreateIcon></CreateIcon>
-            Make an Entry
-          </Link>
-          <Link className="nav-link" to="/paststudententries">
-            <FormatListBulletedIcon></FormatListBulletedIcon>
-            Past Entries
-          </Link>
-          <Link className="nav-link" to="/resetstudentpassword">
-            <RotateLeftIcon></RotateLeftIcon>
-            Reset Password
-          </Link>
-
-          <LogOutButton className="nav-link" />
-        </>
-      )}
+      <>
+        <Link className="nav-link" to="/adminmakeentry">
+          <EditIcon></EditIcon>
+          New
+        </Link>
+        <Link className="nav-link" to="/totalstudententries">
+          <FormatListBulletedIcon></FormatListBulletedIcon>
+          In Progress
+        </Link>
+        <Link className="nav-link" to="/pastadminreports">
+          <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
+          Complete
+        </Link>
+        {/* <Link className="nav-link" to="/resetadminpassword">
+          <RotateLeftIcon></RotateLeftIcon>
+          Reset Password
+        </Link> */}
+        {/* <Link className="nav-link" to="/instructions">
+          <DescriptionIcon></DescriptionIcon>
+          Instructions
+        </Link> */}
+        <LogOutButton className="nav-link" />
+      </>
       {/* Always show this link since the about page is not protected */}
       {/* <Link className="nav-link" to="/about">
         About

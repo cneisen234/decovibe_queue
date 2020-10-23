@@ -6,7 +6,7 @@ import './Footer.css'
 
 const Footer = () => (
   <footer>
-    &copy; Legacy Children's Foundation
+    &copy; Christopher Joseph Neisen
   </footer>
 );
 
