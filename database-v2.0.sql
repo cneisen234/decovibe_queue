@@ -1,11 +1,11 @@
 CREATE TABLE "user" (
-	"id" SERIAL PRIMARY KEY,
-    "lcf_id" int,
-    "admin_id" int,
-    "email" varchar,
-    "password" varchar,
-    "role" varchar,
-    "last_login" TIMESTAMPTZ,
+"id" serial NOT NULL,
+	"first_name" varchar(255) NOT NULL,
+	"last_name" varchar(255) NOT NULL,
+	"email" VARCHAR (320) UNIQUE NOT NULL,
+	"password" varchar(255) NOT NULL,
+	"created_at" DATE NOT NULL DEFAULT 'now()',
+	"role" varchar(255) NOT NULL,
 	"token" varchar(255)
     
 );

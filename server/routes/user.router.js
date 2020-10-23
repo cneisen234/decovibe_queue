@@ -118,7 +118,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
 
 //Handles POST to add a new admin
 //The password is encrypted before being inserted into the database
-router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
+router.post("/addadmin", (req, res, next) => {
 
   // pull out the incoming object data
   const first_name = req.body.first_name;
@@ -129,44 +129,22 @@ router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
   const role = req.body.role;
   lcf_id = null;
 
-  //initialize the id you will get from the student
-  let admin_id = "";
-
-  const queryText = `INSERT INTO "admin" 
-                (first_name, last_name, email, password, role, created_at)
-                VALUES($1, $2, $3, $4, $5, $6) RETURNING id `;
-  pool
-    .query(queryText, [
-      first_name,
-      last_name,
-      email,
-      password,
-      role,
-      created_at,
-    ])
-    .then((result) => {
-      console.log("this is the response", result.rows[0].id);
-      //res.status(201).send(result.rows[0]);
-
-      admin_id = result.rows[0].id;
       //now lets add admin information to the user table
       const query2Text =
-        'INSERT INTO "user" (admin_id, lcf_id, email, password, role, last_login) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id';
+        'INSERT INTO "user" (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING id';
       pool
         .query(query2Text, [
-          admin_id,
-          lcf_id,
-          email,
-          password,
-          role,
-          new Date(),
+         first_name,
+         last_name,
+         email,
+         password,
         ])
-        .then(() => res.status(201).send(result.rows))
+        .then((result) => res.status(201).send(result.rows))
         .catch(function (error) {
           console.log("Sorry, there was an error with your query: ", error);
           res.sendStatus(500); // HTTP SERVER ERROR
-        });
-    })
+        })
+    
     .catch(function (error) {
       console.log("Sorry, there is an error", error);
       res.sendStatus(500);
@@ -331,10 +309,8 @@ router.post("/login", userStrategy.authenticate("local"), (req, res) => {
   const queryText = `update "user" set "last_login" = NOW() WHERE "email"=$1`;
 
   pool.query(queryText, [email]).then((result) => {//when someone logs in, want to capture the time they log in
-    const query2Text = `UPDATE "student" SET "last_login" = NOW() WHERE "student_email"=$1`;
-    pool
-      .query(query2Text, [email])
-      .then(() => res.sendStatus(201))
+
+      res.sendStatus(201)
   });
 });
 
