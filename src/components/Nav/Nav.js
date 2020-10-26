@@ -3,16 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import logo from "../../images/image.png";
-import HomeIcon from '@material-ui/icons/Home';
-import CreateIcon from '@material-ui/icons/Create';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import CreditCardIcon from '@material-ui/icons/CreditCard';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import DescriptionIcon from '@material-ui/icons/Description';
 import EditIcon from "@material-ui/icons/Edit";
 
 const Nav = (props) => (
