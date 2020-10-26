@@ -5,8 +5,6 @@ import { Alert } from "@material-ui/lab";
 import Swal from "sweetalert2";
 import "./LoginPage.css";
 
-//login page for both student and admin, this is the first page a user should
-//see when they enter the application
 class LoginPage extends Component {
   state = {
     username: "",
@@ -40,8 +38,6 @@ class LoginPage extends Component {
     //this makes it so whenever a user logs in, they go straight to homepage
     this.props.history.push("/home");
   }; // end login
-
-  //function ran when student forgets their password
   handleReset = (event) => {
     //prevents any default actions
     event.preventDefault();
@@ -59,7 +55,6 @@ class LoginPage extends Component {
       }, 5000);
       return;
     }
-    //dispatches redux sagas for forgot student password
     this.props.dispatch({
       type: "FORGOT_PASSWORD",
       payload: {
@@ -74,8 +69,7 @@ class LoginPage extends Component {
     }); //end sweet alerts
   }; //end handleReset
 
-  //function ran when admin forgets their password
-  handleResetAdmin = (event) => {
+  handleReset = (event) => {
     //prevents any default actions
     event.preventDefault();
     //change error in state to true if input is empty, this conditionally renders
@@ -92,9 +86,8 @@ class LoginPage extends Component {
       }, 5000);
       return;
     }
-    //dispatches redux sagas for forgot admin password
     this.props.dispatch({
-      type: "FORGOT_PASSWORD_ADMIN",
+      type: "FORGOT_PASSWORD",
       payload: {
         username: this.state.username,
       },
@@ -105,7 +98,7 @@ class LoginPage extends Component {
       title: "Password Reset",
       text: `Password Reset email sent, please check your email.`,
     }); //end sweet alerts
-  }; //end handleResetAdmin
+  };
 
   //This function handles storing input values into state on change
   handleInputChangeFor = (propertyName) => (event) => {
@@ -184,9 +177,9 @@ class LoginPage extends Component {
                       value="Log In"
                     />
                     {/* changes toggle to true, rendering forgot password form */}
-                    <button onClick={this.toggle} className="log-in">
+                    {/* <button onClick={this.toggle} className="log-in">
                       Forgot Password
-                    </button>
+                    </button> */}
                   </div>
                   {/* runs login error toast */}
                   {this.props.errors.loginMessage && (
@@ -199,12 +192,10 @@ class LoginPage extends Component {
             ) : (
               // if toggle is true, render forgot password form
               <div>
-                {/* if toggle2 is false, render student forgot password form */}
                 {this.state.toggle2 === false ? (
                   <div className="reglogin">
                     {/* begin forgot password form */}
                     <form onSubmit={this.handleReset}>
-                      <h1>Student Reset Password</h1>
                       <br />
                       <div>
                         {/* enter email address here */}
@@ -243,17 +234,11 @@ class LoginPage extends Component {
                     <button onClick={this.toggle} className="log-in">
                       Back To Login
                     </button>
-                    {/* switches toggle2 to true, rendering forgot password for admin */}
-                    <button onClick={this.toggle2} className="log-in">
-                      Switch to Admin
-                    </button>
                   </div>
                 ) : (
-                  // if toggle2 in state is true, render form for admin
                   <div className="reglogin">
-                    {/* start form for forgot password on the admin side */}
-                    <form onSubmit={this.handleResetAdmin}>
-                      <h1>Admin Reset Password</h1>
+                    <form onSubmit={this.handleReset}>
+                      <h1>Reset Password</h1>
                       <br />
                       <div>
                         {/* enter email address here */}
@@ -269,7 +254,6 @@ class LoginPage extends Component {
                         </label>
                       </div>
                       <div>
-                        {/* runs handleResetAdmin on submit */}
                         <input
                           className="log-in"
                           type="submit"
@@ -291,10 +275,6 @@ class LoginPage extends Component {
                     {/* switches toggle back to false, rendering login form */}
                     <button onClick={this.toggle} className="log-in">
                       Back To Login
-                    </button>
-                    {/* switches toggle2 to false, rendering forgot password for student */}
-                    <button onClick={this.toggle2} className="log-in">
-                      Switch to Student
                     </button>
                   </div>
                 )}

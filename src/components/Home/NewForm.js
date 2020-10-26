@@ -11,9 +11,9 @@ import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
 
 
-//The purpose of this page is to add an admin to the system, only seen by an admin user
+//The purpose of this page is to add an user to the system, only seen by an user user
 
-class AddAdminForm extends Component {
+class AddUserForm extends Component {
   state = {
     brand: "",
     sku: "",
@@ -30,7 +30,7 @@ class AddAdminForm extends Component {
     });
   };//End of handleInputChangeFor
 
-  registerAdmin = (event) => {
+  registerUser = (event) => {
     event.preventDefault();
 
     console.log("we are about to send the state", this.state);
@@ -42,7 +42,7 @@ class AddAdminForm extends Component {
       this.state.qty &&
       this.state.created_at
     ) {
-      //send the new admin to the server through a redux saga
+      //send the new user to the server through a redux saga
     
       //This is a sweet alerts confirmation, there is a nested redux saga dispatch 
       //If successful, it will route the user to the home page
@@ -57,12 +57,12 @@ class AddAdminForm extends Component {
              created_at: this.state.created_at,
            },
          });
-
+         this.props.history.push("/home")
          
     } else {
-      this.props.dispatch({ type: "ADD_ADMIN_ERROR" });
+      this.props.dispatch({ type: "ADD_USER_ERROR" });
     }
-  }; // end registerAdmin
+  }; // end registerUser
 
   render() {
  
@@ -132,7 +132,7 @@ class AddAdminForm extends Component {
             <center>
               <Link to="/home">
                 <Button
-                  onClick={(event) => this.registerAdmin(event)}
+                  onClick={(event) => this.registerUser(event)}
                   variant="success"
                   type="submit"
                   style={{ width: "20%", margin: "1%" }}
@@ -149,7 +149,7 @@ class AddAdminForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  admin: state.admin.adminlist,
+  user: state.user.userlist,
 });
 
-export default withRouter(connect(mapStateToProps)(AddAdminForm));
+export default withRouter(connect(mapStateToProps)(AddUserForm));

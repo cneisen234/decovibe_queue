@@ -6,17 +6,17 @@ import moment from "moment";
 import MUITable from '../MUITable/MUITable';
 
 
-//This page shows the list of admins currently part of the organization
-//A button on this page allows the admin to add a new admin (AddAdminForm component)
-class AddAdmin extends Component {
+//This page shows the list of users currently part of the organization
+//A button on this page allows the user to add a new user (AddUserForm component)
+class AddUser extends Component {
 
       componentDidMount () {
    this.props.dispatch({
-     type: 'GET_ADMIN'
+     type: 'GET_USER'
    });
 }
 
-//This function dispatched our newly added admin to the database from state
+//This function dispatched our newly added user to the database from state
 //We first validate the inputs to make sure we are not sending empty inputs to the server
      
 //This function handles storing input values into state on change
@@ -27,7 +27,7 @@ class AddAdmin extends Component {
   }
 
     render () {
-      const data = this.props.admin
+      const data = this.props.user
                 .map((entry) => [
                 entry.first_name,
                 entry.last_name,
@@ -37,31 +37,31 @@ class AddAdmin extends Component {
               ])
       return (
       <div><br/>
-        <center><h1>Admin Users</h1></center>
+        <center><h1>Users</h1></center>
         {this.props.user.role === "admin" && (
           <div className="navbuttonscontainer">
-            <Link to="/addadminform">
-              <Button style={{marginLeft:'1%'}} variant="success">Add Admin</Button>
+            <Link to="/adduserform">
+              <Button style={{marginLeft:'1%'}} variant="success">Add User</Button>
             </Link>{" "}
             
           </div>
         )}
           
 
- {/* The material UI table component, takes in data as props, data is a list of admin brought
+ {/* The material UI table component, takes in data as props, data is a list of user brought
  in from global state */}
 
         <div style={{padding:'1.5%'}}>
     <MUITable
-            data={data} //brings in data as an array, in this case, list of admins
+            data={data} //brings in data as an array, in this case, list of users
             columns={[ //names the columns found on MUI table
               {name: "First Name"},
               {name: "Last Name"},
-              {name: "Admin Email" },
+              {name: "User Email" },
               {name: "Role"},
               {name: "Creation Date"}
             ]}
-            title={"LCF Admin List"} //give the table a name
+            title={"User List"} //give the table a name
           />
           </div>
           <br/>
@@ -75,7 +75,6 @@ class AddAdmin extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  admin: state.admin.adminlist,
 });
    
-export default connect(mapStateToProps) (AddAdmin);
+export default connect(mapStateToProps) (AddUser);

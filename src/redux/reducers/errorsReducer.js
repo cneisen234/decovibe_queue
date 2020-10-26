@@ -32,12 +32,9 @@ const registrationMessage = (state = '', action) => {
   }
 };
 
-
-
-//student registration error reducer
-const studentRegistration = (state = '', action) => {
+const registration = (state = '', action) => {
   switch (action.type) {
-    case 'CLEAR_ADD_STUDENT_ERROR':
+    case 'CLEAR_ADD_ERROR':
       return '';
     case 'REGISTRATION_INPUT_ERROR':
       return 'Choose a username and password!';
@@ -58,5 +55,5 @@ const studentRegistration = (state = '', action) => {
 export default combineReducers({
   loginMessage,
   registrationMessage,
-  studentRegistration,
+  registration,
 });

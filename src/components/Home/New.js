@@ -4,12 +4,12 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import MUITable from "../MUITable/MUITable";
-import {Paper, TextField} from '@material-ui/core'; 
+import { Paper, TextField } from "@material-ui/core";
 import { auto } from "async";
+//import { response } from "express";
 
-//This page shows the list of admins currently part of the organization
-//A button on this page allows the admin to add a new admin (AddAdminForm component)
-class AddAdmin extends Component {
+// This component is for new
+class New extends Component {
   state = {
     toggle: false,
     toggle2: false,
@@ -51,6 +51,9 @@ class AddAdmin extends Component {
         qty: this.state.qty,
       },
     });
+    this.setState({
+      toggle: false,
+    })
   };
 
   startAllItem = (event) => {
@@ -74,6 +77,9 @@ class AddAdmin extends Component {
         qty: 0,
       },
     });
+      this.setState({
+        toggle2: false,
+      });
   };
 
   startItem = (event) => {
@@ -97,10 +103,10 @@ class AddAdmin extends Component {
         qty: this.state.qty - this.state.updated_qty,
       },
     });
+      this.setState({
+        toggle2: false,
+      });
   };
-
-  //This function dispatched our newly added admin to the database from state
-  //We first validate the inputs to make sure we are not sending empty inputs to the server
 
   //This function handles storing input values into state on change
   handleInputChangeFor = (propertyName) => (event) => {
@@ -124,19 +130,16 @@ class AddAdmin extends Component {
           <h1>New</h1>
         </center>
         <div className="navbuttonscontainer">
-          <Link to="/addadminform">
+          <Link to="/newform">
             <Button style={{ marginLeft: "1%" }} variant="success">
               Add New Item
             </Button>
           </Link>{" "}
         </div>
 
-        {/* The material UI table component, takes in data as props, data is a list of admin brought
- in from global state */}
-
         <div style={{ padding: "1.5%" }}>
           <MUITable
-            data={data} //brings in data as an array, in this case, list of admins
+            data={data} //brings in data as an array, in this case, list of items
             columns={[
               //names the columns found on MUI table
               { name: "Category/Brand" },
@@ -334,7 +337,9 @@ class AddAdmin extends Component {
                     value={this.state.updated_qty}
                     type="text"
                     maxLength={1000}
-                    onChange={(event) => this.handleChange(event, "updated_qty")} //onChange of input values set local state
+                    onChange={(event) =>
+                      this.handleChange(event, "updated_qty")
+                    } //onChange of input values set local state
                   />
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}
@@ -380,7 +385,6 @@ class AddAdmin extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  itemlist: state.admin.itemlist,
+  itemlist: state.item.itemlist,
 });
-
-export default connect(mapStateToProps)(AddAdmin);
+export default connect(mapStateToProps)(New);

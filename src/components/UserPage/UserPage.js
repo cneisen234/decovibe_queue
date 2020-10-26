@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import StudentHome from '../StudentHome/StudentHome';
-import AdminHome from '../AdminHome/AdminHome';
+import Home from '../Home/New';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
 // and then instead of `props.user.username` you could use `user.username`
 const UserPage = (props) => (
   <div>
-   <AdminHome/>
+   <Home/>
   {/* <LogOutButton className="log-in" /> */}
   </div>
 );

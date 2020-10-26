@@ -24,14 +24,6 @@ class Complete extends Component {
       type: "GET_COMPLETE_LIST",
     });
   }
-  handleChange = (event, fieldName) => {
-    this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event
-  }; //end handleChange
-  handleInputChangeFor = (propertyName) => (event) => {
-    this.setState({
-      [propertyName]: event.target.value,
-    });
-  };
 
   render() {
     const data = this.props.completelist.map((complete) => [
@@ -47,16 +39,6 @@ class Complete extends Component {
         <center>
           <h1>Complete</h1>
         </center>
-        <div className="navbuttonscontainer">
-          <Link to="/addadminform">
-            <Button style={{ marginLeft: "1%" }} variant="success">
-              Completed Items
-            </Button>
-          </Link>{" "}
-        </div>
-
-        {/* The material UI table component, takes in data as props, data is a list of admin brought
- in from global state */}
 
         <div style={{ padding: "1.5%" }}>
           <MUITable
@@ -111,6 +93,6 @@ class Complete extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  completelist: state.admin.completelist,
+  completelist: state.item.completelist,
 });
 export default connect(mapStateToProps)(Complete);

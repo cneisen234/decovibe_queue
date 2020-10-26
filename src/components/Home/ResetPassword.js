@@ -10,9 +10,9 @@ import { Alert } from "@material-ui/lab";
 import Swal from "sweetalert2";
 
 //The component below is f
-class AdminResetPassword extends Component {
+class ResetPassword extends Component {
   state = {
-    admin_id: this.props.user.admin_id,
+    user_id: this.props.user.user_id,
     //email: this.props.user.email,
     password: "",
     retype_password: "",
@@ -22,19 +22,17 @@ class AdminResetPassword extends Component {
     retype_password_nomatch_error: ''
   };
 
-  //This function dispatched our newly added admin to the database from state
-  //We first validate the inputs to make sure we are not sending empty inputs to the server
-  resetAdminPassword = (event) => {
+  resetPassword = (event) => {
     event.preventDefault();
 
     console.log(
-      "we are about to send the state to change admin password",
+      "we are about to send the state to change password",
       this.state
     );
     console.log("this is the user", this.props.user);
 
     if (
-      this.state.admin_id &&
+      this.state.user_id &&
       
       this.state.password &&
       this.state.retype_password &&
@@ -42,9 +40,9 @@ class AdminResetPassword extends Component {
     ) {
       //send the new student to the server through a redux saga
       this.props.dispatch({
-        type: "RESET_ADMIN_PASSWORD",
+        type: "RESET_USER_PASSWORD",
         payload: {
-          admin_id: this.state.admin_id,
+          user_id: this.state.user_id,
           //email: this.state.email,
           password: this.state.password,
         },
@@ -52,13 +50,13 @@ class AdminResetPassword extends Component {
          Swal.fire({
            icon: "Success",
            title: "Activation",
-           text: `Admin number ${this.state.admin_id} password has been reset`,
+           text: `User number ${this.state.user_id} password has been reset`,
          });
 
          this.props.history.push("/home");
 
       this.setState({
-        admin_id: this.props.user.admin_id,
+        user_id: this.props.user.user_id,
         //email: this.props.user.email,
         password: "",
         retype_password: "",
@@ -79,7 +77,7 @@ class AdminResetPassword extends Component {
       setTimeout(() => {
         this.setState({ retype_password_nomatch_error: false, password_nomatch_error: false}); }, 5000);
     }
-  }; // end registerAdmin
+  }; 
 
   //This function handles storing input values into state on change
   handleInputChangeFor = (propertyName) => (event) => {
@@ -93,7 +91,7 @@ class AdminResetPassword extends Component {
       <div>
         <br />
         <center>
-          <h1>Reset Admin Password</h1>
+          <h1>Reset Password</h1>
         </center>
 
           {(this.state.password_empty_error === true || this.state.retype_password_empty_error === true) && (
@@ -115,21 +113,11 @@ class AdminResetPassword extends Component {
         >
           <Form className="addstudent">
             <Row> 
-              {/* <Col>
-                <Form.Label>Admin Email</Form.Label>
-                <Form.Control
-                  placeholder="Admin Email"
-                  type="email"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.handleInputChangeFor("email")}
-                />
-              </Col> */}
               <Col>
               <center>
-                <Form.Label>New Admin Password</Form.Label>
+                <Form.Label>New Password</Form.Label>
                 <Form.Control
-                  placeholder="New Admin Password"
+                  placeholder="New Password"
                   type="password"
                   name="password"
                   value={this.state.password}
@@ -142,7 +130,7 @@ class AdminResetPassword extends Component {
               <center>
                 <Form.Label>Re-type New Password</Form.Label>
                 <Form.Control
-                  placeholder="Re-type New Admin Password"
+                  placeholder="Re-type New Password"
                   type="password"
                   name="password"
                   value={this.state.retype_password}
@@ -155,12 +143,12 @@ class AdminResetPassword extends Component {
             <center>
               <Link to="/home">
                 <Button
-                  onClick={(event) => this.resetAdminPassword(event)}
+                  onClick={(event) => this.resetPassword(event)}
                   variant="success"
                   type="submit"
                   style={{ width: "20%", margin: "1%" }}
                 >
-                  Reset Admin Password
+                  Reset Password
                 </Button>
               </Link>
             </center>
@@ -175,4 +163,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(AdminResetPassword);
+export default connect(mapStateToProps)(ResetPassword);

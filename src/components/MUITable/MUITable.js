@@ -6,11 +6,11 @@ import MUIDataTable from "mui-datatables";
 class MUITable extends Component {
   componentDidMount() {
     this.props.dispatch({
-      type: "GET_STUDENTS",
+      type: "GET_USERS",
     });
 
     this.props.dispatch({
-      type: "FETCH_ENTRIES_FOR_ADMIN",
+      type: "FETCH_ENTRIES",
     });
   }
 

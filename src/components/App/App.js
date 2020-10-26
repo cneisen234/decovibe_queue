@@ -15,29 +15,18 @@ import Footer from "../Footer/Footer";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 
-import UserPage from "../UserPage/UserPage";
+import New from "../Home/New";
 import InfoPage from "../InfoPage/InfoPage";
-import MakeEntry from "../MakeEntry/MakeEntry";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
-import ForgotPasswordAdmin from "../ForgotPassword/ForgotPasswordAdmin";
-import PastStudentEntries from "../PastStudentEntries/PastStudentEntries";
 
 import "./App.css";
-import PastAdminReports from "../PastAdminReports/PastAdminReports";
-import UpdatePassword from "../AdminHome/UpdatePassword";
-import StudentEntries from '../AdminHome/StudentEntries';
-import Complete from "../AdminHome/Complete";
-import AddAdmin from '../AdminHome/AddAdmin';
-import AdminResetPassword from '../AdminHome/AdminResetPassword';
-import StudentResetPassword from '../StudentHome/ResetStudentPassword';
-import OpenTransactions from '../OpenTransactions/OpenTransactions';
-import ChargeStudent from '../ChargeStudent/ChargeStudent';
-import AddAdminForm from '../AdminHome/AddAdminForm';
-
-import PastAdminDeductions from '../PastAdminDeductions/PastAdminDeductions';
-
+import UpdatePassword from "../Home/UpdatePassword";
+import Progress from '../Home/Progress';
+import Complete from "../Home/Complete";
+import AddUser from '../Home/AddUser';
+import ResetPassword from '../Home/ResetPassword';
+import AddUserForm from '../Home/NewForm';
 import Instructions from '../Instructions/Instructions';
-import AdminMakeEntry from "../AdminHome/AdminMakeEntry";
 
 
 
@@ -61,85 +50,42 @@ class App extends Component {
             If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
 
-            <ProtectedRoute exact path="/home" component={UserPage} />
+            <ProtectedRoute exact path="/home" component={New} />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
             <ProtectedRoute exact path="/info" component={InfoPage} />
-            <ProtectedRoute exact path="/makeentry" component={MakeEntry} />
-            <Route //handles token for resetting password via email for student
+            <Route
               exact
               path="/forgotpassword/:token/:email"
               component={ForgotPassword}
             />
-            <Route //handles token for resetting password via email for admin
+            <ProtectedRoute
               exact
-              path="/forgotpassword/admin/:token/:email"
-              component={ForgotPasswordAdmin}
+              path="/Progress"
+              component={Progress}
             />
-            <ProtectedRoute //page to reset student password (while logged in)
-              exact
-              path="/resetstudentpassword"
-              component={StudentResetPassword}
-            />
-            <ProtectedRoute //page to view all entries for the pay period (admin side)
-              exact
-              path="/paststudententries"
-              component={PastStudentEntries}
-            />
-            <ProtectedRoute //page to view all entries for the pay period (admin side)
+            <ProtectedRoute
               exact
               path="/Complete"
               component={Complete}
             />
-            <ProtectedRoute //page for admins to view all reports that are in the history table
-              exact
-              path="/pastadminreports"
-              component={PastAdminReports}
-            />
-            <ProtectedRoute //page admin is brought to when they wish to update a student's password
+            <ProtectedRoute 
               exact
               path="/updatepassword/:lcf_id"
               component={UpdatePassword}
             />
-            <ProtectedRoute //shows all entries made by the students to the admin
-              exact
-              path="/totalstudententries"
-              component={StudentEntries}
-            />
-            <ProtectedRoute //shows all entries made by the students to the admin
-              exact
-              path="/adminmakeentry"
-              component={AdminMakeEntry}
-            />
-            {/*List of all admins registered within the app */}
-            <ProtectedRoute exact path="/adminusers" component={AddAdmin} />
-            {/*Form for admin to fill out if they wish to add a new admin to the organization*/}
+            <ProtectedRoute exact path="/users" component={AddUser} />
             <ProtectedRoute
               exact
-              path="/addadminform"
-              component={AddAdminForm}
+              path="/newform"
+              component={AddUserForm}
             />
-            <ProtectedRoute //page that allows admin to reset their password (while logged in)
+            <ProtectedRoute
               exact
-              path="/resetadminpassword"
-              component={AdminResetPassword}
+              path="/resetpassword"
+              component={ResetPassword}
             />
-            <ProtectedRoute //page for admin to review payroll calculations BEFORE pushing to history table
-              exact //used for making sure bad data is not immeditaely pushed to the history table
-              path="/opentransactions"
-              component={OpenTransactions} //i.e. pulls from 'open_transaction' in the database
-            />
-            <ProtectedRoute //page that shows admin a list of all the deductions made to students
-              exact
-              path="/deductionlist"
-              component={PastAdminDeductions}
-            />
-            <ProtectedRoute //page for admin to fill out if they wish to charge a student
-              exact //this links into their account and is part of the payroll calculations
-              path="/chargestudent"
-              component={ChargeStudent}
-            />
-            <ProtectedRoute //page that explains how to use the application (admin side)
+            <ProtectedRoute
               exact
               path="/instructions"
               component={Instructions}

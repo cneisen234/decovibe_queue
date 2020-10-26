@@ -27,7 +27,7 @@ const Nav = (props) => (
         and call this link 'Login / Register' if they are not */}
         {props.user.id ? (
           <>
-            <HomeIcon></HomeIcon> Home
+            <EditIcon></EditIcon>New
           </>
         ) : (
           <>
@@ -38,11 +38,7 @@ const Nav = (props) => (
       {/* Show the link to the info page and the logout button if the user is logged in */}
 
       <>
-        <Link className="nav-link" to="/adminmakeentry">
-          <EditIcon></EditIcon>
-          New
-        </Link>
-        <Link className="nav-link" to="/totalstudententries">
+        <Link className="nav-link" to="/progress">
           <FormatListBulletedIcon></FormatListBulletedIcon>
           In Progress
         </Link>
@@ -50,7 +46,7 @@ const Nav = (props) => (
           <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
           Complete
         </Link>
-        {/* <Link className="nav-link" to="/resetadminpassword">
+        {/* <Link className="nav-link" to="/resetpassword">
           <RotateLeftIcon></RotateLeftIcon>
           Reset Password
         </Link> */}

@@ -20,9 +20,8 @@ function* loginUser(action) {
     // after the user has logged in
     // get the user information from the server
     yield put({type: 'FETCH_USER'});
-    yield put ({type: 'FETCH_ENTRIES_FOR_ADMIN'});
-    yield put ({ type: 'GET_STUDENTS' });
-    yield put ({type: 'GET_ADMIN'});
+    yield put ({type: 'FETCH_ENTRIES'});
+    yield put ({type: 'GET_USERS'});
     
   } catch (error) {
     console.log('Error with user login:', error);
@@ -42,24 +41,6 @@ function* loginUser(action) {
 function* forgotPassword(action) {
   try {
     yield axios.post("/api/user/forgot/:token/:email", action.payload);
-  } catch (error) {
-    console.log("Error with user login:", error);
-    if (error.response.status === 401) {
-      // The 401 is the error status sent from passport
-      // if user isn't in the database or
-      // if the username and password don't match in the database
-      yield put({ type: "LOGIN_FAILED" });
-    } else {
-      // Got an error that wasn't a 401
-      // Could be anything, but most common cause is the server is not started
-      yield put({ type: "LOGIN_FAILED_NO_CODE" });
-    }
-  }
-}
-
-function* forgotPasswordAdmin(action) {
-  try {
-    yield axios.post("/api/user/forgot/admin/:token/:email", action.payload);
   } catch (error) {
     console.log("Error with user login:", error);
     if (error.response.status === 401) {
@@ -103,7 +84,6 @@ function* loginSaga() {
   yield takeLatest('LOGIN', loginUser);
   yield takeLatest('LOGOUT', logoutUser);
   yield takeLatest('FORGOT_PASSWORD', forgotPassword);
-  yield takeLatest('FORGOT_PASSWORD_ADMIN', forgotPasswordAdmin);
 }
 
 export default loginSaga;

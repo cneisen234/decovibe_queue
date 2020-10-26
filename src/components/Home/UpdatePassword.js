@@ -10,7 +10,6 @@ import { Alert } from "@material-ui/lab";
 
 
 
-//This component is for updating password for the admina ccount
 class UpdatePassword extends Component {
   state = {
     password: "",
@@ -22,11 +21,11 @@ class UpdatePassword extends Component {
 
   componentDidMount() {
     this.props.dispatch({
-      type: "GET_STUDENTS",
+      type: "GET_USERS",
     });
 
     this.props.dispatch({
-      type: "FETCH_ENTRIES_FOR_ADMIN",
+      type: "FETCH_ENTRIES_FOR_USER",
     });
 
     
@@ -60,7 +59,6 @@ let id = url_array[url_array.length-1]; //takes id off the end of the url
     }
 
     if (this.state.password) {
-      //send the updated student to the server through a redux saga
       this.props.dispatch({
         type: "UPDATE_PASSWORD",
         payload: {
@@ -71,14 +69,14 @@ let id = url_array[url_array.length-1]; //takes id off the end of the url
          Swal.fire({
            icon: "Success",
            title: "Activation",
-           text: `Student number ${id} password has been reset`,
+           text: `User number ${id} password has been reset`,
          });
       
       this.props.history.push("/home");
     } else {
-      this.props.dispatch({ type: "UPDATE_STUDENT_ERROR" });
+      this.props.dispatch({ type: "UPDATE_USER_ERROR" });
     }
-  }; // end updateStudent
+  };
 
   //This function handles storing input values into state on change
   handleInputChangeFor = (propertyName) => (event) => {
@@ -102,7 +100,7 @@ let id = url_array[url_array.length-1]; //takes id off the end of the url
         )}
 
         <center><h1>
-          Update Student Password
+          Update User Password
         </h1></center>
         
         <Paper elevation={5}
@@ -112,9 +110,9 @@ let id = url_array[url_array.length-1]; //takes id off the end of the url
           <Row>
             
             <Col>
-              <Form.Label>Student Password</Form.Label>
+              <Form.Label>Reset Password</Form.Label>
               <Form.Control
-                placeholder="Student Password"
+                placeholder="Reset Password"
                 type="password"
                 name="password"
                 value={this.state.password}
@@ -143,7 +141,7 @@ let id = url_array[url_array.length-1]; //takes id off the end of the url
             type="submit"
             style={{ width: "20%", margin:'2%'}}
           >
-            Update Student Password
+            Update Password
           </Button></center>
         </Form>
         </Paper>
@@ -155,7 +153,7 @@ let id = url_array[url_array.length-1]; //takes id off the end of the url
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  students: state.students.studentlist,
+  users: state.users.userlist,
 });
 
 export default connect(mapStateToProps)(UpdatePassword);

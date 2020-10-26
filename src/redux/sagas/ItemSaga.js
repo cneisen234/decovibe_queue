@@ -4,9 +4,8 @@ import axios from 'axios';
 
 function* deleteItem(action) {
   try {
-    //passes the incoming new admin user info from the payload to the server
     console.log("we are about to delete an item", action.payload);
-    yield axios.delete(`/api/admin/deleteitem/${action.payload}`)
+    yield axios.delete(`/api/item/deleteitem/${action.payload}`)
 
     yield put({ type: "GET_ITEM_LIST" });
 
@@ -17,9 +16,8 @@ function* deleteItem(action) {
 
 function* deleteProgress(action) {
   try {
-    //passes the incoming new admin user info from the payload to the server
     console.log("we are about to delete an item", action.payload);
-    yield axios.delete(`/api/admin/deleteprogress/${action.payload}`);
+    yield axios.delete(`/api/item/deleteprogress/${action.payload}`);
 
     yield put({ type: "GET_PROGRESS_LIST" });
   } catch (error) {
@@ -29,9 +27,8 @@ function* deleteProgress(action) {
 
 function* deleteComplete(action) {
   try {
-    //passes the incoming new admin user info from the payload to the server
     console.log("we are about to delete an item", action.payload);
-    yield axios.delete(`/api/admin/deletecomplete/${action.payload}`);
+    yield axios.delete(`/api/item/deletecomplete/${action.payload}`);
 
     yield put({ type: "GET_COMPLETE_LIST" });
   } catch (error) {
@@ -41,8 +38,6 @@ function* deleteComplete(action) {
 
 function* addNewItem(action){
      try{
-
-        //passes the incoming new admin user info from the payload to the server
         console.log('we are about to add a new item', action.payload);
         yield axios.post('/api/user/addnewitem', action.payload);
 
@@ -57,7 +52,6 @@ function* addNewItem(action){
 
   function* addAllProgress(action) {
     try {
-      //passes the incoming new admin user info from the payload to the server
       console.log("we are about to add a new item", action.payload);
       yield axios.post("/api/user/addallprogress", action.payload);
 
@@ -72,7 +66,6 @@ function* addNewItem(action){
 
   function* markComplete(action) {
     try {
-      //passes the incoming new admin user info from the payload to the server
       console.log("we are about to add a new item", action.payload);
       yield axios.post("/api/user/markcomplete", action.payload);
 
@@ -86,8 +79,7 @@ function* addNewItem(action){
 
   function* editQTY(action) {
     try {
-      //passes the incoming new admin user info from the payload to the server
-      yield axios.put("/api/admin/edititem", action.payload);
+      yield axios.put("/api/item/edititem", action.payload);
 
       yield put({ type: "GET_ITEM_LIST" });
 
@@ -97,34 +89,30 @@ function* addNewItem(action){
     }
   }
 
-function* registerAdmin(action){
+function* register(action){
      try{
         //clear any errors on the page before
-        yield put ({ type: 'CLEAR_ADD_ADMIN_ERROR' });
+        yield put ({ type: 'CLEAR_ADD_ERROR' });
+        console.log('we are about to register a new user', action.payload);
+        yield axios.post('/api/user/adduser', action.payload);
 
-        //passes the incoming new admin user info from the payload to the server
-        console.log('we are about to register a new admin', action.payload);
-        yield axios.post('/api/user/addadmin', action.payload);
-
-         yield put({ type: "GET_ADMIN"});
+         yield put({ type: "GET_USER"});
       
 
-        console.log('we are about to send data for a new admin', action.payload);
+        console.log('we are about to send data for a new user', action.payload);
     }catch(error){
-        console.log('Error with admin registration:', error);
-        yield put ({ type: 'ADMIN_REGISTRATION_FAILED' });
+        console.log('Error with registration:', error);
+        yield put ({ type: 'REGISTRATION_FAILED' });
     }
 }
 
-function* forgotAdminPassword(action) {
+function* forgotPassword(action) {
   try {
-    //clear any errors on the page before
-    yield put({ type: "CLEAR_RESET_STUDENT_PASSWORD_ERROR" });
 
     //passes the incoming new student password info from the payload to the server
-    console.log("we are about to reset the admin password", action.payload);
+    console.log("we are about to reset the password", action.payload);
     const response = yield axios.put(
-      `/api/user/passwordforgot/admin`,
+      `/api/user/passwordforgot/item`,
       action.payload
     );
 
@@ -136,20 +124,19 @@ function* forgotAdminPassword(action) {
 }
 
 
-function* getAdmin (action){
+function* getUser (action){
     try {
             //console.log('we are about to get Students', action.type);
 
-            const response = yield axios.get(`/api/admin/adminlist`);
+            const response = yield axios.get(`/api/item/userlist`);
 
             yield put({
-                type: 'SET_ADMIN',
+                type: 'SET_USER',
                 payload: response.data
             });
 
-            //console.log('Here is the list of admins', response.data);
         } catch (error) {
-            console.log('Error with getting the list of Admins:', error);
+            console.log('Error with getting the list of users:', error);
         }
 
 }
@@ -159,7 +146,7 @@ function* getitemlist(action) {
   try {
     //console.log('we are about to get Students', action.type);
 
-    const response = yield axios.get(`/api/admin/itemlist`);
+    const response = yield axios.get(`/api/item/itemlist`);
 
     yield put({
       type: "SET_ITEM",
@@ -175,7 +162,7 @@ function* getprogresslist(action) {
   try {
     //console.log('we are about to get Students', action.type);
 
-    const response = yield axios.get(`/api/admin/progresslist`);
+    const response = yield axios.get(`/api/item/progresslist`);
 
     yield put({
       type: "SET_PROGRESS",
@@ -190,7 +177,7 @@ function* getcompletelist(action) {
   try {
     //console.log('we are about to get Students', action.type);
 
-    const response = yield axios.get(`/api/admin/completelist`);
+    const response = yield axios.get(`/api/item/completelist`);
 
     yield put({
       type: "SET_COMPLETE",
@@ -202,14 +189,12 @@ function* getcompletelist(action) {
 }
 
 
-function* resetAdminPassword(action){
+function* resetPassword(action){
     try{
             //clear any errors on the page before
-            yield put({ type: 'CLEAR_RESET_ADMIN_PASSWORD_ERROR' });
-
-             //passes the incoming new admin user info from the payload to the server
-             console.log('we are about to reset the admin password', action.payload);
-             const response = yield axios.put(`/api/user/adminpasswordreset/${action.payload.admin_id}`, action.payload);
+            yield put({ type: 'CLEAR_RESET_PASSWORD_ERROR' });
+             console.log('we are about to reset the password', action.payload);
+             const response = yield axios.put(`/api/user/passwordreset/${action.payload.user_id}`, action.payload);
              
              yield put({ type: "SET_USER", payload: response.data });
             console.log("Success in updating new password.");
@@ -222,21 +207,21 @@ function* resetAdminPassword(action){
 
 
 
-function* AdminSaga() {
+function* itemSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
    yield takeLatest('START_ALL_ITEM', addAllProgress);
    yield takeLatest('MARK_COMPLETE', markComplete);
     yield takeLatest('EDIT_ITEM', editQTY);
-    yield takeLatest('REGISTER_ADMIN', registerAdmin);
-    yield takeLatest('GET_ADMIN', getAdmin);
+    yield takeLatest('REGISTER', register);
+    yield takeLatest('GET_USER', getUser);
     yield takeLatest('GET_ITEM_LIST', getitemlist);
     yield takeLatest('GET_PROGRESS_LIST', getprogresslist);
     yield takeLatest('GET_COMPLETE_LIST', getcompletelist);
     yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('DELETE_PROGRESS', deleteProgress);
     yield takeLatest('DELETE_COMPLETE', deleteComplete);
-    yield takeLatest('RESET_ADMIN_PASSWORD', resetAdminPassword);
-    yield takeLatest('FORGOT_ADMIN_PASSWORD', forgotAdminPassword);
+    yield takeLatest('RESET_PASSWORD', resetPassword);
+    yield takeLatest('FORGOT_PASSWORD', forgotPassword);
 }
 
-export default AdminSaga;
+export default itemSaga;
