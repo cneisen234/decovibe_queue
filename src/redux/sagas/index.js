@@ -2,13 +2,7 @@ import { all } from 'redux-saga/effects';
 import loginSaga from './loginSaga';
 import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
-import StudentSaga from './StudentSaga';
-import addEntrySaga from './addEntrySaga';
 import AdminSaga from './AdminSaga';
-import calculationsSaga from './calculationsSaga';
-import chargeSaga from './chargeSaga';
-import adminHistorySaga from './adminHistorySaga'
-import studentHistorySaga from './studentHistorySaga';
 
 
 // rootSaga is the primary saga.
@@ -23,13 +17,7 @@ export default function* rootSaga() {
     loginSaga(),
     registrationSaga(),
     userSaga(),
-    StudentSaga(),
-    addEntrySaga(),
-    AdminSaga(),
-    calculationsSaga(),
-    chargeSaga(),
-    adminHistorySaga(),
-    studentHistorySaga()
+    AdminSaga()
 
 
   ]);

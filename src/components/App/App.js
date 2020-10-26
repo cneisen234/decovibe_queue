@@ -24,7 +24,6 @@ import PastStudentEntries from "../PastStudentEntries/PastStudentEntries";
 
 import "./App.css";
 import PastAdminReports from "../PastAdminReports/PastAdminReports";
-import UpdateStudent from '../AdminHome/UpdateStudent';
 import UpdatePassword from "../AdminHome/UpdatePassword";
 import StudentEntries from '../AdminHome/StudentEntries';
 import AddAdmin from '../AdminHome/AddAdmin';
@@ -90,13 +89,6 @@ class App extends Component {
               exact
               path="/pastadminreports"
               component={PastAdminReports}
-            />
-            {/* Page that admin is brought to when they click the 'add new student' button on admin homepage
-            It has the form for the admin to fill out with all the necessary student information */}
-            <ProtectedRoute //page admin is brought to when they wish to update a student's information
-              exact
-              path="/updatestudent/:lcf_id" //lcfid helps prepopulate the page with the exisiting data
-              component={UpdateStudent}
             />
             <ProtectedRoute //page admin is brought to when they wish to update a student's password
               exact

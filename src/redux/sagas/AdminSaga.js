@@ -31,6 +31,19 @@ function* addNewItem(action){
     }
   }
 
+  function* editQTY(action) {
+    try {
+      //passes the incoming new admin user info from the payload to the server
+      yield axios.put("/api/admin/edititem", action.payload);
+
+      yield put({ type: "GET_ITEM_LIST" });
+
+      console.log("we are about to edit an item", action.payload);
+    } catch (error) {
+      console.log("Error with editing an item:", error);
+    }
+  }
+
 function* registerAdmin(action){
      try{
         //clear any errors on the page before
@@ -128,6 +141,7 @@ function* resetAdminPassword(action){
 
 function* AdminSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
+    yield takeLatest('EDIT_ITEM', editQTY);
     yield takeLatest('REGISTER_ADMIN', registerAdmin);
     yield takeLatest('GET_ADMIN', getAdmin);
     yield takeLatest('GET_ITEM_LIST', getitemlist);

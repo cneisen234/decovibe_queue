@@ -4,15 +4,43 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import MUITable from "../MUITable/MUITable";
+import {Paper, TextField} from '@material-ui/core'; 
+import { auto } from "async";
 
 //This page shows the list of admins currently part of the organization
 //A button on this page allows the admin to add a new admin (AddAdminForm component)
 class AddAdmin extends Component {
+  state = {
+    toggle: false,
+    qty: "",
+    id: "",
+  };
   componentDidMount() {
-     this.props.dispatch({
-       type: "GET_ITEM_LIST",
-     });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST",
+    });
   }
+  handleChange = (event, fieldName) => {
+    this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event
+  }; //end handleChange
+  //toggles edit window
+  toggle = () => {
+    this.setState({
+      toggle: !this.state.toggle,
+    });
+  };
+  editItem = (event) => {
+    //prevents default action
+    event.preventDefault();
+    const { qty, item } = this.state;
+    this.props.dispatch({
+      type: "EDIT_ITEM",
+      payload: {
+        id: this.state.id,
+        qty: this.state.qty,
+      },
+    });
+  };
 
   //This function dispatched our newly added admin to the database from state
   //We first validate the inputs to make sure we are not sending empty inputs to the server
@@ -34,6 +62,7 @@ class AddAdmin extends Component {
     ]);
     return (
       <div>
+        {JSON.stringify(this.state)}
         <br />
         <center>
           <h1>New</h1>
@@ -71,8 +100,34 @@ class AddAdmin extends Component {
                         variant="success"
                         onClick={(event) => {
                           event.preventDefault();
-                          const itemArray = this.props.itemlist
-                
+                          const itemArray = this.props.itemlist;
+                          const item = itemArray[dataIndex];
+                          this.setState({
+                          toggle: !this.state.toggle,
+                          id: item.id,
+                          });
+                          }}
+                      >
+                        Start
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Delete",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.itemlist;
+
                           const item = itemArray[dataIndex];
                           console.log(`entry id should be: ${item.id}`);
                           // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
@@ -83,7 +138,7 @@ class AddAdmin extends Component {
                           });
                         }}
                       >
-                        Start
+                        Delete
                       </Button>
                     );
                   },
@@ -92,6 +147,68 @@ class AddAdmin extends Component {
             ]}
             title={"New Items"} //give the table a name
           />
+          {this.state.toggle === false ? (
+            //if toggle is false, render nothing. This is the default
+            <span></span>
+          ) : (
+            //...else render the edit screen for the selected song
+            <Paper
+              style={{
+                right: 0,
+                bottom: 0,
+                position: "fixed",
+                borderRadius: "10%",
+                height: "400px",
+                width: "400px",
+                fontSize: "15px",
+                backgroundColor: "white",
+                zIndex: Infinity,
+              }}
+              elevation="24"
+              className="loginBox"
+            >
+              <td
+                style={{
+                  backgroundColor: "white",
+                }}
+              >
+                {" "}
+                <form onSubmit={this.editItem}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    label="qty"
+                    name="qty"
+                    // sets value of input to local state
+                    value={this.state.qty}
+                    type="text"
+                    maxLength={1000}
+                    onChange={(event) => this.handleChange(event, "qty")} //onChange of input values set local state
+                  />
+                  <br />
+                  {/* onClick tied to form element, runs submitInfo on click */}
+                  <button
+                    className="recommendationButton"
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                  >
+                    Edit qty
+                  </button>
+                </form>
+                {/* toggles edit window back to not displaying */}
+                <button
+                  onClick={this.toggle}
+                  className="recommendationButton"
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                >
+                  Go Back
+                </button>
+              </td>
+            </Paper>
+          )}
         </div>
         <br />
         <br />

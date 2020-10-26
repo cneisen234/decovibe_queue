@@ -47,7 +47,6 @@ class MUITable extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  students: state.students.studentlist,
 });
 
 export default connect(mapStateToProps)(MUITable);
