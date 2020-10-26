@@ -31,6 +31,20 @@ function* addNewItem(action){
     }
   }
 
+  function* addAllProgress(action) {
+    try {
+      //passes the incoming new admin user info from the payload to the server
+      console.log("we are about to add a new item", action.payload);
+      yield axios.post("/api/user/addallprogress", action.payload);
+
+      // yield put({ type: "GET_PROGRESS_LIST" });
+
+      console.log("we are about to add a new item", action.payload);
+    } catch (error) {
+      console.log("Error with adding a new item:", error);
+    }
+  }
+
   function* editQTY(action) {
     try {
       //passes the incoming new admin user info from the payload to the server
@@ -141,6 +155,7 @@ function* resetAdminPassword(action){
 
 function* AdminSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
+   yield takeLatest('START_ALL_ITEM', addAllProgress);
     yield takeLatest('EDIT_ITEM', editQTY);
     yield takeLatest('REGISTER_ADMIN', registerAdmin);
     yield takeLatest('GET_ADMIN', getAdmin);

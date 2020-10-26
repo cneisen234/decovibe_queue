@@ -12,8 +12,14 @@ import { auto } from "async";
 class AddAdmin extends Component {
   state = {
     toggle: false,
+    toggle2: false,
     qty: "",
+    updated_qty: "",
     id: "",
+    sku: "",
+    sku_description: "",
+    qty: "",
+    brand: "",
   };
   componentDidMount() {
     this.props.dispatch({
@@ -29,6 +35,11 @@ class AddAdmin extends Component {
       toggle: !this.state.toggle,
     });
   };
+  toggle2 = () => {
+    this.setState({
+      toggle2: !this.state.toggle2,
+    });
+  };
   editItem = (event) => {
     //prevents default action
     event.preventDefault();
@@ -38,6 +49,52 @@ class AddAdmin extends Component {
       payload: {
         id: this.state.id,
         qty: this.state.qty,
+      },
+    });
+  };
+
+  startAllItem = (event) => {
+    //prevents default action
+    event.preventDefault();
+    const { qty, item } = this.state;
+    this.props.dispatch({
+      type: "START_ALL_ITEM",
+      payload: {
+        id: this.state.id,
+        brand: this.state.brand,
+        qty: this.state.qty,
+        sku: this.state.sku,
+        sku_description: this.state.sku_description,
+      },
+    });
+    this.props.dispatch({
+      type: "EDIT_ITEM",
+      payload: {
+        id: this.state.id,
+        qty: 0,
+      },
+    });
+  };
+
+  startItem = (event) => {
+    //prevents default action
+    event.preventDefault();
+    const { qty, item } = this.state;
+    this.props.dispatch({
+      type: "START_ALL_ITEM",
+      payload: {
+        id: this.state.id,
+        brand: this.state.brand,
+        qty: this.state.updated_qty,
+        sku: this.state.sku,
+        sku_description: this.state.sku_description,
+      },
+    });
+    this.props.dispatch({
+      type: "EDIT_ITEM",
+      payload: {
+        id: this.state.id,
+        qty: this.state.qty - this.state.updated_qty,
       },
     });
   };
@@ -89,7 +146,7 @@ class AddAdmin extends Component {
               { name: "QTY" },
               { name: "Date" },
               {
-                name: "Start",
+                name: "Update QTY",
                 options: {
                   filter: false,
                   sort: false,
@@ -103,10 +160,43 @@ class AddAdmin extends Component {
                           const itemArray = this.props.itemlist;
                           const item = itemArray[dataIndex];
                           this.setState({
-                          toggle: !this.state.toggle,
-                          id: item.id,
+                            toggle: !this.state.toggle,
+                            id: item.id,
                           });
-                          }}
+                        }}
+                      >
+                        Update QTY
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Start",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.itemlist;
+                          const item = itemArray[dataIndex];
+                          console.log(
+                            `entry id should be: ${item.id} ${item.qty} ${item.sku_description} ${item.sku} ${item.brand}`
+                          );
+                          this.setState({
+                            toggle2: !this.state.toggle2,
+                            id: item.id,
+                            sku: item.sku,
+                            sku_description: item.sku_description,
+                            qty: item.qty,
+                            brand: item.brand,
+                          });
+                        }}
                       >
                         Start
                       </Button>
@@ -199,6 +289,78 @@ class AddAdmin extends Component {
                 {/* toggles edit window back to not displaying */}
                 <button
                   onClick={this.toggle}
+                  className="recommendationButton"
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                >
+                  Go Back
+                </button>
+              </td>
+            </Paper>
+          )}
+          {this.state.toggle2 === false ? (
+            //if toggle is false, render nothing. This is the default
+            <span></span>
+          ) : (
+            //...else render the edit screen for the selected song
+            <Paper
+              style={{
+                right: 0,
+                bottom: 0,
+                position: "fixed",
+                borderRadius: "10%",
+                height: "400px",
+                width: "400px",
+                fontSize: "15px",
+                backgroundColor: "white",
+                zIndex: Infinity,
+              }}
+              elevation="24"
+              className="loginBox"
+            >
+              <td
+                style={{
+                  backgroundColor: "white",
+                }}
+              >
+                {" "}
+                <form onSubmit={this.startItem}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    label="qty"
+                    name="qty"
+                    // sets value of input to local state
+                    value={this.state.updated_qty}
+                    type="text"
+                    maxLength={1000}
+                    onChange={(event) => this.handleChange(event, "updated_qty")} //onChange of input values set local state
+                  />
+                  <br />
+                  {/* onClick tied to form element, runs submitInfo on click */}
+                  <button
+                    className="recommendationButton"
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                  >
+                    Start selected qty
+                  </button>
+                </form>
+                <form onSubmit={this.startAllItem}>
+                  <button
+                    className="recommendationButton"
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                  >
+                    Start entire QTY
+                  </button>
+                </form>
+                {/* toggles edit window back to not displaying */}
+                <button
+                  onClick={this.toggle2}
                   className="recommendationButton"
                   variant="contained"
                   color="secondary"
