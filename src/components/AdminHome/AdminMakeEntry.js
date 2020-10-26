@@ -119,7 +119,6 @@ class AddAdmin extends Component {
     ]);
     return (
       <div>
-        {JSON.stringify(this.state)}
         <br />
         <center>
           <h1>New</h1>

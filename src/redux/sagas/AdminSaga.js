@@ -15,6 +15,30 @@ function* deleteItem(action) {
   }
 }
 
+function* deleteProgress(action) {
+  try {
+    //passes the incoming new admin user info from the payload to the server
+    console.log("we are about to delete an item", action.payload);
+    yield axios.delete(`/api/admin/deleteprogress/${action.payload}`);
+
+    yield put({ type: "GET_PROGRESS_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
+function* deleteComplete(action) {
+  try {
+    //passes the incoming new admin user info from the payload to the server
+    console.log("we are about to delete an item", action.payload);
+    yield axios.delete(`/api/admin/deletecomplete/${action.payload}`);
+
+    yield put({ type: "GET_COMPLETE_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
 function* addNewItem(action){
      try{
 
@@ -36,6 +60,21 @@ function* addNewItem(action){
       //passes the incoming new admin user info from the payload to the server
       console.log("we are about to add a new item", action.payload);
       yield axios.post("/api/user/addallprogress", action.payload);
+
+      yield put({ type: "GET_PROGRESS_LIST" });
+
+      console.log("we are about to add a new item", action.payload);
+    } catch (error) {
+      console.log("Error with adding a new item:", error);
+    }
+  }
+
+
+  function* markComplete(action) {
+    try {
+      //passes the incoming new admin user info from the payload to the server
+      console.log("we are about to add a new item", action.payload);
+      yield axios.post("/api/user/markcomplete", action.payload);
 
       // yield put({ type: "GET_PROGRESS_LIST" });
 
@@ -132,6 +171,36 @@ function* getitemlist(action) {
   }
 }
 
+function* getprogresslist(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/admin/progresslist`);
+
+    yield put({
+      type: "SET_PROGRESS",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* getcompletelist(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/admin/completelist`);
+
+    yield put({
+      type: "SET_COMPLETE",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 
 function* resetAdminPassword(action){
     try{
@@ -156,11 +225,16 @@ function* resetAdminPassword(action){
 function* AdminSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
    yield takeLatest('START_ALL_ITEM', addAllProgress);
+   yield takeLatest('MARK_COMPLETE', markComplete);
     yield takeLatest('EDIT_ITEM', editQTY);
     yield takeLatest('REGISTER_ADMIN', registerAdmin);
     yield takeLatest('GET_ADMIN', getAdmin);
     yield takeLatest('GET_ITEM_LIST', getitemlist);
+    yield takeLatest('GET_PROGRESS_LIST', getprogresslist);
+    yield takeLatest('GET_COMPLETE_LIST', getcompletelist);
     yield takeLatest('DELETE_ITEM', deleteItem);
+    yield takeLatest('DELETE_PROGRESS', deleteProgress);
+    yield takeLatest('DELETE_COMPLETE', deleteComplete);
     yield takeLatest('RESET_ADMIN_PASSWORD', resetAdminPassword);
     yield takeLatest('FORGOT_ADMIN_PASSWORD', forgotAdminPassword);
 }

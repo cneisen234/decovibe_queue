@@ -26,6 +26,7 @@ import "./App.css";
 import PastAdminReports from "../PastAdminReports/PastAdminReports";
 import UpdatePassword from "../AdminHome/UpdatePassword";
 import StudentEntries from '../AdminHome/StudentEntries';
+import Complete from "../AdminHome/Complete";
 import AddAdmin from '../AdminHome/AddAdmin';
 import AdminResetPassword from '../AdminHome/AdminResetPassword';
 import StudentResetPassword from '../StudentHome/ResetStudentPassword';
@@ -84,6 +85,11 @@ class App extends Component {
               exact
               path="/paststudententries"
               component={PastStudentEntries}
+            />
+            <ProtectedRoute //page to view all entries for the pay period (admin side)
+              exact
+              path="/Complete"
+              component={Complete}
             />
             <ProtectedRoute //page for admins to view all reports that are in the history table
               exact

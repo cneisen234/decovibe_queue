@@ -46,6 +46,10 @@ const Nav = (props) => (
           <FormatListBulletedIcon></FormatListBulletedIcon>
           In Progress
         </Link>
+        <Link className="nav-link" to="/complete">
+          <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
+          Complete
+        </Link>
         {/* <Link className="nav-link" to="/resetadminpassword">
           <RotateLeftIcon></RotateLeftIcon>
           Reset Password

@@ -117,6 +117,32 @@ router.post("/addallprogress", (req, res, next) => {
     });
 });
 
+router.post("/markcomplete", (req, res, next) => {
+  // pull out the incoming object data
+  const brand = req.body.brand;
+  const sku = req.body.sku;
+  const sku_description = req.body.sku_description;
+  const qty = req.body.qty;
+
+  console.log(brand, sku, sku_description, qty);
+
+  //now lets add admin information to the user table
+  const query2Text =
+    'INSERT INTO "complete" (brand, sku, sku_description, qty ) VALUES ($1, $2, $3, $4) RETURNING id';
+  pool
+    .query(query2Text, [brand, sku, sku_description, qty])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
+
+    .catch(function (error) {
+      console.log("Sorry, there is an error", error);
+      res.sendStatus(500);
+    });
+});
+
 
 
 //Handles POST to add a new admin

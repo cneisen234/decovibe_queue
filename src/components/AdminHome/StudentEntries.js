@@ -1,206 +1,230 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+import moment from "moment";
 import MUITable from "../MUITable/MUITable";
-import { withRouter } from "react-router";
-import EditIcon from '@material-ui/icons/Edit';
-import moment from 'moment';
+import { Paper, TextField } from "@material-ui/core";
+import { auto } from "async";
 
 
 class StudentEntries extends Component {
+  state = {
+    toggle: false,
+    toggle2: false,
+    qty: "",
+    updated_qty: "",
+    id: "",
+    sku: "",
+    sku_description: "",
+    qty: "",
+    brand: "",
+  };
   componentDidMount() {
-
     this.props.dispatch({
-      type: "GET_ADMIN",
+      type: "GET_PROGRESS_LIST",
     });
   }
+  handleChange = (event, fieldName) => {
+    this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event
+  }; //end handleChange
+  //toggles edit window
+  toggle = () => {
+    this.setState({
+      toggle: !this.state.toggle,
+    });
+  };
+  toggle2 = () => {
+    this.setState({
+      toggle2: !this.state.toggle2,
+    });
+  };
+  editItem = (event) => {
+    //prevents default action
+    event.preventDefault();
+    const { qty, item } = this.state;
+    this.props.dispatch({
+      type: "EDIT_ITEM",
+      payload: {
+        id: this.state.id,
+        qty: this.state.qty,
+      },
+    });
+  };
 
-  render() { //MUI tables for columns for the table
-    const columns = [
-      {
-        name: "Edit",
-        options: {
-          filter: false,
-          sort: false,
-          empty: true,
-          customBodyRenderLite: (dataIndex, rowIndex) => {
-            return (
-              <Button
-                variant="warning"
-                onClick={() => {
-                  const studentsArray = this.filterStudentArray(
-                    this.props.entries
-                  );
-                  const student = studentsArray[dataIndex];
-                  console.log(student);
-                  /* a possible refactor:
-                    1. Create a function that returns only the filtered students, but its still an array of objects
-                    2. Then you pass into the MUITable the result of a function that takes the filtered list and makes
-                      an array in the expected format
-                    3. then in THIS function use the first array, not the second mapped array. Thus student.id would work
-                      instead of student[5]
-                  */
-                  console.log(`entry id should be: ${student.lcf_id}`);
-                  //alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
+  startAllItem = (event) => {
+    //prevents default action
+    event.preventDefault();
+    const { qty, item } = this.state;
+    this.props.dispatch({
+      type: "START_ALL_ITEM",
+      payload: {
+        id: this.state.id,
+        brand: this.state.brand,
+        qty: this.state.qty,
+        sku: this.state.sku,
+        sku_description: this.state.sku_description,
+      },
+    });
+    this.props.dispatch({
+      type: "EDIT_ITEM",
+      payload: {
+        id: this.state.id,
+        qty: 0,
+      },
+    });
+  };
 
-                  this.props.history.push({
-                    pathname: `/adminentryupdate/${student.lcf_id}`,
-                    // state: {lcf_id: student.lcf_id}
-                    // pathname:`/updatestudent/${dataIndex}`,
-                    // state: {id: dataIndex}
-                  }); //this pushes admin to edit page for select student
-                  // this.props.dispatch({
-                  //   type: "EDIT_STUDENT",
-                  //   payload: {
-                  //     lcf_id: student.lcf_id,
-                  //   },
-                  // });
+  startItem = (event) => {
+    //prevents default action
+    event.preventDefault();
+    const { qty, item } = this.state;
+    this.props.dispatch({
+      type: "START_ALL_ITEM",
+      payload: {
+        id: this.state.id,
+        brand: this.state.brand,
+        qty: this.state.updated_qty,
+        sku: this.state.sku,
+        sku_description: this.state.sku_description,
+      },
+    });
+    this.props.dispatch({
+      type: "EDIT_ITEM",
+      payload: {
+        id: this.state.id,
+        qty: this.state.qty - this.state.updated_qty,
+      },
+    });
+  };
 
-                  this.props.dispatch({
-                    type: "GET_STUDENT_FOR_EDIT",
-                    payload: student.lcf_id,
-                  });
-                }}
-              >
-                <EditIcon></EditIcon>
-              </Button>
-            );
-          },
-        },
-      },
-      {
-        name: "Entry ID",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "First Name",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Last Name",
-        options: {
-          filter: false,
-        },
-      },
-      {
-        name: "ID",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Grade",
-        options: {
-          filter: true,
-          sort: false,
-        },
-      },
-      {
-        name: "School Name",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Passing Classes",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "GPA",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Days Attended",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Detention",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Activities or Job",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Drug Free",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Service Hours",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Attended Homeroom",
-        options: {
-          filter: true,
-        },
-      },
-      {
-        name: "Comments",
-        options: {
-          filter: true,
-        },
-      },
-    ];
+  //This function dispatched our newly added admin to the database from state
+  //We first validate the inputs to make sure we are not sending empty inputs to the server
 
-    //The calculations below show the next pay day 
-    let date = moment();
-    let previous_pay_day = moment("2020-08-10T00:00:00.000-05")
-    let pay_day = moment(previous_pay_day)
-  
-    //beginning of getDate
-      function getDate() {
-        if (date >= pay_day) {
-          previous_pay_day = pay_day;
-          pay_day = moment(previous_pay_day).add(2, "week");
-          getDate();
-        }
-      }//End of getDate
-      getDate();
+  //This function handles storing input values into state on change
+  handleInputChangeFor = (propertyName) => (event) => {
+    this.setState({
+      [propertyName]: event.target.value,
+    });
+  };
 
-      previous_pay_day = moment(previous_pay_day).format(
-        "MMMM Do YYYY"
-      );
-      pay_day = moment(pay_day).format("MMMM Do YYYY");
+  render() {
+    const data = this.props.progresslist.map((progress) => [
+      progress.brand,
+      progress.sku,
+      progress.sku_description,
+      progress.qty,
+      moment.utc(progress.created_at).format("MMMM Do YYYY"),
+    ]);
     return (
-      <div><br/>
-         <center><h1 >Current Entries</h1></center> 
-        {/*PLEASE NOTE: instead of start date, we want to show latest activity on this table */}
-        {/*This will be tied to whenever a student logs in, it will do a put on that column to show thier latest login */}
-
-        {/*Blaine: one option, get rid of filter and map and handle in redux */}
-        {/*Do map in redux and store the data for the table in redux */}
-        <div style={{paddingRight:'2%', paddingLeft:'2%', paddingBottom:'6%'}}>
+      <div>
+        <br />
+        <center>
+          <h1>In Progress</h1>
+        </center>
+        <div className="navbuttonscontainer">
+          <Link to="/addadminform">
+            <Button style={{ marginLeft: "1%" }} variant="success">
+              Add New Item
+            </Button>
+          </Link>{" "}
         </div>
-        <br/>
-        <br/>
-       
+
+        {/* The material UI table component, takes in data as props, data is a list of admin brought
+ in from global state */}
+
+        <div style={{ padding: "1.5%" }}>
+          <MUITable
+            data={data} //brings in data as an array, in this case, list of admins
+            columns={[
+              //names the columns found on MUI table
+              { name: "Category/Brand" },
+              { name: "SKU" },
+              { name: "SKU Description" },
+              { name: "QTY" },
+              { name: "Date" },
+              {
+                name: "Mark Complete",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.progresslist;
+                          const item = itemArray[dataIndex];
+                          console.log(
+                            `entry id should be: ${item.id} ${item.qty} ${item.sku_description} ${item.sku} ${item.brand}`
+                          );
+                          this.props.dispatch({
+                            type: "MARK_COMPLETE",
+                            payload: {
+                              id: item.id,
+                              sku: item.sku,
+                              sku_description: item.sku_description,
+                              qty: item.qty,
+                              brand: item.brand,
+                            },
+                          });
+                           this.props.dispatch({
+                             type: "DELETE_PROGRESS",
+                             payload: item.id,
+                           });
+                        }}
+                      >
+                        Mark Complete
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Delete",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.progresslist;
+
+                          const item = itemArray[dataIndex];
+                          console.log(`entry id should be: ${item.id}`);
+                          // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
+
+                          this.props.dispatch({
+                            type: "DELETE_PROGRESS",
+                            payload: item.id,
+                          });
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    );
+                  },
+                },
+              },
+            ]}
+            title={"Items In Progress"} //give the table a name
+          />
+        </div>
+        <br />
+        <br />
+        <br />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  progresslist: state.admin.progresslist,
 });
-
-export default withRouter(connect(mapStateToProps)(StudentEntries));
+export default connect(mapStateToProps)(StudentEntries);
