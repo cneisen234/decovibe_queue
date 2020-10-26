@@ -279,25 +279,14 @@ class New extends Component {
                   />
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}
-                  <button
-                    className="recommendationButton"
-                    variant="contained"
-                    color="secondary"
-                    type="submit"
-                  >
+                  <Button variant="success" type="submit">
                     Edit qty
-                  </button>
+                  </Button>
                 </form>
                 {/* toggles edit window back to not displaying */}
-                <button
-                  onClick={this.toggle}
-                  className="recommendationButton"
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                >
+                <Button onClick={this.toggle} variant="success" type="submit">
                   Go Back
-                </button>
+                </Button>
               </td>
             </Paper>
           )}
@@ -343,35 +332,19 @@ class New extends Component {
                   />
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}
-                  <button
-                    className="recommendationButton"
-                    variant="contained"
-                    color="secondary"
-                    type="submit"
-                  >
+                  <Button variant="success" type="submit">
                     Start selected qty
-                  </button>
+                  </Button>
                 </form>
                 <form onSubmit={this.startAllItem}>
-                  <button
-                    className="recommendationButton"
-                    variant="contained"
-                    color="secondary"
-                    type="submit"
-                  >
+                  <Button variant="success" type="submit">
                     Start entire QTY
-                  </button>
+                  </Button>
                 </form>
                 {/* toggles edit window back to not displaying */}
-                <button
-                  onClick={this.toggle2}
-                  className="recommendationButton"
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                >
+                <Button onClick={this.toggle2} variant="success" type="submit">
                   Go Back
-                </button>
+                </Button>
               </td>
             </Paper>
           )}
