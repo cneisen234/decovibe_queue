@@ -14,13 +14,26 @@ require("dotenv").config();
 
 let storeHash = process.env.STORE_HASH
 
+let twoweeks = moment().subtract(2, "weeks")
+
+
 let config = {
   headers: {
     "X-Auth-Client": process.env.BG_AUTH_CLIENT,
     "X-Auth-Token": process.env.BG_AUTH_TOKEN,
   },
 };
-
+router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
+ pool
+   .query('DELETE FROM "complete" WHERE timestamp<=$1', [twoweeks])
+   .then((result) => {
+     res.sendStatus(204); //No Content
+   })
+   .catch((error) => {
+     console.log("Error DELETE ", error);
+     res.sendStatus(500);
+   });
+})
 let orderID = 0
 let prevOrderID = 0
 

@@ -8,10 +8,6 @@ class MUITable extends Component {
     this.props.dispatch({
       type: "GET_USERS",
     });
-
-    this.props.dispatch({
-      type: "FETCH_ENTRIES",
-    });
   }
 
   state = {

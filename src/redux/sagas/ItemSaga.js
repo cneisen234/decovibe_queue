@@ -36,6 +36,31 @@ function* deleteComplete(action) {
   }
 }
 
+function* deleteCompleteAll(action) {
+  try {
+    console.log("we are about to delete everything", action.payload);
+    yield axios.delete(`/api/item/deletecompleteall`);
+
+    yield put({ type: "GET_COMPLETE_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
+function* deleteCompleteRange(action) {
+  try {
+    console.log("we are about to delete everything from 2 weeks ago", action.payload);
+    yield axios.delete(`/api/user/deletecompleterange`);
+
+    yield put({ type: "GET_COMPLETE_LIST" });
+    yield put({ type: "GET_ITEM_LIST_COUNT" });
+    yield put({ type: "GET_PROGRESS_LIST_COUNT" });
+    yield put({ type: "GET_COMPLETE_LIST_COUNT" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
 function* addNewItem(action){
      try{
         console.log('we are about to add a new item', action.payload);
@@ -271,6 +296,8 @@ function* itemSaga() {
     yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('DELETE_PROGRESS', deleteProgress);
     yield takeLatest('DELETE_COMPLETE', deleteComplete);
+     yield takeLatest('DELETE_COMPLETE_ALL', deleteCompleteAll);
+     yield takeLatest('DELETE_COMPLETE_RANGE', deleteCompleteRange);
     yield takeLatest('RESET_PASSWORD', resetPassword);
     yield takeLatest('FORGOT_PASSWORD', forgotPassword);
 }

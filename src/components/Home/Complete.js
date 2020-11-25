@@ -34,6 +34,9 @@ class Complete extends Component {
         this.props.dispatch({
           type: "GET_COMPLETE_LIST_COUNT",
         });
+         this.props.dispatch({
+           type: "DELETE_COMPLETE_RANGE",
+         });
   }
 
   render() {
@@ -51,6 +54,54 @@ class Complete extends Component {
       <div>
         <br />
         <center>
+          <Button
+            variant="danger"
+            style={{ float: "right" }}
+            onClick={(event) => {
+              event.preventDefault();
+              swal({
+                            title: "Warning!",
+                            text:
+                              "This will delete everything on the completed table",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                            //end sweet alerts
+                          }).then((willDelete) => {
+                            // start .then
+                            //if confirmed, delete
+                            if (willDelete) {
+                              this.props.dispatch({
+                                type: "DELETE_COMPLETE_ALL",
+                              });
+                              this.props.dispatch({
+                                type: "GET_COMPLETE_LIST",
+                              });
+                              this.props.dispatch({
+                                type: "GET_ITEM_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_PROGRESS_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_COMPLETE_LIST_COUNT",
+                              });
+                              //success! review deleted
+                              swal(
+                                "Completed table deleted!",
+                                {
+                                  icon: "success",
+                                }
+                              );
+                            } else {
+                              //...else cancel action
+                              swal("The table is safe!");
+                            }
+                          });
+            }}
+          >
+            Delete All
+          </Button>
           <h1>Complete</h1>
         </center>
 
@@ -114,9 +165,12 @@ class Complete extends Component {
                                 type: "GET_COMPLETE_LIST_COUNT",
                               });
                               //success! review deleted
-                              swal("Poof! The sku on this order has been deleted!", {
-                                icon: "success",
-                              });
+                              swal(
+                                "Poof! The sku on this order has been deleted!",
+                                {
+                                  icon: "success",
+                                }
+                              );
                             } else {
                               //...else cancel action
                               swal("The sku is safe!");

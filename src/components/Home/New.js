@@ -323,7 +323,7 @@ class New extends Component {
                   >
                     <option value="">Pick From Below </option>{" "}
                     <option value="Maggi">Maggi </option>{" "}
-                    <option value="Zachary">Zachary </option>{" "}
+                    <option value="Zach">Zach </option>{" "}
                     <option value="Levi">Levi </option>{" "}
                   </Form.Control>
                   <br />
