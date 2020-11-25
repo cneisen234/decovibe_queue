@@ -131,7 +131,7 @@ class Complete extends Component {
                 },
               },
             ]}
-            title={"Items In Progress"} //give the table a name
+            title={"Completed items"} //give the table a name
           />
         </div>
         <br />
