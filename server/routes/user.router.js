@@ -276,7 +276,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
       });
   }, 3000);
 
-router.post("/starttask", (req, res, next) => {
+router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
   // pull out the incoming object data
   const email = req.body.email;
   const first_name = req.body.first_name;
@@ -292,7 +292,18 @@ router.post("/starttask", (req, res, next) => {
   const query2Text =
     'INSERT INTO "progress" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
   pool
-    .query(query2Text, [email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at])
+    .query(query2Text, [
+      email,
+      first_name,
+      last_name,
+      order_number,
+      sku,
+      product_length,
+      product_options,
+      qty,
+      assigned,
+      created_at,
+    ])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {
       console.log("Sorry, there was an error with your query: ", error);
@@ -305,7 +316,7 @@ router.post("/starttask", (req, res, next) => {
     });
 });
 
-router.post("/markcomplete", (req, res, next) => {
+router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
   // pull out the incoming object data
   const email = req.body.email;
   const first_name = req.body.first_name;
@@ -350,8 +361,7 @@ router.post("/markcomplete", (req, res, next) => {
 
 //Handles POST to add a new admin
 //The password is encrypted before being inserted into the database
-router.post("/addadmin", (req, res, next) => {
-
+router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
   // pull out the incoming object data
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
@@ -361,22 +371,17 @@ router.post("/addadmin", (req, res, next) => {
   const role = req.body.role;
   lcf_id = null;
 
-      //now lets add admin information to the user table
-      const query2Text =
-        'INSERT INTO "user" (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING id';
-      pool
-        .query(query2Text, [
-         first_name,
-         last_name,
-         email,
-         password,
-        ])
-        .then((result) => res.status(201).send(result.rows))
-        .catch(function (error) {
-          console.log("Sorry, there was an error with your query: ", error);
-          res.sendStatus(500); // HTTP SERVER ERROR
-        })
-    
+  //now lets add admin information to the user table
+  const query2Text =
+    'INSERT INTO "user" (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING id';
+  pool
+    .query(query2Text, [first_name, last_name, email, password])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
+
     .catch(function (error) {
       console.log("Sorry, there is an error", error);
       res.sendStatus(500);
@@ -398,7 +403,7 @@ router.post("/register", rejectUnauthenticated, (req, res, next) => {
   pool
     .query(queryText, [email, password])
     .then(() => res.sendStatus(201))
-    .catch(() => res.sendStatus(500));
+    .catch((error) => console.log(error));
 });/////////////////////////////////////////////////////////////////////////////////////////
 
 // Handles login form authenticate/login POST

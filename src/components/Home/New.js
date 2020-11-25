@@ -6,7 +6,11 @@ import moment from "moment";
 import MUITable from "../MUITable/MUITable";
 import { Paper, TextField } from "@material-ui/core";
 import Form from "react-bootstrap/Form";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { auto } from "async";
+import swal from "sweetalert";
 //import { response } from "express";
 
 // This component is for new
@@ -39,6 +43,7 @@ class New extends Component {
           type: "GET_COMPLETE_LIST_COUNT",
         });
   }
+
   handleChange = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event
   }; //end handleChange
@@ -47,6 +52,18 @@ class New extends Component {
     this.setState({
       toggle: !this.state.toggle,
     });
+      this.props.dispatch({
+        type: "GET_ITEM_LIST",
+      });
+      this.props.dispatch({
+        type: "GET_ITEM_LIST_COUNT",
+      });
+      this.props.dispatch({
+        type: "GET_PROGRESS_LIST_COUNT",
+      });
+      this.props.dispatch({
+        type: "GET_COMPLETE_LIST_COUNT",
+      });
   };
   toggle2 = () => {
     this.setState({
@@ -70,6 +87,15 @@ class New extends Component {
       this.props.dispatch({
         type: "GET_ITEM_LIST",
       });
+        this.props.dispatch({
+          type: "GET_ITEM_LIST_COUNT",
+        });
+        this.props.dispatch({
+          type: "GET_PROGRESS_LIST_COUNT",
+        });
+        this.props.dispatch({
+          type: "GET_COMPLETE_LIST_COUNT",
+        });
   };
 
   //This function handles storing input values into state on change
@@ -81,14 +107,12 @@ class New extends Component {
 
   render() {
     const data = this.props.itemlist.map((item) => [
-      item.email,
-      item.first_name,
-      item.last_name,
       item.order_number,
       item.sku,
       item.product_length,
-      item.product_options,
       item.qty,
+      item.first_name,
+      item.last_name,
       item.assigned,
       item.created_at,
     ]);
@@ -105,14 +129,12 @@ class New extends Component {
             data={data} //brings in data as an array, in this case, list of items
             columns={[
               //names the columns found on MUI table
-              { name: "Email" },
-              { name: "First Name" },
-              { name: "Last Name" },
               { name: "Order Number" },
               { name: "SKU" },
               { name: "Length" },
-              { name: "Other Product Options" },
               { name: "QTY" },
+              { name: "First Name" },
+              { name: "Last Name" },
               { name: "Assigned" },
               { name: "Created At" },
               {
@@ -135,7 +157,7 @@ class New extends Component {
                           });
                         }}
                       >
-                        Assign
+                        <AssignmentIndIcon></AssignmentIndIcon>
                       </Button>
                     );
                   },
@@ -176,6 +198,9 @@ class New extends Component {
                             payload: item.id,
                           });
                           this.props.dispatch({
+                            type: "GET_ITEM_LIST",
+                          });
+                          this.props.dispatch({
                             type: "GET_ITEM_LIST_COUNT",
                           });
                           this.props.dispatch({
@@ -186,7 +211,7 @@ class New extends Component {
                           });
                         }}
                       >
-                        Start
+                        <PlayArrowIcon></PlayArrowIcon>
                       </Button>
                     );
                   },
@@ -209,23 +234,47 @@ class New extends Component {
                           const item = itemArray[dataIndex];
                           console.log(`entry id should be: ${item.id}`);
                           // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
-
-                          this.props.dispatch({
-                            type: "DELETE_ITEM",
-                            payload: item.id,
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
+                          //sweet alerts!
+                          swal({
+                            title: "Are you sure?",
+                            text:
+                              "Once deleted, you will not be able to recover the sku on this order!",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                            //end sweet alerts
+                          }).then((willDelete) => {
+                            // start .then
+                            //if confirmed, delete
+                            if (willDelete) {
+                              this.props.dispatch({
+                                type: "DELETE_ITEM",
+                                payload: item.id,
+                              });
+                              this.props.dispatch({
+                                type: "GET_ITEM_LIST",
+                              });
+                              this.props.dispatch({
+                                type: "GET_ITEM_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_PROGRESS_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_COMPLETE_LIST_COUNT",
+                              });
+                              //success! review deleted
+                              swal("Poof! The sku on this order has been deleted!", {
+                                icon: "success",
+                              });
+                            } else {
+                              //...else cancel action
+                              swal("The sku is safe!");
+                            }
                           });
                         }}
                       >
-                        Delete
+                        <DeleteIcon></DeleteIcon>
                       </Button>
                     );
                   },
