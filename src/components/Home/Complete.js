@@ -23,15 +23,29 @@ class Complete extends Component {
     this.props.dispatch({
       type: "GET_COMPLETE_LIST",
     });
+        this.props.dispatch({
+          type: "GET_ITEM_LIST_COUNT",
+        });
+        this.props.dispatch({
+          type: "GET_PROGRESS_LIST_COUNT",
+        });
+        this.props.dispatch({
+          type: "GET_COMPLETE_LIST_COUNT",
+        });
   }
 
   render() {
     const data = this.props.completelist.map((complete) => [
-      complete.brand,
+      complete.email,
+      complete.first_name,
+      complete.last_name,
+      complete.order_number,
       complete.sku,
-      complete.sku_description,
+      complete.product_length,
+      complete.product_options,
       complete.qty,
-      moment.utc(complete.created_at).format("MMMM Do YYYY"),
+      complete.assigned,
+      complete.created_at,
     ]);
     return (
       <div>
@@ -45,11 +59,16 @@ class Complete extends Component {
             data={data} //brings in data as an array, in this case, list of admins
             columns={[
               //names the columns found on MUI table
-              { name: "Category/Brand" },
+              { name: "Email" },
+              { name: "First Name" },
+              { name: "Last Name" },
+              { name: "Order Number" },
               { name: "SKU" },
-              { name: "SKU Description" },
+              { name: "Length" },
+              { name: "Other Product Options" },
               { name: "QTY" },
-              { name: "Date" },
+              { name: "Assigned" },
+              { name: "Created At" },
               {
                 name: "Delete",
                 options: {
@@ -71,6 +90,15 @@ class Complete extends Component {
                           this.props.dispatch({
                             type: "DELETE_COMPLETE",
                             payload: item.id,
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
                           });
                         }}
                       >

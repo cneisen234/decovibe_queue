@@ -8,8 +8,21 @@ const userStrategy = require("../strategies/user.strategy");
 const sgMail = require("@sendgrid/mail");
 let crypto = require("crypto");
 const router = express.Router();
+const axios = require("axios");
 const moment = require('moment');
 require("dotenv").config();
+
+let storeHash = process.env.STORE_HASH
+
+let config = {
+  headers: {
+    "X-Auth-Client": process.env.BG_AUTH_CLIENT,
+    "X-Auth-Token": process.env.BG_AUTH_TOKEN,
+  },
+};
+
+let orderID = 0
+let prevOrderID = 0
 
 //NOTE that some routes were brought in from the project template
 //this route deals with users logging in and authicating them (i.e. do they exist in the database?)
@@ -65,46 +78,221 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
 
 });
 
-router.post("/addnewitem", (req, res, next) => {
+// router.post("/addnewitem", (req, res, next) => {
+  // const order = req.body.order
+  setInterval(() => {
+      let nowMonth = Number(moment().month()) + 1;
+      let prevMonth = Number(moment().subtract(1, "month").month()) + 1;
+      let nowYear = Number(moment().year());
+      let prevYear = Number(moment().year());
+      let nowDay = Number(moment().date());
+      let prevDay = Number(moment().subtract(30, "days").date());
+      let hour = Number(moment().hour());
+      let min = Number(moment().minute());
+      let sec = Number(moment().second());
+      if (hour < 10) {
+        hour = "0" + String(hour);
+      }
+      if (min < 10) {
+        min = "0" + String(min);
+      }
+      if (sec < 10) {
+        sec = "0" + String(sec);
+      }
+      if (nowMonth === 1) {
+        prevYear = moment().year() - 1;
+      }
+    axios
+      .get(
+        `https://api.bigcommerce.com/stores/${storeHash}/v2/orders?sort=date_created:desc&limit=1`,
+        config
+      )
+      .then(function (response) {
+        let order = response.data[0];
+        let email = order.billing_address.email;
+        let first_name = order.billing_address.first_name;
+        let last_name = order.billing_address.last_name;
+        // handle success
+        if (response.data !== []) {
+          let normalHour = Number(hour);
+          let AmPm = "am";
+          if (normalHour > 12) {
+            AmPm = "pm";
+            normalHour = normalHour - 12;
+          } else if (normalHour === 12) {
+            AmPm = "pm";
+          } else if (normalHour === 00) {
+            AmPm = "am";
+            normalHour = 12;
+          }
+          // console.log("this is the response", response.data);
+          orderID = response.data[0].id;
+          console.log(response.data[0].id);
+          let dateString = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
+          console.log("this is orderID", orderID);
+          console.log("this is prevOrderID", prevOrderID);
+          console.log(
+            "prev date",
+            `${prevYear}-${prevMonth}-${prevDay}T${hour}:${min}:${sec}`
+          );
+          console.log(
+            "current date",
+            `${nowYear}-${nowMonth}-${nowDay}T${hour}:${min}:${sec}`
+          );
+          if (orderID !== prevOrderID) {
+            console.log("new order incoming");
+            prevOrderID = response.data[0].id;
+            axios
+              .get(
+                `${response.data[0].products.url}`,
+                config
+              )
+              .then(function (response) {
+                // handle success
+                if (response.data !== []) {
+                  let data = response.data;
+                  for (let index = 0; index < data.length; index++) {
+                    const element = data[index];
+                    let options = element.product_options;
+                    let qty = element.quantity;
+                    let optionsArray = [];
+                    let orderComments = [];
+                    let basePrice = Number(element.base_price).toFixed(2);
+                    let name = element.name;
+                    let decoSku = element.sku;
+                    let decoSku2 = decoSku.slice(0, 2);
+                    let decoSku3 = decoSku.slice(0, 6);
+                    let decoSku4 = decoSku.slice(0, 5);
+                    let decoSku5 = decoSku.slice(0, 3);
+                    let decoSku6 = decoSku.slice(0, 8);
+                    if (
+                      decoSku2 === "CD" ||
+                      decoSku2 === "CS" ||
+                      decoSku2 === "SD" ||
+                      decoSku3 === "CUSTOM" ||
+                      decoSku3 === "SUBKIT" ||
+                      decoSku6 === "SETUPFEE" ||
+                      decoSku5 === "SP-" ||
+                      decoSku5 === "CP-"
+                    ) {
+                      let counter = 0;
+                      let product_length = "";
+                      for (let j = 0; j < options.length; j++) {
+                        const opt = options[j];
+                        let display_name = opt.display_name;
+                        let checkName = display_name.slice(0, 10);
+                        let checkName2 = display_name.slice(0, 18);
+                        if (checkName === "Sheet Size") {
+                          counter++;
+                          optionsArray.push(
+                            `${checkName}: ${opt.display_value}`
+                          );
+                        } else if (display_name === "Length") {
+                          product_length = opt.display_value;
+                          console.log("this is product_length", product_length);
+                        } else if (display_name === "Order Comments") {
+                          orderComments.push(
+                            `${opt.display_name}: ${opt.display_value}`
+                          );
+                        } else if (checkName2 === "Garment Type/Color") {
+                          counter++;
+                          optionsArray.push(
+                            `${checkName2}: ${opt.display_value}`
+                          );
+                        } else if (display_name === "Upload File") {
+                          console.log("skipping upload file");
+                        } else {
+                          counter++;
+                          optionsArray.push(
+                            `${opt.display_name}: ${opt.display_value}`
+                          );
+                        }
+                      }
+                      counter = 0;
+                      let optionsJoined = optionsArray.join();
+                      let commentsJoined = orderComments.join();
+                      console.log("customer email", email);
+                      console.log("this is the order ID", orderID);
+                      console.log("product name", name);
+                      console.log("optionsJoined", optionsJoined);
+                      console.log("commentsJoined", commentsJoined);
+                      console.log("sku for order", decoSku);
+                      console.log("basePrice", basePrice);
+                      const query2Text =
+                        'INSERT INTO "item" (email, first_name, last_name, order_number, sku, qty, product_length, product_options, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
+                      pool.query(query2Text, [
+                        email,
+                        first_name,
+                        last_name,
+                        orderID,
+                        decoSku,
+                        qty,
+                        product_length,
+                        optionsJoined,
+                        dateString,
+                      ]);
+                      optionsArray = [];
+                      orderComments = [];
+                    } else if (
+                      decoSku4 === "BL_A3" ||
+                      decoSku4 === "BL_A4" ||
+                      decoSku4 === "BL_A5" ||
+                      decoSku4 === "BL_LC" ||
+                      decoSku4 === "BL_SM" ||
+                      decoSku3 === "HW_CAP" ||
+                      decoSku3 === "PR_BAG" ||
+                      decoSku3 === "PR_UM_" ||
+                      decoSku4 === "SB_A5" ||
+                      decoSku4 === "SB_A4" ||
+                      decoSku4 === "SB_A3" ||
+                      decoSku4 === "SB_LC" ||
+                      decoSku4 === "SB_SM" ||
+                      decoSku4 === "SB_LS" ||
+                      decoSku4 === "WE_SM" ||
+                      decoSku4 === "WE_LC" ||
+                      decoSku4 === "WE_A5" ||
+                      decoSku4 === "WE_A4" ||
+                      decoSku4 === "WE_A3" ||
+                      decoSku3 === "DYESUB" ||
+                      decoSku4 === "FINAL"
+                    ) {
+                      console.log("custom sku", decoSku);
+                    } else {
+                      console.log("not a decovibe sku", decoSku);
+                    }
+                  }
+                }
+              })
+              .catch(function (error) {
+                // handle error
+                console.log(error);
+              });
+          }
+        }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }, 3000);
+
+router.post("/starttask", (req, res, next) => {
   // pull out the incoming object data
-  const brand = req.body.brand;
+  const email = req.body.email;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const order_number = req.body.order_number;
   const sku = req.body.sku;
-  const sku_description = req.body.sku_description;
+  const product_length = req.body.product_length;
+  const product_options = req.body.product_options;
   const qty = req.body.qty;
+  const assigned = req.body.assigned;
+  const created_at = req.body.created_at;
 
-  console.log(brand, sku, sku_description, qty)
-
-  //now lets add admin information to the user table
   const query2Text =
-    'INSERT INTO "item" (brand, sku, sku_description, qty ) VALUES ($1, $2, $3, $4) RETURNING id';
+    'INSERT INTO "progress" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
   pool
-    .query(query2Text, [brand, sku, sku_description, qty])
-    .then((result) => res.status(201).send(result.rows))
-    .catch(function (error) {
-      console.log("Sorry, there was an error with your query: ", error);
-      res.sendStatus(500); // HTTP SERVER ERROR
-    })
-
-    .catch(function (error) {
-      console.log("Sorry, there is an error", error);
-      res.sendStatus(500);
-    });
-});
-
-router.post("/addallprogress", (req, res, next) => {
-  // pull out the incoming object data
-  const brand = req.body.brand;
-  const sku = req.body.sku;
-  const sku_description = req.body.sku_description;
-  const qty = req.body.qty;
-
-  console.log(brand, sku, sku_description, qty);
-
-  //now lets add admin information to the user table
-  const query2Text =
-    'INSERT INTO "progress" (brand, sku, sku_description, qty ) VALUES ($1, $2, $3, $4) RETURNING id';
-  pool
-    .query(query2Text, [brand, sku, sku_description, qty])
+    .query(query2Text, [email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {
       console.log("Sorry, there was an error with your query: ", error);
@@ -119,18 +307,33 @@ router.post("/addallprogress", (req, res, next) => {
 
 router.post("/markcomplete", (req, res, next) => {
   // pull out the incoming object data
-  const brand = req.body.brand;
+  const email = req.body.email;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const order_number = req.body.order_number;
   const sku = req.body.sku;
-  const sku_description = req.body.sku_description;
+  const product_length = req.body.product_length;
+  const product_options = req.body.product_options;
   const qty = req.body.qty;
-
-  console.log(brand, sku, sku_description, qty);
+  const assigned = req.body.assigned;
+  const created_at = req.body.created_at;
 
   //now lets add admin information to the user table
   const query2Text =
-    'INSERT INTO "complete" (brand, sku, sku_description, qty ) VALUES ($1, $2, $3, $4) RETURNING id';
+    'INSERT INTO "complete" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
   pool
-    .query(query2Text, [brand, sku, sku_description, qty])
+    .query(query2Text, [
+      email,
+      first_name,
+      last_name,
+      order_number,
+      sku,
+      product_length,
+      product_options,
+      qty,
+      assigned,
+      created_at,
+    ])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {
       console.log("Sorry, there was an error with your query: ", error);

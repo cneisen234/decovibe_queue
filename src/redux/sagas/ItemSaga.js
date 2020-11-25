@@ -50,10 +50,10 @@ function* addNewItem(action){
     }
   }
 
-  function* addAllProgress(action) {
+  function* startTask(action) {
     try {
       console.log("we are about to add a new item", action.payload);
-      yield axios.post("/api/user/addallprogress", action.payload);
+      yield axios.post("/api/user/starttask", action.payload);
 
       yield put({ type: "GET_PROGRESS_LIST" });
 
@@ -63,13 +63,15 @@ function* addNewItem(action){
     }
   }
 
+  
+
 
   function* markComplete(action) {
     try {
       console.log("we are about to add a new item", action.payload);
       yield axios.post("/api/user/markcomplete", action.payload);
 
-      // yield put({ type: "GET_PROGRESS_LIST" });
+      yield put({ type: "GET_COMPLETE_LIST" });
 
       console.log("we are about to add a new item", action.payload);
     } catch (error) {
@@ -77,9 +79,10 @@ function* addNewItem(action){
     }
   }
 
-  function* editQTY(action) {
+  function* assignTask(action) {
     try {
-      yield axios.put("/api/item/edititem", action.payload);
+      console.log("this payload is", action.payload)
+      yield axios.put("/api/item/assign", action.payload);
 
       yield put({ type: "GET_ITEM_LIST" });
 
@@ -158,6 +161,21 @@ function* getitemlist(action) {
   }
 }
 
+function* getitemlistcount(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/itemlistcount`);
+
+    yield put({
+      type: "SET_ITEM_COUNT",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* getprogresslist(action) {
   try {
     //console.log('we are about to get Students', action.type);
@@ -173,6 +191,21 @@ function* getprogresslist(action) {
   }
 }
 
+function* getprogresslistcount(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/progresslistcount`);
+
+    yield put({
+      type: "SET_PROGRESS_COUNT",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* getcompletelist(action) {
   try {
     //console.log('we are about to get Students', action.type);
@@ -181,6 +214,21 @@ function* getcompletelist(action) {
 
     yield put({
       type: "SET_COMPLETE",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* getcompletelistcount(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/completelistcount`);
+
+    yield put({
+      type: "SET_COMPLETE_COUNT",
       payload: response.data,
     });
   } catch (error) {
@@ -209,14 +257,17 @@ function* resetPassword(action){
 
 function* itemSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
-   yield takeLatest('START_ALL_ITEM', addAllProgress);
+   yield takeLatest('START_ITEM', startTask);
    yield takeLatest('MARK_COMPLETE', markComplete);
-    yield takeLatest('EDIT_ITEM', editQTY);
+    yield takeLatest('ASSIGN_TASK', assignTask);
     yield takeLatest('REGISTER', register);
     yield takeLatest('GET_USER', getUser);
     yield takeLatest('GET_ITEM_LIST', getitemlist);
+    yield takeLatest('GET_ITEM_LIST_COUNT', getitemlistcount);
     yield takeLatest('GET_PROGRESS_LIST', getprogresslist);
+    yield takeLatest('GET_PROGRESS_LIST_COUNT', getprogresslistcount);
     yield takeLatest('GET_COMPLETE_LIST', getcompletelist);
+    yield takeLatest('GET_COMPLETE_LIST_COUNT', getcompletelistcount);
     yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('DELETE_PROGRESS', deleteProgress);
     yield takeLatest('DELETE_COMPLETE', deleteComplete);

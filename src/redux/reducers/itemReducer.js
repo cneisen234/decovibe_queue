@@ -8,9 +8,26 @@ const itemlist = (state = [], action) => {
       return state;
   }
 };
+const itemlistcount = (state = [], action) => {
+  switch (action.type) {
+    case "SET_ITEM_COUNT":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 const progresslist = (state = [], action) => {
   switch (action.type) {
     case "SET_PROGRESS":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const progresslistcount = (state = [], action) => {
+  switch (action.type) {
+    case "SET_PROGRESS_COUNT":
       return action.payload;
     default:
       return state;
@@ -25,9 +42,21 @@ const completelist = (state = [], action) => {
   }
 };
 
+const completelistcount = (state = [], action) => {
+  switch (action.type) {
+    case "SET_COMPLETE_COUNT":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 
 export default combineReducers({
-    itemlist,
-    progresslist,
-    completelist,
+  itemlist,
+  itemlistcount,
+  progresslist,
+  progresslistcount,
+  completelist,
+  completelistcount,
 });

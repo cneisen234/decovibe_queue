@@ -13,11 +13,16 @@ CREATE TABLE "user" (
 CREATE TABLE "item"
 (
 	"id" serial NOT NULL,
-	"brand" varchar(255) NOT NULL,
+	"email" varchar(320),
+	"first_name" varchar(255),
+	"last_name" varchar(255),
+	"order_number" varchar(255) NOT NULL,
 	"sku" varchar(255) NOT NULL,
-	"sku_description" VARCHAR (320) NOT NULL,
-	"qty" DECIMAL NOT NULL,
-	"created_at" DATE NOT NULL DEFAULT 'now()'
+	"product_length" TEXT,
+	"product_options" TEXT,
+	"qty" DECIMAL,
+	"assigned" VARCHAR(255),
+	"created_at" TEXT
 );
 
 

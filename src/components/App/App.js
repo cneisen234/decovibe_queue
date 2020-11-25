@@ -25,7 +25,6 @@ import Progress from '../Home/Progress';
 import Complete from "../Home/Complete";
 import AddUser from '../Home/AddUser';
 import ResetPassword from '../Home/ResetPassword';
-import AddUserForm from '../Home/NewForm';
 import Instructions from '../Instructions/Instructions';
 
 
@@ -75,11 +74,6 @@ class App extends Component {
               component={UpdatePassword}
             />
             <ProtectedRoute exact path="/users" component={AddUser} />
-            <ProtectedRoute
-              exact
-              path="/newform"
-              component={AddUserForm}
-            />
             <ProtectedRoute
               exact
               path="/resetpassword"

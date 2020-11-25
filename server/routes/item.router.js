@@ -42,13 +42,13 @@ router.delete("/deletecomplete/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.put("/edititem", rejectUnauthenticated, (req, res) => {
+router.put("/assign", rejectUnauthenticated, (req, res) => {
 
-    const {qty, id} = req.body;
+    const {assigned, id} = req.body;
     // setting query text to update the username
-    const queryText = 'UPDATE "item" SET qty=$1 WHERE id=$2';
+    const queryText = 'UPDATE "item" SET assigned=$1 WHERE id=$2';
 
-    pool.query(queryText, [qty, id])
+    pool.query(queryText, [assigned, id])
     .then((result) => {
       res.sendStatus(204); //No Content
     })
@@ -61,7 +61,22 @@ router.put("/edititem", rejectUnauthenticated, (req, res) => {
 router.get("/itemlist", rejectUnauthenticated, (req, res) => {
   console.log("We are about to get the item list");
 
-  const queryText = `SELECT * FROM "item";`;
+  const queryText = `SELECT * FROM "item" ORDER BY created_at;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/itemlistcount", rejectUnauthenticated, (req, res) => {
+  console.log("We are about to get the item list");
+
+  const queryText = `SELECT count(*) FROM "item"`;
   pool
     .query(queryText)
     .then((result) => {
@@ -76,7 +91,22 @@ router.get("/itemlist", rejectUnauthenticated, (req, res) => {
 router.get("/progresslist", rejectUnauthenticated, (req, res) => {
   console.log("We are about to get the item list");
 
-  const queryText = `SELECT * FROM "progress";`;
+  const queryText = `SELECT * FROM "progress" ORDER BY created_at;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/progresslistcount", rejectUnauthenticated, (req, res) => {
+  console.log("We are about to get the item list");
+
+  const queryText = `SELECT count(*) FROM "progress";`;
   pool
     .query(queryText)
     .then((result) => {
@@ -91,7 +121,22 @@ router.get("/progresslist", rejectUnauthenticated, (req, res) => {
 router.get("/completelist", rejectUnauthenticated, (req, res) => {
   console.log("We are about to get the item list");
 
-  const queryText = `SELECT * FROM "complete";`;
+  const queryText = `SELECT * FROM "complete" ORDER BY created_at;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/completelistcount", rejectUnauthenticated, (req, res) => {
+  console.log("We are about to get the item list");
+
+  const queryText = `SELECT count(*) FROM "complete";`;
   pool
     .query(queryText)
     .then((result) => {

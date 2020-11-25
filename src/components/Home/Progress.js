@@ -7,29 +7,45 @@ import MUITable from "../MUITable/MUITable";
 
 class Progress extends Component {
   state = {
-    toggle: false,
-    toggle2: false,
+    email: "",
+    first_name: "",
+    last_name: "",
+    order_number: "",
+    product_options: "",
     qty: "",
-    updated_qty: "",
     id: "",
     sku: "",
-    sku_description: "",
     qty: "",
-    brand: "",
+    assigned: "",
+    created_at: "",
   };
   componentDidMount() {
     this.props.dispatch({
       type: "GET_PROGRESS_LIST",
     });
+        this.props.dispatch({
+          type: "GET_ITEM_LIST_COUNT",
+        });
+        this.props.dispatch({
+          type: "GET_PROGRESS_LIST_COUNT",
+        });
+        this.props.dispatch({
+          type: "GET_COMPLETE_LIST_COUNT",
+        });
   }
 
   render() {
     const data = this.props.progresslist.map((progress) => [
-      progress.brand,
+      progress.email,
+      progress.first_name,
+      progress.last_name,
+      progress.order_number,
       progress.sku,
-      progress.sku_description,
+      progress.product_length,
+      progress.product_options,
       progress.qty,
-      moment.utc(progress.created_at).format("MMMM Do YYYY"),
+      progress.assigned,
+      progress.created_at,
     ]);
     return (
       <div>
@@ -43,11 +59,16 @@ class Progress extends Component {
             data={data}
             columns={[
               //names the columns found on MUI table
-              { name: "Category/Brand" },
+              { name: "Email" },
+              { name: "First Name" },
+              { name: "Last Name" },
+              { name: "Order Number" },
               { name: "SKU" },
-              { name: "SKU Description" },
+              { name: "Length" },
+              { name: "Other Product Options" },
               { name: "QTY" },
-              { name: "Date" },
+              { name: "Assigned" },
+              { name: "Created At" },
               {
                 name: "Mark Complete",
                 options: {
@@ -62,23 +83,35 @@ class Progress extends Component {
                           event.preventDefault();
                           const itemArray = this.props.progresslist;
                           const item = itemArray[dataIndex];
-                          console.log(
-                            `entry id should be: ${item.id} ${item.qty} ${item.sku_description} ${item.sku} ${item.brand}`
-                          );
                           this.props.dispatch({
                             type: "MARK_COMPLETE",
                             payload: {
                               id: item.id,
+                              email: item.email,
+                              first_name: item.first_name,
+                              last_name: item.last_name,
+                              order_number: item.order_number,
                               sku: item.sku,
-                              sku_description: item.sku_description,
+                              product_length: item.product_length,
+                              product_options: item.product_options,
                               qty: item.qty,
-                              brand: item.brand,
+                              assigned: item.assigned,
+                              created_at: item.created_at,
                             },
                           });
-                           this.props.dispatch({
-                             type: "DELETE_PROGRESS",
-                             payload: item.id,
-                           });
+                          this.props.dispatch({
+                            type: "DELETE_PROGRESS",
+                            payload: item.id,
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
                         }}
                       >
                         Mark Complete
@@ -108,6 +141,15 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "DELETE_PROGRESS",
                             payload: item.id,
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
                           });
                         }}
                       >
