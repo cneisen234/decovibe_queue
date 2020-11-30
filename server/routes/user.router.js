@@ -148,10 +148,6 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
           console.log("this is orderID", orderID);
           console.log("this is prevOrderID", prevOrderID);
           console.log(
-            "prev date",
-            `${prevYear}-${prevMonth}-${prevDay}T${hour}:${min}:${sec}`
-          );
-          console.log(
             "current date",
             `${nowYear}-${nowMonth}-${nowDay}T${hour}:${min}:${sec}`
           );
