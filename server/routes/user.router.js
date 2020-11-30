@@ -182,9 +182,33 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                     let decoSku5 = decoSku.slice(0, 3);
                     let decoSku6 = decoSku.slice(0, 8);
                     if (
-                      decoSku2 === "CD" ||
-                      decoSku2 === "CS" ||
-                      decoSku2 === "SD" ||
+                      decoSku5 === "CD1" ||
+                      decoSku5 === "CD2" ||
+                      decoSku5 === "CD3" ||
+                      decoSku5 === "CD4" ||
+                      decoSku5 === "CD5" ||
+                      decoSku5 === "CD6" ||
+                      decoSku5 === "CD7" ||
+                      decoSku5 === "CD8" ||
+                      decoSku5 === "CD9" ||
+                      decoSku5 === "CS1" ||
+                      decoSku5 === "CS2" ||
+                      decoSku5 === "CS3" ||
+                      decoSku5 === "CS4" ||
+                      decoSku5 === "CS5" ||
+                      decoSku5 === "CS6" ||
+                      decoSku5 === "CS7" ||
+                      decoSku5 === "CS8" ||
+                      decoSku5 === "CS9" ||
+                      decoSku5 === "SD1" ||
+                      decoSku5 === "SD2" ||
+                      decoSku5 === "SD3" ||
+                      decoSku5 === "SD4" ||
+                      decoSku5 === "SD5" ||
+                      decoSku5 === "SD6" ||
+                      decoSku5 === "SD7" ||
+                      decoSku5 === "SD8" ||
+                      decoSku5 === "SD9" ||
                       decoSku3 === "CUSTOM" ||
                       decoSku3 === "SUBKIT" ||
                       decoSku6 === "SETUPFEE" ||
