@@ -374,7 +374,7 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
 
 //Handles POST to add a new admin
 //The password is encrypted before being inserted into the database
-router.post("/addadmin", (req, res, next) => {
+router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
   // pull out the incoming object data
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
