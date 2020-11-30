@@ -54,7 +54,7 @@ class Complete extends Component {
       <div>
         <br />
         <center>
-          <Button
+          {/* <Button
             variant="danger"
             style={{ float: "right" }}
             onClick={(event) => {
@@ -101,7 +101,7 @@ class Complete extends Component {
             }}
           >
             Delete All
-          </Button>
+          </Button> */}
           <h1>Complete</h1>
         </center>
 

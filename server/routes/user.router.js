@@ -14,7 +14,7 @@ require("dotenv").config();
 
 let storeHash = process.env.STORE_HASH
 
-let twoweeks = moment().subtract(2, "weeks")
+let daterange = moment().subtract(30, "days")
 
 
 let config = {
@@ -25,7 +25,7 @@ let config = {
 };
 router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
  pool
-   .query('DELETE FROM "complete" WHERE timestamp<=$1', [twoweeks])
+   .query('DELETE FROM "complete" WHERE timestamp<=$1', [daterange])
    .then((result) => {
      res.sendStatus(204); //No Content
    })
@@ -374,7 +374,7 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
 
 //Handles POST to add a new admin
 //The password is encrypted before being inserted into the database
-router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
+router.post("/addadmin", (req, res, next) => {
   // pull out the incoming object data
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;

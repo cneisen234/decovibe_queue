@@ -42,6 +42,9 @@ class New extends Component {
         this.props.dispatch({
           type: "GET_COMPLETE_LIST_COUNT",
         });
+            this.props.dispatch({
+              type: "DELETE_COMPLETE_RANGE",
+            });
   }
 
   handleChange = (event, fieldName) => {

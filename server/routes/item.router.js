@@ -73,7 +73,6 @@ router.put("/assign", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/itemlist", rejectUnauthenticated, (req, res) => {
-  console.log("We are about to get the item list");
 
   const queryText = `SELECT * FROM "item" ORDER BY sku;`;
   pool
@@ -88,7 +87,6 @@ router.get("/itemlist", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/itemlistcount", rejectUnauthenticated, (req, res) => {
-  console.log("We are about to get the item list");
 
   const queryText = `SELECT count(*) FROM "item"`;
   pool
@@ -103,7 +101,6 @@ router.get("/itemlistcount", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/progresslist", rejectUnauthenticated, (req, res) => {
-  console.log("We are about to get the item list");
 
   const queryText = `SELECT * FROM "progress" ORDER BY sku;`;
   pool
@@ -118,7 +115,6 @@ router.get("/progresslist", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/progresslistcount", rejectUnauthenticated, (req, res) => {
-  console.log("We are about to get the item list");
 
   const queryText = `SELECT count(*) FROM "progress";`;
   pool
@@ -133,7 +129,6 @@ router.get("/progresslistcount", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/completelist", rejectUnauthenticated, (req, res) => {
-  console.log("We are about to get the item list");
 
   const queryText = `SELECT * FROM "complete" ORDER BY sku;`;
   pool
@@ -148,7 +143,6 @@ router.get("/completelist", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/completelistcount", rejectUnauthenticated, (req, res) => {
-  console.log("We are about to get the item list");
 
   const queryText = `SELECT count(*) FROM "complete";`;
   pool
