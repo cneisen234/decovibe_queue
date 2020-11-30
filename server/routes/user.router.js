@@ -14,7 +14,7 @@ require("dotenv").config();
 
 let storeHash = process.env.STORE_HASH
 
-let daterange = moment().subtract(30, "days")
+let daterange = moment().subtract(6, "hours").subtract(30, "days");
 
 
 let config = {
@@ -94,15 +94,18 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
 // router.post("/addnewitem", (req, res, next) => {
 //   const order = req.body.order
   setInterval(() => {
-      let nowMonth = Number(moment().month()) + 1;
-      let prevMonth = Number(moment().subtract(1, "month").month()) + 1;
-      let nowYear = Number(moment().year());
-      let prevYear = Number(moment().year());
-      let nowDay = Number(moment().date());
-      let prevDay = Number(moment().subtract(30, "days").date());
-      let hour = Number(moment().hour());
-      let min = Number(moment().minute());
-      let sec = Number(moment().second());
+      let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
+      let prevMonth =
+        Number(moment().subtract(1, "month").subtract(6, "hours").month()) + 1;
+      let nowYear = Number(moment().subtract(6, "hours").year());
+      let prevYear = Number(moment().subtract(6, "hours").year());
+      let nowDay = Number(moment().subtract(6, "hours").date());
+      let prevDay = Number(
+        moment().subtract(30, "days").subtract(6, "hours").date()
+      );
+      let hour = Number(moment().subtract(6, "hours").hour());
+      let min = Number(moment().subtract(6, "hours").minute());
+      let sec = Number(moment().subtract(6, "hours").second());
       if (hour < 10) {
         hour = "0" + String(hour);
       }
