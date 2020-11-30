@@ -28,8 +28,6 @@ const store = createStore(
   // adds all middleware to our project including saga and logger
   compose(
     applyMiddleware(...middlewareList),
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    //    ^--------Redux tools removed for production builds (error on mobile and Safari)
   )
 );
 
