@@ -310,7 +310,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
         // handle error
         console.log(error);
       });
-  }, 3000);
+  }, 1000);
 
 router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
   // pull out the incoming object data
