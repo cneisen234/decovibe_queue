@@ -208,6 +208,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                       decoSku3 === "CUSTOM" ||
                       decoSku3 === "SUBKIT" ||
                       decoSku6 === "SETUPFEE" ||
+                      decoSku3 === "SISER-" ||
                       decoSku5 === "SP-" ||
                       decoSku5 === "CP-"
                     ) {
