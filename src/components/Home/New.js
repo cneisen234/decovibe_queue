@@ -36,6 +36,9 @@ class New extends Component {
         this.props.dispatch({
           type: "GET_ITEM_LIST_COUNT",
         });
+          this.props.dispatch({
+            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+          });
         this.props.dispatch({
           type: "GET_PROGRESS_LIST_COUNT",
         });
@@ -61,6 +64,9 @@ class New extends Component {
       this.props.dispatch({
         type: "GET_ITEM_LIST_COUNT",
       });
+        this.props.dispatch({
+          type: "GET_CUSTOM_ITEM_LIST_COUNT",
+        });
       this.props.dispatch({
         type: "GET_PROGRESS_LIST_COUNT",
       });
@@ -93,6 +99,9 @@ class New extends Component {
         this.props.dispatch({
           type: "GET_ITEM_LIST_COUNT",
         });
+          this.props.dispatch({
+            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+          });
         this.props.dispatch({
           type: "GET_PROGRESS_LIST_COUNT",
         });
@@ -206,6 +215,9 @@ class New extends Component {
                           this.props.dispatch({
                             type: "GET_ITEM_LIST_COUNT",
                           });
+                            this.props.dispatch({
+                              type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                            });
                           this.props.dispatch({
                             type: "GET_PROGRESS_LIST_COUNT",
                           });
@@ -260,6 +272,9 @@ class New extends Component {
                               this.props.dispatch({
                                 type: "GET_ITEM_LIST_COUNT",
                               });
+                                this.props.dispatch({
+                                  type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                                });
                               this.props.dispatch({
                                 type: "GET_PROGRESS_LIST_COUNT",
                               });

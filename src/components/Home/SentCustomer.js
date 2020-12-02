@@ -7,8 +7,7 @@ import swal from "sweetalert";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-
-class Progress extends Component {
+class SentCustomer extends Component {
   state = {
     email: "",
     first_name: "",
@@ -26,21 +25,21 @@ class Progress extends Component {
     this.props.dispatch({
       type: "GET_PROGRESS_LIST",
     });
-        this.props.dispatch({
-          type: "GET_ITEM_LIST_COUNT",
-        });
-          this.props.dispatch({
-            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-          });
-        this.props.dispatch({
-          type: "GET_PROGRESS_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_COMPLETE_LIST_COUNT",
-        });
-            this.props.dispatch({
-              type: "DELETE_COMPLETE_RANGE",
-            });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+      this.props.dispatch({
+        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+      });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "DELETE_COMPLETE_RANGE",
+    });
   }
 
   render() {
@@ -58,7 +57,7 @@ class Progress extends Component {
       <div>
         <br />
         <center>
-          <h1>In Progress</h1>
+          <h1>Sent To Customer</h1>
         </center>
 
         <div style={{ padding: "1.5%" }}>
@@ -202,9 +201,12 @@ class Progress extends Component {
                                 type: "GET_COMPLETE_LIST_COUNT",
                               });
                               //success! review deleted
-                              swal("Poof! The sku on the order has been deleted!", {
-                                icon: "success",
-                              });
+                              swal(
+                                "Poof! The sku on the order has been deleted!",
+                                {
+                                  icon: "success",
+                                }
+                              );
                             } else {
                               //...else cancel action
                               swal("The sku is safe!");
@@ -219,7 +221,7 @@ class Progress extends Component {
                 },
               },
             ]}
-            title={"Items In Progress"} //give the table a name
+            title={"Items Sent to Customer"} //give the table a name
           />
         </div>
         <br />
@@ -233,4 +235,4 @@ class Progress extends Component {
 const mapStateToProps = (state) => ({
   progresslist: state.item.progresslist,
 });
-export default connect(mapStateToProps)(Progress);
+export default connect(mapStateToProps)(SentCustomer);

@@ -16,12 +16,15 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 
 import New from "../Home/New";
+import NewCustom from "../Home/NewCustom";
 import InfoPage from "../InfoPage/InfoPage";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
 
 import "./App.css";
 import UpdatePassword from "../Home/UpdatePassword";
 import Progress from '../Home/Progress';
+import SentCustomer from "../Home/SentCustomer";
+import Response from "../Home/Response";
 import Complete from "../Home/Complete";
 import AddUser from '../Home/AddUser';
 import ResetPassword from '../Home/ResetPassword';
@@ -50,6 +53,7 @@ class App extends Component {
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
 
             <ProtectedRoute exact path="/home" component={New} />
+            <ProtectedRoute exact path="/newcustom" component={NewCustom} />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
             <ProtectedRoute exact path="/info" component={InfoPage} />
@@ -58,17 +62,19 @@ class App extends Component {
               path="/forgotpassword/:token/:email"
               component={ForgotPassword}
             />
+            <ProtectedRoute exact path="/Progress" component={Progress} />
             <ProtectedRoute
               exact
-              path="/Progress"
-              component={Progress}
+              path="/SentCustomer"
+              component={SentCustomer}
             />
             <ProtectedRoute
               exact
-              path="/Complete"
-              component={Complete}
+              path="/Response"
+              component={Response}
             />
-            <ProtectedRoute 
+            <ProtectedRoute exact path="/Complete" component={Complete} />
+            <ProtectedRoute
               exact
               path="/updatepassword/:lcf_id"
               component={UpdatePassword}

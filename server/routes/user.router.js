@@ -293,7 +293,24 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                       decoSku3 === "DYESUB" ||
                       decoSku4 === "FINAL"
                     ) {
+                      console.log("custom order email", email);
                       console.log("custom sku", decoSku);
+                      console.log("custom order first name", first_name);
+                      console.log("custom order first name", last_name);
+                      console.log("custom order number", orderID);
+                      console.log("custom order qty", qty);
+                      console.log("custom order created at", dateString);
+                      const query2Text =
+                        'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
+                      pool.query(query2Text, [
+                        email,
+                        first_name,
+                        last_name,
+                        orderID,
+                        decoSku,
+                        qty,
+                        dateString,
+                      ]);
                     } else {
                       console.log("not a decovibe sku", decoSku);
                     }
@@ -340,6 +357,46 @@ router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
       qty,
       assigned,
       created_at,
+    ])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
+
+    .catch(function (error) {
+      console.log("Sorry, there is an error", error);
+      res.sendStatus(500);
+    });
+});
+
+router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
+  // pull out the incoming object data
+  const email = req.body.email;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const order_number = req.body.order_number;
+  const sku = req.body.sku;
+  const qty = req.body.qty;
+  const assigned = req.body.assigned;
+  const created_at = req.body.created_at;
+  const pic = req.body.pic;
+  const comments = req.body.comments
+
+  const query2Text =
+    'INSERT INTO "customerconfirm" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, upload_url, comments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
+  pool
+    .query(query2Text, [
+      email,
+      first_name,
+      last_name,
+      order_number,
+      sku,
+      qty,
+      assigned,
+      created_at,
+      pic,
+      comments,
     ])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {

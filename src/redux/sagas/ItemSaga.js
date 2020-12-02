@@ -14,6 +14,17 @@ function* deleteItem(action) {
   }
 }
 
+function* deleteCustomItem(action) {
+  try {
+    console.log("we are about to delete an item", action.payload);
+    yield axios.delete(`/api/item/deletecustomitem/${action.payload}`);
+
+    yield put({ type: "GET_CUSTOM_ITEM_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
 function* deleteProgress(action) {
   try {
     console.log("we are about to delete an item", action.payload);
@@ -88,6 +99,19 @@ function* addNewItem(action){
     }
   }
 
+   function* customerConfirm(action) {
+     try {
+       console.log("we are about to add a new item", action.payload);
+       yield axios.post("/api/user/customerconfirm", action.payload);
+
+       yield put({ type: "GET_CUSTOMER_LIST" });
+
+       console.log("we are about to add a new item", action.payload);
+     } catch (error) {
+       console.log("Error with adding a new item:", error);
+     }
+   }
+
   
 
 
@@ -110,6 +134,19 @@ function* addNewItem(action){
       yield axios.put("/api/item/assign", action.payload);
 
       yield put({ type: "GET_ITEM_LIST" });
+
+      console.log("we are about to edit an item", action.payload);
+    } catch (error) {
+      console.log("Error with editing an item:", error);
+    }
+  }
+
+  function* assignCustomTask(action) {
+    try {
+      console.log("this payload is", action.payload);
+      yield axios.put("/api/item/customassign", action.payload);
+
+      yield put({ type: "GET_CUSTOM_ITEM_LIST" });
 
       console.log("we are about to edit an item", action.payload);
     } catch (error) {
@@ -186,6 +223,22 @@ function* getitemlist(action) {
   }
 }
 
+
+function* getcustomitemlist(action) {
+  try {
+
+    const response = yield axios.get(`/api/item/customitemlist`);
+    console.log(response.data)
+
+    yield put({
+      type: "SET_CUSTOM_ITEM",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* getitemlistcount(action) {
   try {
     //console.log('we are about to get Students', action.type);
@@ -194,6 +247,21 @@ function* getitemlistcount(action) {
 
     yield put({
       type: "SET_ITEM_COUNT",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* getcustomitemlistcount(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/customitemlistcount`);
+
+    yield put({
+      type: "SET_CUSTOM_ITEM_COUNT",
       payload: response.data,
     });
   } catch (error) {
@@ -260,7 +328,20 @@ function* getcompletelistcount(action) {
     console.log("Error with getting the list of items:", error);
   }
 }
-
+function* orderDetails(action) {
+  try {
+    //passes the incoming new student user info from the payload to the server
+    console.log("this is the payload", action.payload);
+    const response = yield axios.post("/api/item/orderdetails", action.payload);
+    console.log("this is response.data in sagas", response.data);
+    yield put({
+      type: "SET_DETAILS",
+      payload: response.data,
+    });
+  } catch (error) {
+    yield put({ type: "STUDENT_REGISTRATION_FAILED" });
+  }
+}
 
 function* resetPassword(action){
     try{
@@ -283,21 +364,27 @@ function* resetPassword(action){
 function* itemSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
    yield takeLatest('START_ITEM', startTask);
+     yield takeLatest('CUSTOMER_CONFIRM', customerConfirm);
    yield takeLatest('MARK_COMPLETE', markComplete);
     yield takeLatest('ASSIGN_TASK', assignTask);
+    yield takeLatest('ASSIGN_CUSTOM_TASK', assignCustomTask);
     yield takeLatest('REGISTER', register);
     yield takeLatest('GET_USER', getUser);
     yield takeLatest('GET_ITEM_LIST', getitemlist);
+     yield takeLatest('GET_CUSTOM_ITEM_LIST', getcustomitemlist);
     yield takeLatest('GET_ITEM_LIST_COUNT', getitemlistcount);
+     yield takeLatest('GET_CUSTOM_ITEM_LIST_COUNT', getcustomitemlistcount);
     yield takeLatest('GET_PROGRESS_LIST', getprogresslist);
     yield takeLatest('GET_PROGRESS_LIST_COUNT', getprogresslistcount);
     yield takeLatest('GET_COMPLETE_LIST', getcompletelist);
     yield takeLatest('GET_COMPLETE_LIST_COUNT', getcompletelistcount);
     yield takeLatest('DELETE_ITEM', deleteItem);
+    yield takeLatest('DELETE_CUSTOM_ITEM', deleteCustomItem);
     yield takeLatest('DELETE_PROGRESS', deleteProgress);
     yield takeLatest('DELETE_COMPLETE', deleteComplete);
      yield takeLatest('DELETE_COMPLETE_ALL', deleteCompleteAll);
      yield takeLatest('DELETE_COMPLETE_RANGE', deleteCompleteRange);
+     yield takeLatest('ORDER_DETAILS', orderDetails);
     yield takeLatest('RESET_PASSWORD', resetPassword);
     yield takeLatest('FORGOT_PASSWORD', forgotPassword);
 }
