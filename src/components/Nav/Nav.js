@@ -112,47 +112,6 @@ class Nav extends Component {
                       float: "left",
                     }}
                   >
-                    {/* <div
-                      style={{ float: "right" }}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        this.setState({
-                          toggle: !this.state.toggle,
-                        });
-                        this.props.dispatch({
-                          type: "GET_ITEM_LIST",
-                        });
-                        this.props.dispatch({
-                          type: "GET_ITEM_LIST_COUNT",
-                        });
-                        this.props.dispatch({
-                          type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                        });
-                        this.props.dispatch({
-                          type: "GET_PROGRESS_LIST_COUNT",
-                        });
-                        this.props.dispatch({
-                          type: "GET_COMPLETE_LIST_COUNT",
-                        });
-                      }}
-                    >
-                      <Link className="nav-link" to="/newcustom">
-                        <LoopIcon></LoopIcon>
-                        Switch Queues{" "}
-                      </Link>
-                    </div> */}
-                  </Grid>
-                  <Grid
-                    item
-                    xs={6}
-                    sm={6}
-                    md={6}
-                    style={{
-                      backgroundColor: "black",
-                      width: "50%",
-                      float: "left",
-                    }}
-                  >
                     <LogOutButton
                       style={{ float: "left" }}
                       className="nav-link"
@@ -234,49 +193,6 @@ class Nav extends Component {
                     float: "left",
                   }}
                 >
-                  <Grid
-                    item
-                    xs={6}
-                    sm={6}
-                    md={6}
-                    style={{
-                      backgroundColor: "black",
-                      width: "50%",
-                      float: "left",
-                    }}
-                  >
-                    {/* <div
-                      style={{ float: "right",
-                    margin: "0px",
-                  padding: "0px" }}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        this.setState({
-                          toggle: !this.state.toggle,
-                        });
-                        this.props.dispatch({
-                          type: "GET_ITEM_LIST",
-                        });
-                        this.props.dispatch({
-                          type: "GET_ITEM_LIST_COUNT",
-                        });
-                        this.props.dispatch({
-                          type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                        });
-                        this.props.dispatch({
-                          type: "GET_PROGRESS_LIST_COUNT",
-                        });
-                        this.props.dispatch({
-                          type: "GET_COMPLETE_LIST_COUNT",
-                        });
-                      }}
-                    >
-                      <Link className="nav-link" to="/home">
-                        <LoopIcon></LoopIcon>
-                        Switch Queues{" "}
-                      </Link>
-                    </div> */}
-                  </Grid>
                   <Grid
                     item
                     xs={6}
