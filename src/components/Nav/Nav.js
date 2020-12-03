@@ -112,8 +112,7 @@ class Nav extends Component {
                       float: "left",
                     }}
                   >
-                    <div
-                      className="nav-link"
+                    {/* <div
                       style={{ float: "right" }}
                       onClick={(event) => {
                         event.preventDefault();
@@ -126,9 +125,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_ITEM_LIST_COUNT",
                         });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
+                        this.props.dispatch({
+                          type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                        });
                         this.props.dispatch({
                           type: "GET_PROGRESS_LIST_COUNT",
                         });
@@ -137,9 +136,11 @@ class Nav extends Component {
                         });
                       }}
                     >
-                      <LoopIcon></LoopIcon>
-                      Switch Queues{" "}
-                    </div>
+                      <Link className="nav-link" to="/newcustom">
+                        <LoopIcon></LoopIcon>
+                        Switch Queues{" "}
+                      </Link>
+                    </div> */}
                   </Grid>
                   <Grid
                     item
@@ -244,9 +245,10 @@ class Nav extends Component {
                       float: "left",
                     }}
                   >
-                    <div
-                      className="nav-link"
-                      style={{ float: "right" }}
+                    {/* <div
+                      style={{ float: "right",
+                    margin: "0px",
+                  padding: "0px" }}
                       onClick={(event) => {
                         event.preventDefault();
                         this.setState({
@@ -258,9 +260,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_ITEM_LIST_COUNT",
                         });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
+                        this.props.dispatch({
+                          type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                        });
                         this.props.dispatch({
                           type: "GET_PROGRESS_LIST_COUNT",
                         });
@@ -269,9 +271,11 @@ class Nav extends Component {
                         });
                       }}
                     >
-                      <LoopIcon></LoopIcon>
-                      Switch Queues{" "}
-                    </div>
+                      <Link className="nav-link" to="/home">
+                        <LoopIcon></LoopIcon>
+                        Switch Queues{" "}
+                      </Link>
+                    </div> */}
                   </Grid>
                   <Grid
                     item

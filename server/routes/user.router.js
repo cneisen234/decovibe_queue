@@ -300,17 +300,17 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                       console.log("custom order number", orderID);
                       console.log("custom order qty", qty);
                       console.log("custom order created at", dateString);
-                      const query2Text =
-                        'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
-                      pool.query(query2Text, [
-                        email,
-                        first_name,
-                        last_name,
-                        orderID,
-                        decoSku,
-                        qty,
-                        dateString,
-                      ]);
+                      // const query2Text =
+                      //   'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
+                      // pool.query(query2Text, [
+                      //   email,
+                      //   first_name,
+                      //   last_name,
+                      //   orderID,
+                      //   decoSku,
+                      //   qty,
+                      //   dateString,
+                      // ]);
                     } else {
                       console.log("not a decovibe sku", decoSku);
                     }
