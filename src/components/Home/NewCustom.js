@@ -7,7 +7,7 @@ import MUITable from "../MUITable/MUITable";
 import { Paper, TextField } from "@material-ui/core";
 import Form from "react-bootstrap/Form";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import ViewListIcon from "@material-ui/icons/ViewList";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { auto } from "async";
 import ReactFilestack from "filestack-react";
@@ -29,7 +29,26 @@ class NewCustom extends Component {
     qty: "",
     assigned: "",
     created_at: "",
-    pic: "",
+    pic1: "",
+    pic2: "",
+    pic3: "",
+    pic4: "",
+    pic5: "",
+    pic6: "",
+    pic7: "",
+    pic8: "",
+    pic9: "",
+    pic10: "",
+    pic11: "",
+    pic12: "",
+    pic13: "",
+    pic14: "",
+    pic15: "",
+    pic16: "",
+    pic17: "",
+    pic18: "",
+    pic19: "",
+    pic20: "",
     comments: "",
   };
   componentDidMount() {
@@ -38,6 +57,12 @@ class NewCustom extends Component {
     });
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
+    });
+     this.props.dispatch({
+       type: "GET_RESPOND_LIST_COUNT",
+     });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
     });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST_COUNT",
@@ -67,6 +92,12 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
+     this.props.dispatch({
+       type: "GET_RESPOND_LIST_COUNT",
+     });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST_COUNT",
     });
@@ -86,6 +117,12 @@ class NewCustom extends Component {
     });
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
+    });
+     this.props.dispatch({
+       type: "GET_RESPOND_LIST_COUNT",
+     });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
     });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST_COUNT",
@@ -116,6 +153,12 @@ class NewCustom extends Component {
     });
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
+    });
+     this.props.dispatch({
+       type: "GET_RESPOND_LIST_COUNT",
+     });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
     });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST_COUNT",
@@ -215,7 +258,7 @@ class NewCustom extends Component {
                           );
                         }}
                       >
-                        View Details
+                        <ViewListIcon></ViewListIcon>
                       </Button>
                     );
                   },
@@ -242,63 +285,6 @@ class NewCustom extends Component {
                         }}
                       >
                         <AssignmentIndIcon></AssignmentIndIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Start",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-                          const item = itemArray[dataIndex];
-                          this.props.dispatch({
-                            type: "START_ITEM",
-                            payload: {
-                              id: item.id,
-                              email: item.email,
-                              first_name: item.first_name,
-                              last_name: item.last_name,
-                              order_number: item.order_number,
-                              sku: item.sku,
-                              product_length: item.product_length,
-                              product_options: item.product_options,
-                              qty: item.qty,
-                              assigned: item.assigned,
-                              created_at: item.created_at,
-                            },
-                          });
-                          this.props.dispatch({
-                            type: "DELETE_ITEM",
-                            payload: item.id,
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST",
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
-                          });
-                        }}
-                      >
-                        <PlayArrowIcon></PlayArrowIcon>
                       </Button>
                     );
                   },
@@ -343,6 +329,12 @@ class NewCustom extends Component {
                               });
                               this.props.dispatch({
                                 type: "GET_ITEM_LIST_COUNT",
+                              });
+                               this.props.dispatch({
+                                 type: "GET_RESPOND_LIST_COUNT",
+                               });
+                              this.props.dispatch({
+                                type: "GET_CONFIRM_LIST_COUNT",
                               });
                               this.props.dispatch({
                                 type: "GET_CUSTOM_ITEM_LIST_COUNT",
@@ -504,6 +496,8 @@ class NewCustom extends Component {
                   </tr>
                   {this.props.detailslist.map((item, index) => {
                     if (this.state.sku == item.sku) {
+                      let newIndex = index + 1;
+                      let pic = "pic" + newIndex;
                       let itemname = item.name;
                       let itemsku = item.sku;
                       let itemcost = Number(item.base_price).toFixed(2);
@@ -563,34 +557,46 @@ class NewCustom extends Component {
                           })}{" "}
                           <br />
                           <br />
+                          <tr>
+                            <td>
+                              <ReactFilestack
+                                apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
+                                componentDisplayMode={{
+                                  customText: "Upload artwork",
+                                  customClass: "picUploader",
+                                }}
+                                onSuccess={(res) =>
+                                  this.setState({
+                                    //path for uploaded photo to display on dom
+                                    [pic]: res.filesUploaded[0].url,
+                                  })
+                                }
+                              />
+                              Uploaded file
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <b>You're upload:</b>{" "}
+                              <img
+                                src={this.state[pic]}
+                                alt="your upload"
+                                width="100"
+                                height="100"
+                              ></img>
+                            </td>
+                          </tr>
                         </>
                       );
                     }
                   })}{" "}
-                  <tr>
-                    <td>
-                      <ReactFilestack
-                        apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
-                        componentDisplayMode={{
-                          customText: "Upload artwork",
-                          customClass: "picUploader",
-                        }}
-                        onSuccess={(res) =>
-                          this.setState({
-                            //path for uploaded photo to display on dom
-                            pic: res.filesUploaded[0].url,
-                          })
-                        }
-                      />
-                    </td>
-                  </tr>
-                  <br/>
+                  <br />
                   <tr>
                     <td>
                       <TextField
-                      style={{
-                          width: "50%"
-                      }}
+                        style={{
+                          width: "50%",
+                        }}
                         //per material UI changes textfield to act like a textarea tag
                         multiline
                         //input field takes up for rows by defaults
@@ -621,7 +627,26 @@ class NewCustom extends Component {
                           this.props.dispatch({
                             type: "CUSTOMER_CONFIRM",
                             payload: {
-                              pic: this.state.pic,
+                              pic1: this.state.pic1,
+                              pic2: this.state.pic2,
+                              pic3: this.state.pic3,
+                              pic4: this.state.pic4,
+                              pic5: this.state.pic5,
+                              pic6: this.state.pic6,
+                              pic7: this.state.pic7,
+                              pic8: this.state.pic8,
+                              pic9: this.state.pic9,
+                              pic10: this.state.pic10,
+                              pic11: this.state.pic11,
+                              pic12: this.state.pic12,
+                              pic13: this.state.pic13,
+                              pic14: this.state.pic14,
+                              pic15: this.state.pic15,
+                              pic16: this.state.pic16,
+                              pic17: this.state.pic17,
+                              pic18: this.state.pic18,
+                              pic19: this.state.pic19,
+                              pic20: this.state.pic20,
                               comments: this.state.comments,
                               email: this.state.email,
                               first_name: this.state.first_name,
@@ -633,18 +658,24 @@ class NewCustom extends Component {
                               created_at: this.state.created_at,
                             },
                           });
-                            this.props.dispatch({
-                              type: "DELETE_CUSTOM_ITEM",
-                              payload: this.state.id,
-                            });
+                          this.props.dispatch({
+                            type: "DELETE_CUSTOM_ITEM",
+                            payload: this.state.id,
+                          });
                           this.props.dispatch({
                             type: "GET_ITEM_LIST",
                           });
                           this.props.dispatch({
                             type: "GET_ITEM_LIST_COUNT",
                           });
+                           this.props.dispatch({
+                             type: "GET_RESPOND_LIST_COUNT",
+                           });
                           this.props.dispatch({
                             type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
                           });
                           this.props.dispatch({
                             type: "GET_PROGRESS_LIST_COUNT",
@@ -655,7 +686,7 @@ class NewCustom extends Component {
                           this.setState({
                             toggle2: !this.state.toggle2,
                             comments: "",
-                          })
+                          });
                         }}
                       >
                         Send to Customer

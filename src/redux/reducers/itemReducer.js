@@ -52,6 +52,43 @@ const progresslistcount = (state = [], action) => {
       return state;
   }
 };
+
+const confirmlist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_CONFIRM":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const confirmlistcount = (state = [], action) => {
+  switch (action.type) {
+    case "SET_CONFIRM_COUNT":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const respondlist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_RESPOND":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const respondlistcount = (state = [], action) => {
+  switch (action.type) {
+    case "SET_RESPOND_COUNT":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const completelist = (state = [], action) => {
   switch (action.type) {
     case "SET_COMPLETE":
@@ -87,6 +124,10 @@ export default combineReducers({
   customitemlistcount,
   progresslist,
   progresslistcount,
+  confirmlist,
+  confirmlistcount,
+  respondlist,
+  respondlistcount,
   completelist,
   completelistcount,
   detailslist,

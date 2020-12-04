@@ -5,11 +5,12 @@ const {
 const encryptLib = require("../modules/encryption");
 const pool = require("../modules/pool");
 const userStrategy = require("../strategies/user.strategy");
-const sgMail = require("@sendgrid/mail");
 let crypto = require("crypto");
 const router = express.Router();
 const axios = require("axios");
 const moment = require('moment');
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 require("dotenv").config();
 
 let storeHash = process.env.STORE_HASH
@@ -67,7 +68,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                 subject: "request to reset password",
                 html: `
   <div>
-  <div style="background-color:black;"><img
+  <div><img
         src="https://legacychildrensfoundation.com/wp-content/uploads/2020/04/LCFLogo_H_RGB_kp.jpg"
        width="150"
       /></div>
@@ -95,14 +96,9 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
 //   const order = req.body.order
   setInterval(() => {
       let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
-      let prevMonth =
-        Number(moment().subtract(1, "month").subtract(6, "hours").month()) + 1;
       let nowYear = Number(moment().subtract(6, "hours").year());
       let prevYear = Number(moment().subtract(6, "hours").year());
       let nowDay = Number(moment().subtract(6, "hours").date());
-      let prevDay = Number(
-        moment().subtract(30, "days").subtract(6, "hours").date()
-      );
       let hour = Number(moment().subtract(6, "hours").hour());
       let min = Number(moment().subtract(6, "hours").minute());
       let sec = Number(moment().subtract(6, "hours").second());
@@ -300,17 +296,17 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                       console.log("custom order number", orderID);
                       console.log("custom order qty", qty);
                       console.log("custom order created at", dateString);
-                      // const query2Text =
-                      //   'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
-                      // pool.query(query2Text, [
-                      //   email,
-                      //   first_name,
-                      //   last_name,
-                      //   orderID,
-                      //   decoSku,
-                      //   qty,
-                      //   dateString,
-                      // ]);
+                      const query2Text =
+                        'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
+                      pool.query(query2Text, [
+                        email,
+                        first_name,
+                        last_name,
+                        orderID,
+                        decoSku,
+                        qty,
+                        dateString,
+                      ]);
                     } else {
                       console.log("not a decovibe sku", decoSku);
                     }
@@ -370,6 +366,68 @@ router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
     });
 });
 
+router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
+  // pull out the incoming object data
+  let approve = req.body.approve
+  let comments = req.body.comments;
+  let token = req.body.token;
+
+  const queryText = pool
+    .query(`SELECT * FROM "customerconfirm" WHERE token='${token}'`)
+    .then((result) => {
+      email = result.rows[0].email;
+      first_name = result.rows[0].first_name;
+      last_name = result.rows[0].last_name;
+      order_number = result.rows[0].order_number;
+      sku = result.rows[0].sku;
+      qty = result.rows[0].qty;
+      assigned = result.rows[0].assigned;
+      created_at = result.rows[0].created_at;
+
+      const query2Text =
+        'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id';
+      pool
+        .query(query2Text, [
+          email,
+          first_name,
+          last_name,
+          order_number,
+          sku,
+          qty,
+          assigned,
+          approve,
+          comments,
+          created_at,
+          token,
+        ])
+        .then((result) => {
+          res.status(201).send(result.rows)
+            const query3Text = `DELETE FROM "customerconfirm" WHERE token=$1`;
+            pool
+              .query(query3Text, [token])
+              .then((result) => res.sendStatus(201))
+              .catch(function (error) {
+                console.log(
+                  "Sorry, there was an error with your query: ",
+                  error
+                );
+                res.sendStatus(500); // HTTP SERVER ERROR
+              });
+        })
+        .catch(function (error) {
+          console.log("Sorry, there was an error with your query: ", error);
+          res.sendStatus(500); // HTTP SERVER ERROR
+        })
+
+         
+
+             .catch(function (error) {
+               console.log("Sorry, there is an error", error);
+               res.sendStatus(500);
+             });
+    });
+});
+
 router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   // pull out the incoming object data
   const email = req.body.email;
@@ -380,11 +438,116 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   const qty = req.body.qty;
   const assigned = req.body.assigned;
   const created_at = req.body.created_at;
-  const pic = req.body.pic;
+  const pic1 = req.body.pic1;
+  const pic2 = req.body.pic2;
+  const pic3 = req.body.pic3;
+  const pic4 = req.body.pic4;
+  const pic5 = req.body.pic5;
+  const pic6 = req.body.pic6;
+  const pic7 = req.body.pic7;
+  const pic8 = req.body.pic8;
+  const pic9 = req.body.pic9;
+  const pic10 = req.body.pic10;
+  const pic11 = req.body.pic11;
+  const pic12 = req.body.pic12;
+  const pic13 = req.body.pic13;
+  const pic14 = req.body.pic14;
+  const pic15 = req.body.pic15;
+  const pic16 = req.body.pic16;
+  const pic17 = req.body.pic17;
+  const pic18 = req.body.pic18;
+  const pic19 = req.body.pic19;
+  const pic20 = req.body.pic20;
   const comments = req.body.comments
+  let token = crypto.randomBytes(16).toString("hex");
+  const pic = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10, pic11, pic12, pic13, pic14, pic15, pic16, pic17, pic18, pic19, pic20]
+
+axios
+                 .get(
+                   `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+                   config
+                 )
+                 .then(function (response) {
+                   // handle success
+                   if (response.data !== []) {
+                     let titleString = `  <div><img
+        src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+       width="150"
+      /></div>
+                     <div>Please confirm the details below for your recent custom order</div>
+<div><b>Order number:</b> ${order_number} </br></br>`;
+                       let commentsString = `
+<div><b>Comments from the art department:</b> </br></br>
+${comments}</div></br></br>
+<div><b>Please click the link below to confirm your order</b></div></br></br>
+  <div><a style="font-size:30px" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Confirm</a></div>`; 
+                     let array = response.data;
+                     let newArray = [];
+                     let optionsArray = [];
+                     for (let index = 0; index < array.length; index++) {
+                       const element = array[index];
+                        if (sku == element.sku) {
+                          newArray.push(
+                            `<div><b>Item Name:</b> ${element.name}</div>`
+                          );
+                          let options = element.product_options;
+                          for (let j = 0; j < options.length; j++) {
+                            const opt = options[j];
+                            optionsArray.push(
+                              `<div><b>${opt.display_name}:</b> ${opt.display_value}</div>`
+                            );
+                          }
+                          let optionsJoined = optionsArray.join();
+                          newArray.push(optionsJoined);
+                          optionsArray = [];
+                           newArray.push(` <div><b>Please confirm your approval of the artwork below</b></div>
+<img src=${pic[index]} alt="Artwork" width="500" height="600"> </br></br>`);
+   newArray.push("<br><br> --------------------------------------------");
+                        }
+
+                     }
+
+                     let joinedArray = newArray.join();
+                     let finalArray =
+                       titleString + commentsString + joinedArray;
+                     newArray = [];
+                     console.log(finalArray);
+
+ const msg = {
+   personalizations: [
+     {
+       to: [
+         {
+           email: "christopherjay71186@gmail.com",
+         },
+       ],
+       bcc: [
+         {
+           email: "chris.neisen@heattransferwarehouse.com",
+         },
+       ],
+     },
+   ],
+   from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+   subject: `Please confirm details for your order: ${order_number}`,
+   html: finalArray,
+ };
+ (async () => {
+   try {
+     await sgMail.send(msg);
+   } catch (error) {
+     console.error(error);
+
+     if (error.response) {
+       console.error(error.response.body);
+     }
+   }
+ })();
+}
+})
 
   const query2Text =
-    'INSERT INTO "customerconfirm" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, upload_url, comments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
+    'INSERT INTO "customerconfirm" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, upload_url1, upload_url2, upload_url3, upload_url4, upload_url5, upload_url6, upload_url7, upload_url8, upload_url9, upload_url10, upload_url11, upload_url12, upload_url13, upload_url14, upload_url15, upload_url16, upload_url17, upload_url18, upload_url19, upload_url20, comments, token) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30) RETURNING id';
   pool
     .query(query2Text, [
       email,
@@ -395,8 +558,28 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
       qty,
       assigned,
       created_at,
-      pic,
+      pic1,
+      pic2,
+      pic3,
+      pic4,
+      pic5,
+      pic6,
+      pic7,
+      pic8,
+      pic9,
+      pic10,
+      pic11,
+      pic12,
+      pic13,
+      pic14,
+      pic15,
+      pic16,
+      pic17,
+      pic18,
+      pic19,
+      pic20,
       comments,
+      token,
     ])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {

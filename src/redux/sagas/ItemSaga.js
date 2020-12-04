@@ -25,6 +25,17 @@ function* deleteCustomItem(action) {
   }
 }
 
+function* deleteRespond(action) {
+  try {
+    console.log("we are about to delete an item", action.payload);
+    yield axios.delete(`/api/item/deleterespond/${action.payload}`);
+
+    yield put({ type: "GET_RESPOND_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
 function* deleteProgress(action) {
   try {
     console.log("we are about to delete an item", action.payload);
@@ -99,6 +110,18 @@ function* addNewItem(action){
     }
   }
 
+    function* customerResponse(action) {
+      try {
+        console.log("we are about to add a new item", action.payload);
+        yield axios.post("/api/user/customerresponse", action.payload);
+
+        // yield put({ type: "GET_RESPONSE_LIST" });
+        console.log("we are about to add a new item", action.payload);
+      } catch (error) {
+        console.log("Error with adding a new item:", error);
+      }
+    }
+
    function* customerConfirm(action) {
      try {
        console.log("we are about to add a new item", action.payload);
@@ -111,6 +134,7 @@ function* addNewItem(action){
        console.log("Error with adding a new item:", error);
      }
    }
+   
 
   
 
@@ -299,6 +323,68 @@ function* getprogresslistcount(action) {
   }
 }
 
+function* getconfirmlist(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/confirmlist`);
+
+    yield put({
+      type: "SET_CONFIRM",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+
+
+function* getconfirmlistcount(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/confirmlistcount`);
+
+    yield put({
+      type: "SET_CONFIRM_COUNT",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* getrespondlist(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/respondlist`);
+
+    yield put({
+      type: "SET_RESPOND",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* getrespondlistcount(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/respondlistcount`);
+
+    yield put({
+      type: "SET_RESPOND_COUNT",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* getcompletelist(action) {
   try {
     //console.log('we are about to get Students', action.type);
@@ -365,6 +451,7 @@ function* itemSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
    yield takeLatest('START_ITEM', startTask);
      yield takeLatest('CUSTOMER_CONFIRM', customerConfirm);
+     yield takeLatest('CUSTOMER_RESPONSE', customerResponse);
    yield takeLatest('MARK_COMPLETE', markComplete);
     yield takeLatest('ASSIGN_TASK', assignTask);
     yield takeLatest('ASSIGN_CUSTOM_TASK', assignCustomTask);
@@ -376,10 +463,15 @@ function* itemSaga() {
      yield takeLatest('GET_CUSTOM_ITEM_LIST_COUNT', getcustomitemlistcount);
     yield takeLatest('GET_PROGRESS_LIST', getprogresslist);
     yield takeLatest('GET_PROGRESS_LIST_COUNT', getprogresslistcount);
+    yield takeLatest('GET_CONFIRM_LIST', getconfirmlist);
+    yield takeLatest('GET_CONFIRM_LIST_COUNT', getconfirmlistcount);
+    yield takeLatest('GET_RESPOND_LIST', getrespondlist);
+    yield takeLatest('GET_RESPOND_LIST_COUNT', getrespondlistcount);
     yield takeLatest('GET_COMPLETE_LIST', getcompletelist);
     yield takeLatest('GET_COMPLETE_LIST_COUNT', getcompletelistcount);
     yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('DELETE_CUSTOM_ITEM', deleteCustomItem);
+     yield takeLatest('DELETE_RESPOND', deleteRespond);
     yield takeLatest('DELETE_PROGRESS', deleteProgress);
     yield takeLatest('DELETE_COMPLETE', deleteComplete);
      yield takeLatest('DELETE_COMPLETE_ALL', deleteCompleteAll);

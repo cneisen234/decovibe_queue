@@ -40,7 +40,7 @@
     "redux-saga": "^1.0.2",
     "sendmail": "^1.6.1",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^9.17.1"
+    "sweetalert2": "^9.17.2"
   },
   "scripts": {
     "start": "react-scripts build && node server/server.js",

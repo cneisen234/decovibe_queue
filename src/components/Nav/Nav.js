@@ -24,9 +24,21 @@ class Nav extends Component {
       this.props.dispatch({
         type: "GET_CUSTOM_ITEM_LIST_COUNT",
       });
+         this.props.dispatch({
+           type: "GET_CONFIRM_LIST_COUNT",
+         });
+            this.props.dispatch({
+              type: "GET_RESPOND_LIST_COUNT",
+            });
+             this.props.dispatch({
+               type: "GET_RESPOND_LIST_COUNT",
+             });
     this.props.dispatch({
       type: "GET_PROGRESS_LIST_COUNT",
     });
+     this.props.dispatch({
+       type: "GET_CONFIRM_LIST_COUNT",
+     });
     this.props.dispatch({
       type: "GET_COMPLETE_LIST_COUNT",
     });
@@ -57,9 +69,9 @@ class Nav extends Component {
               <>
                 <Grid
                   item
-                  xs={8}
-                  sm={8}
-                  md={8}
+                  xs={6}
+                  sm={6}
+                  md={7}
                   style={{
                     backgroundColor: "black",
                     width: "15%",
@@ -92,15 +104,63 @@ class Nav extends Component {
                 </Grid>
                 <Grid
                   item
-                  xs={4}
-                  sm={4}
-                  md={2}
+                  xs={6}
+                  sm={6}
+                  md={3}
                   style={{
                     backgroundColor: "black",
                     width: "30%",
                     float: "left",
                   }}
                 >
+                  <Grid
+                    item
+                    xs={6}
+                    sm={6}
+                    md={6}
+                    style={{
+                      backgroundColor: "black",
+                      width: "50%",
+                      float: "left",
+                    }}
+                  >
+                    <div
+                      style={{ float: "right" }}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        this.setState({
+                          toggle: !this.state.toggle,
+                        });
+                        this.props.dispatch({
+                          type: "GET_ITEM_LIST",
+                        });
+                        this.props.dispatch({
+                          type: "GET_ITEM_LIST_COUNT",
+                        });
+                         this.props.dispatch({
+                           type: "GET_RESPOND_LIST_COUNT",
+                         });
+                           this.props.dispatch({
+                             type: "GET_CONFIRM_LIST_COUNT",
+                           });
+                        this.props.dispatch({
+                          type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_PROGRESS_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_COMPLETE_LIST_COUNT",
+                        });
+                      }}
+                    >
+                      <Link className="nav-link" to="/newcustom">
+                        <LoopIcon></LoopIcon>
+                        Switch Queues{" "}
+                      </Link>
+                    </div>
+                  </Grid>
+
                   <Grid
                     item
                     xs={6}
@@ -141,9 +201,9 @@ class Nav extends Component {
               <>
                 <Grid
                   item
-                  xs={8}
-                  sm={8}
-                  md={8}
+                  xs={6}
+                  sm={6}
+                  md={7}
                   style={{
                     backgroundColor: "black",
                     width: "15%",
@@ -161,16 +221,16 @@ class Nav extends Component {
                     <EmailIcon></EmailIcon>
                     Sent to Customer{" "}
                     {`(${
-                      this.props.progresslistcount[0] &&
-                      this.props.progresslistcount[0].count
+                      this.props.confirmlistcount[0] &&
+                      this.props.confirmlistcount[0].count
                     })`}
                   </Link>
                   <Link className="nav-link" to="/Response">
                     <ReplyIcon></ReplyIcon>
                     Customer response{" "}
                     {`(${
-                      this.props.progresslistcount[0] &&
-                      this.props.progresslistcount[0].count
+                      this.props.respondlistcount[0] &&
+                      this.props.respondlistcount[0].count
                     })`}
                   </Link>
                   <Link className="nav-link" to="/complete">
@@ -184,15 +244,62 @@ class Nav extends Component {
                 </Grid>
                 <Grid
                   item
-                  xs={4}
-                  sm={4}
-                  md={2}
+                  xs={6}
+                  sm={6}
+                  md={3}
                   style={{
                     backgroundColor: "black",
                     width: "30%",
                     float: "left",
                   }}
                 >
+                  <Grid
+                    item
+                    xs={6}
+                    sm={6}
+                    md={6}
+                    style={{
+                      backgroundColor: "black",
+                      width: "50%",
+                      float: "left",
+                    }}
+                  >
+                    <div
+                      style={{ float: "right", margin: "0px", padding: "0px" }}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        this.setState({
+                          toggle: !this.state.toggle,
+                        });
+                        this.props.dispatch({
+                          type: "GET_ITEM_LIST",
+                        });
+                        this.props.dispatch({
+                          type: "GET_ITEM_LIST_COUNT",
+                        });
+                         this.props.dispatch({
+                           type: "GET_RESPOND_LIST_COUNT",
+                         });
+                           this.props.dispatch({
+                             type: "GET_CONFIRM_LIST_COUNT",
+                           });
+                        this.props.dispatch({
+                          type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_PROGRESS_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_COMPLETE_LIST_COUNT",
+                        });
+                      }}
+                    >
+                      <Link className="nav-link" to="/home">
+                        <LoopIcon></LoopIcon>
+                        Switch Queues{" "}
+                      </Link>
+                    </div>
+                  </Grid>
                   <Grid
                     item
                     xs={6}
@@ -260,6 +367,8 @@ const mapStateToProps = (state) => ({
   itemlistcount: state.item.itemlistcount,
   customitemlistcount: state.item.customitemlistcount,
   progresslistcount: state.item.progresslistcount,
+  confirmlistcount: state.item.confirmlistcount,
+  respondlistcount: state.item.respondlistcount,
   completelistcount: state.item.completelistcount,
 });
 

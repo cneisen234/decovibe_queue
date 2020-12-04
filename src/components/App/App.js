@@ -24,6 +24,7 @@ import "./App.css";
 import UpdatePassword from "../Home/UpdatePassword";
 import Progress from '../Home/Progress';
 import SentCustomer from "../Home/SentCustomer";
+import CustomerPage from "../Home/CustomerPage";
 import Response from "../Home/Response";
 import Complete from "../Home/Complete";
 import AddUser from '../Home/AddUser';
@@ -51,7 +52,11 @@ class App extends Component {
             Visiting localhost:3000/home will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
-
+            <Route //customer path to confirm order
+              exact
+              path="/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/:token"
+              component={CustomerPage}
+            />
             <ProtectedRoute exact path="/home" component={New} />
             <ProtectedRoute exact path="/newcustom" component={NewCustom} />
             {/* This works the same as the other protected route, except that if the user is logged in,
@@ -68,11 +73,7 @@ class App extends Component {
               path="/SentCustomer"
               component={SentCustomer}
             />
-            <ProtectedRoute
-              exact
-              path="/Response"
-              component={Response}
-            />
+            <ProtectedRoute exact path="/Response" component={Response} />
             <ProtectedRoute exact path="/Complete" component={Complete} />
             <ProtectedRoute
               exact

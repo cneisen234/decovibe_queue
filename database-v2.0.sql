@@ -39,6 +39,57 @@ CREATE TABLE "customitem"
 	"created_at" TEXT
 );
 
+CREATE TABLE "customerconfirm"
+(
+	"id" serial NOT NULL,
+	"email" varchar(320),
+	"first_name" varchar(255),
+	"last_name" varchar(255),
+	"order_number" varchar(255) NOT NULL,
+	"sku" varchar(255) NOT NULL,
+	"qty" DECIMAL,
+	"assigned" VARCHAR(255),
+	"upload_url1" TEXT,
+	"upload_url2" TEXT,
+	"upload_url3" TEXT,
+	"upload_url4" TEXT,
+	"upload_url5" TEXT,
+	"upload_url6" TEXT,
+	"upload_url7" TEXT,
+	"upload_url8" TEXT,
+	"upload_url9" TEXT,
+	"upload_url10" TEXT,
+	"upload_url11" TEXT,
+	"upload_url12" TEXT,
+	"upload_url13" TEXT,
+	"upload_url14" TEXT,
+	"upload_url15" TEXT,
+	"upload_url16" TEXT,
+	"upload_url17" TEXT,
+	"upload_url18" TEXT,
+	"upload_url19" TEXT,
+	"upload_url20" TEXT,
+	"comments" TEXT,
+	"created_at" TEXT,
+	"token" TEXT
+);
+
+CREATE TABLE "customerrespond"
+(
+	"id" serial NOT NULL,
+	"email" varchar(320),
+	"first_name" varchar(255),
+	"last_name" varchar(255),
+	"order_number" varchar(255) NOT NULL,
+	"sku" varchar(255) NOT NULL,
+	"qty" VARCHAR(10),
+	"assigned" VARCHAR(255),
+	"approve" VARCHAR(10),
+	"comments" TEXT,
+	"created_at" TEXT,
+	"token" TEXT
+);
+
 CREATE TABLE "complete"
 (
 	"id" serial NOT NULL,
