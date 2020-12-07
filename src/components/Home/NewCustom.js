@@ -184,7 +184,7 @@ class NewCustom extends Component {
   };
 
   render() {
-    const dataSelector = [];
+    let dataSelector = [];
     const data = this.props.customitemlist.map((item) => [
       item.order_number,
       item.sku,
@@ -214,9 +214,13 @@ class NewCustom extends Component {
                   console.log(element.checked);
                   element.checked = true;
                 }
+                this.props.customitemlist.map((item) => {
+                  dataSelector.push(item);
+                });
                 this.setState({
                   toggle3: !this.state.toggle3,
                 });
+                console.log(dataSelector);
               }}
             >
               Select All
@@ -232,9 +236,11 @@ class NewCustom extends Component {
                   console.log(element.checked);
                   element.checked = false;
                 }
+                dataSelector = [];
                 this.setState({
                   toggle3: !this.state.toggle3,
                 });
+                console.log(dataSelector);
               }}
             >
               Deselect All
@@ -305,9 +311,9 @@ class NewCustom extends Component {
                   console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
-                   const element = checkInput[index];
-                   console.log(element.checked);
-                   element.checked = false;
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
                   }
                 } else {
                   //...else cancel action
@@ -367,9 +373,9 @@ class NewCustom extends Component {
                   console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = false;
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
                   }
                 } else {
                   //...else cancel action

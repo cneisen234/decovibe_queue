@@ -142,7 +142,7 @@ class New extends Component {
 
   render() {
 
-    const dataSelector = [];
+    let dataSelector = [];
 
     const data = this.props.itemlist.map((item) => [
       item.order_number,
@@ -173,9 +173,13 @@ class New extends Component {
                   console.log(element.checked);
                   element.checked = true;
                 }
+                this.props.itemlist.map((item) => {
+                  dataSelector.push(item);
+                })
                 this.setState({
                   toggle3: !this.state.toggle3
                 })
+                console.log(dataSelector);
               }}
             >
               Select All
@@ -191,9 +195,11 @@ class New extends Component {
                   console.log(element.checked);
                   element.checked = false;
                 }
+                dataSelector = [];
                    this.setState({
                      toggle3: !this.state.toggle3,
                    });
+                   console.log(dataSelector);
               }}
             >
               Deselect All

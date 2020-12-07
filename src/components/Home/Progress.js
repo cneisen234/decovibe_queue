@@ -54,7 +54,7 @@ class Progress extends Component {
   }
 
   render() {
-    const dataSelector = [];
+    let dataSelector = [];
     const data = this.props.progresslist.map((progress) => [
       progress.order_number,
       progress.sku,
@@ -83,9 +83,13 @@ class Progress extends Component {
                   console.log(element.checked);
                   element.checked = true;
                 }
+                this.props.progresslist.map((item) => {
+                  dataSelector.push(item);
+                });
                 this.setState({
                   toggle3: !this.state.toggle3,
                 });
+                console.log(dataSelector);
               }}
             >
               Select All
@@ -101,9 +105,11 @@ class Progress extends Component {
                   console.log(element.checked);
                   element.checked = false;
                 }
+                dataSelector = [];
                 this.setState({
                   toggle3: !this.state.toggle3,
                 });
+                console.log(dataSelector);
               }}
             >
               Deselect All
@@ -174,9 +180,9 @@ class Progress extends Component {
                   console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = false;
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
                   }
                 } else {
                   //...else cancel action
@@ -236,9 +242,9 @@ class Progress extends Component {
                   console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
-                 const element = checkInput[index];
-                 console.log(element.checked);
-                 element.checked = false;
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
                   }
                 } else {
                   //...else cancel action

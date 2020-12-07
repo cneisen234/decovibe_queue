@@ -81,7 +81,7 @@ class Complete extends Component {
   };
 
   render() {
-    const dataSelector = [];
+    let dataSelector = [];
     const data = this.props.completelist.map((complete) => [
       complete.order_number,
       complete.sku,
@@ -111,9 +111,13 @@ class Complete extends Component {
                   console.log(element.checked);
                   element.checked = true;
                 }
+                this.props.completelist.map((item) => {
+                  dataSelector.push(item.id);
+                });
                 this.setState({
                   toggle3: !this.state.toggle3,
                 });
+                console.log(dataSelector);
               }}
             >
               Select All
@@ -129,9 +133,11 @@ class Complete extends Component {
                   console.log(element.checked);
                   element.checked = false;
                 }
+                dataSelector = [];
                 this.setState({
                   toggle3: !this.state.toggle3,
                 });
+                console.log(dataSelector);
               }}
             >
               Deselect All
@@ -186,9 +192,9 @@ class Complete extends Component {
                   console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
-                   const element = checkInput[index];
-                   console.log(element.checked);
-                   element.checked = false;
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
                   }
                 } else {
                   //...else cancel action
