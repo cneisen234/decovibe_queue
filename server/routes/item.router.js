@@ -26,6 +26,18 @@ router.delete("/deleteitem/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.delete("/deletehistory/:id", rejectUnauthenticated, (req, res) => {
+  pool
+    .query('DELETE FROM "history" WHERE id=$1', [req.params.id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error DELETE ", error);
+      res.sendStatus(500);
+    });
+});
+
 router.delete("/deletecustomitem/:id", rejectUnauthenticated, (req, res) => {
   pool
     .query('DELETE FROM "customitem" WHERE id=$1', [req.params.id])
@@ -123,6 +135,35 @@ router.get("/itemlist", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "item" ORDER BY sku;`;
   pool
     .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/historylist", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT array_agg(DISTINCT email) as email, array_agg(DISTINCT first_name) as first_name, array_agg(DISTINCT last_name) as last_name FROM "history" GROUP BY email`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.post("/checkhistory", (req, res) => {
+  let email = req.body.email;
+  console.log("this is the email", email);
+  const queryText =
+    `SELECT * from "history" where email=$1;`
+  pool
+    .query(queryText, [email])
     .then((result) => {
       res.send(result.rows);
     })

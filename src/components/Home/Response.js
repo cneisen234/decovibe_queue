@@ -74,6 +74,9 @@ class Response extends Component {
     this.props.dispatch({
       type: "DELETE_COMPLETE_RANGE",
     });
+     this.props.dispatch({
+       type: "DELETE_HISTORY_RANGE",
+     });
   }
 
   handleChange = (event, fieldName) => {
@@ -108,6 +111,7 @@ class Response extends Component {
   };
 
   render() {
+    const dataSelector = [];
     const data = this.props.respondlist.map((respond) => [
       respond.order_number,
       respond.sku,
@@ -127,10 +131,189 @@ class Response extends Component {
         </center>
 
         <div style={{ padding: "1.5%" }}>
+          <Button
+            variant="success"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+              swal({
+                title: "Mark Complete?",
+                text:
+                  "Click 'ok' to mark the selected orders complete, this can't be undone!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                //end sweet alerts
+              }).then((willDelete) => {
+                // start .then
+                //if confirmed, delete
+                if (willDelete) {
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "MARK_COMPLETE",
+                      payload: {
+                        id: element.id,
+                        email: element.email,
+                        first_name: element.first_name,
+                        last_name: element.last_name,
+                        order_number: element.order_number,
+                        sku: element.sku,
+                        product_length: element.product_length,
+                        product_options: element.product_options,
+                        qty: element.qty,
+                        assigned: element.assigned,
+                        created_at: element.created_at,
+                      },
+                    });
+                    this.props.dispatch({
+                      type: "DELETE_RESPOND",
+                      payload: element.id,
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  //success! review deleted
+                  console.log("delete successful");
+                    let checkInput = document.getElementsByTagName("input");
+                    for (let index = 0; index < checkInput.length; index++) {
+                      const element = checkInput[index];
+                      element.checked = element.unchecked;
+                    }
+                } else {
+                  //...else cancel action
+                  console.log("action canceled");
+                }
+              });
+            }}
+          >
+            Mark Selected Complete
+          </Button>
+          <Button
+            variant="danger"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+              swal({
+                title: "Are you sure?",
+                text:
+                  "Once deleted, you will not be able to recover the sku on these orders!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                //end sweet alerts
+              }).then((willDelete) => {
+                // start .then
+                //if confirmed, delete
+                if (willDelete) {
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "DELETE_RESPOND",
+                      payload: element,
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  //success! review deleted
+                  console.log("delete successful");
+                   let checkInput = document.getElementsByTagName("input");
+                   for (let index = 0; index < checkInput.length; index++) {
+                     const element = checkInput[index];
+                     element.checked = element.unchecked;
+                   }
+                } else {
+                  //...else cancel action
+                  console.log("delete canceled");
+                }
+              });
+            }}
+          >
+            Delete Selected
+          </Button>
           <MUITable
             data={data}
             columns={[
               //names the columns found on MUI table
+              {
+                name: "Select",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <input
+                        type="checkbox"
+                        id={dataIndex}
+                        name=""
+                        value=""
+                        onClick={(event) => {
+                          let checkChecked = document.getElementById(dataIndex)
+                            .checked;
+                          console.log("checkChecked", checkChecked);
+                          console.log("I'm being checked at index", dataIndex);
+                          const itemArray = this.props.respondlist;
+                          const item = itemArray[dataIndex];
+                          if (checkChecked === true) {
+                            dataSelector.push(item);
+                          } else {
+                            for (
+                              let index = 0;
+                              index < dataSelector.length;
+                              index++
+                            ) {
+                              const element = dataSelector[index];
+                              if (item.id === element.id) {
+                                dataSelector.splice(index, 1);
+                              }
+                            }
+                          }
+                          console.log(dataSelector);
+                        }}
+                      ></input>
+                    );
+                  },
+                },
+              },
               { name: "Order Number" },
               { name: "SKU" },
               { name: "QTY" },
@@ -147,7 +330,6 @@ class Response extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    
                     return this.props.respondlist[dataIndex] &&
                       this.props.respondlist[dataIndex].approve === "Yes" ? (
                       <Button
@@ -178,8 +360,6 @@ class Response extends Component {
                                   last_name: item.last_name,
                                   order_number: item.order_number,
                                   sku: item.sku,
-                                  product_length: item.product_length,
-                                  product_options: item.product_options,
                                   qty: item.qty,
                                   assigned: item.assigned,
                                   created_at: item.created_at,
@@ -210,12 +390,10 @@ class Response extends Component {
                               this.props.dispatch({
                                 type: "GET_COMPLETE_LIST_COUNT",
                               });
-                              swal("This sku has been marked complete!", {
-                                icon: "success",
-                              });
+                              console.log("marked complete");
                             } else {
                               //...else cancel action
-                              swal("Action canceled!");
+                              console.log("action canceled");
                             }
                           });
                         }}
@@ -328,15 +506,10 @@ class Response extends Component {
                                 type: "GET_COMPLETE_LIST_COUNT",
                               });
                               //success! review deleted
-                              swal(
-                                "Poof! The sku on the order has been deleted!",
-                                {
-                                  icon: "success",
-                                }
-                              );
+                              console.log("deleted");
                             } else {
                               //...else cancel action
-                              swal("The sku is safe!");
+                              console.log("delete canceled");
                             }
                           });
                         }}
@@ -581,10 +754,10 @@ class Response extends Component {
                             created_at: this.state.created_at,
                           },
                         });
-                       this.props.dispatch({
-                         type: "DELETE_RESPOND",
-                         payload: this.state.id,
-                       });
+                        this.props.dispatch({
+                          type: "DELETE_RESPOND",
+                          payload: this.state.id,
+                        });
                         this.props.dispatch({
                           type: "GET_ITEM_LIST",
                         });
@@ -621,7 +794,6 @@ class Response extends Component {
               <Button onClick={this.toggle2} variant="success" type="submit">
                 Close
               </Button>
-              {JSON.stringify(this.state)}
               <br />
               <br />
               <br />

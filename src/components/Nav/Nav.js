@@ -10,6 +10,7 @@ import LoopIcon from "@material-ui/icons/Loop";
 import EmailIcon from "@material-ui/icons/Email";
 import ReplyIcon from "@material-ui/icons/Reply";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HistoryIcon from "@material-ui/icons/History";
 import EditIcon from "@material-ui/icons/Edit";
 
 class Nav extends Component {
@@ -137,12 +138,12 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_ITEM_LIST_COUNT",
                         });
-                         this.props.dispatch({
-                           type: "GET_RESPOND_LIST_COUNT",
-                         });
-                           this.props.dispatch({
-                             type: "GET_CONFIRM_LIST_COUNT",
-                           });
+                        this.props.dispatch({
+                          type: "GET_RESPOND_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_CONFIRM_LIST_COUNT",
+                        });
                         this.props.dispatch({
                           type: "GET_CUSTOM_ITEM_LIST_COUNT",
                         });
@@ -241,6 +242,10 @@ class Nav extends Component {
                       this.props.completelistcount[0].count
                     })`}
                   </Link>
+                  <Link className="nav-link" to="/History">
+                    <HistoryIcon></HistoryIcon>
+                    History{" "}
+                  </Link>
                 </Grid>
                 <Grid
                   item
@@ -277,12 +282,12 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_ITEM_LIST_COUNT",
                         });
-                         this.props.dispatch({
-                           type: "GET_RESPOND_LIST_COUNT",
-                         });
-                           this.props.dispatch({
-                             type: "GET_CONFIRM_LIST_COUNT",
-                           });
+                        this.props.dispatch({
+                          type: "GET_RESPOND_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_CONFIRM_LIST_COUNT",
+                        });
                         this.props.dispatch({
                           type: "GET_CUSTOM_ITEM_LIST_COUNT",
                         });

@@ -47,6 +47,17 @@ function* deleteProgress(action) {
   }
 }
 
+function* deleteHistory(action) {
+  try {
+    console.log("we are about to delete an item", action.payload);
+    yield axios.delete(`/api/item/deletehistory/${action.payload}`);
+
+    yield put({ type: "GET_HISTORY_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
 function* deleteComplete(action) {
   try {
     console.log("we are about to delete an item", action.payload);
@@ -73,6 +84,23 @@ function* deleteCompleteRange(action) {
   try {
     console.log("we are about to delete everything from 2 weeks ago", action.payload);
     yield axios.delete(`/api/user/deletecompleterange`);
+
+    yield put({ type: "GET_COMPLETE_LIST" });
+    yield put({ type: "GET_ITEM_LIST_COUNT" });
+    yield put({ type: "GET_PROGRESS_LIST_COUNT" });
+    yield put({ type: "GET_COMPLETE_LIST_COUNT" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
+function* deleteHistoryRange(action) {
+  try {
+    console.log(
+      "we are about to delete everything from 2 weeks ago",
+      action.payload
+    );
+    yield axios.delete(`/api/user/deletehistoryrange`);
 
     yield put({ type: "GET_COMPLETE_LIST" });
     yield put({ type: "GET_ITEM_LIST_COUNT" });
@@ -244,6 +272,36 @@ function* getitemlist(action) {
 
   } catch (error) {
     console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* gethistorylist(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/historylist`);
+
+    yield put({
+      type: "SET_HISTORY",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* checkHistory(action) {
+  try {
+    //passes the incoming new student user info from the payload to the server
+    console.log("this is the payload", action.payload);
+    const response = yield axios.post("api/item/checkhistory", action.payload);
+    console.log("this is response.data in sagas", response.data);
+    yield put({
+      type: "SET_HISTORY_TABLE",
+      payload: response.data,
+    });
+  } catch (error) {
+    yield put({ type: "STUDENT_REGISTRATION_FAILED" });
   }
 }
 
@@ -449,6 +507,7 @@ function* resetPassword(action){
 
 function* itemSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
+    yield takeLatest('CHECK_HISTORY', checkHistory);
    yield takeLatest('START_ITEM', startTask);
      yield takeLatest('CUSTOMER_CONFIRM', customerConfirm);
      yield takeLatest('CUSTOMER_RESPONSE', customerResponse);
@@ -458,6 +517,7 @@ function* itemSaga() {
     yield takeLatest('REGISTER', register);
     yield takeLatest('GET_USER', getUser);
     yield takeLatest('GET_ITEM_LIST', getitemlist);
+       yield takeLatest('GET_HISTORY_LIST', gethistorylist);
      yield takeLatest('GET_CUSTOM_ITEM_LIST', getcustomitemlist);
     yield takeLatest('GET_ITEM_LIST_COUNT', getitemlistcount);
      yield takeLatest('GET_CUSTOM_ITEM_LIST_COUNT', getcustomitemlistcount);
@@ -473,9 +533,11 @@ function* itemSaga() {
     yield takeLatest('DELETE_CUSTOM_ITEM', deleteCustomItem);
      yield takeLatest('DELETE_RESPOND', deleteRespond);
     yield takeLatest('DELETE_PROGRESS', deleteProgress);
+     yield takeLatest('DELETE_HISTORY', deleteHistory);
     yield takeLatest('DELETE_COMPLETE', deleteComplete);
      yield takeLatest('DELETE_COMPLETE_ALL', deleteCompleteAll);
      yield takeLatest('DELETE_COMPLETE_RANGE', deleteCompleteRange);
+     yield takeLatest('DELETE_HISTORY_RANGE', deleteHistoryRange);
      yield takeLatest('ORDER_DETAILS', orderDetails);
     yield takeLatest('RESET_PASSWORD', resetPassword);
     yield takeLatest('FORGOT_PASSWORD', forgotPassword);

@@ -1,45 +1,53 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
 import moment from "moment";
 import MUITable from "../MUITable/MUITable";
-import { Paper, TextField } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import ViewListIcon from "@material-ui/icons/ViewList";
-import { auto } from "async";
 import swal from "sweetalert";
+import ReactFilestack from "filestack-react";
+import { Paper, TextField } from "@material-ui/core";
+import Form from "react-bootstrap/Form";
+import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
+import ViewListIcon from "@material-ui/icons/ViewList";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-class Complete extends Component {
+class History extends Component {
   state = {
-    toggle: false,
     toggle2: false,
+    email: "",
+    first_name: "",
+    last_name: "",
+    order_number: "",
+    product_options: "",
     qty: "",
-    updated_qty: "",
     id: "",
     sku: "",
-    sku_description: "",
     qty: "",
-    brand: "",
+    assigned: "",
+    created_at: "",
+    comments: "",
   };
   componentDidMount() {
     this.props.dispatch({
-      type: "GET_COMPLETE_LIST",
+      type: "GET_HISTORY_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST",
     });
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
     this.props.dispatch({
-      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+      type: "GET_RESPOND_LIST_COUNT",
     });
     this.props.dispatch({
-      type: "GET_PROGRESS_LIST_COUNT",
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
     });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
     this.props.dispatch({
-      type: "GET_RESPOND_LIST_COUNT",
+      type: "GET_PROGRESS_LIST_COUNT",
     });
     this.props.dispatch({
       type: "GET_COMPLETE_LIST_COUNT",
@@ -52,12 +60,29 @@ class Complete extends Component {
      });
   }
 
+  checkHistory = (event) => {
+    //prevents default action
+    event.preventDefault();
+    const { email } = this.state;
+    console.log("this is state", email);
+    this.props.dispatch({
+      type: "CHECK_HISTORY",
+      payload: {
+        email: email,
+      },
+    });
+  };
+
+  handleChange = (event, fieldName) => {
+    this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event
+  }; //end handleChange
+
   toggle2 = () => {
     this.setState({
       toggle2: !this.state.toggle2,
     });
     this.props.dispatch({
-      type: "GET_COMPLETE_LIST",
+      type: "GET_HISTORY_LIST",
     });
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
@@ -80,139 +105,66 @@ class Complete extends Component {
   };
 
   render() {
-    const dataSelector = [];
-    const data = this.props.completelist.map((complete) => [
-      complete.order_number,
-      complete.sku,
-      complete.product_length,
-      complete.qty,
-      complete.first_name,
-      complete.last_name,
-      complete.assigned,
-      complete.created_at,
+    const data = this.props.historylisttable.map((history) => [
+      history.order_number,
+      history.sku,
+      history.qty,
+      history.first_name,
+      history.last_name,
+      history.assigned,
+      history.admincomments,
+      history.customercomments,
+      history.comment_made_at,
     ]);
     return (
       <div>
         <br />
         <center>
-          <h1>Complete</h1>
+          <h1>Communication History</h1>
         </center>
 
         <div style={{ padding: "1.5%" }}>
-          <Button
-            variant="danger"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              swal({
-                title: "Are you sure?",
-                text:
-                  "Once deleted, you will not be able to recover the sku on these orders!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                //end sweet alerts
-              }).then((willDelete) => {
-                // start .then
-                //if confirmed, delete
-                if (willDelete) {
-                  for (let index = 0; index < dataSelector.length; index++) {
-                    const element = dataSelector[index];
-                    this.props.dispatch({
-                      type: "DELETE_COMPLETE",
-                      payload: element,
-                    });
-                  }
-                  this.props.dispatch({
-                    type: "GET_COMPLETE_LIST",
-                  });
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_RESPOND_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CONFIRM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_PROGRESS_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_COMPLETE_LIST_COUNT",
-                  });
-                  //success! review deleted
-                  console.log("delete successful");
-                    let checkInput = document.getElementsByTagName("input");
-                    for (let index = 0; index < checkInput.length; index++) {
-                      const element = checkInput[index];
-                      element.checked = element.unchecked;
-                    }
-                } else {
-                  //...else cancel action
-                  console.log("delete canceled");
-                }
-              });
-            }}
-          >
-            Delete Selected
-          </Button>
+          <center>
+            <Form.Control
+              as="select"
+              onChange={(event) => this.setState({ email: event.target.value })}
+            >
+              <option value="">Pick From Below </option>{" "}
+              {this.props.historylist
+                ? this.props.historylist.map((item) => (
+                    <option key={item.id} value={item.email}>
+                      {" "}
+                      {String(item.first_name + " " + item.last_name)}{" "}
+                    </option>
+                  ))
+                : ""}
+            </Form.Control>
+            <Form>
+              <center>
+                <Button
+                  onClick={(event) => this.checkHistory(event)}
+                  variant="primary"
+                  type="submit"
+                  style={{ width: "20%", margin: "2%" }}
+                >
+                  Confirm Customer
+                </Button>
+              </center>
+            </Form>
+          </center>
           <MUITable
-            data={data} //brings in data as an array, in this case, list of admins
+            data={data}
             columns={[
               //names the columns found on MUI table
-              {
-                name: "Select",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                      <input
-                        type="checkbox"
-                        id={dataIndex}
-                        name=""
-                        value=""
-                        onClick={(event) => {
-                          let checkChecked = document.getElementById(dataIndex)
-                            .checked;
-                          console.log("checkChecked", checkChecked);
-                          console.log("I'm being checked at index", dataIndex);
-                          const itemArray = this.props.completelist;
-                          const item = itemArray[dataIndex];
-                          if (checkChecked === true) {
-                            dataSelector.push(item.id);
-                          } else {
-                            for (
-                              let index = 0;
-                              index < dataSelector.length;
-                              index++
-                            ) {
-                              const element = dataSelector[index];
-                              if (item.id === element) {
-                                dataSelector.splice(index, 1);
-                              }
-                            }
-                          }
-                          console.log(dataSelector);
-                        }}
-                      ></input>
-                    );
-                  },
-                },
-              },
               { name: "Order Number" },
               { name: "SKU" },
-              { name: "Length" },
               { name: "QTY" },
               { name: "First Name" },
               { name: "Last Name" },
               { name: "Assigned" },
-              { name: "Created At" },
+              { name: "Decovibe Comments" },
+              { name: "Customer Comments" },
+              { name: "Comment Made At" },
               {
                 name: "View Details",
                 options: {
@@ -225,7 +177,7 @@ class Complete extends Component {
                         variant="success"
                         onClick={(event) => {
                           event.preventDefault();
-                          const itemArray = this.props.completelist;
+                          const itemArray = this.props.historylisttable;
                           const item = itemArray[dataIndex];
                           const order_number = item.order_number;
                           const sku = item.sku;
@@ -234,7 +186,6 @@ class Complete extends Component {
                           const last_name = item.last_name;
                           const qty = item.qty;
                           const assigned = item.assigned;
-                          const created_at = item.created_at;
                           const id = item.id;
                           console.log("this is item", item);
                           console.log("this is order_number", order_number);
@@ -247,7 +198,6 @@ class Complete extends Component {
                             last_name: last_name,
                             qty: qty,
                             assigned: assigned,
-                            created_at: created_at,
                             id: id,
                           });
                           console.log("this is state", this.state.order_number);
@@ -269,78 +219,83 @@ class Complete extends Component {
                   },
                 },
               },
-              {
-                name: "Delete",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                      <Button
-                        variant="danger"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.completelist;
+              //   {
+              //     name: "Delete",
+              //     options: {
+              //       filter: false,
+              //       sort: false,
+              //       empty: true,
+              //       customBodyRenderLite: (dataIndex, rowIndex) => {
+              //         return (
+              //           <Button
+              //             variant="danger"
+              //             onClick={(event) => {
+              //               event.preventDefault();
+              //               const itemArray = this.props.historylisttable;
 
-                          const item = itemArray[dataIndex];
-                          console.log(`entry id should be: ${item.id}`);
-                          // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
+              //               const item = itemArray[dataIndex];
+              //               console.log(`entry id should be: ${item.id}`);
+              //               // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
 
-                          swal({
-                            title: "Are you sure?",
-                            text:
-                              "Once deleted, you will not be able to recover the sku on this order!",
-                            icon: "warning",
-                            buttons: true,
-                            dangerMode: true,
-                            //end sweet alerts
-                          }).then((willDelete) => {
-                            // start .then
-                            //if confirmed, delete
-                            if (willDelete) {
-                              this.props.dispatch({
-                                type: "DELETE_COMPLETE",
-                                payload: item.id,
-                              });
-                              this.props.dispatch({
-                                type: "GET_COMPLETE_LIST",
-                              });
-                              this.props.dispatch({
-                                type: "GET_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CONFIRM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_RESPOND_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_PROGRESS_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_COMPLETE_LIST_COUNT",
-                              });
-                              //success! review deleted
-                              console.log("this has been deleted");
-                            } else {
-                              //...else cancel action
-                              console.log("delete canceled");
-                            }
-                          });
-                        }}
-                      >
-                        <DeleteIcon></DeleteIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
+              //               swal({
+              //                 title: "Are you sure?",
+              //                 text:
+              //                   "Once deleted, you will not be able to recover the sku on this order!",
+              //                 icon: "warning",
+              //                 buttons: true,
+              //                 dangerMode: true,
+              //                 //end sweet alerts
+              //               }).then((willDelete) => {
+              //                 // start .then
+              //                 //if confirmed, delete
+              //                 if (willDelete) {
+              //                   this.props.dispatch({
+              //                     type: "DELETE_HISTORY",
+              //                     payload: item.id,
+              //                   });
+              //                   this.props.dispatch({
+              //                     type: "GET_HISTORY_LIST",
+              //                   });
+              //                   this.props.dispatch({
+              //                     type: "GET_ITEM_LIST_COUNT",
+              //                   });
+              //                   this.props.dispatch({
+              //                     type: "GET_RESPOND_LIST_COUNT",
+              //                   });
+              //                   this.props.dispatch({
+              //                     type: "GET_CONFIRM_LIST_COUNT",
+              //                   });
+              //                   this.props.dispatch({
+              //                     type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              //                   });
+              //                   this.props.dispatch({
+              //                     type: "GET_PROGRESS_LIST_COUNT",
+              //                   });
+              //                   this.props.dispatch({
+              //                     type: "GET_COMPLETE_LIST_COUNT",
+              //                   });
+              //                   //success! review deleted
+              //                   swal(
+              //                     "Poof! The sku on the order has been deleted!",
+              //                     {
+              //                       icon: "success",
+              //                     }
+              //                   );
+              //                 } else {
+              //                   //...else cancel action
+              //                   swal("The sku is safe!");
+              //                 }
+              //               });
+              //             }}
+              //           >
+              //             <DeleteIcon></DeleteIcon>
+              //           </Button>
+              //         );
+              //       },
+              //     },
+              //   },
             ]}
-            title={"Completed items"} //give the table a name
+            title={"Items Customer Responded To"} //give the table a name
           />
         </div>
         <br />
@@ -499,7 +454,9 @@ class Complete extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  completelist: state.item.completelist,
+  customitemlist: state.item.customitemlist,
+  historylist: state.item.historylist,
+  historylisttable: state.item.historylisttable,
   detailslist: state.item.detailslist,
 });
-export default connect(mapStateToProps)(Complete);
+export default connect(mapStateToProps)(History);

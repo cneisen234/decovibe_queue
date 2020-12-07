@@ -46,6 +46,9 @@ class SentCustomer extends Component {
     this.props.dispatch({
       type: "DELETE_COMPLETE_RANGE",
     });
+     this.props.dispatch({
+       type: "DELETE_HISTORY_RANGE",
+     });
   }
 
   render() {

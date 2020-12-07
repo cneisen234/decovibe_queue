@@ -35,6 +35,17 @@ router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
      res.sendStatus(500);
    });
 })
+router.delete("/deletehistoryrange", rejectUnauthenticated, (req, res) => {
+  pool
+    .query('DELETE FROM "history" WHERE timestamp<=$1', [daterange])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error DELETE ", error);
+      res.sendStatus(500);
+    });
+});
 let orderID = 0
 let prevOrderID = 0
 
@@ -371,6 +382,44 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
   let approve = req.body.approve
   let comments = req.body.comments;
   let token = req.body.token;
+                       let nowMonth =
+                         Number(moment().subtract(6, "hours").month()) + 1;
+                       let nowYear = Number(
+                         moment().subtract(6, "hours").year()
+                       );
+                       let prevYear = Number(
+                         moment().subtract(6, "hours").year()
+                       );
+                       let nowDay = Number(
+                         moment().subtract(6, "hours").date()
+                       );
+                       let hour = Number(moment().subtract(6, "hours").hour());
+                       let min = Number(moment().subtract(6, "hours").minute());
+                       let sec = Number(moment().subtract(6, "hours").second());
+                       if (hour < 10) {
+                         hour = "0" + String(hour);
+                       }
+                       if (min < 10) {
+                         min = "0" + String(min);
+                       }
+                       if (sec < 10) {
+                         sec = "0" + String(sec);
+                       }
+                       if (nowMonth === 1) {
+                         prevYear = moment().year() - 1;
+                       }
+                       let normalHour = Number(hour);
+                       let AmPm = "am";
+                       if (normalHour > 12) {
+                         AmPm = "pm";
+                         normalHour = normalHour - 12;
+                       } else if (normalHour === 12) {
+                         AmPm = "pm";
+                       } else if (normalHour === 00) {
+                         AmPm = "am";
+                         normalHour = 12;
+                       }
+                       let comment_made_at = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
 
   const queryText = pool
     .query(`SELECT * FROM "customerconfirm" WHERE token='${token}'`)
@@ -400,11 +449,35 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
           created_at,
           token,
         ])
+         const query3Text =
+        'INSERT INTO "history" (email, first_name, last_name, order_number, sku, qty, assigned, comment_made_at, customercomments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
+      pool
+        .query(query3Text, [
+          email,
+          first_name,
+          last_name,
+          order_number,
+          sku,
+          qty,
+          assigned,
+          comment_made_at,
+          comments,
+        ])
+        .then((result) => res.status(201).send(result.rows))
+        .catch(function (error) {
+          console.log("Sorry, there was an error with your query: ", error);
+          res.sendStatus(500); // HTTP SERVER ERROR
+        })
+
+        .catch(function (error) {
+          console.log("Sorry, there is an error", error);
+          res.sendStatus(500);
+        })
         .then((result) => {
           res.status(201).send(result.rows)
-            const query3Text = `DELETE FROM "customerconfirm" WHERE token=$1`;
+            const query4Text = `DELETE FROM "customerconfirm" WHERE token=$1`;
             pool
-              .query(query3Text, [token])
+              .query(query4Text, [token])
               .then((result) => res.sendStatus(201))
               .catch(function (error) {
                 console.log(
@@ -460,6 +533,37 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   const pic20 = req.body.pic20;
   const comments = req.body.comments
   let token = crypto.randomBytes(16).toString("hex");
+          let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
+          let nowYear = Number(moment().subtract(6, "hours").year());
+          let prevYear = Number(moment().subtract(6, "hours").year());
+          let nowDay = Number(moment().subtract(6, "hours").date());
+          let hour = Number(moment().subtract(6, "hours").hour());
+          let min = Number(moment().subtract(6, "hours").minute());
+          let sec = Number(moment().subtract(6, "hours").second());
+          if (hour < 10) {
+            hour = "0" + String(hour);
+          }
+          if (min < 10) {
+            min = "0" + String(min);
+          }
+          if (sec < 10) {
+            sec = "0" + String(sec);
+          }
+          if (nowMonth === 1) {
+            prevYear = moment().year() - 1;
+          }
+          let normalHour = Number(hour);
+          let AmPm = "am";
+          if (normalHour > 12) {
+            AmPm = "pm";
+            normalHour = normalHour - 12;
+          } else if (normalHour === 12) {
+            AmPm = "pm";
+          } else if (normalHour === 00) {
+            AmPm = "am";
+            normalHour = 12;
+          }
+          let comment_made_at = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
   const pic = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10, pic11, pic12, pic13, pic14, pic15, pic16, pic17, pic18, pic19, pic20]
 
 axios
@@ -581,16 +685,31 @@ ${comments}</div></br></br>
       comments,
       token,
     ])
-    .then((result) => res.status(201).send(result.rows))
-    .catch(function (error) {
-      console.log("Sorry, there was an error with your query: ", error);
-      res.sendStatus(500); // HTTP SERVER ERROR
-    })
 
-    .catch(function (error) {
-      console.log("Sorry, there is an error", error);
-      res.sendStatus(500);
-    });
+      const query3Text =
+        'INSERT INTO "history" (email, first_name, last_name, order_number, sku, qty, assigned, comment_made_at, admincomments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
+      pool
+        .query(query3Text, [
+          email,
+          first_name,
+          last_name,
+          order_number,
+          sku,
+          qty,
+          assigned,
+          comment_made_at,
+          comments,
+        ])
+        .then((result) => res.status(201).send(result.rows))
+        .catch(function (error) {
+          console.log("Sorry, there was an error with your query: ", error);
+          res.sendStatus(500); // HTTP SERVER ERROR
+        })
+
+        .catch(function (error) {
+          console.log("Sorry, there is an error", error);
+          res.sendStatus(500);
+        });
 });
 
 router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {

@@ -9,6 +9,24 @@ const itemlist = (state = [], action) => {
   }
 };
 
+const historylist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_HISTORY":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const historylisttable = (state = [], action) => {
+  switch (action.type) {
+    case "SET_HISTORY_TABLE":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const customitemlist = (state = [], action) => {
   switch (action.type) {
     case "SET_CUSTOM_ITEM":
@@ -119,6 +137,8 @@ const detailslist = (state = [], action) => {
 
 export default combineReducers({
   itemlist,
+  historylist,
+  historylisttable,
   customitemlist,
   itemlistcount,
   customitemlistcount,

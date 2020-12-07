@@ -32,10 +32,11 @@ const GreenRadio = withStyles({
 //The purpose of this page is to capture the student's activity for the past pay period
 class CustomerPage extends Component {
   state = {
+    toggle: false,
     approve: null,
     comments: null,
     token: "",
-    error: false
+    error: false,
   };
 
   componentWillMount() {}
@@ -62,25 +63,22 @@ class CustomerPage extends Component {
     //prevents any default actions
     event.preventDefault();
     //grabs local state and defines it in a var of the same name
-    const {approve, comments, token} = this.state;
+    const { approve, comments, token } = this.state;
     //don't run function if any of these values below are null
-        if (
-          approve === null ||
-        comments === null
-        ) {
-          //...if they are null set error state to true to conditionally render alert toast
-          this.setState({
-            error: true,
-          });
-          //...set it back to false after 5 secondss
-          setTimeout(() => {
-            this.setState({
-              error: false,
-            });
-          }, 5000);
-          //stop the function
-          return;
-        }
+    if (approve === null || comments === null) {
+      //...if they are null set error state to true to conditionally render alert toast
+      this.setState({
+        error: true,
+      });
+      //...set it back to false after 5 secondss
+      setTimeout(() => {
+        this.setState({
+          error: false,
+        });
+      }, 5000);
+      //stop the function
+      return;
+    }
 
     //begin sweetAlerts
     Swal.fire({
@@ -99,9 +97,7 @@ class CustomerPage extends Component {
       if (result.value) {
         this.props.dispatch({
           type: "CUSTOMER_RESPONSE",
-          payload: {approve: approve,
-        comments: comments,
-    token: token},
+          payload: { approve: approve, comments: comments, token: token },
         });
         //begin sweetAlerts
         Swal.fire(
@@ -109,107 +105,121 @@ class CustomerPage extends Component {
           "Your feedback has been submitted to the art department",
           "success"
         ); //end sweetAlerts
+         this.setState({
+           toggle: !this.state.toggle,
+         });
       }
     });
   }; //ends SubmitInfo
-
   render() {
     return (
       <div>
-        <br />
-        {/* toast that appears on error, shows up when all required fields are not filled in */}
-        {this.state.error === true && (
-          <Alert className="error" style={{}} severity="error">
-            Please fill out all of the required fields
-          </Alert>
-        )}
-        <br />
-        <Paper
-          elevation={5}
-          style={{
-            padding: "5%",
-            marginLeft: "5%",
-            marginRight: "5%",
-            marginBottom: "5%",
-          }}
-        >
-          {/* start form for make entry */}
-          <form onSubmit={this.submitInfo}>
-            <FormControl component="fieldset">
-              <FormLabel component="legend" style={{ color: "black" }}>
-                1. Do you approve the artwork?
-              </FormLabel>
-              <RadioGroup
-                required
-                aria-label="approve"
-                name="approve"
-                // sets the value of the input to the value of state
-                value={this.state.approve}
-                // onChange run handleChange function to update coorasponding state
-                onChange={(event) => this.handleChange(event, "approve")}
-              >
-                <FormControlLabel
-                  value="Yes"
-                  //calls and renders the green radio button
-                  control={<GreenRadio />}
-                  label="Yes"
-                />
-                <FormControlLabel
-                  value="No"
-                  control={<Radio />}
-                  label="No"
-                />
-              </RadioGroup>
-            </FormControl>
+        {this.state.toggle === false ? (
+          <>
             <br />
+            {/* toast that appears on error, shows up when all required fields are not filled in */}
+            {this.state.error === true && (
+              <Alert className="error" style={{}} severity="error">
+                Please fill out all of the required fields
+              </Alert>
+            )}
             <br />
-            <p>2. Please leave any comments you have below</p>
-            <TextField //box for student to enter in text
+            <Paper
+              elevation={5}
               style={{
-                backgroundColor: "white",
-                margin: "5px",
-                width: "100%",
+                padding: "5%",
+                marginLeft: "5%",
+                marginRight: "5%",
+                marginBottom: "5%",
               }}
-              //per material UI changes textfield to act like a textarea tag
-              multiline
-              //input field takes up for rows by defaults
-              rows={4}
-              //...will expand up to 8 rows
-              rowsMax={8}
-              variant="outlined"
-              fullWidth
-              label="Write comments here"
-              name="comments"
-              // sets value of input to local state
-              value={this.state.comments}
-              type="text"
-              maxLength={1000}
-              //onChange of input values set local state
-              onChange={(event) => this.handleChange(event, "comments")} //onChange of input values set local state
-            />{" "}
-            <center>
-              <Button //button that, one clicked, submits the entry to the database
-                style={{
-                  //note that it only goes through if it passes all validation
-                  marginTop: "3%",
-                  marginLeft: "5%",
-                  marginRight: "5%",
-                  backgroundColor: "green",
-                  color: "white",
-                }}
-                variant="contained"
-                type="submit"
-                color="primary"
-                className="button"
-              >
-                Submit Response
-              </Button>
-            </center>
-          </form>
-        </Paper>
-        <br />{" "}
-        {/*Add a little buffer on the bottom of page (prevent cutoff on mobile) */}
-        <br />
+            >
+              {/* start form for make entry */}
+              <form onSubmit={this.submitInfo}>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend" style={{ color: "black" }}>
+                    1. Do you approve the artwork?
+                  </FormLabel>
+                  <RadioGroup
+                    required
+                    aria-label="approve"
+                    name="approve"
+                    // sets the value of the input to the value of state
+                    value={this.state.approve}
+                    // onChange run handleChange function to update coorasponding state
+                    onChange={(event) => this.handleChange(event, "approve")}
+                  >
+                    <FormControlLabel
+                      value="Yes"
+                      //calls and renders the green radio button
+                      control={<GreenRadio />}
+                      label="Yes"
+                    />
+                    <FormControlLabel
+                      value="No"
+                      control={<Radio />}
+                      label="No"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <br />
+                <br />
+                <p>2. Please leave any comments you have below</p>
+                <TextField //box for student to enter in text
+                  style={{
+                    backgroundColor: "white",
+                    margin: "5px",
+                    width: "100%",
+                  }}
+                  //per material UI changes textfield to act like a textarea tag
+                  multiline
+                  //input field takes up for rows by defaults
+                  rows={4}
+                  //...will expand up to 8 rows
+                  rowsMax={8}
+                  variant="outlined"
+                  fullWidth
+                  label="Write comments here"
+                  name="comments"
+                  // sets value of input to local state
+                  value={this.state.comments}
+                  type="text"
+                  maxLength={1000}
+                  //onChange of input values set local state
+                  onChange={(event) => this.handleChange(event, "comments")} //onChange of input values set local state
+                />{" "}
+                <center>
+                  <Button //button that, one clicked, submits the entry to the database
+                    style={{
+                      //note that it only goes through if it passes all validation
+                      marginTop: "3%",
+                      marginLeft: "5%",
+                      marginRight: "5%",
+                      backgroundColor: "green",
+                      color: "white",
+                    }}
+                    variant="contained"
+                    type="submit"
+                    color="primary"
+                    className="button"
+                  >
+                    Submit Response
+                  </Button>
+                </center>
+              </form>
+            </Paper>
+            <br />{" "}
+            {/*Add a little buffer on the bottom of page (prevent cutoff on mobile) */}
+            <br />
+          </>
+        ) : (
+          <>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+            <h1 style={{textAlign: "center"}}>Thank you for your feedback.<br/> The art department will follow up with you shortly</h1>
+          </>
+        )}
       </div>
     );
   }

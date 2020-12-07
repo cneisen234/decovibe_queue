@@ -21,12 +21,13 @@ class MUITable extends Component {
       responsive: "vertical",
       tableBodyHeight: "800px",
       tableBodyMaxHeight: " ",
+      rowsPerPage: 100,
+      rowsPerPageOptions: [100, 500, 1000],
       selectableRows: false, //false means checkboxes are hidden
     },
   };
 
   render() {
-    
     return (
       <React.Fragment>
         <MUIDataTable
@@ -38,7 +39,6 @@ class MUITable extends Component {
       </React.Fragment>
     );
   }
-
 }
 
 const mapStateToProps = (state) => ({

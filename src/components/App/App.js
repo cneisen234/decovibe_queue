@@ -26,6 +26,7 @@ import Progress from '../Home/Progress';
 import SentCustomer from "../Home/SentCustomer";
 import CustomerPage from "../Home/CustomerPage";
 import Response from "../Home/Response";
+import History from "../Home/History";
 import Complete from "../Home/Complete";
 import AddUser from '../Home/AddUser';
 import ResetPassword from '../Home/ResetPassword';
@@ -74,6 +75,7 @@ class App extends Component {
               component={SentCustomer}
             />
             <ProtectedRoute exact path="/Response" component={Response} />
+            <ProtectedRoute exact path="/History" component={History} />
             <ProtectedRoute exact path="/Complete" component={Complete} />
             <ProtectedRoute
               exact
