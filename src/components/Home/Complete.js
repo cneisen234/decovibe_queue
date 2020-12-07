@@ -14,6 +14,7 @@ class Complete extends Component {
   state = {
     toggle: false,
     toggle2: false,
+    toggle3: false,
     qty: "",
     updated_qty: "",
     id: "",
@@ -99,6 +100,43 @@ class Complete extends Component {
         </center>
 
         <div style={{ padding: "1.5%" }}>
+          {this.state.toggle3 === false ? (
+            <Button
+              variant="primary"
+              onClick={(event) => {
+                event.preventDefault();
+                let checkInput = document.getElementsByTagName("input");
+                for (let index = 0; index < checkInput.length; index++) {
+                  const element = checkInput[index];
+                  console.log(element.checked);
+                  element.checked = true;
+                }
+                this.setState({
+                  toggle3: !this.state.toggle3,
+                });
+              }}
+            >
+              Select All
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              onClick={(event) => {
+                event.preventDefault();
+                let checkInput = document.getElementsByTagName("input");
+                for (let index = 0; index < checkInput.length; index++) {
+                  const element = checkInput[index];
+                  console.log(element.checked);
+                  element.checked = false;
+                }
+                this.setState({
+                  toggle3: !this.state.toggle3,
+                });
+              }}
+            >
+              Deselect All
+            </Button>
+          )}
           <Button
             variant="danger"
             onClick={(event) => {
@@ -146,11 +184,12 @@ class Complete extends Component {
                   });
                   //success! review deleted
                   console.log("delete successful");
-                    let checkInput = document.getElementsByTagName("input");
-                    for (let index = 0; index < checkInput.length; index++) {
-                      const element = checkInput[index];
-                      element.checked = element.unchecked;
-                    }
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                   const element = checkInput[index];
+                   console.log(element.checked);
+                   element.checked = false;
+                  }
                 } else {
                   //...else cancel action
                   console.log("delete canceled");

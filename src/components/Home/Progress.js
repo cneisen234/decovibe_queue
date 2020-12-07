@@ -10,6 +10,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 class Progress extends Component {
   state = {
+    toggle3: false,
     email: "",
     first_name: "",
     last_name: "",
@@ -71,6 +72,43 @@ class Progress extends Component {
           <h1>In Progress</h1>
         </center>
         <div style={{ padding: "1.5%" }}>
+          {this.state.toggle3 === false ? (
+            <Button
+              variant="primary"
+              onClick={(event) => {
+                event.preventDefault();
+                let checkInput = document.getElementsByTagName("input");
+                for (let index = 0; index < checkInput.length; index++) {
+                  const element = checkInput[index];
+                  console.log(element.checked);
+                  element.checked = true;
+                }
+                this.setState({
+                  toggle3: !this.state.toggle3,
+                });
+              }}
+            >
+              Select All
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              onClick={(event) => {
+                event.preventDefault();
+                let checkInput = document.getElementsByTagName("input");
+                for (let index = 0; index < checkInput.length; index++) {
+                  const element = checkInput[index];
+                  console.log(element.checked);
+                  element.checked = false;
+                }
+                this.setState({
+                  toggle3: !this.state.toggle3,
+                });
+              }}
+            >
+              Deselect All
+            </Button>
+          )}
           <Button
             variant="success"
             onClick={(event) => {
@@ -91,25 +129,25 @@ class Progress extends Component {
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
                     this.props.dispatch({
-                                type: "MARK_COMPLETE",
-                                payload: {
-                                  id: element.id,
-                                  email: element.email,
-                                  first_name: element.first_name,
-                                  last_name: element.last_name,
-                                  order_number: element.order_number,
-                                  sku: element.sku,
-                                  product_length: element.product_length,
-                                  product_options: element.product_options,
-                                  qty: element.qty,
-                                  assigned: element.assigned,
-                                  created_at: element.created_at,
-                                },
-                              });
-                              this.props.dispatch({
-                                type: "DELETE_PROGRESS",
-                                payload: element.id,
-                              });
+                      type: "MARK_COMPLETE",
+                      payload: {
+                        id: element.id,
+                        email: element.email,
+                        first_name: element.first_name,
+                        last_name: element.last_name,
+                        order_number: element.order_number,
+                        sku: element.sku,
+                        product_length: element.product_length,
+                        product_options: element.product_options,
+                        qty: element.qty,
+                        assigned: element.assigned,
+                        created_at: element.created_at,
+                      },
+                    });
+                    this.props.dispatch({
+                      type: "DELETE_PROGRESS",
+                      payload: element.id,
+                    });
                   }
                   this.props.dispatch({
                     type: "GET_PROGRESS_LIST",
@@ -134,11 +172,12 @@ class Progress extends Component {
                   });
                   //success! review deleted
                   console.log("delete successful");
-                    let checkInput = document.getElementsByTagName("input");
-                    for (let index = 0; index < checkInput.length; index++) {
-                      const element = checkInput[index];
-                      element.checked = element.unchecked;
-                    }
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                  const element = checkInput[index];
+                  console.log(element.checked);
+                  element.checked = false;
+                  }
                 } else {
                   //...else cancel action
                   console.log("delete canceled");
@@ -195,11 +234,12 @@ class Progress extends Component {
                   });
                   //success! review deleted
                   console.log("delete successful");
-                   let checkInput = document.getElementsByTagName("input");
-                   for (let index = 0; index < checkInput.length; index++) {
-                     const element = checkInput[index];
-                     element.checked = element.unchecked;
-                   }
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                 const element = checkInput[index];
+                 console.log(element.checked);
+                 element.checked = false;
+                  }
                 } else {
                   //...else cancel action
                   console.log("delete canceled");
