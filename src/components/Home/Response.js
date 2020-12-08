@@ -46,6 +46,7 @@ class Response extends Component {
     pic19: "",
     pic20: "",
     comments: "",
+    dataSelector: [],
   };
   componentDidMount() {
     this.props.dispatch({
@@ -112,7 +113,7 @@ class Response extends Component {
   };
 
   render() {
-    let dataSelector = [];
+    let dataSelector = this.state.dataSelector;
     const data = this.props.respondlist.map((respond) => [
       respond.order_number,
       respond.sku,

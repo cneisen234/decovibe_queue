@@ -52,6 +52,7 @@ class NewCustom extends Component {
     pic19: "",
     pic20: "",
     comments: "",
+    dataSelector: [],
   };
   componentDidMount() {
     this.props.dispatch({
@@ -184,7 +185,7 @@ class NewCustom extends Component {
   };
 
   render() {
-    let dataSelector = [];
+    let dataSelector = this.state.dataSelector;
     const data = this.props.customitemlist.map((item) => [
       item.order_number,
       item.sku,

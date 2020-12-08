@@ -22,6 +22,7 @@ class Progress extends Component {
     qty: "",
     assigned: "",
     created_at: "",
+    dataSelector: [],
   };
   componentDidMount() {
     this.props.dispatch({
@@ -54,7 +55,7 @@ class Progress extends Component {
   }
 
   render() {
-    let dataSelector = [];
+    let dataSelector = this.state.dataSelector;
     const data = this.props.progresslist.map((progress) => [
       progress.order_number,
       progress.sku,

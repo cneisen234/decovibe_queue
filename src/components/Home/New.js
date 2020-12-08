@@ -30,6 +30,7 @@ class New extends Component {
     qty: "",
     assigned: "",
     created_at: "",
+    dataSelector: [],
   };
   componentDidMount() {
     this.props.dispatch({
@@ -141,9 +142,7 @@ class New extends Component {
   };
 
   render() {
-
-    let dataSelector = [];
-
+    let dataSelector = this.state.dataSelector
     const data = this.props.itemlist.map((item) => [
       item.order_number,
       item.sku,

@@ -22,6 +22,7 @@ class Complete extends Component {
     sku_description: "",
     qty: "",
     brand: "",
+    dataSelector: [],
   };
   componentDidMount() {
     this.props.dispatch({
@@ -81,7 +82,7 @@ class Complete extends Component {
   };
 
   render() {
-    let dataSelector = [];
+    let dataSelector = this.state.dataSelector;
     const data = this.props.completelist.map((complete) => [
       complete.order_number,
       complete.sku,
