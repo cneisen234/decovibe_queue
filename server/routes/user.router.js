@@ -12,10 +12,12 @@ const moment = require('moment');
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 require("dotenv").config();
+const fs = require("fs");
 
 let storeHash = process.env.STORE_HASH
 
 let daterange = moment().subtract(6, "hours").subtract(30, "days");
+let daterange2 = moment().subtract(6, "hours").subtract(60, "days");
 
 
 let config = {
@@ -37,7 +39,7 @@ router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
 })
 router.delete("/deletehistoryrange", rejectUnauthenticated, (req, res) => {
   pool
-    .query('DELETE FROM "history" WHERE timestamp<=$1', [daterange])
+    .query('DELETE FROM "history" WHERE timestamp<=$1', [daterange2])
     .then((result) => {
       res.sendStatus(204); //No Content
     })
@@ -263,7 +265,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                       console.log("sku for order", decoSku);
                       console.log("basePrice", basePrice);
                       const query2Text =
-                        'INSERT INTO "item" (email, first_name, last_name, order_number, sku, qty, product_length, product_options, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
+                        'INSERT INTO "item" (email, first_name, last_name, order_number, sku, qty, product_length, product_options, created_at, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
                       pool.query(query2Text, [
                         email,
                         first_name,
@@ -274,6 +276,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                         product_length,
                         optionsJoined,
                         dateString,
+                        name,
                       ]);
                       optionsArray = [];
                       orderComments = [];
@@ -308,7 +311,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                       console.log("custom order qty", qty);
                       console.log("custom order created at", dateString);
                       const query2Text =
-                        'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
+                        'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id';
                       pool.query(query2Text, [
                         email,
                         first_name,
@@ -317,6 +320,7 @@ router.post("/forgot/admin/:token/:email", (req, res) => {
                         decoSku,
                         qty,
                         dateString,
+                        name,
                       ]);
                     } else {
                       console.log("not a decovibe sku", decoSku);
@@ -344,14 +348,16 @@ router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
   const last_name = req.body.last_name;
   const order_number = req.body.order_number;
   const sku = req.body.sku;
+  const description = req.body.description;
   const product_length = req.body.product_length;
   const product_options = req.body.product_options;
   const qty = req.body.qty;
   const assigned = req.body.assigned;
   const created_at = req.body.created_at;
+  const priority = req.body.priority;
 
   const query2Text =
-    'INSERT INTO "progress" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
+    'INSERT INTO "progress" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id';
   pool
     .query(query2Text, [
       email,
@@ -364,6 +370,52 @@ router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
       qty,
       assigned,
       created_at,
+      description,
+      priority,
+    ])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
+
+    .catch(function (error) {
+      console.log("Sorry, there is an error", error);
+      res.sendStatus(500);
+    });
+});
+
+router.post("/gobacknew", rejectUnauthenticated, (req, res, next) => {
+  // pull out the incoming object data
+  const email = req.body.email;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const order_number = req.body.order_number;
+  const sku = req.body.sku;
+  const description = req.body.description;
+  const product_length = req.body.product_length;
+  const product_options = req.body.product_options;
+  const qty = req.body.qty;
+  const assigned = req.body.assigned;
+  const created_at = req.body.created_at;
+  const priority = req.body.priority;
+
+  const query2Text =
+    'INSERT INTO "item" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id';
+  pool
+    .query(query2Text, [
+      email,
+      first_name,
+      last_name,
+      order_number,
+      sku,
+      product_length,
+      product_options,
+      qty,
+      assigned,
+      created_at,
+      description,
+      priority
     ])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {
@@ -429,12 +481,14 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
       last_name = result.rows[0].last_name;
       order_number = result.rows[0].order_number;
       sku = result.rows[0].sku;
+      description = result.rows[0].description;
       qty = result.rows[0].qty;
       assigned = result.rows[0].assigned;
       created_at = result.rows[0].created_at;
+      priority = result.rows[0].priority;
 
       const query2Text =
-        'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id';
+        'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id';
       pool
         .query(query2Text, [
           email,
@@ -448,6 +502,8 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
           comments,
           created_at,
           token,
+          description,
+          priority,
         ])
          const query3Text =
         'INSERT INTO "history" (email, first_name, last_name, order_number, sku, qty, assigned, comment_made_at, customercomments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
@@ -508,6 +564,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   const last_name = req.body.last_name;
   const order_number = req.body.order_number;
   const sku = req.body.sku;
+  const description = req.body.description;
   const qty = req.body.qty;
   const assigned = req.body.assigned;
   const created_at = req.body.created_at;
@@ -531,7 +588,8 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   const pic18 = req.body.pic18;
   const pic19 = req.body.pic19;
   const pic20 = req.body.pic20;
-  const comments = req.body.comments
+  const comments = req.body.comments;
+  const priority = req.body.priority;
   let token = crypto.randomBytes(16).toString("hex");
           let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
           let nowYear = Number(moment().subtract(6, "hours").year());
@@ -578,13 +636,13 @@ axios
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
        width="150"
       /></div>
-                     <div>Please confirm the details below for your recent custom order</div>
-<div><b>Order number:</b> ${order_number} </br></br>`;
+                     <div>Please confirm the details below for your recent custom order</div>,<br><br>
+<div><b>Order number:</b> ${order_number} <br><br>`;
                        let commentsString = `
-<div><b>Comments from the art department:</b> </br></br>
-${comments}</div></br></br>
-<div><b>Please click the link below to confirm your order</b></div></br></br>
-  <div><a style="font-size:30px" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Confirm</a></div>`; 
+<div><b>Comments from the art department:</b> <br><br>
+${comments}</div><br><br>
+<div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
+  <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Continue</a></div><br><br>`; 
                      let array = response.data;
                      let newArray = [];
                      let optionsArray = [];
@@ -592,7 +650,7 @@ ${comments}</div></br></br>
                        const element = array[index];
                         if (sku == element.sku) {
                           newArray.push(
-                            `<div><b>Item Name:</b> ${element.name}</div>`
+                            `<div><b>Details of your original order are listed below</b></div><br><br><div><b>Item Name:</b> ${element.name}</div>`
                           );
                           let options = element.product_options;
                           for (let j = 0; j < options.length; j++) {
@@ -604,8 +662,13 @@ ${comments}</div></br></br>
                           let optionsJoined = optionsArray.join();
                           newArray.push(optionsJoined);
                           optionsArray = [];
-                           newArray.push(` <div><b>Please confirm your approval of the artwork below</b></div>
-<img src=${pic[index]} alt="Artwork" width="500" height="600"> </br></br>`);
+              
+                          newArray.push(
+                            `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
+                              pic[index]
+                            }>Artwork${index + 1}</a><br><br>
+                             <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
+                          );
    newArray.push("<br><br> --------------------------------------------");
                         }
 
@@ -613,7 +676,11 @@ ${comments}</div></br></br>
 
                      let joinedArray = newArray.join();
                      let finalArray =
-                       titleString + commentsString + joinedArray;
+                       `<div style="text-align:center;">` +
+                       titleString +
+                       commentsString +
+                       joinedArray +
+                       `</div>`;
                      newArray = [];
                      console.log(finalArray);
 
@@ -651,7 +718,7 @@ ${comments}</div></br></br>
 })
 
   const query2Text =
-    'INSERT INTO "customerconfirm" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, upload_url1, upload_url2, upload_url3, upload_url4, upload_url5, upload_url6, upload_url7, upload_url8, upload_url9, upload_url10, upload_url11, upload_url12, upload_url13, upload_url14, upload_url15, upload_url16, upload_url17, upload_url18, upload_url19, upload_url20, comments, token) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30) RETURNING id';
+    'INSERT INTO "customerconfirm" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, upload_url1, upload_url2, upload_url3, upload_url4, upload_url5, upload_url6, upload_url7, upload_url8, upload_url9, upload_url10, upload_url11, upload_url12, upload_url13, upload_url14, upload_url15, upload_url16, upload_url17, upload_url18, upload_url19, upload_url20, comments, token, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32) RETURNING id';
   pool
     .query(query2Text, [
       email,
@@ -684,6 +751,8 @@ ${comments}</div></br></br>
       pic20,
       comments,
       token,
+      description,
+      priority,
     ])
 
       const query3Text =
@@ -719,15 +788,17 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
   const last_name = req.body.last_name;
   const order_number = req.body.order_number;
   const sku = req.body.sku;
+  const description = req.body.description;
   const product_length = req.body.product_length;
   const product_options = req.body.product_options;
   const qty = req.body.qty;
   const assigned = req.body.assigned;
   const created_at = req.body.created_at;
+  const priority = req.body.priority;
 
   //now lets add admin information to the user table
   const query2Text =
-    'INSERT INTO "complete" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
+    'INSERT INTO "complete" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id';
   pool
     .query(query2Text, [
       email,
@@ -740,6 +811,8 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
       qty,
       assigned,
       created_at,
+      description,
+      priority,
     ])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {
@@ -753,6 +826,29 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
     });
 });
 
+router.post("/canned", rejectUnauthenticated, (req, res, next) => {
+  // pull out the incoming object data
+  const canned = req.body.canned;
+
+
+  //now lets add admin information to the user table
+  const query2Text =
+    'INSERT INTO "replies" (reply) VALUES ($1) RETURNING id';
+  pool
+    .query(query2Text, [
+      canned
+    ])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
+
+    .catch(function (error) {
+      console.log("Sorry, there is an error", error);
+      res.sendStatus(500);
+    });
+});
 
 
 //Handles POST to add a new admin

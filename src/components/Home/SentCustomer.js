@@ -55,11 +55,13 @@ class SentCustomer extends Component {
     const data = this.props.confirmlist.map((item) => [
       item.order_number,
       item.sku,
+      item.description,
       item.qty,
       item.first_name,
       item.last_name,
       item.assigned,
       item.created_at,
+      item.priority,
     ]);
     return (
       <div>
@@ -75,11 +77,13 @@ class SentCustomer extends Component {
               //names the columns found on MUI table
               { name: "Order Number" },
               { name: "SKU" },
+              { name: "Description" },
               { name: "QTY" },
               { name: "First Name" },
               { name: "Last Name" },
               { name: "Assigned" },
               { name: "Created At" },
+              { name: "Priority" },
             ]}
             title={"Items Sent to Customer"} //give the table a name
           />

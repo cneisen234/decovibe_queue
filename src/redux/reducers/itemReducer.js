@@ -125,6 +125,15 @@ const completelistcount = (state = [], action) => {
   }
 };
 
+const replieslist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_REPLIES":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const detailslist = (state = [], action) => {
   switch (action.type) {
     case "SET_DETAILS":
@@ -150,5 +159,6 @@ export default combineReducers({
   respondlistcount,
   completelist,
   completelistcount,
+  replieslist,
   detailslist,
 });

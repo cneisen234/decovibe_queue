@@ -6,6 +6,8 @@ import MUITable from "../MUITable/MUITable";
 import swal from "sweetalert";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import DeleteIcon from "@material-ui/icons/Delete";
+import RestoreIcon from "@material-ui/icons/Restore";
+import FlagIcon from "@material-ui/icons/Flag";
 
 
 class Progress extends Component {
@@ -59,12 +61,12 @@ class Progress extends Component {
     const data = this.props.progresslist.map((progress) => [
       progress.order_number,
       progress.sku,
+      progress.description,
       progress.product_length,
       progress.qty,
-      progress.first_name,
-      progress.last_name,
       progress.assigned,
       progress.created_at,
+      progress.priority
     ]);
     return (
       <div>
@@ -73,7 +75,7 @@ class Progress extends Component {
           <h1>In Progress</h1>
         </center>
         <div style={{ padding: "1.5%" }}>
-          {this.state.toggle3 === false ? (
+          {/* {this.state.toggle3 === false ? (
             <Button
               variant="primary"
               onClick={(event) => {
@@ -109,90 +111,261 @@ class Progress extends Component {
                 dataSelector = [];
                 this.setState({
                   toggle3: !this.state.toggle3,
+                  dataSelector: [],
                 });
                 console.log(dataSelector);
               }}
             >
               Deselect All
             </Button>
-          )}
+          )} */}
           <Button
             variant="success"
             onClick={(event) => {
               event.preventDefault();
               console.log(dataSelector);
-              swal({
-                title: "Mark Complete?",
-                text:
-                  "Click 'ok' to mark the selected orders complete, this action can't be undone!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                //end sweet alerts
-              }).then((willDelete) => {
-                // start .then
-                //if confirmed, delete
-                if (willDelete) {
-                  for (let index = 0; index < dataSelector.length; index++) {
-                    const element = dataSelector[index];
-                    this.props.dispatch({
-                      type: "MARK_COMPLETE",
-                      payload: {
-                        id: element.id,
-                        email: element.email,
-                        first_name: element.first_name,
-                        last_name: element.last_name,
-                        order_number: element.order_number,
-                        sku: element.sku,
-                        product_length: element.product_length,
-                        product_options: element.product_options,
-                        qty: element.qty,
-                        assigned: element.assigned,
-                        created_at: element.created_at,
-                      },
-                    });
-                    this.props.dispatch({
-                      type: "DELETE_PROGRESS",
-                      payload: element.id,
-                    });
-                  }
-                  this.props.dispatch({
-                    type: "GET_PROGRESS_LIST",
-                  });
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_RESPOND_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CONFIRM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_PROGRESS_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_COMPLETE_LIST_COUNT",
-                  });
-                  //success! review deleted
-                  console.log("delete successful");
-                  let checkInput = document.getElementsByTagName("input");
-                  for (let index = 0; index < checkInput.length; index++) {
-                    const element = checkInput[index];
-                    console.log(element.checked);
-                    element.checked = false;
-                  }
-                } else {
-                  //...else cancel action
-                  console.log("delete canceled");
-                }
+
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "MARK_COMPLETE",
+                  payload: {
+                    id: element.id,
+                    email: element.email,
+                    first_name: element.first_name,
+                    last_name: element.last_name,
+                    order_number: element.order_number,
+                    sku: element.sku,
+                    description: element.description,
+                    product_length: element.product_length,
+                    product_options: element.product_options,
+                    qty: element.qty,
+                    assigned: element.assigned,
+                    created_at: element.created_at,
+                    priority: element.priority,
+                  },
+                });
+                this.props.dispatch({
+                  type: "DELETE_PROGRESS",
+                  payload: element.id,
+                });
+              }
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              console.log("delete successful");
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
               });
             }}
           >
-            Mark Selected Complete
+            <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+          </Button>
+          <Button
+            variant="success"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "ADD_NEW",
+                  payload: {
+                    id: element.id,
+                    email: element.email,
+                    first_name: element.first_name,
+                    last_name: element.last_name,
+                    order_number: element.order_number,
+                    sku: element.sku,
+                    description: element.description,
+                    product_length: element.product_length,
+                    product_options: element.product_options,
+                    qty: element.qty,
+                    assigned: element.assigned,
+                    created_at: element.created_at,
+                    priority: element.priority,
+                  },
+                });
+                this.props.dispatch({
+                  type: "DELETE_PROGRESS",
+                  payload: element.id,
+                });
+              }
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              console.log("delete successful");
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              this.setState({
+                dataSelector: [],
+              });
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
+              });
+            }}
+          >
+            <RestoreIcon></RestoreIcon>
+          </Button>
+          <Button
+            variant="danger"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "MARK_PRIORITY_PROGRESS",
+                  payload: {
+                    id: element.id,
+                    priority: "high",
+                  },
+                });
+              }
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
+              });
+            }}
+          >
+            <FlagIcon></FlagIcon>
+          </Button>
+          <Button
+            variant="success"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "MARK_PRIORITY_PROGRESS",
+                  payload: {
+                    id: element.id,
+                    priority: "low",
+                  },
+                });
+              }
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
+              });
+            }}
+          >
+            <FlagIcon></FlagIcon>
           </Button>
           <Button
             variant="danger"
@@ -247,6 +420,11 @@ class Progress extends Component {
                     console.log(element.checked);
                     element.checked = false;
                   }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
                 } else {
                   //...else cancel action
                   console.log("delete canceled");
@@ -254,7 +432,7 @@ class Progress extends Component {
               });
             }}
           >
-            Delete Selected
+            <DeleteIcon></DeleteIcon>
           </Button>
 
           <MUITable
@@ -304,12 +482,12 @@ class Progress extends Component {
               },
               { name: "Order Number" },
               { name: "SKU" },
+              { name: "Description" },
               { name: "Length" },
               { name: "QTY" },
-              { name: "First Name" },
-              { name: "Last Name" },
               { name: "Assigned" },
               { name: "Created At" },
+              { name: "Priority" },
               {
                 name: "Mark Complete",
                 options: {
@@ -325,68 +503,213 @@ class Progress extends Component {
                           const itemArray = this.props.progresslist;
                           const item = itemArray[dataIndex];
 
-                          swal({
-                            title: "Mark Complete?",
-                            text:
-                              "This action can't be undone, click 'ok' to confirm!",
-                            icon: "warning",
-                            buttons: true,
-                            dangerMode: true,
-                            //end sweet alerts
-                          }).then((willDelete) => {
-                            // start .then
-                            //if confirmed, delete
-                            if (willDelete) {
-                              this.props.dispatch({
-                                type: "MARK_COMPLETE",
-                                payload: {
-                                  id: item.id,
-                                  email: item.email,
-                                  first_name: item.first_name,
-                                  last_name: item.last_name,
-                                  order_number: item.order_number,
-                                  sku: item.sku,
-                                  product_length: item.product_length,
-                                  product_options: item.product_options,
-                                  qty: item.qty,
-                                  assigned: item.assigned,
-                                  created_at: item.created_at,
-                                },
-                              });
-                              this.props.dispatch({
-                                type: "DELETE_PROGRESS",
-                                payload: item.id,
-                              });
-                              this.props.dispatch({
-                                type: "GET_PROGRESS_LIST",
-                              });
-                              this.props.dispatch({
-                                type: "GET_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_RESPOND_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CONFIRM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_PROGRESS_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_COMPLETE_LIST_COUNT",
-                              });
-                              console.log("marked complete");
-                            } else {
-                              //...else cancel action
-                              console.log("action canceled");
-                            }
+                          this.props.dispatch({
+                            type: "MARK_COMPLETE",
+                            payload: {
+                              id: item.id,
+                              email: item.email,
+                              first_name: item.first_name,
+                              last_name: item.last_name,
+                              order_number: item.order_number,
+                              sku: item.sku,
+                              description: item.description,
+                              product_length: item.product_length,
+                              product_options: item.product_options,
+                              qty: item.qty,
+                              assigned: item.assigned,
+                              created_at: item.created_at,
+                              priority: item.priority,
+                            },
                           });
+                          this.props.dispatch({
+                            type: "DELETE_PROGRESS",
+                            payload: item.id,
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                          console.log("marked complete");
                         }}
                       >
                         <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Go Back",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.progresslist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "ADD_NEW",
+                            payload: {
+                              id: item.id,
+                              email: item.email,
+                              first_name: item.first_name,
+                              last_name: item.last_name,
+                              order_number: item.order_number,
+                              sku: item.sku,
+                              description: item.description,
+                              product_length: item.product_length,
+                              product_options: item.product_options,
+                              qty: item.qty,
+                              assigned: item.assigned,
+                              created_at: item.created_at,
+                              priority: item.priority,
+                            },
+                          });
+                          this.props.dispatch({
+                            type: "DELETE_PROGRESS",
+                            payload: item.id,
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        <RestoreIcon></RestoreIcon>
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Mark Priority",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.progresslist[dataIndex] &&
+                      this.props.progresslist[dataIndex].priority === "low" ? (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.progresslist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "MARK_PRIORITY_PROGRESS",
+                            payload: {
+                              id: item.id,
+                              priority: "high",
+                            },
+                          });
+
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        <FlagIcon></FlagIcon>
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.progresslist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "MARK_PRIORITY_PROGRESS",
+                            payload: {
+                              id: item.id,
+                              priority: "low",
+                            },
+                          });
+
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        <FlagIcon></FlagIcon>
                       </Button>
                     );
                   },

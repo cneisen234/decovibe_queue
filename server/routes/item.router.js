@@ -130,9 +130,73 @@ router.put("/assign", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.put("/priority", rejectUnauthenticated, (req, res) => {
+  const { priority, id } = req.body;
+  // setting query text to update the username
+  const queryText = 'UPDATE "item" SET priority=$1 WHERE id=$2';
+
+  pool
+    .query(queryText, [priority, id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
+router.put("/priorityprogress", rejectUnauthenticated, (req, res) => {
+  const { priority, id } = req.body;
+  // setting query text to update the username
+  const queryText = 'UPDATE "progress" SET priority=$1 WHERE id=$2';
+
+  pool
+    .query(queryText, [priority, id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
+router.put("/prioritycustom", rejectUnauthenticated, (req, res) => {
+  const { priority, id } = req.body;
+  // setting query text to update the username
+  const queryText = 'UPDATE "customitem" SET priority=$1 WHERE id=$2';
+
+  pool
+    .query(queryText, [priority, id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
+router.put("/priorityrespond", rejectUnauthenticated, (req, res) => {
+  const { priority, id } = req.body;
+  // setting query text to update the username
+  const queryText = 'UPDATE "customerrespond" SET priority=$1 WHERE id=$2';
+
+  pool
+    .query(queryText, [priority, id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
 router.get("/itemlist", rejectUnauthenticated, (req, res) => {
 
-  const queryText = `SELECT * FROM "item" ORDER BY sku;`;
+  const queryText = `SELECT * FROM "item" ORDER BY id DESC;`;
   pool
     .query(queryText)
     .then((result) => {
@@ -174,7 +238,7 @@ router.post("/checkhistory", (req, res) => {
 });
 
 router.get("/customitemlist", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "customitem" ORDER BY sku;`;
+  const queryText = `SELECT * FROM "customitem" ORDER BY id DESC;`;
   pool
     .query(queryText)
     .then((result) => {
@@ -215,7 +279,7 @@ router.get("/customitemlistcount", rejectUnauthenticated, (req, res) => {
 
 router.get("/progresslist", rejectUnauthenticated, (req, res) => {
 
-  const queryText = `SELECT * FROM "progress" ORDER BY sku;`;
+  const queryText = `SELECT * FROM "progress" ORDER BY id DESC;`;
   pool
     .query(queryText)
     .then((result) => {
@@ -242,7 +306,7 @@ router.get("/progresslistcount", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/confirmlist", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "customerconfirm" ORDER BY sku;`;
+  const queryText = `SELECT * FROM "customerconfirm" ORDER BY id DESC;`;
   pool
     .query(queryText)
     .then((result) => {
@@ -268,7 +332,7 @@ router.get("/confirmlistcount", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/respondlist", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "customerrespond" ORDER BY sku;`;
+  const queryText = `SELECT * FROM "customerrespond" ORDER BY id DESC;`;
   pool
     .query(queryText)
     .then((result) => {
@@ -295,7 +359,20 @@ router.get("/respondlistcount", rejectUnauthenticated, (req, res) => {
 
 router.get("/completelist", rejectUnauthenticated, (req, res) => {
 
-  const queryText = `SELECT * FROM "complete" ORDER BY sku;`;
+  const queryText = `SELECT * FROM "complete" ORDER BY id DESC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/replies", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM "replies" ORDER BY id DESC;`;
   pool
     .query(queryText)
     .then((result) => {

@@ -19,7 +19,7 @@ class MUITable extends Component {
       filter: true,
       filterType: "dropdown",
       responsive: "vertical",
-      tableBodyHeight: "800px",
+      tableBodyHeight: "7400px",
       tableBodyMaxHeight: " ",
       rowsPerPage: 100,
       rowsPerPageOptions: [100, 500, 1000],

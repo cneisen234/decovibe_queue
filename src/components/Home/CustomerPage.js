@@ -65,7 +65,7 @@ class CustomerPage extends Component {
     //grabs local state and defines it in a var of the same name
     const { approve, comments, token } = this.state;
     //don't run function if any of these values below are null
-    if (approve === null || comments === null) {
+    if (approve === null) {
       //...if they are null set error state to true to conditionally render alert toast
       this.setState({
         error: true,
@@ -78,38 +78,92 @@ class CustomerPage extends Component {
       }, 5000);
       //stop the function
       return;
+    } else if (approve === 'No' && comments === null) {
+
+      this.setState({
+        error: true,
+      });
+      //...set it back to false after 5 secondss
+      setTimeout(() => {
+        this.setState({
+          error: false,
+        });
+      }, 5000);
+      //stop the function
+      return;
+    } else if (approve === "Yes") {
+      //begin sweetAlerts
+      Swal.fire({
+        title: "Please confirm details below",
+        html: `1. Approve: ${approve} <br/><br/>`,
+        icon: "question",
+        customClass: {
+          actions: "confirm",
+        },
+        showCancelButton: true,
+        confirmButtonColor: "#5cb85c",
+        cancelButtonColor: "#fcb70a",
+        confirmButtonText: "Confirm",
+      }).then((result) => {
+        //end sweetAlerts
+
+        //on confirm run the dispatch to send makeEntry info over to redux sagas
+        if (result.value) {
+          this.props.dispatch({
+            type: "CUSTOMER_RESPONSE",
+            payload: { approve: approve, comments: comments, token: token },
+          });
+          //begin sweetAlerts
+          Swal.fire(
+            "Success!",
+            "Your feedback has been submitted to the art department",
+            "success"
+          ); //end sweetAlerts
+          this.setState({
+            toggle: !this.state.toggle,
+          });
+        }
+      });
+    } else if (approve === "No" && comments !== null) {
+            Swal.fire({
+              title: "Please confirm details below",
+              html: `1. Approve: ${approve} <br/>
+              2. Your Feedback: ${comments} <br/><br/>`,
+              icon: "question",
+                customClass: {
+    actions: 'confirm',
+  },
+              showCancelButton: true,
+              confirmButtonColor: "#5cb85c",
+              cancelButtonColor: "#fcb70a",
+              confirmButtonText: "Confirm",
+            }).then((result) => {
+              //end sweetAlerts
+
+              //on confirm run the dispatch to send makeEntry info over to redux sagas
+              if (result.value) {
+                this.props.dispatch({
+                  type: "CUSTOMER_RESPONSE",
+                  payload: {
+                    approve: approve,
+                    comments: comments,
+                    token: token,
+                  },
+                });
+                //begin sweetAlerts
+                Swal.fire(
+                  "Success!",
+                  "Your feedback has been submitted to the art department",
+                  "success"
+                ); //end sweetAlerts
+                this.setState({
+                  toggle: !this.state.toggle,
+                });
+              }
+            });
     }
 
-    //begin sweetAlerts
-    Swal.fire({
-      title: "Please confirm details below",
-      html: `1. Approve: ${approve} <br/>
-      2. Comments: ${comments}`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#5cb85c",
-      cancelButtonColor: "#fcb70a",
-      confirmButtonText: "Confirm my entry",
-    }).then((result) => {
-      //end sweetAlerts
-
-      //on confirm run the dispatch to send makeEntry info over to redux sagas
-      if (result.value) {
-        this.props.dispatch({
-          type: "CUSTOMER_RESPONSE",
-          payload: { approve: approve, comments: comments, token: token },
-        });
-        //begin sweetAlerts
-        Swal.fire(
-          "Success!",
-          "Your feedback has been submitted to the art department",
-          "success"
-        ); //end sweetAlerts
-         this.setState({
-           toggle: !this.state.toggle,
-         });
-      }
-    });
+ 
   }; //ends SubmitInfo
   render() {
     return (
@@ -163,6 +217,11 @@ class CustomerPage extends Component {
                 </FormControl>
                 <br />
                 <br />
+                {this.state.approve === null ? (
+                  <span></span>
+                ) : (
+                this.state.approve === "No" ? (
+                  <>
                 <p>2. Please leave any comments you have below</p>
                 <TextField //box for student to enter in text
                   style={{
@@ -186,7 +245,12 @@ class CustomerPage extends Component {
                   maxLength={1000}
                   //onChange of input values set local state
                   onChange={(event) => this.handleChange(event, "comments")} //onChange of input values set local state
-                />{" "}
+                />
+                </>
+                ) : (
+                  <span>This is for "yes"</span>
+                )
+                )}
                 <center>
                   <Button //button that, one clicked, submits the entry to the database
                     style={{

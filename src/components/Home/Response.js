@@ -9,6 +9,7 @@ import { Paper, TextField } from "@material-ui/core";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import DeleteIcon from "@material-ui/icons/Delete";
+import FlagIcon from "@material-ui/icons/Flag";
 
 class Response extends Component {
   state = {
@@ -117,6 +118,7 @@ class Response extends Component {
     const data = this.props.respondlist.map((respond) => [
       respond.order_number,
       respond.sku,
+      respond.description,
       respond.qty,
       respond.first_name,
       respond.last_name,
@@ -124,6 +126,7 @@ class Response extends Component {
       respond.assigned,
       respond.comments,
       respond.created_at,
+      respond.priority
     ]);
     return (
       <div>
@@ -133,7 +136,7 @@ class Response extends Component {
         </center>
 
         <div style={{ padding: "1.5%" }}>
-          {this.state.toggle3 === false ? (
+          {/* {this.state.toggle3 === false ? (
             <Button
               variant="primary"
               onClick={(event) => {
@@ -169,90 +172,185 @@ class Response extends Component {
                 dataSelector = [];
                 this.setState({
                   toggle3: !this.state.toggle3,
+                  dataSelector: [],
                 });
                 console.log(dataSelector);
               }}
             >
               Deselect All
             </Button>
-          )}
+          )} */}
           <Button
             variant="success"
             onClick={(event) => {
               event.preventDefault();
               console.log(dataSelector);
-              swal({
-                title: "Mark Complete?",
-                text:
-                  "Click 'ok' to mark the selected orders complete, this can't be undone!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                //end sweet alerts
-              }).then((willDelete) => {
-                // start .then
-                //if confirmed, delete
-                if (willDelete) {
-                  for (let index = 0; index < dataSelector.length; index++) {
-                    const element = dataSelector[index];
-                    this.props.dispatch({
-                      type: "MARK_COMPLETE",
-                      payload: {
-                        id: element.id,
-                        email: element.email,
-                        first_name: element.first_name,
-                        last_name: element.last_name,
-                        order_number: element.order_number,
-                        sku: element.sku,
-                        product_length: element.product_length,
-                        product_options: element.product_options,
-                        qty: element.qty,
-                        assigned: element.assigned,
-                        created_at: element.created_at,
-                      },
-                    });
-                    this.props.dispatch({
-                      type: "DELETE_RESPOND",
-                      payload: element.id,
-                    });
-                  }
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST",
-                  });
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_RESPOND_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CONFIRM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_PROGRESS_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_COMPLETE_LIST_COUNT",
-                  });
-                  //success! review deleted
-                  console.log("delete successful");
-                  let checkInput = document.getElementsByTagName("input");
-                  for (let index = 0; index < checkInput.length; index++) {
-                    const element = checkInput[index];
-                    console.log(element.checked);
-                    element.checked = false;
-                  }
-                } else {
-                  //...else cancel action
-                  console.log("action canceled");
-                }
+
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "MARK_COMPLETE",
+                  payload: {
+                    id: element.id,
+                    email: element.email,
+                    first_name: element.first_name,
+                    last_name: element.last_name,
+                    order_number: element.order_number,
+                    sku: element.sku,
+                    description: element.description,
+                    product_length: element.product_length,
+                    product_options: element.product_options,
+                    qty: element.qty,
+                    assigned: element.assigned,
+                    created_at: element.created_at,
+                  },
+                });
+                this.props.dispatch({
+                  type: "DELETE_RESPOND",
+                  payload: element.id,
+                });
+              }
+              this.props.dispatch({
+                type: "GET_ITEM_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              console.log("delete successful");
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
               });
             }}
           >
-            Mark Selected Complete
+            <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+          </Button>
+          <Button
+            variant="danger"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "MARK_PRIORITY_RESPOND",
+                  payload: {
+                    id: element.id,
+                    priority: "high",
+                  },
+                });
+              }
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
+              });
+            }}
+          >
+            <FlagIcon></FlagIcon>
+          </Button>
+          <Button
+            variant="success"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "MARK_PRIORITY_RESPOND",
+                  payload: {
+                    id: element.id,
+                    priority: "low",
+                  },
+                });
+              }
+              this.props.dispatch({
+                type: "GET_ITEM_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
+              });
+            }}
+          >
+            <FlagIcon></FlagIcon>
           </Button>
           <Button
             variant="danger"
@@ -307,6 +405,11 @@ class Response extends Component {
                     console.log(element.checked);
                     element.checked = false;
                   }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
                 } else {
                   //...else cancel action
                   console.log("delete canceled");
@@ -314,7 +417,7 @@ class Response extends Component {
               });
             }}
           >
-            Delete Selected
+            <DeleteIcon></DeleteIcon>
           </Button>
           <MUITable
             data={data}
@@ -363,6 +466,7 @@ class Response extends Component {
               },
               { name: "Order Number" },
               { name: "SKU" },
+              { name: "Description" },
               { name: "QTY" },
               { name: "First Name" },
               { name: "Last Name" },
@@ -370,6 +474,7 @@ class Response extends Component {
               { name: "Assigned" },
               { name: "Comments" },
               { name: "Created At" },
+              { name: "Priority" },
               {
                 name: "Review",
                 options: {
@@ -407,6 +512,7 @@ class Response extends Component {
                                   last_name: item.last_name,
                                   order_number: item.order_number,
                                   sku: item.sku,
+                                  description: item.description,
                                   qty: item.qty,
                                   assigned: item.assigned,
                                   created_at: item.created_at,
@@ -492,6 +598,100 @@ class Response extends Component {
                         }}
                       >
                         <ViewListIcon></ViewListIcon>
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Mark Priority",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.respondlist[dataIndex] &&
+                      this.props.respondlist[dataIndex].priority === "low" ? (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.respondlist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "MARK_PRIORITY_RESPOND",
+                            payload: {
+                              id: item.id,
+                              priority: "high",
+                            },
+                          });
+
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        <FlagIcon></FlagIcon>
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.respondlist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "MARK_PRIORITY_RESPOND",
+                            payload: {
+                              id: item.id,
+                              priority: "low",
+                            },
+                          });
+
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        <FlagIcon></FlagIcon>
                       </Button>
                     );
                   },
@@ -606,6 +806,7 @@ class Response extends Component {
                   marginRight: "auto",
                   marginTop: "20px",
                   width: "100%",
+                  textAlign: "center",
                 }}
               >
                 <tr>

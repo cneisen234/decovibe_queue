@@ -10,6 +10,7 @@ import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import DeleteIcon from "@material-ui/icons/Delete";
+import FlagIcon from "@material-ui/icons/Flag";
 import { auto } from "async";
 import ReactFilestack from "filestack-react";
 import swal from "sweetalert";
@@ -21,6 +22,7 @@ class NewCustom extends Component {
     toggle: false,
     toggle2: false,
     toggle3: false,
+    toggle4: false,
     email: "",
     first_name: "",
     last_name: "",
@@ -28,6 +30,7 @@ class NewCustom extends Component {
     qty: "",
     id: "",
     sku: "",
+    description: "",
     qty: "",
     assigned: "",
     created_at: "",
@@ -51,19 +54,44 @@ class NewCustom extends Component {
     pic18: "",
     pic19: "",
     pic20: "",
+    filename1: "",
+    filename2: "",
+    filename3: "",
+    filename4: "",
+    filename5: "",
+    filename6: "",
+    filename7: "",
+    filename8: "",
+    filename9: "",
+    filename10: "",
+    filename11: "",
+    filename12: "",
+    filename13: "",
+    filename14: "",
+    filename15: "",
+    filename16: "",
+    filename17: "",
+    filename18: "",
+    filename19: "",
+    filename20: "",
     comments: "",
     dataSelector: [],
+    priority: "",
+    canned: "",
   };
   componentDidMount() {
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
     this.props.dispatch({
+      type: "GET_REPLIES",
+    });
+    this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_RESPOND_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -79,9 +107,9 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "DELETE_COMPLETE_RANGE",
     });
-     this.props.dispatch({
-       type: "DELETE_HISTORY_RANGE",
-     });
+    this.props.dispatch({
+      type: "DELETE_HISTORY_RANGE",
+    });
   }
 
   handleChange = (event, fieldName) => {
@@ -98,9 +126,9 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_RESPOND_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -124,9 +152,35 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_RESPOND_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
+  };
+  toggle4 = () => {
+    this.setState({
+      toggle4: !this.state.toggle4,
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -160,9 +214,9 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_RESPOND_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -189,11 +243,13 @@ class NewCustom extends Component {
     const data = this.props.customitemlist.map((item) => [
       item.order_number,
       item.sku,
+      item.description,
       item.qty,
       item.first_name,
       item.last_name,
       item.assigned,
       item.created_at,
+      item.priority,
     ]);
     return (
       <div>
@@ -204,7 +260,7 @@ class NewCustom extends Component {
         <div className="navbuttonscontainer"></div>
 
         <div style={{ padding: "1.5%" }}>
-          {this.state.toggle3 === false ? (
+          {/* {this.state.toggle3 === false ? (
             <Button
               variant="primary"
               onClick={(event) => {
@@ -240,13 +296,25 @@ class NewCustom extends Component {
                 dataSelector = [];
                 this.setState({
                   toggle3: !this.state.toggle3,
+                  dataSelector: [],
                 });
                 console.log(dataSelector);
               }}
             >
               Deselect All
             </Button>
-          )}
+          )} */}
+          <Button
+            variant="success"
+            onClick={(event) => {
+              this.setState({
+                toggle4: !this.state.toggle4,
+                toggle3: false,
+              });
+            }}
+          >
+            <AssignmentIndIcon></AssignmentIndIcon>
+          </Button>
           <Button
             variant="success"
             onClick={(event) => {
@@ -275,11 +343,13 @@ class NewCustom extends Component {
                         last_name: element.last_name,
                         order_number: element.order_number,
                         sku: element.sku,
+                        description: element.description,
                         product_length: element.product_length,
                         product_options: element.product_options,
                         qty: element.qty,
                         assigned: element.assigned,
                         created_at: element.created_at,
+                        priority: element.priority,
                       },
                     });
                     this.props.dispatch({
@@ -316,6 +386,11 @@ class NewCustom extends Component {
                     console.log(element.checked);
                     element.checked = false;
                   }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
                 } else {
                   //...else cancel action
                   console.log("action canceled");
@@ -323,7 +398,111 @@ class NewCustom extends Component {
               });
             }}
           >
-            Mark Selected Complete
+            <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+          </Button>
+          <Button
+            variant="danger"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "MARK_PRIORITY_CUSTOM",
+                  payload: {
+                    id: element.id,
+                    priority: "high",
+                  },
+                });
+              }
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
+              });
+            }}
+          >
+            <FlagIcon></FlagIcon>
+          </Button>
+          <Button
+            variant="success"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                this.props.dispatch({
+                  type: "MARK_PRIORITY_CUSTOM",
+                  payload: {
+                    id: element.id,
+                    priority: "low",
+                  },
+                });
+              }
+              this.props.dispatch({
+                type: "GET_ITEM_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+              //success! review deleted
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
+              });
+            }}
+          >
+            <FlagIcon></FlagIcon>
           </Button>
           <Button
             variant="danger"
@@ -378,6 +557,11 @@ class NewCustom extends Component {
                     console.log(element.checked);
                     element.checked = false;
                   }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
                 } else {
                   //...else cancel action
                   console.log("delete canceled");
@@ -385,7 +569,7 @@ class NewCustom extends Component {
               });
             }}
           >
-            Delete Selected
+            <DeleteIcon></DeleteIcon>
           </Button>
           <MUITable
             data={data} //brings in data as an array, in this case, list of items
@@ -434,11 +618,13 @@ class NewCustom extends Component {
               },
               { name: "Order Number" },
               { name: "SKU" },
+              { name: "Description" },
               { name: "QTY" },
               { name: "First Name" },
               { name: "Last Name" },
               { name: "Assigned" },
               { name: "Created At" },
+              { name: "Priority" },
               {
                 name: "View Details",
                 options: {
@@ -447,50 +633,62 @@ class NewCustom extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.customitemlist;
-                          const item = itemArray[dataIndex];
-                          const order_number = item.order_number;
-                          const sku = item.sku;
-                          const email = item.email;
-                          const first_name = item.first_name;
-                          const last_name = item.last_name;
-                          const qty = item.qty;
-                          const assigned = item.assigned;
-                          const created_at = item.created_at;
-                          const id = item.id;
-                          console.log("this is item", item);
-                          console.log("this is order_number", order_number);
-                          this.setState({
-                            toggle2: !this.state.toggle2,
-                            order_number: order_number,
-                            sku: sku,
-                            email: email,
-                            first_name: first_name,
-                            last_name: last_name,
-                            qty: qty,
-                            assigned: assigned,
-                            created_at: created_at,
-                            id: id,
-                          });
-                          console.log("this is state", this.state.order_number);
-                          this.props.dispatch({
-                            type: "ORDER_DETAILS",
-                            payload: {
+                      <>
+                        <Button
+                          variant="success"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const itemArray = this.props.customitemlist;
+                            const item = itemArray[dataIndex];
+                            const order_number = item.order_number;
+                            const sku = item.sku;
+                            const description = item.description;
+                            const email = item.email;
+                            const first_name = item.first_name;
+                            const last_name = item.last_name;
+                            const qty = item.qty;
+                            const assigned = item.assigned;
+                            const created_at = item.created_at;
+                            const id = item.id;
+                            const priority = item.priority;
+                            console.log("this is item", item);
+                            console.log("this is order_number", order_number);
+                            this.setState({
+                              toggle2: !this.state.toggle2,
                               order_number: order_number,
-                            },
-                          });
-                          console.log(
-                            "this is details",
-                            this.props.detailslist
-                          );
-                        }}
-                      >
-                        <ViewListIcon></ViewListIcon>
-                      </Button>
+                              sku: sku,
+                              description: description,
+                              email: email,
+                              first_name: first_name,
+                              last_name: last_name,
+                              qty: qty,
+                              assigned: assigned,
+                              created_at: created_at,
+                              id: id,
+                              priority: priority,
+                            });
+                            console.log(
+                              "this is state",
+                              this.state.order_number
+                            );
+                            this.props.dispatch({
+                              type: "ORDER_DETAILS",
+                              payload: {
+                                order_number: order_number,
+                              },
+                            });
+                            this.props.dispatch({
+                              type: "GET_REPLIES",
+                            });
+                            console.log(
+                              "this is details",
+                              this.props.detailslist
+                            );
+                          }}
+                        >
+                          <ViewListIcon></ViewListIcon>
+                        </Button>
+                      </>
                     );
                   },
                 },
@@ -558,9 +756,11 @@ class NewCustom extends Component {
                                     last_name: item.last_name,
                                     order_number: item.order_number,
                                     sku: item.sku,
+                                    description: item.description,
                                     qty: item.qty,
                                     assigned: item.assigned,
                                     created_at: item.created_at,
+                                    priority: item.priority,
                                   },
                                 });
                                 this.props.dispatch({
@@ -599,6 +799,101 @@ class NewCustom extends Component {
                           <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
                         </Button>
                       )
+                    );
+                  },
+                },
+              },
+              {
+                name: "Mark Priority",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.customitemlist[dataIndex] &&
+                      this.props.customitemlist[dataIndex].priority ===
+                        "low" ? (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.customitemlist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "MARK_PRIORITY_CUSTOM",
+                            payload: {
+                              id: item.id,
+                              priority: "high",
+                            },
+                          });
+
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        <FlagIcon></FlagIcon>
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.customitemlist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "MARK_PRIORITY_CUSTOM",
+                            payload: {
+                              id: item.id,
+                              priority: "low",
+                            },
+                          });
+
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        <FlagIcon></FlagIcon>
+                      </Button>
                     );
                   },
                 },
@@ -769,6 +1064,7 @@ class NewCustom extends Component {
                     marginRight: "auto",
                     marginTop: "20px",
                     width: "100%",
+                    textAlign: "center",
                   }}
                 >
                   <tr>
@@ -806,6 +1102,7 @@ class NewCustom extends Component {
                     if (this.state.sku == item.sku) {
                       let newIndex = index + 1;
                       let pic = "pic" + newIndex;
+                      let filename = "filename" + newIndex;
                       let itemname = item.name;
                       let itemsku = item.sku;
                       let itemcost = Number(item.base_price).toFixed(2);
@@ -877,27 +1174,103 @@ class NewCustom extends Component {
                                   this.setState({
                                     //path for uploaded photo to display on dom
                                     [pic]: res.filesUploaded[0].url,
+                                    [filename]: res.filesUploaded[0].originalPath,
                                   })
                                 }
                               />
                               Uploaded file
                             </td>
                           </tr>
-                          <tr>
-                            <td>
-                              <b>You're upload:</b>{" "}
-                              <img
-                                src={this.state[pic]}
-                                alt="your upload"
-                                width="100"
-                                height="100"
-                              ></img>
-                            </td>
-                          </tr>
+                          {this.state[pic] !== "" ? (
+                            <tr>
+                              <td>
+                                <a href={this.state[pic]} target="_blank">
+                                  <b>{this.state[filename]}</b>
+                                </a>
+                              </td>
+                            </tr>
+                          ) : (
+                            <span></span>
+                          )}
                         </>
                       );
                     }
                   })}{" "}
+                  <br />
+                  <br />
+                  <tr>
+                    <td>
+                      {" "}
+                      <TextField
+                        style={{
+                          width: "50%",
+                        }}
+                        variant="outlined"
+                        label="Add new canned response"
+                        name="edit"
+                        placeholder="...canned response"
+                        // value of local state as text value
+                        value={this.state.canned}
+                        type="text"
+                        maxLength={10000}
+                        //runs handleChange on input change
+                        onChange={(event) => this.handleChange(event, "canned")}
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          this.props.dispatch({
+                            type: "CANNED",
+                            payload: {
+                              canned: this.state.canned,
+                            },
+                          });
+                          this.setState({
+                            canned: "",
+                          });
+                          this.props.dispatch({
+                            type: "GET_REPLIES",
+                          });
+                        }}
+                      >
+                        Add Canned Response
+                      </Button>
+                    </td>
+                  </tr>
+                  <br />
+                  <br />
+                  <tr>
+                    <td>
+                      <Form.Control
+                        as="select"
+                        onChange={(event) =>
+                          this.setState({
+                            comments: event.target.value,
+                          })
+                        }
+                        style={{
+                          width: "50%",
+                          margin: "auto",
+                        }}
+                      >
+                        <option value="">Canned Responses</option>{" "}
+                        {this.props.replieslist
+                          ? this.props.replieslist.map((item) => (
+                              <option key={item.id} value={item.reply}>
+                                {" "}
+                                {String(item.reply)}{" "}
+                              </option>
+                            ))
+                          : ""}
+                      </Form.Control>
+                    </td>
+                  </tr>
+                  <br />
                   <br />
                   <tr>
                     <td>
@@ -926,6 +1299,30 @@ class NewCustom extends Component {
                       />
                     </td>
                   </tr>
+                  <br />
+                  <br />
+                  <tr>
+                    <td>
+                      {" "}
+                      <TextField
+                        style={{
+                          width: "50%",
+                        }}
+                        variant="outlined"
+                        label="Customer email"
+                        name="edit"
+                        placeholder="...enter email"
+                        // value of local state as text value
+                        value={this.state.email}
+                        type="text"
+                        maxLength={10000}
+                        //runs handleChange on input change
+                        onChange={(event) => this.handleChange(event, "email")}
+                      />
+                    </td>
+                  </tr>
+                  <br />
+                  <br />
                   <tr>
                     <td>
                       <Button
@@ -961,9 +1358,11 @@ class NewCustom extends Component {
                               last_name: this.state.last_name,
                               order_number: this.state.order_number,
                               sku: this.state.sku,
+                              description: this.state.description,
                               qty: this.state.qty,
                               assigned: this.state.assigned,
                               created_at: this.state.created_at,
+                              priority: this.state.priority,
                             },
                           });
                           this.props.dispatch({
@@ -1001,11 +1400,22 @@ class NewCustom extends Component {
                       </Button>
                     </td>
                   </tr>
+                  <br />
+                  <br />
+                  <tr>
+                    <td>
+                      {" "}
+                      <Button
+                        onClick={this.toggle2}
+                        variant="success"
+                        type="submit"
+                      >
+                        Close
+                      </Button>
+                    </td>
+                  </tr>
                 </table>
                 {/* toggles edit window back to not displaying */}
-                <Button onClick={this.toggle2} variant="success" type="submit">
-                  Close
-                </Button>
                 <br />
                 <br />
                 <br />
@@ -1013,6 +1423,116 @@ class NewCustom extends Component {
                 <br />
                 <br />
               </div>
+            </Paper>
+          )}
+          {this.state.toggle4 === false ? (
+            //if toggle is false, render nothing. This is the default
+            <span></span>
+          ) : (
+            <Paper
+              style={{
+                right: 0,
+                bottom: 0,
+                position: "fixed",
+                borderRadius: "10%",
+                height: "600px",
+                width: "400px",
+                zIndex: "1000000000",
+                border: "50px",
+                overflow: "scroll",
+                fontSize: "15px",
+                backgroundColor: "white",
+              }}
+              elevation="24"
+              className="loginBox"
+            >
+              <td
+                style={{
+                  backgroundColor: "white",
+                  padding: "5%",
+                }}
+              >
+                <br />
+                <br />{" "}
+                <form
+                  onSubmit={(event) => {
+                    //prevents default action
+                    event.preventDefault();
+                    const { assigned } = this.state;
+                    for (let index = 0; index < dataSelector.length; index++) {
+                      const element = dataSelector[index];
+                      this.props.dispatch({
+                        type: "ASSIGN_CUSTOM_TASK",
+                        payload: {
+                          id: element.id,
+                          assigned: assigned,
+                        },
+                      });
+                      this.setState({
+                        toggle4: false,
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                    }
+                    let checkInput = document.getElementsByTagName("input");
+                    for (let index = 0; index < checkInput.length; index++) {
+                      const element = checkInput[index];
+                      console.log(element.checked);
+                      element.checked = false;
+                    }
+                    dataSelector = [];
+                    this.setState({
+                      dataSelector: [],
+                    });
+                  }}
+                >
+                  <Form.Control
+                    style={{ width: "300px" }}
+                    as="select"
+                    onChange={(event) =>
+                      this.setState({ assigned: event.target.value })
+                    }
+                  >
+                    <option value="">Pick From Below </option>{" "}
+                    <option value="Maggi">Maggi </option>{" "}
+                    <option value="Zach">Zach </option>{" "}
+                    <option value="Levi">Levi </option>{" "}
+                  </Form.Control>
+                  <br />
+                  {/* onClick tied to form element, runs submitInfo on click */}
+                  <Button variant="success" type="submit">
+                    Assign
+                  </Button>
+                </form>
+                {/* toggles edit window back to not displaying */}
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <Button onClick={this.toggle4} variant="success" type="submit">
+                  Go Back
+                </Button>
+              </td>
             </Paper>
           )}
         </div>
@@ -1027,5 +1547,6 @@ class NewCustom extends Component {
 const mapStateToProps = (state) => ({
   customitemlist: state.item.customitemlist,
   detailslist: state.item.detailslist,
+  replieslist: state.item.replieslist,
 });
 export default connect(mapStateToProps)(NewCustom);

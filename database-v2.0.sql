@@ -22,6 +22,7 @@ CREATE TABLE "item"
 	"qty" DECIMAL,
 	"assigned" VARCHAR(255),
 	"created_at" TEXT
+	"priority" VARCHAR(5) DEFAULT 'low'
 );
 
 CREATE TABLE "customitem"
@@ -36,7 +37,8 @@ CREATE TABLE "customitem"
 	"assigned" VARCHAR(255),
 	"upload_url" TEXT,
 	"comments" TEXT,
-	"created_at" TEXT
+	"created_at" TEXT,
+	"priority" VARCHAR(5) DEFAULT 'low'
 );
 
 CREATE TABLE "customerconfirm"
@@ -71,7 +73,8 @@ CREATE TABLE "customerconfirm"
 	"upload_url20" TEXT,
 	"comments" TEXT,
 	"created_at" TEXT,
-	"token" TEXT
+	"token" TEXT,
+	"priority" VARCHAR(5)
 );
 
 CREATE TABLE "customerrespond"
@@ -87,7 +90,8 @@ CREATE TABLE "customerrespond"
 	"approve" VARCHAR(10),
 	"comments" TEXT,
 	"created_at" TEXT,
-	"token" TEXT
+	"token" TEXT,
+	"priority" VARCHAR(5)
 );
 
 CREATE TABLE "history"
@@ -105,6 +109,7 @@ CREATE TABLE "history"
 	"customercomments" TEXT,
 	"comment_made_at" TEXT,
 	"timestamp" DATE NOT NULL DEFAULT NOW()
+
 );
 
 CREATE TABLE "complete"
@@ -120,7 +125,13 @@ CREATE TABLE "complete"
 	"qty" DECIMAL,
 	"assigned" VARCHAR(255),
 	"created_at" TEXT,
-	"timestamp" DATE NOT NULL DEFAULT NOW()
+	"timestamp" DATE NOT NULL DEFAULT NOW(),
+	"priority" VARCHAR(5)
 );
+
+CREATE TABLE "replies" (
+	"id" serial NOT NULL,
+	"reply" TEXT
+)
 
 

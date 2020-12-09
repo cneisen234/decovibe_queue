@@ -51,6 +51,12 @@ input {
     outline:0;
     cursor: pointer;
 }
+
+.confirm {
+  margin: 0 !important;
+  flex-direction: row-reverse;
+}
+
 .picUploader:hover {
   background-color:#388e3c;
     color:white;

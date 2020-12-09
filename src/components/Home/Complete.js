@@ -9,6 +9,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import { auto } from "async";
 import swal from "sweetalert";
+import RestoreIcon from "@material-ui/icons/Restore";
 
 class Complete extends Component {
   state = {
@@ -86,12 +87,12 @@ class Complete extends Component {
     const data = this.props.completelist.map((complete) => [
       complete.order_number,
       complete.sku,
+      complete.description,
       complete.product_length,
       complete.qty,
-      complete.first_name,
-      complete.last_name,
       complete.assigned,
       complete.created_at,
+      complete.priority
     ]);
     return (
       <div>
@@ -101,7 +102,7 @@ class Complete extends Component {
         </center>
 
         <div style={{ padding: "1.5%" }}>
-          {this.state.toggle3 === false ? (
+          {/* {this.state.toggle3 === false ? (
             <Button
               variant="primary"
               onClick={(event) => {
@@ -113,7 +114,7 @@ class Complete extends Component {
                   element.checked = true;
                 }
                 this.props.completelist.map((item) => {
-                  dataSelector.push(item.id);
+                  dataSelector.push(item);
                 });
                 this.setState({
                   toggle3: !this.state.toggle3,
@@ -137,13 +138,132 @@ class Complete extends Component {
                 dataSelector = [];
                 this.setState({
                   toggle3: !this.state.toggle3,
+                  dataSelector: [],
                 });
                 console.log(dataSelector);
               }}
             >
               Deselect All
             </Button>
-          )}
+          )} */}
+          <Button
+            variant="success"
+            onClick={(event) => {
+              event.preventDefault();
+              console.log(dataSelector);
+
+              for (let index = 0; index < dataSelector.length; index++) {
+                const element = dataSelector[index];
+                let decoSku = element.sku;
+                console.log(element);
+                let decoSku2 = decoSku.slice(0, 2);
+                let decoSku3 = decoSku.slice(0, 6);
+                let decoSku4 = decoSku.slice(0, 5);
+                let decoSku5 = decoSku.slice(0, 3);
+                let decoSku6 = decoSku.slice(0, 8);
+                if (
+                  decoSku5 === "CD1" ||
+                  decoSku5 === "CD2" ||
+                  decoSku5 === "CD3" ||
+                  decoSku5 === "CD4" ||
+                  decoSku5 === "CD5" ||
+                  decoSku5 === "CD6" ||
+                  decoSku5 === "CD7" ||
+                  decoSku5 === "CD8" ||
+                  decoSku5 === "CD9" ||
+                  decoSku5 === "CS1" ||
+                  decoSku5 === "CS2" ||
+                  decoSku5 === "CS3" ||
+                  decoSku5 === "CS4" ||
+                  decoSku5 === "CS5" ||
+                  decoSku5 === "CS6" ||
+                  decoSku5 === "CS7" ||
+                  decoSku5 === "CS8" ||
+                  decoSku5 === "CS9" ||
+                  decoSku5 === "SD1" ||
+                  decoSku5 === "SD2" ||
+                  decoSku5 === "SD3" ||
+                  decoSku5 === "SD4" ||
+                  decoSku5 === "SD5" ||
+                  decoSku5 === "SD6" ||
+                  decoSku5 === "SD7" ||
+                  decoSku5 === "SD8" ||
+                  decoSku5 === "SD9" ||
+                  decoSku3 === "CUSTOM" ||
+                  decoSku3 === "SUBKIT" ||
+                  decoSku6 === "SETUPFEE" ||
+                  decoSku3 === "SISER-" ||
+                  decoSku5 === "SP-" ||
+                  decoSku5 === "CP-"
+                ) {
+                  this.props.dispatch({
+                    type: "START_ITEM",
+                    payload: {
+                      id: element.id,
+                      email: element.email,
+                      first_name: element.first_name,
+                      last_name: element.last_name,
+                      order_number: element.order_number,
+                      sku: element.sku,
+                      description: element.description,
+                      product_length: element.product_length,
+                      product_options: element.product_options,
+                      qty: element.qty,
+                      assigned: element.assigned,
+                      created_at: element.created_at,
+                      priority: element.priority,
+                    },
+                  });
+                  this.props.dispatch({
+                    type: "DELETE_COMPLETE",
+                    payload: element.id,
+                  });
+                } else {
+                  console.log("skipping custom order");
+                }
+              }
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST",
+              });
+              this.props.dispatch({
+                type: "GET_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_RESPOND_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CONFIRM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_PROGRESS_LIST_COUNT",
+              });
+              this.props.dispatch({
+                type: "GET_COMPLETE_LIST_COUNT",
+              });
+
+              //success! review deleted
+              console.log("delete successful");
+              let checkInput = document.getElementsByTagName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                console.log(element.checked);
+                element.checked = false;
+              }
+              dataSelector = [];
+              this.setState({
+                dataSelector: [],
+                toggle3: false,
+              });
+            }}
+          >
+            <RestoreIcon></RestoreIcon>
+          </Button>
           <Button
             variant="danger"
             onClick={(event) => {
@@ -165,7 +285,7 @@ class Complete extends Component {
                     const element = dataSelector[index];
                     this.props.dispatch({
                       type: "DELETE_COMPLETE",
-                      payload: element,
+                      payload: element.id,
                     });
                   }
                   this.props.dispatch({
@@ -197,6 +317,11 @@ class Complete extends Component {
                     console.log(element.checked);
                     element.checked = false;
                   }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
                 } else {
                   //...else cancel action
                   console.log("delete canceled");
@@ -204,7 +329,7 @@ class Complete extends Component {
               });
             }}
           >
-            Delete Selected
+            <DeleteIcon></DeleteIcon>
           </Button>
           <MUITable
             data={data} //brings in data as an array, in this case, list of admins
@@ -231,7 +356,8 @@ class Complete extends Component {
                           const itemArray = this.props.completelist;
                           const item = itemArray[dataIndex];
                           if (checkChecked === true) {
-                            dataSelector.push(item.id);
+                            dataSelector.push(item);
+                            console.log("dataSelector", dataSelector);
                           } else {
                             for (
                               let index = 0;
@@ -239,7 +365,7 @@ class Complete extends Component {
                               index++
                             ) {
                               const element = dataSelector[index];
-                              if (item.id === element) {
+                              if (item.id === element.id) {
                                 dataSelector.splice(index, 1);
                               }
                             }
@@ -253,12 +379,12 @@ class Complete extends Component {
               },
               { name: "Order Number" },
               { name: "SKU" },
+              { name: "Description" },
               { name: "Length" },
               { name: "QTY" },
-              { name: "First Name" },
-              { name: "Last Name" },
               { name: "Assigned" },
               { name: "Created At" },
+              { name: "Priority" },
               {
                 name: "View Details",
                 options: {
@@ -310,6 +436,118 @@ class Complete extends Component {
                         }}
                       >
                         <ViewListIcon></ViewListIcon>
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Go Back",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.completelist;
+                          const item = itemArray[dataIndex];
+                          let decoSku = item.sku;
+                          let decoSku2 = decoSku.slice(0, 2);
+                          let decoSku3 = decoSku.slice(0, 6);
+                          let decoSku4 = decoSku.slice(0, 5);
+                          let decoSku5 = decoSku.slice(0, 3);
+                          let decoSku6 = decoSku.slice(0, 8);
+                          if (
+                            decoSku5 === "CD1" ||
+                            decoSku5 === "CD2" ||
+                            decoSku5 === "CD3" ||
+                            decoSku5 === "CD4" ||
+                            decoSku5 === "CD5" ||
+                            decoSku5 === "CD6" ||
+                            decoSku5 === "CD7" ||
+                            decoSku5 === "CD8" ||
+                            decoSku5 === "CD9" ||
+                            decoSku5 === "CS1" ||
+                            decoSku5 === "CS2" ||
+                            decoSku5 === "CS3" ||
+                            decoSku5 === "CS4" ||
+                            decoSku5 === "CS5" ||
+                            decoSku5 === "CS6" ||
+                            decoSku5 === "CS7" ||
+                            decoSku5 === "CS8" ||
+                            decoSku5 === "CS9" ||
+                            decoSku5 === "SD1" ||
+                            decoSku5 === "SD2" ||
+                            decoSku5 === "SD3" ||
+                            decoSku5 === "SD4" ||
+                            decoSku5 === "SD5" ||
+                            decoSku5 === "SD6" ||
+                            decoSku5 === "SD7" ||
+                            decoSku5 === "SD8" ||
+                            decoSku5 === "SD9" ||
+                            decoSku3 === "CUSTOM" ||
+                            decoSku3 === "SUBKIT" ||
+                            decoSku6 === "SETUPFEE" ||
+                            decoSku3 === "SISER-" ||
+                            decoSku5 === "SP-" ||
+                            decoSku5 === "CP-"
+                          ) {
+                            this.props.dispatch({
+                              type: "START_ITEM",
+                              payload: {
+                                id: item.id,
+                                email: item.email,
+                                first_name: item.first_name,
+                                last_name: item.last_name,
+                                order_number: item.order_number,
+                                sku: item.sku,
+                                description: item.description,
+                                product_length: item.product_length,
+                                product_options: item.product_options,
+                                qty: item.qty,
+                                assigned: item.assigned,
+                                created_at: item.created_at,
+                                priority: item.priority,
+                              },
+                            });
+                            this.props.dispatch({
+                              type: "DELETE_COMPLETE",
+                              payload: item.id,
+                            });
+                            this.props.dispatch({
+                              type: "GET_PROGRESS_LIST",
+                            });
+                            this.props.dispatch({
+                              type: "GET_COMPLETE_LIST",
+                            });
+                            this.props.dispatch({
+                              type: "GET_ITEM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_RESPOND_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_CONFIRM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_PROGRESS_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_COMPLETE_LIST_COUNT",
+                            });
+                          } else {
+                            swal("Sorry, we can't go back on a custom order");
+                          }
+                        }}
+                      >
+                        <RestoreIcon></RestoreIcon>
                       </Button>
                     );
                   },
@@ -396,7 +634,6 @@ class Complete extends Component {
           //if toggle is false, render nothing. This is the default
           <span></span>
         ) : (
-          //...else render the edit screen for the selected song
           <Paper
             style={{
               right: 0,
@@ -424,6 +661,7 @@ class Complete extends Component {
                   marginRight: "auto",
                   marginTop: "20px",
                   width: "100%",
+                  textAlign: "center",
                 }}
               >
                 <tr>
@@ -520,6 +758,13 @@ class Complete extends Component {
                         })}{" "}
                         <br />
                         <br />
+                        <Button
+                          onClick={this.toggle2}
+                          variant="success"
+                          type="submit"
+                        >
+                          Close
+                        </Button>
                       </>
                     );
                   }
@@ -527,9 +772,7 @@ class Complete extends Component {
                 <br />
               </table>
               {/* toggles edit window back to not displaying */}
-              <Button onClick={this.toggle2} variant="success" type="submit">
-                Close
-              </Button>
+
               <br />
               <br />
               <br />

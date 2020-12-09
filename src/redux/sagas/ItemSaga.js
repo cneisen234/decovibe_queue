@@ -162,6 +162,19 @@ function* addNewItem(action){
        console.log("Error with adding a new item:", error);
      }
    }
+
+      function* canned(action) {
+        try {
+          console.log("we are about to add a new item", action.payload);
+          yield axios.post("/api/user/canned", action.payload);
+
+          yield put({ type: "GET_CUSTOM_ITEM_LIST" });
+
+          console.log("we are about to add a new item", action.payload);
+        } catch (error) {
+          console.log("Error with adding a new item:", error);
+        }
+      }
    
 
   
@@ -179,6 +192,70 @@ function* addNewItem(action){
       console.log("Error with adding a new item:", error);
     }
   }
+
+    function* goBackNew(action) {
+      try {
+        console.log("we are about to add a new item", action.payload);
+        yield axios.post("/api/user/gobacknew", action.payload);
+
+        yield put({ type: "GET_ITEM_LIST" });
+
+        console.log("we are about to add a new item", action.payload);
+      } catch (error) {
+        console.log("Error with adding a new item:", error);
+      }
+    }
+
+      function* markPriority(action) {
+        try {
+          console.log("this payload is", action.payload);
+          yield axios.put("/api/item/priority", action.payload);
+
+          yield put({ type: "GET_ITEM_LIST" });
+
+          console.log("we are about to edit an item", action.payload);
+        } catch (error) {
+          console.log("Error with editing an item:", error);
+        }
+      }
+           function* markPriorityProgress(action) {
+             try {
+               console.log("this payload is", action.payload);
+               yield axios.put("/api/item/priorityprogress", action.payload);
+
+               yield put({ type: "GET_PROGRESS_LIST" });
+
+               console.log("we are about to edit an item", action.payload);
+             } catch (error) {
+               console.log("Error with editing an item:", error);
+             }
+           }
+
+    function* markPriorityCustom(action) {
+      try {
+        console.log("this payload is", action.payload);
+        yield axios.put("/api/item/prioritycustom", action.payload);
+
+        yield put({ type: "GET_CUSTOM_ITEM_LIST" });
+
+        console.log("we are about to edit an item", action.payload);
+      } catch (error) {
+        console.log("Error with editing an item:", error);
+      }
+    }
+
+        function* markPriorityRespond(action) {
+          try {
+            console.log("this payload is", action.payload);
+            yield axios.put("/api/item/priorityrespond", action.payload);
+
+            yield put({ type: "GET_RESPOND_LIST" });
+
+            console.log("we are about to edit an item", action.payload);
+          } catch (error) {
+            console.log("Error with editing an item:", error);
+          }
+        }
 
   function* assignTask(action) {
     try {
@@ -472,6 +549,22 @@ function* getcompletelistcount(action) {
     console.log("Error with getting the list of items:", error);
   }
 }
+
+function* getreplies(action) {
+  try {
+    //console.log('we are about to get Students', action.type);
+
+    const response = yield axios.get(`/api/item/replies`);
+
+    yield put({
+      type: "SET_REPLIES",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* orderDetails(action) {
   try {
     //passes the incoming new student user info from the payload to the server
@@ -510,8 +603,14 @@ function* itemSaga() {
     yield takeLatest('CHECK_HISTORY', checkHistory);
    yield takeLatest('START_ITEM', startTask);
      yield takeLatest('CUSTOMER_CONFIRM', customerConfirm);
+     yield takeLatest('CANNED', canned);
      yield takeLatest('CUSTOMER_RESPONSE', customerResponse);
    yield takeLatest('MARK_COMPLETE', markComplete);
+    yield takeLatest('ADD_NEW', goBackNew);
+    yield takeLatest('MARK_PRIORITY', markPriority);
+      yield takeLatest('MARK_PRIORITY_PROGRESS', markPriorityProgress);
+      yield takeLatest('MARK_PRIORITY_CUSTOM', markPriorityCustom);
+      yield takeLatest('MARK_PRIORITY_RESPOND', markPriorityRespond);
     yield takeLatest('ASSIGN_TASK', assignTask);
     yield takeLatest('ASSIGN_CUSTOM_TASK', assignCustomTask);
     yield takeLatest('REGISTER', register);
@@ -529,6 +628,7 @@ function* itemSaga() {
     yield takeLatest('GET_RESPOND_LIST_COUNT', getrespondlistcount);
     yield takeLatest('GET_COMPLETE_LIST', getcompletelist);
     yield takeLatest('GET_COMPLETE_LIST_COUNT', getcompletelistcount);
+    yield takeLatest('GET_REPLIES', getreplies);
     yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('DELETE_CUSTOM_ITEM', deleteCustomItem);
      yield takeLatest('DELETE_RESPOND', deleteRespond);
