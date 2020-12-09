@@ -476,7 +476,65 @@ class Response extends Component {
               { name: "Created At" },
               { name: "Priority" },
               {
-                name: "Review",
+                name: "View Details",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.respondlist[dataIndex] &&
+                 
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.respondlist;
+                          const item = itemArray[dataIndex];
+                          const order_number = item.order_number;
+                          const sku = item.sku;
+                          const email = item.email;
+                          const first_name = item.first_name;
+                          const last_name = item.last_name;
+                          const qty = item.qty;
+                          const assigned = item.assigned;
+                          const created_at = item.created_at;
+                          const id = item.id;
+                          console.log("this is item", item);
+                          console.log("this is order_number", order_number);
+                          this.setState({
+                            toggle2: !this.state.toggle2,
+                            id: item.id,
+                            order_number: order_number,
+                            sku: sku,
+                            email: email,
+                            first_name: first_name,
+                            last_name: last_name,
+                            qty: qty,
+                            assigned: assigned,
+                            created_at: created_at,
+                            id: id,
+                          });
+                          console.log("this is state", this.state.order_number);
+                          this.props.dispatch({
+                            type: "ORDER_DETAILS",
+                            payload: {
+                              order_number: order_number,
+                            },
+                          });
+                          console.log(
+                            "this is details",
+                            this.props.detailslist
+                          );
+                        }}
+                      >
+                        <ViewListIcon></ViewListIcon>
+                      </Button>
+                    
+                  },
+                },
+              },
+              {
+                name: "Mark Complete",
                 options: {
                   filter: false,
                   sort: false,
@@ -554,51 +612,7 @@ class Response extends Component {
                         <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
                       </Button>
                     ) : (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.respondlist;
-                          const item = itemArray[dataIndex];
-                          const order_number = item.order_number;
-                          const sku = item.sku;
-                          const email = item.email;
-                          const first_name = item.first_name;
-                          const last_name = item.last_name;
-                          const qty = item.qty;
-                          const assigned = item.assigned;
-                          const created_at = item.created_at;
-                          const id = item.id;
-                          console.log("this is item", item);
-                          console.log("this is order_number", order_number);
-                          this.setState({
-                            toggle2: !this.state.toggle2,
-                            id: item.id,
-                            order_number: order_number,
-                            sku: sku,
-                            email: email,
-                            first_name: first_name,
-                            last_name: last_name,
-                            qty: qty,
-                            assigned: assigned,
-                            created_at: created_at,
-                            id: id,
-                          });
-                          console.log("this is state", this.state.order_number);
-                          this.props.dispatch({
-                            type: "ORDER_DETAILS",
-                            payload: {
-                              order_number: order_number,
-                            },
-                          });
-                          console.log(
-                            "this is details",
-                            this.props.detailslist
-                          );
-                        }}
-                      >
-                        <ViewListIcon></ViewListIcon>
-                      </Button>
+                   <span></span>
                     );
                   },
                 },
