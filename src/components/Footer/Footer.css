@@ -1,6 +1,5 @@
 footer {
     /* want footer to stay in one place */
-    position: fixed;
     bottom:0;
     background-color: #00003D;
     padding:1%;

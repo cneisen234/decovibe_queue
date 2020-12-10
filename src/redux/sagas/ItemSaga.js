@@ -168,13 +168,37 @@ function* addNewItem(action){
           console.log("we are about to add a new item", action.payload);
           yield axios.post("/api/user/canned", action.payload);
 
-          yield put({ type: "GET_CUSTOM_ITEM_LIST" });
+          yield put({ type: "GET_REPLIES" });
 
           console.log("we are about to add a new item", action.payload);
         } catch (error) {
           console.log("Error with adding a new item:", error);
         }
       }
+
+        function* cannedEdit(action) {
+          try {
+            console.log("this payload is", action.payload);
+            yield axios.put("/api/item/cannededit", action.payload);
+
+            yield put({ type: "GET_REPLIES" });
+
+            console.log("we are about to edit an item", action.payload);
+          } catch (error) {
+            console.log("Error with editing an item:", error);
+          }
+        }
+
+        function* cannedDelete(action) {
+          try {
+            console.log("we are about to delete an item", action.payload);
+            yield axios.delete(`/api/item/canneddelete/${action.payload}`);
+
+            yield put({ type: "GET_REPLIES" });
+          } catch (error) {
+            console.log("Error with adding a new item:", error);
+          }
+        }
    
 
   
@@ -604,6 +628,8 @@ function* itemSaga() {
    yield takeLatest('START_ITEM', startTask);
      yield takeLatest('CUSTOMER_CONFIRM', customerConfirm);
      yield takeLatest('CANNED', canned);
+      yield takeLatest('CANNED_EDIT', cannedEdit);
+      yield takeLatest('CANNED_DELETE', cannedDelete);
      yield takeLatest('CUSTOMER_RESPONSE', customerResponse);
    yield takeLatest('MARK_COMPLETE', markComplete);
     yield takeLatest('ADD_NEW', goBackNew);

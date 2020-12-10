@@ -14,6 +14,7 @@ import FlagIcon from "@material-ui/icons/Flag";
 import { auto } from "async";
 import ReactFilestack from "filestack-react";
 import swal from "sweetalert";
+import { Alert } from "@material-ui/lab";
 //import { response } from "express";
 
 // This component is for new
@@ -23,6 +24,7 @@ class NewCustom extends Component {
     toggle2: false,
     toggle3: false,
     toggle4: false,
+    toggle5: false,
     email: "",
     first_name: "",
     last_name: "",
@@ -78,6 +80,9 @@ class NewCustom extends Component {
     dataSelector: [],
     priority: "",
     canned: "",
+    canned_edit: "",
+    comment_id: "",
+    error: false,
   };
   componentDidMount() {
     this.props.dispatch({
@@ -1061,11 +1066,10 @@ class NewCustom extends Component {
               >
                 <table
                   style={{
-                    marginLeft: "auto",
+                    marginLeft: "200px",
                     marginRight: "auto",
                     marginTop: "20px",
                     width: "100%",
-                    textAlign: "center",
                   }}
                 >
                   <tr>
@@ -1175,7 +1179,8 @@ class NewCustom extends Component {
                                   this.setState({
                                     //path for uploaded photo to display on dom
                                     [pic]: res.filesUploaded[0].url,
-                                    [filename]: res.filesUploaded[0].originalPath,
+                                    [filename]:
+                                      res.filesUploaded[0].originalPath,
                                   })
                                 }
                               />
@@ -1252,11 +1257,11 @@ class NewCustom extends Component {
                         onChange={(event) =>
                           this.setState({
                             comments: event.target.value,
+                            canned_edit: event.target.value,
                           })
                         }
                         style={{
                           width: "50%",
-                          margin: "auto",
                         }}
                       >
                         <option value="">Canned Responses</option>{" "}
@@ -1269,6 +1274,55 @@ class NewCustom extends Component {
                             ))
                           : ""}
                       </Form.Control>
+                    </td>
+                  </tr>
+                  <br />
+                  <br />
+                  <tr>
+                    <td>
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+
+                          event.preventDefault();
+                          this.props.dispatch({
+                            type: "CANNED_EDIT",
+                            payload: {
+                              canned: this.state.canned_edit,
+                              comments: this.state.comments,
+                            },
+                          });
+                          this.props.dispatch({
+                            type: "GET_REPLIES",
+                          });
+                        }}
+                      >
+                        Edit Canned Response
+                      </Button>
+                    </td>
+                  </tr>
+                  <br />
+                  <br />
+                  <tr>
+                    <td>
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+
+                          event.preventDefault();
+                          this.props.dispatch({
+                            type: "CANNED_DELETE",
+                            payload: this.state.canned_edit,
+                          });
+                          this.props.dispatch({
+                            type: "GET_REPLIES",
+                          });
+                        }}
+                      >
+                        Delete Canned Response
+                      </Button>
                     </td>
                   </tr>
                   <br />
@@ -1329,76 +1383,119 @@ class NewCustom extends Component {
                       <Button
                         variant="success"
                         onClick={(event) => {
-                          event.preventDefault();
-                          this.props.dispatch({
-                            type: "CUSTOMER_CONFIRM",
-                            payload: {
-                              pic1: this.state.pic1,
-                              pic2: this.state.pic2,
-                              pic3: this.state.pic3,
-                              pic4: this.state.pic4,
-                              pic5: this.state.pic5,
-                              pic6: this.state.pic6,
-                              pic7: this.state.pic7,
-                              pic8: this.state.pic8,
-                              pic9: this.state.pic9,
-                              pic10: this.state.pic10,
-                              pic11: this.state.pic11,
-                              pic12: this.state.pic12,
-                              pic13: this.state.pic13,
-                              pic14: this.state.pic14,
-                              pic15: this.state.pic15,
-                              pic16: this.state.pic16,
-                              pic17: this.state.pic17,
-                              pic18: this.state.pic18,
-                              pic19: this.state.pic19,
-                              pic20: this.state.pic20,
-                              comments: this.state.comments,
-                              email: this.state.email,
-                              first_name: this.state.first_name,
-                              last_name: this.state.last_name,
-                              order_number: this.state.order_number,
-                              sku: this.state.sku,
-                              description: this.state.description,
-                              qty: this.state.qty,
-                              assigned: this.state.assigned,
-                              created_at: this.state.created_at,
-                              priority: this.state.priority,
-                            },
-                          });
-                          this.props.dispatch({
-                            type: "DELETE_CUSTOM_ITEM",
-                            payload: this.state.id,
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST",
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_RESPOND_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CONFIRM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
-                          });
-                          this.setState({
-                            toggle2: !this.state.toggle2,
-                            comments: "",
-                          });
+                          if (
+                            this.state.pic1 === "" &&
+                            this.state.pic2 === "" &&
+                            this.state.pic3 === "" &&
+                            this.state.pic4 === "" &&
+                            this.state.pic5 === "" &&
+                            this.state.pic6 === "" &&
+                            this.state.pic7 === "" &&
+                            this.state.pic8 === "" &&
+                            this.state.pic9 === "" &&
+                            this.state.pic10 === "" &&
+                            this.state.pic11 === "" &&
+                            this.state.pic12 === "" &&
+                            this.state.pic13 === "" &&
+                            this.state.pic14 === "" &&
+                            this.state.pic15 === "" &&
+                            this.state.pic16 === "" &&
+                            this.state.pic17 === "" &&
+                            this.state.pic18 === "" &&
+                            this.state.pic19 === "" &&
+                            this.state.pic20 === ""
+                          ) {
+                            this.setState({
+                              error: true,
+                            });
+                            //...set it back to false after 5 secondss
+                            setTimeout(() => {
+                              this.setState({
+                                error: false,
+                              });
+                            }, 5000);
+                            return;
+                          } else {
+                            event.preventDefault();
+                            this.props.dispatch({
+                              type: "CUSTOMER_CONFIRM",
+                              payload: {
+                                pic1: this.state.pic1,
+                                pic2: this.state.pic2,
+                                pic3: this.state.pic3,
+                                pic4: this.state.pic4,
+                                pic5: this.state.pic5,
+                                pic6: this.state.pic6,
+                                pic7: this.state.pic7,
+                                pic8: this.state.pic8,
+                                pic9: this.state.pic9,
+                                pic10: this.state.pic10,
+                                pic11: this.state.pic11,
+                                pic12: this.state.pic12,
+                                pic13: this.state.pic13,
+                                pic14: this.state.pic14,
+                                pic15: this.state.pic15,
+                                pic16: this.state.pic16,
+                                pic17: this.state.pic17,
+                                pic18: this.state.pic18,
+                                pic19: this.state.pic19,
+                                pic20: this.state.pic20,
+                                comments: this.state.comments,
+                                email: this.state.email,
+                                first_name: this.state.first_name,
+                                last_name: this.state.last_name,
+                                order_number: this.state.order_number,
+                                sku: this.state.sku,
+                                description: this.state.description,
+                                qty: this.state.qty,
+                                assigned: this.state.assigned,
+                                created_at: this.state.created_at,
+                                priority: this.state.priority,
+                              },
+                            });
+                            this.props.dispatch({
+                              type: "DELETE_CUSTOM_ITEM",
+                              payload: this.state.id,
+                            });
+                            this.props.dispatch({
+                              type: "GET_ITEM_LIST",
+                            });
+                            this.props.dispatch({
+                              type: "GET_ITEM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_RESPOND_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_CONFIRM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_PROGRESS_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_COMPLETE_LIST_COUNT",
+                            });
+                            this.setState({
+                              toggle2: !this.state.toggle2,
+                              comments: "",
+                            });
+                          }
                         }}
                       >
                         Send to Customer
                       </Button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      {this.state.error === true && (
+                        <Alert className="error" style={{}} severity="error">
+                          {"Don't forget the upload :)"}
+                        </Alert>
+                      )}
                     </td>
                   </tr>
                   <br />

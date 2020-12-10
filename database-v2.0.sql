@@ -21,7 +21,8 @@ CREATE TABLE "item"
 	"product_options" TEXT,
 	"qty" DECIMAL,
 	"assigned" VARCHAR(255),
-	"created_at" TEXT
+	"created_at" TEXT,
+	"description" TEXT,
 	"priority" VARCHAR(5) DEFAULT 'low'
 );
 
@@ -38,6 +39,7 @@ CREATE TABLE "customitem"
 	"upload_url" TEXT,
 	"comments" TEXT,
 	"created_at" TEXT,
+	"description" TEXT,
 	"priority" VARCHAR(5) DEFAULT 'low'
 );
 
@@ -74,6 +76,7 @@ CREATE TABLE "customerconfirm"
 	"comments" TEXT,
 	"created_at" TEXT,
 	"token" TEXT,
+	"description" TEXT,
 	"priority" VARCHAR(5)
 );
 
@@ -91,6 +94,7 @@ CREATE TABLE "customerrespond"
 	"comments" TEXT,
 	"created_at" TEXT,
 	"token" TEXT,
+	"description" TEXT,
 	"priority" VARCHAR(5)
 );
 
@@ -126,6 +130,7 @@ CREATE TABLE "complete"
 	"assigned" VARCHAR(255),
 	"created_at" TEXT,
 	"timestamp" DATE NOT NULL DEFAULT NOW(),
+	"description" TEXT,
 	"priority" VARCHAR(5)
 );
 

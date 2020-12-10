@@ -60,53 +60,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
-//POST or create the email that is sent off to admins if they wish to reset their password
-//(without logging in)
-router.post("/forgot/admin/:token/:email", (req, res) => {
-  let email = req.body.username;
-    let token = crypto.randomBytes(16).toString("hex");
-    const queryText = `UPDATE "admin" SET token=$1 WHERE email=$2 `;
-    pool
-      .query(queryText, [token, email])
-      .then((result) => {
-        const query2Text = `UPDATE "user" SET token=$1 WHERE email=$2 `;
-        pool
-          .query(query2Text, [token, email])
-          .then(() => { //set up information to be sent off inside email
-              sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-               let domain = process.env.DOMAIN_NAME;
-              const msg = {
-                to: email,
-                from: "no.reply.legacyfoundation@gmail.com",
-                subject: "request to reset password",
-                html: `
-  <div>
-  <div><img
-        src="https://legacychildrensfoundation.com/wp-content/uploads/2020/04/LCFLogo_H_RGB_kp.jpg"
-       width="150"
-      /></div>
-  <h2 style="text-align:center;">Click below to reset your password</h2>
-  <p style="text-align:center;"><a href="${domain}/#/forgotpassword/${token}/${email}" style="text-align:center;">Reset Password</a></p>
-  <p style="text-align:center;">If you did not request this email, please disregard it and delete it.</p>
-  </div>
-  `,
-              };
-              sgMail.send(msg);
-            res.status(201).send(result.rows)})
-          .catch(function (error) {
-            console.log("Sorry, there was an error with your query: ", error);
-            res.sendStatus(500); // HTTP SERVER ERROR
-          });
-      })
-      .catch(function (error) {
-        console.log("Sorry, there is an error", error);
-        res.sendStatus(500);
-      });
-
-});
-
-// router.post("/addnewitem", (req, res, next) => {
-//   const order = req.body.order
   setInterval(() => {
       let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
       let nowYear = Number(moment().subtract(6, "hours").year());
@@ -666,7 +619,7 @@ ${comments}</div><br><br>
                           newArray.push(
                             `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
                               pic[index]
-                            }>Artwork${index + 1}</a><br><br>
+                            }>View Proof ${index + 1}</a><br><br>
                              <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
                           );
    newArray.push("<br><br> --------------------------------------------");
@@ -676,7 +629,7 @@ ${comments}</div><br><br>
 
                      let joinedArray = newArray.join();
                      let finalArray =
-                       `<div style="text-align:center;">` +
+                       `<div style="margin-left:50px;">` +
                        titleString +
                        commentsString +
                        joinedArray +
@@ -689,7 +642,7 @@ ${comments}</div><br><br>
      {
        to: [
          {
-           email: "christopherjay71186@gmail.com",
+           email: email,
          },
        ],
        bcc: [

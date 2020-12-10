@@ -13,6 +13,7 @@ body {
 input {
     margin: 5px;
     margin-bottom: 10px;
+   
 }
 
 .log-in, .log-out, .register {

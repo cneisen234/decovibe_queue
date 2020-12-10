@@ -92,11 +92,29 @@ class CustomerPage extends Component {
       //stop the function
       return;
     } else if (approve === "Yes") {
+              let checkInput = document.getElementsByClassName("input");
+              for (let index = 0; index < checkInput.length; index++) {
+                const element = checkInput[index];
+                if (element.checked === false) {
+                      this.setState({
+                        error: true,
+                      });
+                      //...set it back to false after 5 secondss
+                      setTimeout(() => {
+                        this.setState({
+                          error: false,
+                        });
+                      }, 5000);
+                      return;
+                }
+              }
       //begin sweetAlerts
       Swal.fire({
-        title: "Please confirm details below",
-        html: `1. Approve: ${approve} <br/><br/>`,
-        icon: "question",
+        title: "Please confirm",
+        html: `You are approving the artwork<br/><br/>
+        <b>Disclaimer: Once artwork is approved there are no changes or cancelations</b><br/><br/>
+        Please click "confirm" to confirm your submission<br/><br/>`,
+        icon: "success",
         customClass: {
           actions: "confirm",
         },
@@ -126,10 +144,12 @@ class CustomerPage extends Component {
       });
     } else if (approve === "No" && comments !== null) {
             Swal.fire({
-              title: "Please confirm details below",
-              html: `1. Approve: ${approve} <br/>
-              2. Your Feedback: ${comments} <br/><br/>`,
-              icon: "question",
+              title: "Please confirm",
+              html: `You're not approving the artwork<br/><br/>
+              Your Feedback: ${comments} <br/><br/>
+              Please click "confirm" to send this back to the art department<br/><br/>
+              `,
+              icon: "error",
                 customClass: {
     actions: 'confirm',
   },
@@ -187,7 +207,6 @@ class CustomerPage extends Component {
                 marginBottom: "5%",
               }}
             >
-              {/* start form for make entry */}
               <form onSubmit={this.submitInfo}>
                 <FormControl component="fieldset">
                   <FormLabel component="legend" style={{ color: "black" }}>
@@ -219,37 +238,72 @@ class CustomerPage extends Component {
                 <br />
                 {this.state.approve === null ? (
                   <span></span>
-                ) : (
-                this.state.approve === "No" ? (
+                ) : this.state.approve === "No" ? (
                   <>
-                <p>2. Please leave any comments you have below</p>
-                <TextField //box for student to enter in text
-                  style={{
-                    backgroundColor: "white",
-                    margin: "5px",
-                    width: "100%",
-                  }}
-                  //per material UI changes textfield to act like a textarea tag
-                  multiline
-                  //input field takes up for rows by defaults
-                  rows={4}
-                  //...will expand up to 8 rows
-                  rowsMax={8}
-                  variant="outlined"
-                  fullWidth
-                  label="Write comments here"
-                  name="comments"
-                  // sets value of input to local state
-                  value={this.state.comments}
-                  type="text"
-                  maxLength={1000}
-                  //onChange of input values set local state
-                  onChange={(event) => this.handleChange(event, "comments")} //onChange of input values set local state
-                />
-                </>
+                    <p>2. Please leave any comments you have below</p>
+                    <TextField //box for student to enter in text
+                      style={{
+                        backgroundColor: "white",
+                        margin: "5px",
+                        width: "100%",
+                      }}
+                      //per material UI changes textfield to act like a textarea tag
+                      multiline
+                      //input field takes up for rows by defaults
+                      rows={4}
+                      //...will expand up to 8 rows
+                      rowsMax={8}
+                      variant="outlined"
+                      fullWidth
+                      label="Write comments here"
+                      name="comments"
+                      // sets value of input to local state
+                      value={this.state.comments}
+                      type="text"
+                      maxLength={1000}
+                      //onChange of input values set local state
+                      onChange={(event) => this.handleChange(event, "comments")} //onChange of input values set local state
+                    />
+                  </>
                 ) : (
-                  <span>This is for "yes"</span>
-                )
+                  <>
+                    <b>I have reviewed and approve the following:</b>
+                    <br />
+                    <input
+                      type="checkbox"
+                      className="input"
+                      name="transfer"
+                      value="Type of Transfer"
+                      style={{ cursor: "pointer" }}
+                    ></input>
+                    <span>Type of Transfer</span>
+                    <br />
+                    <input
+                      type="checkbox"
+                      className="input"
+                      name="size"
+                      value="Transfer size, color and resolution"
+                      style={{ cursor: "pointer" }}
+                    ></input>
+                    <span>Transfer size, color and resolution</span>
+                    <br />
+                    <input
+                      type="checkbox"
+                      className="input"
+                      name="spelling"
+                      value="All spelling and grammar"
+                      style={{ cursor: "pointer" }}
+                    ></input>
+                    <span>All spelling and grammar</span><br/>
+                    <input
+                      type="checkbox"
+                      className="input"
+                      name="qty"
+                      value="Quantity of each Transfer"
+                      style={{ cursor: "pointer" }}
+                    ></input>
+                    <span>Quantity of each Transfer</span>
+                  </>
                 )}
                 <center>
                   <Button //button that, one clicked, submits the entry to the database
@@ -277,11 +331,14 @@ class CustomerPage extends Component {
           </>
         ) : (
           <>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-            <h1 style={{textAlign: "center"}}>Thank you for your feedback.<br/> The art department will follow up with you shortly</h1>
+            <br />
+            <br />
+            <br />
+            <br />
+            <h1 style={{ textAlign: "center" }}>
+              Thank you for your feedback.
+              <br /> The art department will follow up with you shortly
+            </h1>
           </>
         )}
       </div>

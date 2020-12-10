@@ -140,6 +140,38 @@ router.put("/assign", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.put("/cannededit", rejectUnauthenticated, (req, res) => {
+  //Edits canned responses
+  const { comments, canned } = req.body;
+  // setting query text to update the username
+  const queryText = 'UPDATE "replies" SET reply=$1 WHERE reply=$2';
+
+  pool
+    .query(queryText, [comments, canned])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
+router.delete("/canneddelete/:canned", rejectUnauthenticated, (req, res) => {
+  // setting query text to update the username
+  const queryText = 'DELETE FROM "replies" WHERE reply=$1';
+
+  pool
+    .query(queryText, [req.params.canned])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
 router.put("/priority", rejectUnauthenticated, (req, res) => {
   //api to set priority of new stock items
   const { priority, id } = req.body;

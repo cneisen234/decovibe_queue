@@ -16,30 +16,32 @@ import EditIcon from "@material-ui/icons/Edit";
 class Nav extends Component {
   state = {
     toggle: false,
+    backgroundcolor: "#000080",
+    backgroundcolorclass: "nav-link",
   };
 
   componentDidMount() {
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
-      this.props.dispatch({
-        type: "GET_CUSTOM_ITEM_LIST_COUNT",
-      });
-         this.props.dispatch({
-           type: "GET_CONFIRM_LIST_COUNT",
-         });
-            this.props.dispatch({
-              type: "GET_RESPOND_LIST_COUNT",
-            });
-             this.props.dispatch({
-               type: "GET_RESPOND_LIST_COUNT",
-             });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_PROGRESS_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_CONFIRM_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_COMPLETE_LIST_COUNT",
     });
@@ -74,19 +76,22 @@ class Nav extends Component {
                   sm={6}
                   md={7}
                   style={{
-                    backgroundColor: "black",
+                    backgroundColor: this.state.backgroundcolor,
                     width: "15%",
                     float: "left",
                   }}
                 >
-                  <Link className="nav-link" to="/home">
+                  <Link className={this.state.backgroundcolorclass} to="/home">
                     <EditIcon></EditIcon>New{" "}
                     {`(${
                       this.props.itemlistcount[0] &&
                       this.props.itemlistcount[0].count
                     })`}
                   </Link>
-                  <Link className="nav-link" to="/progress">
+                  <Link
+                    className={this.state.backgroundcolorclass}
+                    to="/progress"
+                  >
                     <FormatListBulletedIcon></FormatListBulletedIcon>
                     In Progress{" "}
                     {`(${
@@ -94,7 +99,10 @@ class Nav extends Component {
                       this.props.progresslistcount[0].count
                     })`}
                   </Link>
-                  <Link className="nav-link" to="/complete">
+                  <Link
+                    className={this.state.backgroundcolorclass}
+                    to="/complete"
+                  >
                     <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
                     Complete{" "}
                     {`(${
@@ -109,7 +117,7 @@ class Nav extends Component {
                   sm={6}
                   md={3}
                   style={{
-                    backgroundColor: "black",
+                    backgroundColor: this.state.backgroundcolor,
                     width: "30%",
                     float: "left",
                   }}
@@ -120,7 +128,7 @@ class Nav extends Component {
                     sm={6}
                     md={6}
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor: this.state.backgroundcolor,
                       width: "50%",
                       float: "left",
                     }}
@@ -131,6 +139,8 @@ class Nav extends Component {
                         event.preventDefault();
                         this.setState({
                           toggle: !this.state.toggle,
+                          backgroundcolor: "#8B008B",
+                          backgroundcolorclass: "nav-link2",
                         });
                         this.props.dispatch({
                           type: "GET_ITEM_LIST",
@@ -155,7 +165,10 @@ class Nav extends Component {
                         });
                       }}
                     >
-                      <Link className="nav-link" to="/newcustom">
+                      <Link
+                        className={this.state.backgroundcolorclass}
+                        to="/newcustom"
+                      >
                         <LoopIcon></LoopIcon>
                         Switch Queues{" "}
                       </Link>
@@ -168,14 +181,17 @@ class Nav extends Component {
                     sm={6}
                     md={6}
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor: this.state.backgroundcolor,
                       width: "50%",
                       float: "left",
                     }}
                   >
                     <LogOutButton
-                      style={{ float: "left" }}
-                      className="nav-link"
+                      style={{
+                        float: "left",
+                        backgroundColor: this.state.backgroundcolor,
+                      }}
+                      className={this.state.backgroundcolorclass}
                     />
                   </Grid>
                 </Grid>
@@ -187,7 +203,7 @@ class Nav extends Component {
                 sm={12}
                 md={10}
                 style={{
-                  backgroundColor: "black",
+                  backgroundColor: this.state.backgroundcolor,
                   width: "15%",
                   float: "left",
                 }}
@@ -206,19 +222,25 @@ class Nav extends Component {
                   sm={6}
                   md={7}
                   style={{
-                    backgroundColor: "black",
+                    backgroundColor: this.state.backgroundcolor,
                     width: "15%",
                     float: "left",
                   }}
                 >
-                  <Link className="nav-link" to="/newcustom">
+                  <Link
+                    className={this.state.backgroundcolorclass}
+                    to="/newcustom"
+                  >
                     <EditIcon></EditIcon>New{" "}
                     {`(${
                       this.props.customitemlistcount[0] &&
                       this.props.customitemlistcount[0].count
                     })`}
                   </Link>
-                  <Link className="nav-link" to="/SentCustomer">
+                  <Link
+                    className={this.state.backgroundcolorclass}
+                    to="/SentCustomer"
+                  >
                     <EmailIcon></EmailIcon>
                     Sent to Customer{" "}
                     {`(${
@@ -226,7 +248,10 @@ class Nav extends Component {
                       this.props.confirmlistcount[0].count
                     })`}
                   </Link>
-                  <Link className="nav-link" to="/Response">
+                  <Link
+                    className={this.state.backgroundcolorclass}
+                    to="/Response"
+                  >
                     <ReplyIcon></ReplyIcon>
                     Customer response{" "}
                     {`(${
@@ -234,7 +259,10 @@ class Nav extends Component {
                       this.props.respondlistcount[0].count
                     })`}
                   </Link>
-                  <Link className="nav-link" to="/complete">
+                  <Link
+                    className={this.state.backgroundcolorclass}
+                    to="/complete"
+                  >
                     <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
                     Complete{" "}
                     {`(${
@@ -242,7 +270,10 @@ class Nav extends Component {
                       this.props.completelistcount[0].count
                     })`}
                   </Link>
-                  <Link className="nav-link" to="/History">
+                  <Link
+                    className={this.state.backgroundcolorclass}
+                    to="/History"
+                  >
                     <HistoryIcon></HistoryIcon>
                     History{" "}
                   </Link>
@@ -253,7 +284,7 @@ class Nav extends Component {
                   sm={6}
                   md={3}
                   style={{
-                    backgroundColor: "black",
+                    backgroundColor: this.state.backgroundcolor,
                     width: "30%",
                     float: "left",
                   }}
@@ -264,7 +295,7 @@ class Nav extends Component {
                     sm={6}
                     md={6}
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor: this.state.backgroundcolor,
                       width: "50%",
                       float: "left",
                     }}
@@ -275,6 +306,8 @@ class Nav extends Component {
                         event.preventDefault();
                         this.setState({
                           toggle: !this.state.toggle,
+                          backgroundcolor: "#000080",
+                          backgroundcolorclass: "nav-link",
                         });
                         this.props.dispatch({
                           type: "GET_ITEM_LIST",
@@ -299,7 +332,10 @@ class Nav extends Component {
                         });
                       }}
                     >
-                      <Link className="nav-link" to="/home">
+                      <Link
+                        className={this.state.backgroundcolorclass}
+                        to="/home"
+                      >
                         <LoopIcon></LoopIcon>
                         Switch Queues{" "}
                       </Link>
@@ -311,14 +347,14 @@ class Nav extends Component {
                     sm={6}
                     md={6}
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor: this.state.backgroundcolor,
                       width: "50%",
                       float: "left",
                     }}
                   >
                     <LogOutButton
                       style={{ float: "left" }}
-                      className="nav-link"
+                      className={this.state.backgroundcolorclass}
                     />
                   </Grid>
                 </Grid>
@@ -330,7 +366,7 @@ class Nav extends Component {
                 sm={12}
                 md={10}
                 style={{
-                  backgroundColor: "black",
+                  backgroundColor: this.state.backgroundcolor,
                   width: "15%",
                   float: "left",
                 }}
