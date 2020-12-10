@@ -139,6 +139,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                     let decoSku4 = decoSku.slice(0, 5);
                     let decoSku5 = decoSku.slice(0, 3);
                     let decoSku6 = decoSku.slice(0, 8);
+                    let decoSku7 = decoSku.slice(0, 7);
                     if (
                       decoSku5 === "CD1" ||
                       decoSku5 === "CD2" ||
@@ -253,7 +254,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                       decoSku4 === "WE_A5" ||
                       decoSku4 === "WE_A4" ||
                       decoSku4 === "WE_A3" ||
-                      decoSku3 === "DYESUB" ||
+                      decoSku7 === "DYESUB-" ||
                       decoSku4 === "FINAL"
                     ) {
                       console.log("custom order email", email);
