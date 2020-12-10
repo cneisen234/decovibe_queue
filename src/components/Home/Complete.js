@@ -346,6 +346,7 @@ class Complete extends Component {
                       <input
                         type="checkbox"
                         id={dataIndex}
+                        style={{ cursor: "pointer"}}
                         name=""
                         value=""
                         onClick={(event) => {

@@ -185,65 +185,84 @@ class Response extends Component {
             onClick={(event) => {
               event.preventDefault();
               console.log(dataSelector);
+                 swal({
+                   title: "Mark Complete?",
+                   text:
+                     "The customer has approved this order! Click 'ok' to mark as complete",
+                   icon: "warning",
+                   buttons: true,
+                   dangerMode: true,
+                   //end sweet alerts
+                 }).then((willDelete) => {
+                   // start .then
+                   //if confirmed, delete
+                   if (willDelete) {
+                     for (let index = 0; index < dataSelector.length; index++) {
+                       const element = dataSelector[index];
+                       this.props.dispatch({
+                         type: "MARK_COMPLETE",
+                         payload: {
+                           id: element.id,
+                           email: element.email,
+                           first_name: element.first_name,
+                           last_name: element.last_name,
+                           order_number: element.order_number,
+                           sku: element.sku,
+                           description: element.description,
+                           product_length: element.product_length,
+                           product_options: element.product_options,
+                           qty: element.qty,
+                           assigned: element.assigned,
+                           created_at: element.created_at,
+                         },
+                       });
+                       this.props.dispatch({
+                         type: "DELETE_RESPOND",
+                         payload: element.id,
+                       });
+                     }
+                     this.props.dispatch({
+                       type: "GET_ITEM_LIST",
+                     });
+                     this.props.dispatch({
+                       type: "GET_ITEM_LIST_COUNT",
+                     });
+                     this.props.dispatch({
+                       type: "GET_RESPOND_LIST_COUNT",
+                     });
+                     this.props.dispatch({
+                       type: "GET_CONFIRM_LIST_COUNT",
+                     });
+                     this.props.dispatch({
+                       type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                     });
+                     this.props.dispatch({
+                       type: "GET_PROGRESS_LIST_COUNT",
+                     });
+                     this.props.dispatch({
+                       type: "GET_COMPLETE_LIST_COUNT",
+                     });
 
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "MARK_COMPLETE",
-                  payload: {
-                    id: element.id,
-                    email: element.email,
-                    first_name: element.first_name,
-                    last_name: element.last_name,
-                    order_number: element.order_number,
-                    sku: element.sku,
-                    description: element.description,
-                    product_length: element.product_length,
-                    product_options: element.product_options,
-                    qty: element.qty,
-                    assigned: element.assigned,
-                    created_at: element.created_at,
-                  },
-                });
-                this.props.dispatch({
-                  type: "DELETE_RESPOND",
-                  payload: element.id,
-                });
-              }
-              this.props.dispatch({
-                type: "GET_ITEM_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              //success! review deleted
-              console.log("delete successful");
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                console.log(element.checked);
-                element.checked = false;
-              }
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
+                     //success! review deleted
+                     console.log("delete successful");
+                     let checkInput = document.getElementsByTagName("input");
+                     for (let index = 0; index < checkInput.length; index++) {
+                       const element = checkInput[index];
+                       console.log(element.checked);
+                       element.checked = false;
+                     }
+
+                     dataSelector = [];
+                     this.setState({
+                       dataSelector: [],
+                       toggle3: false,
+                     });
+                   } else {
+                     //...else cancel action
+                     console.log("action canceled");
+                   }
+                 });
+                          
             }}
           >
             <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
@@ -434,6 +453,7 @@ class Response extends Component {
                       <input
                         type="checkbox"
                         id={dataIndex}
+                        style={{ cursor: "pointer" }}
                         name=""
                         value=""
                         onClick={(event) => {
