@@ -544,6 +544,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   const pic20 = req.body.pic20;
   const comments = req.body.comments;
   const priority = req.body.priority;
+  const payment_link = req.body.payment_link;
   let token = crypto.randomBytes(16).toString("hex");
           let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
           let nowYear = Number(moment().subtract(6, "hours").year());
@@ -616,13 +617,26 @@ ${comments}</div><br><br>
                           let optionsJoined = optionsArray.join();
                           newArray.push(optionsJoined);
                           optionsArray = [];
-              
-                          newArray.push(
-                            `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
-                              pic[index]
-                            }>View Proof ${index + 1}</a><br><br>
+                          if (payment_link === "" || payment_link === null) {
+                            newArray.push(
+                              `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
+                                pic[index]
+                              }>View Proof ${index + 1}</a><br><br>
                              <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
-                          );
+                            );
+
+                          } else {
+                                      newArray.push(
+                                        `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
+                                          pic[index]
+                                        }>View Proof ${index + 1}</a><br><br>
+                             <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
+                                      );
+
+                                      newArray.push(
+                                        `<p><b>Please finalize your payment by clicking the link below</b></p><a style="font-size:30px; text-decoration: none;" href=${payment_link}>Pay Here</a><br><br>`
+                                      );
+                          }
    newArray.push("<br><br> --------------------------------------------");
                         }
 
@@ -643,7 +657,7 @@ ${comments}</div><br><br>
      {
        to: [
          {
-           email: email,
+           email: "christopherjay71186@gmail.com",
          },
        ],
        bcc: [

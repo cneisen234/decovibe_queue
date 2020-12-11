@@ -83,6 +83,7 @@ class NewCustom extends Component {
     canned_edit: "",
     comment_id: "",
     error: false,
+    payment_link: null,
   };
   componentDidMount() {
     this.props.dispatch({
@@ -657,6 +658,7 @@ class NewCustom extends Component {
                             const created_at = item.created_at;
                             const id = item.id;
                             const priority = item.priority;
+                            const payment_link = this.state.payment_link;
                             console.log("this is item", item);
                             console.log("this is order_number", order_number);
                             this.setState({
@@ -672,6 +674,7 @@ class NewCustom extends Component {
                               created_at: created_at,
                               id: id,
                               priority: priority,
+                              payment_link: payment_link,
                             });
                             console.log(
                               "this is state",
@@ -1212,40 +1215,40 @@ class NewCustom extends Component {
                           width: "50%",
                         }}
                         variant="outlined"
-                        label="Add new canned response"
+                        label="Customer email"
                         name="edit"
-                        placeholder="...canned response"
+                        placeholder="...enter email"
                         // value of local state as text value
-                        value={this.state.canned}
+                        value={this.state.email}
                         type="text"
                         maxLength={10000}
                         //runs handleChange on input change
-                        onChange={(event) => this.handleChange(event, "canned")}
+                        onChange={(event) => this.handleChange(event, "email")}
                       />
                     </td>
                   </tr>
+                  <br />
+                  <br />
                   <tr>
                     <td>
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          this.props.dispatch({
-                            type: "CANNED",
-                            payload: {
-                              canned: this.state.canned,
-                            },
-                          });
-                          this.setState({
-                            canned: "",
-                          });
-                          this.props.dispatch({
-                            type: "GET_REPLIES",
-                          });
+                      {" "}
+                      <TextField
+                        style={{
+                          width: "50%",
                         }}
-                      >
-                        Add Canned Response
-                      </Button>
+                        variant="outlined"
+                        label="Payment link"
+                        name="edit"
+                        placeholder="...enter payment link"
+                        // value of local state as text value
+                        value={this.state.payment_link}
+                        type="text"
+                        maxLength={10000}
+                        //runs handleChange on input change
+                        onChange={(event) =>
+                          this.handleChange(event, "payment_link")
+                        }
+                      />
                     </td>
                   </tr>
                   <br />
@@ -1274,55 +1277,6 @@ class NewCustom extends Component {
                             ))
                           : ""}
                       </Form.Control>
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-
-                          event.preventDefault();
-                          this.props.dispatch({
-                            type: "CANNED_EDIT",
-                            payload: {
-                              canned: this.state.canned_edit,
-                              comments: this.state.comments,
-                            },
-                          });
-                          this.props.dispatch({
-                            type: "GET_REPLIES",
-                          });
-                        }}
-                      >
-                        Edit Canned Response
-                      </Button>
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <Button
-                        variant="danger"
-                        onClick={(event) => {
-                          event.preventDefault();
-
-                          event.preventDefault();
-                          this.props.dispatch({
-                            type: "CANNED_DELETE",
-                            payload: this.state.canned_edit,
-                          });
-                          this.props.dispatch({
-                            type: "GET_REPLIES",
-                          });
-                        }}
-                      >
-                        Delete Canned Response
-                      </Button>
                     </td>
                   </tr>
                   <br />
@@ -1358,22 +1312,68 @@ class NewCustom extends Component {
                   <br />
                   <tr>
                     <td>
-                      {" "}
-                      <TextField
-                        style={{
-                          width: "50%",
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          this.props.dispatch({
+                            type: "CANNED",
+                            payload: {
+                              canned: this.state.comments,
+                            },
+                          });
+                          this.setState({
+                            canned: "",
+                          });
+                          this.props.dispatch({
+                            type: "GET_REPLIES",
+                          });
                         }}
-                        variant="outlined"
-                        label="Customer email"
-                        name="edit"
-                        placeholder="...enter email"
-                        // value of local state as text value
-                        value={this.state.email}
-                        type="text"
-                        maxLength={10000}
-                        //runs handleChange on input change
-                        onChange={(event) => this.handleChange(event, "email")}
-                      />
+                      >
+                        Add Canned Response
+                      </Button>
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+
+                          event.preventDefault();
+                          this.props.dispatch({
+                            type: "CANNED_EDIT",
+                            payload: {
+                              canned: this.state.canned_edit,
+                              comments: this.state.comments,
+                            },
+                          });
+                          this.props.dispatch({
+                            type: "GET_REPLIES",
+                          });
+                        }}
+                      >
+                        Edit Canned Response
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          let canned_edit = this.state.canned_edit
+                          if (canned_edit.slice(canned_edit.length - 1) === "?") {
+                            canned_edit = canned_edit.slice(0, canned_edit.length - 1)
+                            canned_edit = canned_edit + "1"
+
+                          }
+                          console.log(canned_edit)
+                          this.props.dispatch({
+                            type: "CANNED_DELETE",
+                            payload: canned_edit,
+                          });
+                          this.props.dispatch({
+                            type: "GET_REPLIES",
+                          });
+                        }}
+                      >
+                        Delete Canned Response
+                      </Button>
                     </td>
                   </tr>
                   <br />
@@ -1451,6 +1451,7 @@ class NewCustom extends Component {
                                 assigned: this.state.assigned,
                                 created_at: this.state.created_at,
                                 priority: this.state.priority,
+                                payment_link: this.state.payment_link,
                               },
                             });
                             this.props.dispatch({

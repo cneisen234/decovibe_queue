@@ -77,7 +77,8 @@ CREATE TABLE "customerconfirm"
 	"created_at" TEXT,
 	"token" TEXT,
 	"description" TEXT,
-	"priority" VARCHAR(5)
+	"priority" VARCHAR(5),
+	"payment_link" TEXT
 );
 
 CREATE TABLE "customerrespond"

@@ -159,10 +159,17 @@ router.put("/cannededit", rejectUnauthenticated, (req, res) => {
 
 router.delete("/canneddelete/:canned", rejectUnauthenticated, (req, res) => {
   // setting query text to update the username
+  let canned = req.params.canned
+  console.log (req.params.canned)
+  if (canned.slice(canned.length - 1) === "1") {
+    canned = canned.slice(0, canned.length - 1)
+    canned = canned + "?"
+    console.log(canned);
+  }
   const queryText = 'DELETE FROM "replies" WHERE reply=$1';
 
   pool
-    .query(queryText, [req.params.canned])
+    .query(queryText, [canned])
     .then((result) => {
       res.sendStatus(204); //No Content
     })
