@@ -28,12 +28,14 @@ class History extends Component {
     comments: "",
   };
   componentDidMount() {
+    //gets the customer coraspondance history
     this.props.dispatch({
       type: "GET_HISTORY_LIST",
     });
-    this.props.dispatch({
-      type: "GET_CUSTOM_ITEM_LIST",
-    });
+      this.props.dispatch({
+        type: "GET_CUSTOM_ITEM_LIST",
+      });
+    //gets total count of all queues
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
@@ -52,6 +54,7 @@ class History extends Component {
     this.props.dispatch({
       type: "GET_COMPLETE_LIST_COUNT",
     });
+    //deletes any items in complete or history that meet the cut off dates defined in the server
     this.props.dispatch({
       type: "DELETE_COMPLETE_RANGE",
     });
@@ -64,7 +67,6 @@ class History extends Component {
     //prevents default action
     event.preventDefault();
     const { email } = this.state;
-    console.log("this is state", email);
     this.props.dispatch({
       type: "CHECK_HISTORY",
       payload: {
@@ -132,6 +134,7 @@ class History extends Component {
               <option value="">Pick From Below </option>{" "}
               {this.props.historylist
                 ? this.props.historylist.map((item) => (
+                  //select the names of customers
                     <option key={item.id} value={item.email}>
                       {" "}
                       {String(item.first_name + " " + item.last_name)}{" "}
@@ -152,6 +155,7 @@ class History extends Component {
               </center>
             </Form>
           </center>
+          {/* ...and the table will only populate with the info from the selected customer */}
           <MUITable
             data={data}
             columns={[
@@ -165,6 +169,7 @@ class History extends Component {
               { name: "Decovibe Comments" },
               { name: "Customer Comments" },
               { name: "Comment Made At" },
+              //view order details
               {
                 name: "View Details",
                 options: {
@@ -187,8 +192,6 @@ class History extends Component {
                           const qty = item.qty;
                           const assigned = item.assigned;
                           const id = item.id;
-                          console.log("this is item", item);
-                          console.log("this is order_number", order_number);
                           this.setState({
                             toggle2: !this.state.toggle2,
                             order_number: order_number,
@@ -200,17 +203,12 @@ class History extends Component {
                             assigned: assigned,
                             id: id,
                           });
-                          console.log("this is state", this.state.order_number);
                           this.props.dispatch({
                             type: "ORDER_DETAILS",
                             payload: {
                               order_number: order_number,
                             },
                           });
-                          console.log(
-                            "this is details",
-                            this.props.detailslist
-                          );
                         }}
                       >
                         <ViewListIcon></ViewListIcon>
@@ -219,81 +217,6 @@ class History extends Component {
                   },
                 },
               },
-              //   {
-              //     name: "Delete",
-              //     options: {
-              //       filter: false,
-              //       sort: false,
-              //       empty: true,
-              //       customBodyRenderLite: (dataIndex, rowIndex) => {
-              //         return (
-              //           <Button
-              //             variant="danger"
-              //             onClick={(event) => {
-              //               event.preventDefault();
-              //               const itemArray = this.props.historylisttable;
-
-              //               const item = itemArray[dataIndex];
-              //               console.log(`entry id should be: ${item.id}`);
-              //               // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
-
-              //               swal({
-              //                 title: "Are you sure?",
-              //                 text:
-              //                   "Once deleted, you will not be able to recover the sku on this order!",
-              //                 icon: "warning",
-              //                 buttons: true,
-              //                 dangerMode: true,
-              //                 //end sweet alerts
-              //               }).then((willDelete) => {
-              //                 // start .then
-              //                 //if confirmed, delete
-              //                 if (willDelete) {
-              //                   this.props.dispatch({
-              //                     type: "DELETE_HISTORY",
-              //                     payload: item.id,
-              //                   });
-              //                   this.props.dispatch({
-              //                     type: "GET_HISTORY_LIST",
-              //                   });
-              //                   this.props.dispatch({
-              //                     type: "GET_ITEM_LIST_COUNT",
-              //                   });
-              //                   this.props.dispatch({
-              //                     type: "GET_RESPOND_LIST_COUNT",
-              //                   });
-              //                   this.props.dispatch({
-              //                     type: "GET_CONFIRM_LIST_COUNT",
-              //                   });
-              //                   this.props.dispatch({
-              //                     type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              //                   });
-              //                   this.props.dispatch({
-              //                     type: "GET_PROGRESS_LIST_COUNT",
-              //                   });
-              //                   this.props.dispatch({
-              //                     type: "GET_COMPLETE_LIST_COUNT",
-              //                   });
-              //                   //success! review deleted
-              //                   swal(
-              //                     "Poof! The sku on the order has been deleted!",
-              //                     {
-              //                       icon: "success",
-              //                     }
-              //                   );
-              //                 } else {
-              //                   //...else cancel action
-              //                   swal("The sku is safe!");
-              //                 }
-              //               });
-              //             }}
-              //           >
-              //             <DeleteIcon></DeleteIcon>
-              //           </Button>
-              //         );
-              //       },
-              //     },
-              //   },
             ]}
             title={"Items Customer Responded To"} //give the table a name
           />
@@ -302,10 +225,10 @@ class History extends Component {
         <br />
         <br />
         {this.state.toggle2 === false ? (
-          //if toggle is false, render nothing. This is the default
+          //if toggle2 is false, render nothing. This is the default
           <span></span>
         ) : (
-          //...else render the edit screen for the selected song
+          //...else render the order details
           <Paper
             style={{
               right: 0,
@@ -369,7 +292,6 @@ class History extends Component {
                 {this.props.detailslist.map((item, index) => {
                   if (this.state.sku == item.sku) {
                     let newIndex = index + 1;
-                    let pic = "pic" + newIndex;
                     let itemname = item.name;
                     let itemsku = item.sku;
                     let itemcost = Number(item.base_price).toFixed(2);
@@ -435,7 +357,7 @@ class History extends Component {
                 })}{" "}
                 <br />
               </table>
-              {/* toggles edit window back to not displaying */}
+              {/* toggles display window back to not displaying */}
               <Button onClick={this.toggle2} variant="success" type="submit">
                 Close
               </Button>
@@ -452,7 +374,7 @@ class History extends Component {
     );
   }
 }
-
+//grabs customitems, history, historytablem and details from BigCommerce API
 const mapStateToProps = (state) => ({
   customitemlist: state.item.customitemlist,
   historylist: state.item.historylist,

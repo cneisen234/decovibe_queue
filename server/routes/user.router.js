@@ -16,10 +16,11 @@ const fs = require("fs");
 
 let storeHash = process.env.STORE_HASH
 
+//defines dates to auto delete certain things from the database.
 let daterange = moment().subtract(6, "hours").subtract(30, "days");
 let daterange2 = moment().subtract(6, "hours").subtract(60, "days");
 
-
+//BigCommerce API tokens and keys
 let config = {
   headers: {
     "X-Auth-Client": process.env.BG_AUTH_CLIENT,
@@ -27,6 +28,7 @@ let config = {
   },
 };
 router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
+  //deletes any completed orders after 30 days
  pool
    .query('DELETE FROM "complete" WHERE timestamp<=$1', [daterange])
    .then((result) => {
@@ -38,6 +40,7 @@ router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
    });
 })
 router.delete("/deletehistoryrange", rejectUnauthenticated, (req, res) => {
+  //deletes any customer coraspondance after 60 days
   pool
     .query('DELETE FROM "history" WHERE timestamp<=$1', [daterange2])
     .then((result) => {
@@ -48,11 +51,9 @@ router.delete("/deletehistoryrange", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
+//used to check if the current order is a new order.
 let orderID = 0
 let prevOrderID = 0
-
-//NOTE that some routes were brought in from the project template
-//this route deals with users logging in and authicating them (i.e. do they exist in the database?)
 
 // Handles Ajax request for user information if user is authenticated
 router.get("/", rejectUnauthenticated, (req, res) => {
@@ -61,6 +62,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 });
 
   setInterval(() => {
+    //defines the dates to be used for the timestamp
       let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
       let nowYear = Number(moment().subtract(6, "hours").year());
       let prevYear = Number(moment().subtract(6, "hours").year());
@@ -68,6 +70,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
       let hour = Number(moment().subtract(6, "hours").hour());
       let min = Number(moment().subtract(6, "hours").minute());
       let sec = Number(moment().subtract(6, "hours").second());
+      //make sure all numbers come in as a double digit
       if (hour < 10) {
         hour = "0" + String(hour);
       }
@@ -77,9 +80,11 @@ router.get("/", rejectUnauthenticated, (req, res) => {
       if (sec < 10) {
         sec = "0" + String(sec);
       }
+      //make sure the previous month from Jan is December of the previous year
       if (nowMonth === 1) {
         prevYear = moment().year() - 1;
       }
+      //checks for new orders, always pulls up the most recent
     axios
       .get(
         `https://api.bigcommerce.com/stores/${storeHash}/v2/orders?sort=date_created:desc&limit=1`,
@@ -90,7 +95,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
         let email = order.billing_address.email;
         let first_name = order.billing_address.first_name;
         let last_name = order.billing_address.last_name;
-        // handle success
+        //converts to am/pm time
         if (response.data !== []) {
           let normalHour = Number(hour);
           let AmPm = "am";
@@ -103,44 +108,45 @@ router.get("/", rejectUnauthenticated, (req, res) => {
             AmPm = "am";
             normalHour = 12;
           }
-          // console.log("this is the response", response.data);
+          //defines orderID to be the id of the recent order checked
           orderID = response.data[0].id;
-          console.log(response.data[0].id);
+          //defines a datestring used for the timestamp
           let dateString = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
-          console.log("this is orderID", orderID);
-          console.log("this is prevOrderID", prevOrderID);
-          console.log(
-            "current date",
-            `${nowYear}-${nowMonth}-${nowDay}T${hour}:${min}:${sec}`
-          );
+          console.log(orderID)
+          console.log(prevOrderID)
+          console.log(dateString)
+          //is the current order ID different from the one that was checked last time? If so, check for decovibe skus
           if (orderID !== prevOrderID) {
-            console.log("new order incoming");
+            //instantly redefine the previous order number to be the same as the current to prepare for the next check
             prevOrderID = response.data[0].id;
+            //uses the url from the api to check the products url on that order
             axios
               .get(
                 `${response.data[0].products.url}`,
                 config
               )
               .then(function (response) {
-                // handle success
+                
                 if (response.data !== []) {
                   let data = response.data;
                   for (let index = 0; index < data.length; index++) {
                     const element = data[index];
                     let options = element.product_options;
                     let qty = element.quantity;
+                    //arrays used to determan how emails appear when sent
                     let optionsArray = [];
                     let orderComments = [];
                     let basePrice = Number(element.base_price).toFixed(2);
                     let name = element.name;
+                    //slices up the sku numbers to check certain parts of the string
                     let decoSku = element.sku;
-                    let decoSku2 = decoSku.slice(0, 2);
                     let decoSku3 = decoSku.slice(0, 6);
                     let decoSku4 = decoSku.slice(0, 5);
                     let decoSku5 = decoSku.slice(0, 3);
                     let decoSku6 = decoSku.slice(0, 8);
                     let decoSku7 = decoSku.slice(0, 7);
                     if (
+                      //if the sliced skews match the below criteria...
                       decoSku5 === "CD1" ||
                       decoSku5 === "CD2" ||
                       decoSku5 === "CD3" ||
@@ -175,49 +181,46 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                       decoSku5 === "SP-" ||
                       decoSku5 === "CP-"
                     ) {
-                      let counter = 0;
+                      //run the logic that places the skus in the stock queue
+                      console.log("goes into stock queue")
                       let product_length = "";
                       for (let j = 0; j < options.length; j++) {
                         const opt = options[j];
                         let display_name = opt.display_name;
+                        //some strings are overly long and have unneeded info, checking for those and simplify
                         let checkName = display_name.slice(0, 10);
                         let checkName2 = display_name.slice(0, 18);
                         if (checkName === "Sheet Size") {
-                          counter++;
+                          //if the first ten letters are Sheet Size, show just that
                           optionsArray.push(
                             `${checkName}: ${opt.display_value}`
                           );
                         } else if (display_name === "Length") {
+                          //if the display name of the product option is "length", define product length as it's value, ignore all others
                           product_length = opt.display_value;
-                          console.log("this is product_length", product_length);
                         } else if (display_name === "Order Comments") {
+                          //if display name is "Order Comments", push the name and value of that product option
                           orderComments.push(
                             `${opt.display_name}: ${opt.display_value}`
                           );
                         } else if (checkName2 === "Garment Type/Color") {
-                          counter++;
+                          //if the first 18 letters of the name state "Garment Type/Color", just use that and push the value
                           optionsArray.push(
                             `${checkName2}: ${opt.display_value}`
                           );
                         } else if (display_name === "Upload File") {
+                          //if diplay name is Upload File, just skip it
                           console.log("skipping upload file");
                         } else {
-                          counter++;
+                          //....push everything else
                           optionsArray.push(
                             `${opt.display_name}: ${opt.display_value}`
                           );
                         }
                       }
-                      counter = 0;
+                      //join the arrays as one string
                       let optionsJoined = optionsArray.join();
-                      let commentsJoined = orderComments.join();
-                      console.log("customer email", email);
-                      console.log("this is the order ID", orderID);
-                      console.log("product name", name);
-                      console.log("optionsJoined", optionsJoined);
-                      console.log("commentsJoined", commentsJoined);
-                      console.log("sku for order", decoSku);
-                      console.log("basePrice", basePrice);
+                      //...and throw them in the database
                       const query2Text =
                         'INSERT INTO "item" (email, first_name, last_name, order_number, sku, qty, product_length, product_options, created_at, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
                       pool.query(query2Text, [
@@ -232,9 +235,11 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                         dateString,
                         name,
                       ]);
+                      //empties the arrays for the next order
                       optionsArray = [];
                       orderComments = [];
                     } else if (
+                      //if the sliced skus meet the below conditions
                       decoSku4 === "BL_A3" ||
                       decoSku4 === "BL_A4" ||
                       decoSku4 === "BL_A5" ||
@@ -257,13 +262,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                       decoSku7 === "DYESUB-" ||
                       decoSku4 === "FINAL"
                     ) {
-                      console.log("custom order email", email);
-                      console.log("custom sku", decoSku);
-                      console.log("custom order first name", first_name);
-                      console.log("custom order first name", last_name);
-                      console.log("custom order number", orderID);
-                      console.log("custom order qty", qty);
-                      console.log("custom order created at", dateString);
+           //...place in the custom queue
+           console.log("goes into custom queue")
                       const query2Text =
                         'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id';
                       pool.query(query2Text, [
@@ -277,6 +277,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                         name,
                       ]);
                     } else {
+                      //...ignore everything else
                       console.log("not a decovibe sku", decoSku);
                     }
                   }
@@ -293,10 +294,11 @@ router.get("/", rejectUnauthenticated, (req, res) => {
         // handle error
         console.log(error);
       });
+      //...check for new orders every second
   }, 1000);
 
 router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
-  // pull out the incoming object data
+  // places items from the new col in the stock queue to in process
   const email = req.body.email;
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
@@ -340,7 +342,7 @@ router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
 });
 
 router.post("/gobacknew", rejectUnauthenticated, (req, res, next) => {
-  // pull out the incoming object data
+  // places items from the in process queue in stock orders back to new
   const email = req.body.email;
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
@@ -376,18 +378,15 @@ router.post("/gobacknew", rejectUnauthenticated, (req, res, next) => {
       console.log("Sorry, there was an error with your query: ", error);
       res.sendStatus(500); // HTTP SERVER ERROR
     })
-
-    .catch(function (error) {
-      console.log("Sorry, there is an error", error);
-      res.sendStatus(500);
-    });
 });
 
 router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
-  // pull out the incoming object data
+  // function that's run when customer responds to their email query
   let approve = req.body.approve
   let comments = req.body.comments;
+  //generates unique customer identifier
   let token = req.body.token;
+  //define date
                        let nowMonth =
                          Number(moment().subtract(6, "hours").month()) + 1;
                        let nowYear = Number(
@@ -426,7 +425,7 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
                          normalHour = 12;
                        }
                        let comment_made_at = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
-
+//only update database in the area that matches the customer identification number
   const queryText = pool
     .query(`SELECT * FROM "customerconfirm" WHERE token='${token}'`)
     .then((result) => {
@@ -440,7 +439,7 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
       assigned = result.rows[0].assigned;
       created_at = result.rows[0].created_at;
       priority = result.rows[0].priority;
-
+      //populate info into the response table that's pulled from the previous query
       const query2Text =
         'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id';
       pool
@@ -459,6 +458,7 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
           description,
           priority,
         ])
+        //...and save any cooraspondance into the history
          const query3Text =
         'INSERT INTO "history" (email, first_name, last_name, order_number, sku, qty, assigned, comment_made_at, customercomments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
       pool
@@ -484,6 +484,7 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
           res.sendStatus(500);
         })
         .then((result) => {
+          //...and delete from the customer confirm table since customer responded to prevent duplicate responses
           res.status(201).send(result.rows)
             const query4Text = `DELETE FROM "customerconfirm" WHERE token=$1`;
             pool
@@ -512,7 +513,7 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
 });
 
 router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
-  // pull out the incoming object data
+  // defines info thats sent to the customer for proofing
   const email = req.body.email;
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
@@ -545,150 +546,228 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   const comments = req.body.comments;
   const priority = req.body.priority;
   const payment_link = req.body.payment_link;
+  //generates unique customer identifer
   let token = crypto.randomBytes(16).toString("hex");
-          let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
-          let nowYear = Number(moment().subtract(6, "hours").year());
-          let prevYear = Number(moment().subtract(6, "hours").year());
-          let nowDay = Number(moment().subtract(6, "hours").date());
-          let hour = Number(moment().subtract(6, "hours").hour());
-          let min = Number(moment().subtract(6, "hours").minute());
-          let sec = Number(moment().subtract(6, "hours").second());
-          if (hour < 10) {
-            hour = "0" + String(hour);
-          }
-          if (min < 10) {
-            min = "0" + String(min);
-          }
-          if (sec < 10) {
-            sec = "0" + String(sec);
-          }
-          if (nowMonth === 1) {
-            prevYear = moment().year() - 1;
-          }
-          let normalHour = Number(hour);
-          let AmPm = "am";
-          if (normalHour > 12) {
-            AmPm = "pm";
-            normalHour = normalHour - 12;
-          } else if (normalHour === 12) {
-            AmPm = "pm";
-          } else if (normalHour === 00) {
-            AmPm = "am";
-            normalHour = 12;
-          }
-          let comment_made_at = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
-  const pic = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10, pic11, pic12, pic13, pic14, pic15, pic16, pic17, pic18, pic19, pic20]
-
-axios
-                 .get(
-                   `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
-                   config
-                 )
-                 .then(function (response) {
-                   // handle success
-                   if (response.data !== []) {
-                     let titleString = `  <div><img
+  //defines the date
+  let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
+  let nowYear = Number(moment().subtract(6, "hours").year());
+  let prevYear = Number(moment().subtract(6, "hours").year());
+  let nowDay = Number(moment().subtract(6, "hours").date());
+  let hour = Number(moment().subtract(6, "hours").hour());
+  let min = Number(moment().subtract(6, "hours").minute());
+  let sec = Number(moment().subtract(6, "hours").second());
+  if (hour < 10) {
+    hour = "0" + String(hour);
+  }
+  if (min < 10) {
+    min = "0" + String(min);
+  }
+  if (sec < 10) {
+    sec = "0" + String(sec);
+  }
+  if (nowMonth === 1) {
+    prevYear = moment().year() - 1;
+  }
+  let normalHour = Number(hour);
+  let AmPm = "am";
+  if (normalHour > 12) {
+    AmPm = "pm";
+    normalHour = normalHour - 12;
+  } else if (normalHour === 12) {
+    AmPm = "pm";
+  } else if (normalHour === 00) {
+    AmPm = "am";
+    normalHour = 12;
+  }
+  let comment_made_at = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
+  //checks all 20 potential spots for a file
+  const pic = [
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
+    pic6,
+    pic7,
+    pic8,
+    pic9,
+    pic10,
+    pic11,
+    pic12,
+    pic13,
+    pic14,
+    pic15,
+    pic16,
+    pic17,
+    pic18,
+    pic19,
+    pic20,
+  ];
+  //makes a query to the BigCommerce API so the customer can see the details of their order
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
+      config
+    )
+    .then(function (response) {
+      if (response.data !== []) {
+        //defines the html being sent in the email
+        let titleString = `  <div><img
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
        width="150"
       /></div>
                      <div>Please confirm the details below for your recent custom order</div>,<br><br>
 <div><b>Order number:</b> ${order_number} <br><br>`;
-                       let commentsString = `
+        let commentsString = `
 <div><b>Comments from the art department:</b> <br><br>
 ${comments}</div><br><br>
 <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
-  <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Continue</a></div><br><br>`; 
-                     let array = response.data;
-                     let newArray = [];
-                     let optionsArray = [];
-                     for (let index = 0; index < array.length; index++) {
-                       const element = array[index];
-                        if (sku == element.sku) {
-                          newArray.push(
-                            `<div><b>Details of your original order are listed below</b></div><br><br><div><b>Item Name:</b> ${element.name}</div>`
-                          );
-                          let options = element.product_options;
-                          for (let j = 0; j < options.length; j++) {
-                            const opt = options[j];
-                            optionsArray.push(
-                              `<div><b>${opt.display_name}:</b> ${opt.display_value}</div>`
-                            );
-                          }
-                          let optionsJoined = optionsArray.join();
-                          newArray.push(optionsJoined);
-                          optionsArray = [];
-                          if (payment_link === "" || payment_link === null) {
-                            newArray.push(
-                              `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
-                                pic[index]
-                              }>View Proof ${index + 1}</a><br><br>
+  <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Continue</a></div><br><br>`;
+        let array = response.data;
+        //defines array to be used for pushing html later
+        let newArray = [];
+        let optionsArray = [];
+        for (let index = 0; index < array.length; index++) {
+          //loops through the response data
+          const element = array[index];
+          if (sku == element.sku) {
+            //checks if the sku is the one that matches the one the email is pertaining to
+            //...if so, push the array
+            newArray.push(
+              `<div><b>Details of your original order are listed below</b></div><br><br><div><b>Item Name:</b> ${element.name}</div>`
+            );
+            let options = element.product_options;
+            for (let j = 0; j < options.length; j++) {
+              //...then loop through the product options for that sku
+              const opt = options[j];
+              //...and push into the options array
+              optionsArray.push(
+                `<div><b>${opt.display_name}:</b> ${opt.display_value}</div>`
+              );
+            }
+            //join into one string
+            let optionsJoined = optionsArray.join();
+            //...then push that joined array into the main array
+            newArray.push(optionsJoined);
+            //empty the optionsArray to get ready for the next order
+            optionsArray = [];
+            if (payment_link === "" || payment_link === null) {
+              //...if a payment link was not sent, push the below html
+              newArray.push(
+                `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
+                  pic[index]
+                }>View Proof ${index + 1}</a><br><br>
                              <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
-                            );
-
-                          } else {
-                                      newArray.push(
-                                        `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
-                                          pic[index]
-                                        }>View Proof ${index + 1}</a><br><br>
+              );
+            } else {
+              //...if a payment link was sent, push the below html which includes a payment link
+              newArray.push(
+                `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
+                  pic[index]
+                }>View Proof ${index + 1}</a><br><br>
                              <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
-                                      );
+              );
 
-                                      newArray.push(
-                                        `<p><b>Please finalize your payment by clicking the link below</b></p><a style="font-size:30px; text-decoration: none;" href=${payment_link}>Pay Here</a><br><br>`
-                                      );
-                          }
-   newArray.push("<br><br> --------------------------------------------");
-                        }
+              newArray.push(
+                `<p><b>Please finalize your payment by clicking the link below</b></p><a style="font-size:30px; text-decoration: none;" href=${payment_link}>Pay Here</a><br><br>`
+              );
+            }
+            //push to create space
+            newArray.push(
+              "<br><br> --------------------------------------------"
+            );
+          }
+        }
+        //join the array into one string
+        let joinedArray = newArray.join();
+        //then define the final string to be sent
+        let finalArray =
+          `<div style="margin-left:50px;">` +
+          titleString +
+          commentsString +
+          joinedArray +
+          `</div>`;
+          //empty newArray for next order
+        newArray = [];
+        console.log(finalArray);
 
-                     }
+        const msg = {
+          personalizations: [
+            {
+              to: [
+                //send to the customers email address
+                {
+                  email: email,
+                },
+              ],
+              bcc: [
+                //bcc me for testing purposes
+                {
+                  email: "chris.neisen@heattransferwarehouse.com",
+                },
+              ],
+            },
+          ],
+          from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+          subject: `Please confirm details for your order: ${order_number}`,
+          //send the entire finalArray as one string
+          html: finalArray,
+        };
+        (async () => {
+          try {
+            await sgMail.send(msg);
+          } catch (error) {
+            console.error(error);
 
-                     let joinedArray = newArray.join();
-                     let finalArray =
-                       `<div style="margin-left:50px;">` +
-                       titleString +
-                       commentsString +
-                       joinedArray +
-                       `</div>`;
-                     newArray = [];
-                     console.log(finalArray);
-
- const msg = {
-   personalizations: [
-     {
-       to: [
-         {
-           email: "christopherjay71186@gmail.com",
-         },
-       ],
-       bcc: [
-         {
-           email: "chris.neisen@heattransferwarehouse.com",
-         },
-       ],
-     },
-   ],
-   from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
-   subject: `Please confirm details for your order: ${order_number}`,
-   html: finalArray,
- };
- (async () => {
-   try {
-     await sgMail.send(msg);
-   } catch (error) {
-     console.error(error);
-
-     if (error.response) {
-       console.error(error.response.body);
-     }
-   }
- })();
-}
-})
-
+            if (error.response) {
+              console.error(error.response.body);
+            }
+          }
+        })();
+      }
+    });
+    //...then place into the customer confirm table until the customer responds
   const query2Text =
     'INSERT INTO "customerconfirm" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, upload_url1, upload_url2, upload_url3, upload_url4, upload_url5, upload_url6, upload_url7, upload_url8, upload_url9, upload_url10, upload_url11, upload_url12, upload_url13, upload_url14, upload_url15, upload_url16, upload_url17, upload_url18, upload_url19, upload_url20, comments, token, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32) RETURNING id';
+  pool.query(query2Text, [
+    email,
+    first_name,
+    last_name,
+    order_number,
+    sku,
+    qty,
+    assigned,
+    created_at,
+    pic1,
+    pic2,
+    pic3,
+    pic4,
+    pic5,
+    pic6,
+    pic7,
+    pic8,
+    pic9,
+    pic10,
+    pic11,
+    pic12,
+    pic13,
+    pic14,
+    pic15,
+    pic16,
+    pic17,
+    pic18,
+    pic19,
+    pic20,
+    comments,
+    token,
+    description,
+    priority,
+  ]);
+  //...then place into the history table to keep track of coraspondance
+  const query3Text =
+    'INSERT INTO "history" (email, first_name, last_name, order_number, sku, qty, assigned, comment_made_at, admincomments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
   pool
-    .query(query2Text, [
+    .query(query3Text, [
       email,
       first_name,
       last_name,
@@ -696,61 +775,23 @@ ${comments}</div><br><br>
       sku,
       qty,
       assigned,
-      created_at,
-      pic1,
-      pic2,
-      pic3,
-      pic4,
-      pic5,
-      pic6,
-      pic7,
-      pic8,
-      pic9,
-      pic10,
-      pic11,
-      pic12,
-      pic13,
-      pic14,
-      pic15,
-      pic16,
-      pic17,
-      pic18,
-      pic19,
-      pic20,
+      comment_made_at,
       comments,
-      token,
-      description,
-      priority,
     ])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
 
-      const query3Text =
-        'INSERT INTO "history" (email, first_name, last_name, order_number, sku, qty, assigned, comment_made_at, admincomments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
-      pool
-        .query(query3Text, [
-          email,
-          first_name,
-          last_name,
-          order_number,
-          sku,
-          qty,
-          assigned,
-          comment_made_at,
-          comments,
-        ])
-        .then((result) => res.status(201).send(result.rows))
-        .catch(function (error) {
-          console.log("Sorry, there was an error with your query: ", error);
-          res.sendStatus(500); // HTTP SERVER ERROR
-        })
-
-        .catch(function (error) {
-          console.log("Sorry, there is an error", error);
-          res.sendStatus(500);
-        });
+    .catch(function (error) {
+      console.log("Sorry, there is an error", error);
+      res.sendStatus(500);
+    });
 });
 
 router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
-  // pull out the incoming object data
+  // marks orders as complete and places them in the complete table
   const email = req.body.email;
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
@@ -763,8 +804,6 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
   const assigned = req.body.assigned;
   const created_at = req.body.created_at;
   const priority = req.body.priority;
-
-  //now lets add admin information to the user table
   const query2Text =
     'INSERT INTO "complete" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id';
   pool
@@ -795,11 +834,8 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
 });
 
 router.post("/canned", rejectUnauthenticated, (req, res, next) => {
-  // pull out the incoming object data
   const canned = req.body.canned;
-
-
-  //now lets add admin information to the user table
+  //adds canned responses to the table
   const query2Text =
     'INSERT INTO "replies" (reply) VALUES ($1) RETURNING id';
   pool
@@ -817,19 +853,12 @@ router.post("/canned", rejectUnauthenticated, (req, res, next) => {
       res.sendStatus(500);
     });
 });
-
-
-//Handles POST to add a new admin
-//The password is encrypted before being inserted into the database
 router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
-  // pull out the incoming object data
+  // used to reset user logins. It's on a permenent restricted path, only accessesable by manaully changing the code. Extremely secure and protected
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
   const email = req.body.email;
   const password = encryptLib.encryptPassword(req.body.password);
-  const created_at = req.body.created_at;
-  const role = req.body.role;
-  lcf_id = null;
 
   //now lets add admin information to the user table
   const query2Text =
@@ -849,22 +878,6 @@ router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
 });
 
 
-
-////////////ROUTE BELOW IS PART OF TEMPLATE AND REMAINS HERE IN CASE OF OPEN REGISTRATION BEING NEEDED//////////
-// Handles POST request with new user data
-// The only thing different from this and every other post we've seen
-// is that the password gets encrypted before being inserted
-router.post("/register", rejectUnauthenticated, (req, res, next) => {
-  const email = req.body.username;
-  const password = encryptLib.encryptPassword(req.body.password);
-
-  const queryText =
-    'INSERT INTO "user" (email, password) VALUES ($1, $2) RETURNING id';
-  pool
-    .query(queryText, [email, password])
-    .then(() => res.sendStatus(201))
-    .catch((error) => console.log(error));
-});/////////////////////////////////////////////////////////////////////////////////////////
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
@@ -887,72 +900,6 @@ router.post("/logout", (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();
   res.sendStatus(200);
-});
-
-
-
-//PUT or updates the admin password from 'reset password' tab admin side
-router.put(`/adminpasswordreset/:admin_id`, rejectUnauthenticated, (req, res) => {
-  console.log('we are about to change the admin password:', req.body);
-  const newPassword = encryptLib.encryptPassword(req.body.password);
-  const adminID = req.params.admin_id;
-  const email = req.body.email;
-  // setting query text to update the username
-  const queryText = `UPDATE "admin" SET password=$1 WHERE id=$2 `;
-
-  pool
-    .query(queryText, [newPassword, adminID])
-    .then((result) => {
-      console.log("Success in updating password or email!");
-
-      const query2Text = `UPDATE "user" SET password=$1 WHERE admin_id=$2`;
-      const queryValue = [newPassword, adminID];
-      pool
-        .query(query2Text, queryValue)
-             .then(() => res.status(201).send(result.rows))
-          .catch(function (error) {
-          console.log("Sorry, there was an error with your query: ", error);
-          res.sendStatus(500); // HTTP SERVER ERROR
-        });
-      
-    })
-    .catch((error) => {
-      console.log(`Error on PUT with query ${error}`);
-      res.sendStatus(500); // if there is an error, send server error 500
-    });
-});
-// end PUT
-
-
-
-
-//route used to deal with forgot password for admins and creates token for them
-router.put(`/passwordforgot/admin`, (req, res) => {
-  console.log("we are about to change the admin password:", req.body);
-  const newPassword = encryptLib.encryptPassword(req.body.password);
-  const token = req.body.token;
-  // setting query text to update the username
-  const queryText = `UPDATE "admin" SET password=$1 WHERE token=$2 `;
-
-  pool
-    .query(queryText, [newPassword, token])
-    .then((result) => {
-      console.log("Success in updating password or email for admin!");
-
-      const query2Text = `UPDATE "user" SET password=$1 WHERE token=$2`;
-      const queryValue = [newPassword, token];
-      pool
-        .query(query2Text, queryValue)
-        .then(() => res.sendStatus(201).res.send(result.rows))
-        .catch(function (error) {
-          console.log("Sorry, there was an error with your query: ", error);
-          res.sendStatus(500); // HTTP SERVER ERROR
-        });
-    })
-    .catch((error) => {
-      console.log(`Error on PUT with query ${error}`);
-      res.sendStatus(500); // if there is an error, send server error 500
-    });
 });
 
 

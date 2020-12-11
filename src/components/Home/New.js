@@ -35,9 +35,11 @@ class New extends Component {
     dataSelector: [],
   };
   componentDidMount() {
+    //get all new stock items
     this.props.dispatch({
       type: "GET_ITEM_LIST",
     });
+    //get count of everything
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
@@ -56,6 +58,7 @@ class New extends Component {
     this.props.dispatch({
       type: "GET_COMPLETE_LIST_COUNT",
     });
+    //delete from complete table and history table if dates meet cut off dates defined in the server
     this.props.dispatch({
       type: "DELETE_COMPLETE_RANGE",
     });
@@ -147,7 +150,7 @@ class New extends Component {
         });
   };
   assignTask = (event) => {
-    //prevents default action
+    //assigns the task to a decovibe worker
     event.preventDefault();
     const { id, assigned } = this.state;
     this.props.dispatch({
@@ -191,6 +194,7 @@ class New extends Component {
   };
 
   render() {
+    //defines the dataselector to know which items to preform actions on
     let dataSelector = this.state.dataSelector;
     const data = this.props.itemlist.map((item) => [
       item.order_number,
@@ -210,50 +214,6 @@ class New extends Component {
         </center>
         <div className="navbuttonscontainer"></div>
         <div style={{ padding: "1.5%" }}>
-          {/* {this.state.toggle3 === false ? (
-            <Button
-              variant="primary"
-              onClick={(event) => {
-                event.preventDefault();
-                let checkInput = document.getElementsByTagName("input");
-                for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = true;
-                }
-                this.props.itemlist.map((item) => {
-                  dataSelector.push(item);
-                });
-                this.setState({
-                  toggle3: !this.state.toggle3,
-                });
-                console.log(dataSelector);
-              }}
-            >
-              Select All
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={(event) => {
-                event.preventDefault();
-                let checkInput = document.getElementsByTagName("input");
-                for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = false;
-                }
-                dataSelector = [];
-                this.setState({
-                  toggle3: !this.state.toggle3,
-                  dataSelector: [],
-                });
-                console.log(dataSelector);
-              }}
-            >
-              Deselect All
-            </Button>
-          )} */}
           <Button
             variant="success"
             onClick={(event) => {
@@ -271,6 +231,7 @@ class New extends Component {
               event.preventDefault();
               console.log(dataSelector);
               for (let index = 0; index < dataSelector.length; index++) {
+                //loop through the dataselector to know which indexes are checked, preform action on those indexes
                 const element = dataSelector[index];
                 this.props.dispatch({
                   type: "START_ITEM",
@@ -316,14 +277,13 @@ class New extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
-              console.log("delete successful");
+              //uncheck all inputs
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
-                console.log(element.checked);
                 element.checked = false;
               }
+              //...and clear the dataselector
               dataSelector = [];
               this.setState({
                 dataSelector: [],
@@ -333,11 +293,11 @@ class New extends Component {
           >
             <PlayArrowIcon></PlayArrowIcon>
           </Button>
+          {/* mark the selected items complete */}
           <Button
             variant="success"
             onClick={(event) => {
               event.preventDefault();
-              console.log(dataSelector);
               for (let index = 0; index < dataSelector.length; index++) {
                 const element = dataSelector[index];
                 this.props.dispatch({
@@ -384,8 +344,6 @@ class New extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
-              console.log("delete successful");
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
@@ -401,11 +359,11 @@ class New extends Component {
           >
             <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
           </Button>
+          {/* mark selected items high priority */}
           <Button
             variant="danger"
             onClick={(event) => {
               event.preventDefault();
-              console.log(dataSelector);
               for (let index = 0; index < dataSelector.length; index++) {
                 const element = dataSelector[index];
                 this.props.dispatch({
@@ -437,7 +395,6 @@ class New extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
@@ -453,6 +410,7 @@ class New extends Component {
           >
             <FlagIcon></FlagIcon>
           </Button>
+          {/* mark selected items low priority */}
           <Button
             variant="success"
             onClick={(event) => {
@@ -489,7 +447,6 @@ class New extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
@@ -505,11 +462,12 @@ class New extends Component {
           >
             <FlagIcon></FlagIcon>
           </Button>
+          {/* deleted selected items */}
           <Button
             variant="danger"
             onClick={(event) => {
               event.preventDefault();
-              console.log(dataSelector);
+              //sweet alerts to warn of irreversible action
               swal({
                 title: "Are you sure?",
                 text:
@@ -517,10 +475,7 @@ class New extends Component {
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-                //end sweet alerts
               }).then((willDelete) => {
-                // start .then
-                //if confirmed, delete
                 if (willDelete) {
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
@@ -550,8 +505,6 @@ class New extends Component {
                   this.props.dispatch({
                     type: "GET_COMPLETE_LIST_COUNT",
                   });
-                  //success! review deleted
-                  console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
                     const element = checkInput[index];
@@ -564,7 +517,6 @@ class New extends Component {
                     toggle3: false,
                   });
                 } else {
-                  //...else cancel action
                   console.log("delete canceled");
                 }
               });
@@ -576,6 +528,7 @@ class New extends Component {
             data={data} //brings in data as an array, in this case, list of items
             columns={[
               //names the columns found on MUI table
+              //col with the checkboxes
               {
                 name: "Select",
                 options: {
@@ -591,15 +544,16 @@ class New extends Component {
                         name=""
                         value=""
                         onClick={(event) => {
+                          //if clicked, check the checkbox
                           let checkChecked = document.getElementById(dataIndex)
                             .checked;
-                          console.log("checkChecked", checkChecked);
-                          console.log("I'm being checked at index", dataIndex);
                           const itemArray = this.props.itemlist;
                           const item = itemArray[dataIndex];
                           if (checkChecked === true) {
+                            //...and push the index into the dataselector
                             dataSelector.push(item);
                           } else {
+                            //when deselected, remove the index from the dataselector
                             for (
                               let index = 0;
                               index < dataSelector.length;
@@ -775,7 +729,6 @@ class New extends Component {
                           this.props.dispatch({
                             type: "GET_COMPLETE_LIST_COUNT",
                           });
-                          console.log("this order has been marked complete");
                         }}
                       >
                         <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
@@ -893,9 +846,7 @@ class New extends Component {
                           const itemArray = this.props.itemlist;
 
                           const item = itemArray[dataIndex];
-                          console.log(`entry id should be: ${item.id}`);
-                          // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
-                          //sweet alerts!
+                          //sweetalerts to warn of irreversable action
                           swal({
                             title: "Are you sure?",
                             text:
@@ -903,10 +854,7 @@ class New extends Component {
                             icon: "warning",
                             buttons: true,
                             dangerMode: true,
-                            //end sweet alerts
                           }).then((willDelete) => {
-                            // start .then
-                            //if confirmed, delete
                             if (willDelete) {
                               this.props.dispatch({
                                 type: "DELETE_ITEM",
@@ -933,10 +881,7 @@ class New extends Component {
                               this.props.dispatch({
                                 type: "GET_COMPLETE_LIST_COUNT",
                               });
-                              //success! review deleted
-                              console.log("delete successful");
                             } else {
-                              //...else cancel action
                               console.log("delete canceled");
                             }
                           });
@@ -955,6 +900,7 @@ class New extends Component {
             //if toggle is false, render nothing. This is the default
             <span></span>
           ) : (
+            //else render the assign window
             <Paper
               style={{
                 right: 0,
@@ -1016,6 +962,7 @@ class New extends Component {
             //if toggle is false, render nothing. This is the default
             <span></span>
           ) : (
+            //another assign window for the selected checkboxes. Needed it's own window because the functionality needed to be altered a bit for this feature
             <Paper
               style={{
                 right: 0,

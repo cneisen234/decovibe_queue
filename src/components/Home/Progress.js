@@ -75,56 +75,10 @@ class Progress extends Component {
           <h1>In Progress</h1>
         </center>
         <div style={{ padding: "1.5%" }}>
-          {/* {this.state.toggle3 === false ? (
-            <Button
-              variant="primary"
-              onClick={(event) => {
-                event.preventDefault();
-                let checkInput = document.getElementsByTagName("input");
-                for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = true;
-                }
-                this.props.progresslist.map((item) => {
-                  dataSelector.push(item);
-                });
-                this.setState({
-                  toggle3: !this.state.toggle3,
-                });
-                console.log(dataSelector);
-              }}
-            >
-              Select All
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={(event) => {
-                event.preventDefault();
-                let checkInput = document.getElementsByTagName("input");
-                for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = false;
-                }
-                dataSelector = [];
-                this.setState({
-                  toggle3: !this.state.toggle3,
-                  dataSelector: [],
-                });
-                console.log(dataSelector);
-              }}
-            >
-              Deselect All
-            </Button>
-          )} */}
           <Button
             variant="success"
             onClick={(event) => {
               event.preventDefault();
-              console.log(dataSelector);
-
               for (let index = 0; index < dataSelector.length; index++) {
                 const element = dataSelector[index];
                 this.props.dispatch({
@@ -171,8 +125,6 @@ class Progress extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
-              console.log("delete successful");
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
@@ -192,8 +144,6 @@ class Progress extends Component {
             variant="success"
             onClick={(event) => {
               event.preventDefault();
-              console.log(dataSelector);
-
               for (let index = 0; index < dataSelector.length; index++) {
                 const element = dataSelector[index];
                 this.props.dispatch({
@@ -243,8 +193,6 @@ class Progress extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
-              console.log("delete successful");
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
@@ -299,7 +247,6 @@ class Progress extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
@@ -351,7 +298,6 @@ class Progress extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
@@ -379,10 +325,7 @@ class Progress extends Component {
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-                //end sweet alerts
               }).then((willDelete) => {
-                // start .then
-                //if confirmed, delete
                 if (willDelete) {
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
@@ -412,8 +355,6 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_COMPLETE_LIST_COUNT",
                   });
-                  //success! review deleted
-                  console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
                     const element = checkInput[index];
@@ -426,7 +367,6 @@ class Progress extends Component {
                     toggle3: false,
                   });
                 } else {
-                  //...else cancel action
                   console.log("delete canceled");
                 }
               });
@@ -456,8 +396,6 @@ class Progress extends Component {
                         onClick={(event) => {
                           let checkChecked = document.getElementById(dataIndex)
                             .checked;
-                          console.log("checkChecked", checkChecked);
-                          console.log("I'm being checked at index", dataIndex);
                           const itemArray = this.props.progresslist;
                           const item = itemArray[dataIndex];
                           if (checkChecked === true) {
@@ -474,7 +412,6 @@ class Progress extends Component {
                               }
                             }
                           }
-                          console.log(dataSelector);
                         }}
                       ></input>
                     );
@@ -503,7 +440,6 @@ class Progress extends Component {
                           event.preventDefault();
                           const itemArray = this.props.progresslist;
                           const item = itemArray[dataIndex];
-
                           this.props.dispatch({
                             type: "MARK_COMPLETE",
                             payload: {
@@ -547,7 +483,6 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_COMPLETE_LIST_COUNT",
                           });
-                          console.log("marked complete");
                         }}
                       >
                         <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
@@ -570,7 +505,6 @@ class Progress extends Component {
                           event.preventDefault();
                           const itemArray = this.props.progresslist;
                           const item = itemArray[dataIndex];
-
                           this.props.dispatch({
                             type: "ADD_NEW",
                             payload: {
@@ -637,7 +571,6 @@ class Progress extends Component {
                           event.preventDefault();
                           const itemArray = this.props.progresslist;
                           const item = itemArray[dataIndex];
-
                           this.props.dispatch({
                             type: "MARK_PRIORITY_PROGRESS",
                             payload: {
@@ -678,7 +611,6 @@ class Progress extends Component {
                           event.preventDefault();
                           const itemArray = this.props.progresslist;
                           const item = itemArray[dataIndex];
-
                           this.props.dispatch({
                             type: "MARK_PRIORITY_PROGRESS",
                             payload: {
@@ -686,7 +618,6 @@ class Progress extends Component {
                               priority: "low",
                             },
                           });
-
                           this.props.dispatch({
                             type: "GET_PROGRESS_LIST",
                           });
@@ -729,11 +660,7 @@ class Progress extends Component {
                         onClick={(event) => {
                           event.preventDefault();
                           const itemArray = this.props.progresslist;
-
                           const item = itemArray[dataIndex];
-                          console.log(`entry id should be: ${item.id}`);
-                          // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
-
                           swal({
                             title: "Are you sure?",
                             text:
@@ -741,10 +668,7 @@ class Progress extends Component {
                             icon: "warning",
                             buttons: true,
                             dangerMode: true,
-                            //end sweet alerts
                           }).then((willDelete) => {
-                            // start .then
-                            //if confirmed, delete
                             if (willDelete) {
                               this.props.dispatch({
                                 type: "DELETE_PROGRESS",
@@ -771,10 +695,7 @@ class Progress extends Component {
                               this.props.dispatch({
                                 type: "GET_COMPLETE_LIST_COUNT",
                               });
-                              //success! review deleted
-                              console.log("deleted");
                             } else {
-                              //...else cancel action
                               console.log("action canceled");
                             }
                           });

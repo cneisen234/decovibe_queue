@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Button from "react-bootstrap/Button";
-import moment from "moment";
 import MUITable from "../MUITable/MUITable";
-import swal from "sweetalert";
-import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
-import DeleteIcon from "@material-ui/icons/Delete";
-
 class SentCustomer extends Component {
   state = {
     email: "",
@@ -69,7 +63,6 @@ class SentCustomer extends Component {
         <center>
           <h1>Sent To Customer</h1>
         </center>
-
         <div style={{ padding: "1.5%" }}>
           <MUITable
             data={data}

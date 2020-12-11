@@ -8,7 +8,6 @@
 
 .nav {
   overflow: hidden;
-  /* border: 20px solid yellow; */
   width:100%;
 
   
@@ -22,9 +21,6 @@
   padding: 24px 10px;
   text-decoration: none;
   font-size: 15px;
-
-  /* these last two make the logout button in
-  the nav bar look like another link */
   border:none;
   cursor: pointer;
   outline:0;
@@ -38,9 +34,6 @@
   padding: 24px 10px;
   text-decoration: none;
   font-size: 15px;
-
-  /* these last two make the logout button in
-  the nav bar look like another link */
   border:none;
   cursor: pointer;
   outline:0;
@@ -57,9 +50,3 @@
 .nav-right {
   float: right;
 }
-
-/* .logo{
-   max-width:15%;
-   height:auto;
-   margin-left: 0;
-} */

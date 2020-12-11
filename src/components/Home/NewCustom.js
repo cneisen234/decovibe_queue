@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
-import moment from "moment";
 import MUITable from "../MUITable/MUITable";
 import { Paper, TextField } from "@material-ui/core";
 import Form from "react-bootstrap/Form";
@@ -11,13 +9,11 @@ import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FlagIcon from "@material-ui/icons/Flag";
-import { auto } from "async";
 import ReactFilestack from "filestack-react";
 import swal from "sweetalert";
 import { Alert } from "@material-ui/lab";
-//import { response } from "express";
 
-// This component is for new
+// This component is for NewCustom
 class NewCustom extends Component {
   state = {
     toggle: false,
@@ -121,7 +117,7 @@ class NewCustom extends Component {
   handleChange = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event
   }; //end handleChange
-  //toggles edit window
+  //toggles window
   toggle = () => {
     this.setState({
       toggle: !this.state.toggle,
@@ -266,50 +262,6 @@ class NewCustom extends Component {
         <div className="navbuttonscontainer"></div>
 
         <div style={{ padding: "1.5%" }}>
-          {/* {this.state.toggle3 === false ? (
-            <Button
-              variant="primary"
-              onClick={(event) => {
-                event.preventDefault();
-                let checkInput = document.getElementsByTagName("input");
-                for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = true;
-                }
-                this.props.customitemlist.map((item) => {
-                  dataSelector.push(item);
-                });
-                this.setState({
-                  toggle3: !this.state.toggle3,
-                });
-                console.log(dataSelector);
-              }}
-            >
-              Select All
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={(event) => {
-                event.preventDefault();
-                let checkInput = document.getElementsByTagName("input");
-                for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = false;
-                }
-                dataSelector = [];
-                this.setState({
-                  toggle3: !this.state.toggle3,
-                  dataSelector: [],
-                });
-                console.log(dataSelector);
-              }}
-            >
-              Deselect All
-            </Button>
-          )} */}
           <Button
             variant="success"
             onClick={(event) => {
@@ -325,7 +277,6 @@ class NewCustom extends Component {
             variant="success"
             onClick={(event) => {
               event.preventDefault();
-              console.log(dataSelector);
               swal({
                 title: "Mark Complete?",
                 text:
@@ -333,10 +284,7 @@ class NewCustom extends Component {
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-                //end sweet alerts
               }).then((willDelete) => {
-                // start .then
-                //if confirmed, delete
                 if (willDelete) {
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
@@ -384,12 +332,9 @@ class NewCustom extends Component {
                   this.props.dispatch({
                     type: "GET_COMPLETE_LIST_COUNT",
                   });
-                  //success! review deleted
-                  console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
                     const element = checkInput[index];
-                    console.log(element.checked);
                     element.checked = false;
                   }
                   dataSelector = [];
@@ -398,7 +343,6 @@ class NewCustom extends Component {
                     toggle3: false,
                   });
                 } else {
-                  //...else cancel action
                   console.log("action canceled");
                 }
               });
@@ -442,7 +386,6 @@ class NewCustom extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
@@ -494,11 +437,9 @@ class NewCustom extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-              //success! review deleted
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
-                console.log(element.checked);
                 element.checked = false;
               }
               dataSelector = [];
@@ -522,10 +463,7 @@ class NewCustom extends Component {
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-                //end sweet alerts
               }).then((willDelete) => {
-                // start .then
-                //if confirmed, delete
                 if (willDelete) {
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
@@ -555,8 +493,6 @@ class NewCustom extends Component {
                   this.props.dispatch({
                     type: "GET_COMPLETE_LIST_COUNT",
                   });
-                  //success! review deleted
-                  console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
                     const element = checkInput[index];
@@ -569,7 +505,6 @@ class NewCustom extends Component {
                     toggle3: false,
                   });
                 } else {
-                  //...else cancel action
                   console.log("delete canceled");
                 }
               });
@@ -598,8 +533,6 @@ class NewCustom extends Component {
                         onClick={(event) => {
                           let checkChecked = document.getElementById(dataIndex)
                             .checked;
-                          console.log("checkChecked", checkChecked);
-                          console.log("I'm being checked at index", dataIndex);
                           const itemArray = this.props.customitemlist;
                           const item = itemArray[dataIndex];
                           if (checkChecked === true) {
@@ -616,7 +549,6 @@ class NewCustom extends Component {
                               }
                             }
                           }
-                          console.log(dataSelector);
                         }}
                       ></input>
                     );
@@ -659,8 +591,6 @@ class NewCustom extends Component {
                             const id = item.id;
                             const priority = item.priority;
                             const payment_link = this.state.payment_link;
-                            console.log("this is item", item);
-                            console.log("this is order_number", order_number);
                             this.setState({
                               toggle2: !this.state.toggle2,
                               order_number: order_number,
@@ -676,10 +606,6 @@ class NewCustom extends Component {
                               priority: priority,
                               payment_link: payment_link,
                             });
-                            console.log(
-                              "this is state",
-                              this.state.order_number
-                            );
                             this.props.dispatch({
                               type: "ORDER_DETAILS",
                               payload: {
@@ -689,10 +615,6 @@ class NewCustom extends Component {
                             this.props.dispatch({
                               type: "GET_REPLIES",
                             });
-                            console.log(
-                              "this is details",
-                              this.props.detailslist
-                            );
                           }}
                         >
                           <ViewListIcon></ViewListIcon>
@@ -743,7 +665,6 @@ class NewCustom extends Component {
                             event.preventDefault();
                             const itemArray = this.props.customitemlist;
                             const item = itemArray[dataIndex];
-
                             swal({
                               title: "Mark Complete?",
                               text:
@@ -751,10 +672,7 @@ class NewCustom extends Component {
                               icon: "warning",
                               buttons: true,
                               dangerMode: true,
-                              //end sweet alerts
                             }).then((willDelete) => {
-                              // start .then
-                              //if confirmed, delete
                               if (willDelete) {
                                 this.props.dispatch({
                                   type: "MARK_COMPLETE",
@@ -797,9 +715,7 @@ class NewCustom extends Component {
                                 this.props.dispatch({
                                   type: "GET_COMPLETE_LIST_COUNT",
                                 });
-                                console.log("marked complete");
                               } else {
-                                //...else cancel action
                                 console.log("action canceled");
                               }
                             });
@@ -819,6 +735,7 @@ class NewCustom extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
+                    //if the priority is low, run the function to change it to high
                     return this.props.customitemlist[dataIndex] &&
                       this.props.customitemlist[dataIndex].priority ===
                         "low" ? (
@@ -828,7 +745,6 @@ class NewCustom extends Component {
                           event.preventDefault();
                           const itemArray = this.props.customitemlist;
                           const item = itemArray[dataIndex];
-
                           this.props.dispatch({
                             type: "MARK_PRIORITY_CUSTOM",
                             payload: {
@@ -863,6 +779,7 @@ class NewCustom extends Component {
                         <FlagIcon></FlagIcon>
                       </Button>
                     ) : (
+                      //...if it's high change it to low
                       <Button
                         variant="danger"
                         onClick={(event) => {
@@ -920,11 +837,7 @@ class NewCustom extends Component {
                         onClick={(event) => {
                           event.preventDefault();
                           const itemArray = this.props.customitemlist;
-
                           const item = itemArray[dataIndex];
-                          console.log(`entry id should be: ${item.id}`);
-                          // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
-                          //sweet alerts!
                           swal({
                             title: "Are you sure?",
                             text:
@@ -932,10 +845,7 @@ class NewCustom extends Component {
                             icon: "warning",
                             buttons: true,
                             dangerMode: true,
-                            //end sweet alerts
                           }).then((willDelete) => {
-                            // start .then
-                            //if confirmed, delete
                             if (willDelete) {
                               this.props.dispatch({
                                 type: "DELETE_CUSTOM_ITEM",
@@ -962,10 +872,7 @@ class NewCustom extends Component {
                               this.props.dispatch({
                                 type: "GET_COMPLETE_LIST_COUNT",
                               });
-                              //success! review deleted
-                              console.log("delete successful");
                             } else {
-                              //...else cancel action
                               console.log("deletion canceled");
                             }
                           });
@@ -984,7 +891,7 @@ class NewCustom extends Component {
             //if toggle is false, render nothing. This is the default
             <span></span>
           ) : (
-            //...else render the edit screen for the selected song
+            //...else render the assign window
             <Paper
               style={{
                 right: 0,
@@ -1024,12 +931,11 @@ class NewCustom extends Component {
                     <option value="Levi">Levi </option>{" "}
                   </Form.Control>
                   <br />
-                  {/* onClick tied to form element, runs submitInfo on click */}
                   <Button variant="success" type="submit">
                     Assign
                   </Button>
                 </form>
-                {/* toggles edit window back to not displaying */}
+                {/* toggles assign window back to not displaying */}
                 <br />
                 <br />
                 <br />
@@ -1045,7 +951,7 @@ class NewCustom extends Component {
             //if toggle is false, render nothing. This is the default
             <span></span>
           ) : (
-            //...else render the edit screen for the selected song
+            //...else render the details window
             <Paper
               style={{
                 right: 0,
@@ -1109,6 +1015,7 @@ class NewCustom extends Component {
                   {this.props.detailslist.map((item, index) => {
                     if (this.state.sku == item.sku) {
                       let newIndex = index + 1;
+                      //define pic as pic and concatnate the index number, this should match with state
                       let pic = "pic" + newIndex;
                       let filename = "filename" + newIndex;
                       let itemname = item.name;
@@ -1172,6 +1079,7 @@ class NewCustom extends Component {
                           <br />
                           <tr>
                             <td>
+                              {/* filestack for photo uploads */}
                               <ReactFilestack
                                 apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
                                 componentDisplayMode={{
@@ -1180,7 +1088,7 @@ class NewCustom extends Component {
                                 }}
                                 onSuccess={(res) =>
                                   this.setState({
-                                    //path for uploaded photo to display on dom
+                                    //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
                                     [pic]: res.filesUploaded[0].url,
                                     [filename]:
                                       res.filesUploaded[0].originalPath,

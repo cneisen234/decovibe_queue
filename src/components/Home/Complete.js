@@ -26,9 +26,11 @@ class Complete extends Component {
     dataSelector: [],
   };
   componentDidMount() {
+    //get the complete queue
     this.props.dispatch({
       type: "GET_COMPLETE_LIST",
     });
+    //get the count of everything
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
@@ -47,6 +49,7 @@ class Complete extends Component {
     this.props.dispatch({
       type: "GET_COMPLETE_LIST_COUNT",
     });
+    //delete anything that meets the cut off dates defined on the backend
     this.props.dispatch({
       type: "DELETE_COMPLETE_RANGE",
     });
@@ -102,50 +105,7 @@ class Complete extends Component {
         </center>
 
         <div style={{ padding: "1.5%" }}>
-          {/* {this.state.toggle3 === false ? (
-            <Button
-              variant="primary"
-              onClick={(event) => {
-                event.preventDefault();
-                let checkInput = document.getElementsByTagName("input");
-                for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = true;
-                }
-                this.props.completelist.map((item) => {
-                  dataSelector.push(item);
-                });
-                this.setState({
-                  toggle3: !this.state.toggle3,
-                });
-                console.log(dataSelector);
-              }}
-            >
-              Select All
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={(event) => {
-                event.preventDefault();
-                let checkInput = document.getElementsByTagName("input");
-                for (let index = 0; index < checkInput.length; index++) {
-                  const element = checkInput[index];
-                  console.log(element.checked);
-                  element.checked = false;
-                }
-                dataSelector = [];
-                this.setState({
-                  toggle3: !this.state.toggle3,
-                  dataSelector: [],
-                });
-                console.log(dataSelector);
-              }}
-            >
-              Deselect All
-            </Button>
-          )} */}
+          {/*function to go back to in process for any selected skus*/}
           <Button
             variant="success"
             onClick={(event) => {
@@ -155,13 +115,12 @@ class Complete extends Component {
               for (let index = 0; index < dataSelector.length; index++) {
                 const element = dataSelector[index];
                 let decoSku = element.sku;
-                console.log(element);
-                let decoSku2 = decoSku.slice(0, 2);
+                //slice the skus to check only certain parts of them
                 let decoSku3 = decoSku.slice(0, 6);
-                let decoSku4 = decoSku.slice(0, 5);
                 let decoSku5 = decoSku.slice(0, 3);
                 let decoSku6 = decoSku.slice(0, 8);
                 if (
+                  //if the sliced skus meet the below conditions
                   decoSku5 === "CD1" ||
                   decoSku5 === "CD2" ||
                   decoSku5 === "CD3" ||
@@ -196,6 +155,7 @@ class Complete extends Component {
                   decoSku5 === "SP-" ||
                   decoSku5 === "CP-"
                 ) {
+                  //...then allows the item to go back to process, it's a stock item
                   this.props.dispatch({
                     type: "START_ITEM",
                     payload: {
@@ -219,6 +179,7 @@ class Complete extends Component {
                     payload: element.id,
                   });
                 } else {
+                  //...ignore any custom skus
                   console.log("skipping custom order");
                 }
               }
@@ -246,15 +207,14 @@ class Complete extends Component {
               this.props.dispatch({
                 type: "GET_COMPLETE_LIST_COUNT",
               });
-
-              //success! review deleted
-              console.log("delete successful");
+              //uncheck all of the checkboxes
               let checkInput = document.getElementsByTagName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
                 console.log(element.checked);
                 element.checked = false;
               }
+              //empty data selector because nothing is checked
               dataSelector = [];
               this.setState({
                 dataSelector: [],
@@ -264,11 +224,12 @@ class Complete extends Component {
           >
             <RestoreIcon></RestoreIcon>
           </Button>
+            {/* button to delete selected items */}
           <Button
             variant="danger"
             onClick={(event) => {
               event.preventDefault();
-              console.log(dataSelector);
+              //sweet alerts, this actions can't be undone
               swal({
                 title: "Are you sure?",
                 text:
@@ -276,11 +237,9 @@ class Complete extends Component {
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-                //end sweet alerts
               }).then((willDelete) => {
-                // start .then
-                //if confirmed, delete
                 if (willDelete) {
+                  //loops through all selected items and deletes them
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
                     this.props.dispatch({
@@ -309,8 +268,6 @@ class Complete extends Component {
                   this.props.dispatch({
                     type: "GET_COMPLETE_LIST_COUNT",
                   });
-                  //success! review deleted
-                  console.log("delete successful");
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
                     const element = checkInput[index];
@@ -323,7 +280,6 @@ class Complete extends Component {
                     toggle3: false,
                   });
                 } else {
-                  //...else cancel action
                   console.log("delete canceled");
                 }
               });
@@ -331,10 +287,12 @@ class Complete extends Component {
           >
             <DeleteIcon></DeleteIcon>
           </Button>
+          {/* start table */}
           <MUITable
             data={data} //brings in data as an array, in this case, list of admins
             columns={[
               //names the columns found on MUI table
+              //The col that shows the checkboxes
               {
                 name: "Select",
                 options: {
@@ -350,16 +308,16 @@ class Complete extends Component {
                         name=""
                         value=""
                         onClick={(event) => {
+                          //check the box and push into the dataselector array
                           let checkChecked = document.getElementById(dataIndex)
                             .checked;
-                          console.log("checkChecked", checkChecked);
-                          console.log("I'm being checked at index", dataIndex);
                           const itemArray = this.props.completelist;
                           const item = itemArray[dataIndex];
                           if (checkChecked === true) {
+                            //push the checked item into the dataselector array for later looping upon action
                             dataSelector.push(item);
-                            console.log("dataSelector", dataSelector);
                           } else {
+                            //...uncheck the box and remove from dataselector array
                             for (
                               let index = 0;
                               index < dataSelector.length;
@@ -371,7 +329,6 @@ class Complete extends Component {
                               }
                             }
                           }
-                          console.log(dataSelector);
                         }}
                       ></input>
                     );
@@ -386,6 +343,7 @@ class Complete extends Component {
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
+              //see order details
               {
                 name: "View Details",
                 options: {
@@ -409,9 +367,8 @@ class Complete extends Component {
                           const assigned = item.assigned;
                           const created_at = item.created_at;
                           const id = item.id;
-                          console.log("this is item", item);
-                          console.log("this is order_number", order_number);
                           this.setState({
+                            //toggles state to toggle the window
                             toggle2: !this.state.toggle2,
                             order_number: order_number,
                             sku: sku,
@@ -423,17 +380,13 @@ class Complete extends Component {
                             created_at: created_at,
                             id: id,
                           });
-                          console.log("this is state", this.state.order_number);
+                          //runs the api call, sends the order number as payload to grab the correct order
                           this.props.dispatch({
                             type: "ORDER_DETAILS",
                             payload: {
                               order_number: order_number,
                             },
                           });
-                          console.log(
-                            "this is details",
-                            this.props.detailslist
-                          );
                         }}
                       >
                         <ViewListIcon></ViewListIcon>
@@ -442,6 +395,7 @@ class Complete extends Component {
                   },
                 },
               },
+              //pushes the item back to the previous queue
               {
                 name: "Go Back",
                 options: {
@@ -457,12 +411,12 @@ class Complete extends Component {
                           const itemArray = this.props.completelist;
                           const item = itemArray[dataIndex];
                           let decoSku = item.sku;
-                          let decoSku2 = decoSku.slice(0, 2);
+                          //slices sku up to check only certain parts
                           let decoSku3 = decoSku.slice(0, 6);
-                          let decoSku4 = decoSku.slice(0, 5);
                           let decoSku5 = decoSku.slice(0, 3);
                           let decoSku6 = decoSku.slice(0, 8);
                           if (
+                            //if the conditions below are met
                             decoSku5 === "CD1" ||
                             decoSku5 === "CD2" ||
                             decoSku5 === "CD3" ||
@@ -497,6 +451,7 @@ class Complete extends Component {
                             decoSku5 === "SP-" ||
                             decoSku5 === "CP-"
                           ) {
+                            //push the item back, it's a stock sku
                             this.props.dispatch({
                               type: "START_ITEM",
                               payload: {
@@ -544,6 +499,7 @@ class Complete extends Component {
                               type: "GET_COMPLETE_LIST_COUNT",
                             });
                           } else {
+                            //...else deny the action, can't push back a custom sku
                             swal("Sorry, we can't go back on a custom order");
                           }
                         }}
@@ -554,6 +510,7 @@ class Complete extends Component {
                   },
                 },
               },
+              // deletes the sku
               {
                 name: "Delete",
                 options: {
@@ -567,11 +524,8 @@ class Complete extends Component {
                         onClick={(event) => {
                           event.preventDefault();
                           const itemArray = this.props.completelist;
-
                           const item = itemArray[dataIndex];
-                          console.log(`entry id should be: ${item.id}`);
-                          // alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
-
+                          //sweet alerts, warn of irreversable action
                           swal({
                             title: "Are you sure?",
                             text:
@@ -579,10 +533,7 @@ class Complete extends Component {
                             icon: "warning",
                             buttons: true,
                             dangerMode: true,
-                            //end sweet alerts
                           }).then((willDelete) => {
-                            // start .then
-                            //if confirmed, delete
                             if (willDelete) {
                               this.props.dispatch({
                                 type: "DELETE_COMPLETE",
@@ -609,10 +560,7 @@ class Complete extends Component {
                               this.props.dispatch({
                                 type: "GET_COMPLETE_LIST_COUNT",
                               });
-                              //success! review deleted
-                              console.log("this has been deleted");
                             } else {
-                              //...else cancel action
                               console.log("delete canceled");
                             }
                           });
@@ -627,12 +575,13 @@ class Complete extends Component {
             ]}
             title={"Completed items"} //give the table a name
           />
+          {/* end table */}
         </div>
         <br />
         <br />
         <br />
         {this.state.toggle2 === false ? (
-          //if toggle is false, render nothing. This is the default
+          //details window, this toggles based on the boolean value of state.toggle2
           <span></span>
         ) : (
           <Paper
@@ -674,6 +623,7 @@ class Complete extends Component {
                     }}
                   >
                     {" "}
+                    {/* used to close the window, toggles back */}
                     <Button
                       onClick={this.toggle2}
                       variant="success"
@@ -697,9 +647,10 @@ class Complete extends Component {
                   </td>
                 </tr>
                 {this.props.detailslist.map((item, index) => {
+                  //map from details reducer to show details pulled from api request from BigCommerce
                   if (this.state.sku == item.sku) {
+                    //only show details for the sku that was clicked on
                     let newIndex = index + 1;
-                    let pic = "pic" + newIndex;
                     let itemname = item.name;
                     let itemsku = item.sku;
                     let itemcost = Number(item.base_price).toFixed(2);
@@ -739,6 +690,7 @@ class Complete extends Component {
                           </td>
                         </tr>
                         {item.product_options.map((product, index) => {
+                          //map the product options of that sku to show the details 
                           let display_name = product.display_name;
                           let display_value = product.display_value;
                           return (
@@ -787,7 +739,7 @@ class Complete extends Component {
     );
   }
 }
-
+//bring in complete table and order details from BigCommerce API
 const mapStateToProps = (state) => ({
   completelist: state.item.completelist,
   detailslist: state.item.detailslist,

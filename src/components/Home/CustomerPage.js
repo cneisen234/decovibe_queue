@@ -28,8 +28,6 @@ const GreenRadio = withStyles({
   },
   checked: {},
 })((props) => <Radio color="default" {...props} />);
-
-//The purpose of this page is to capture the student's activity for the past pay period
 class CustomerPage extends Component {
   state = {
     toggle: false,
@@ -38,10 +36,7 @@ class CustomerPage extends Component {
     token: "",
     error: false,
   };
-
-  componentWillMount() {}
-
-  componentDidMount() {
+componentDidMount() {
     // grabs the token from the header, this comes in from the token generated
     // this is used for verification purposes
     let token = window.location.hash;
@@ -58,7 +53,7 @@ class CustomerPage extends Component {
     this.setState({ [fieldName]: event.target.value });
   }; //end handleChange
 
-  //this function sends user information to the server to store in the database
+  //this function sends information to the server to store in the database
   submitInfo = (event) => {
     //prevents any default actions
     event.preventDefault();
@@ -70,7 +65,7 @@ class CustomerPage extends Component {
       this.setState({
         error: true,
       });
-      //...set it back to false after 5 secondss
+      //...set it back to false after 5 seconds
       setTimeout(() => {
         this.setState({
           error: false,
@@ -78,6 +73,7 @@ class CustomerPage extends Component {
       }, 5000);
       //stop the function
       return;
+      //repeat with these condtions, if approve is "no" and the comments are left blank
     } else if (approve === 'No' && comments === null) {
 
       this.setState({
@@ -92,10 +88,12 @@ class CustomerPage extends Component {
       //stop the function
       return;
     } else if (approve === "Yes") {
+      //if customer clicks yes, check if the checkboxes are checked
               let checkInput = document.getElementsByClassName("input");
               for (let index = 0; index < checkInput.length; index++) {
                 const element = checkInput[index];
                 if (element.checked === false) {
+                  //...if any are missed, deny action set error to true
                       this.setState({
                         error: true,
                       });
@@ -105,6 +103,7 @@ class CustomerPage extends Component {
                           error: false,
                         });
                       }, 5000);
+                      //...and stop
                       return;
                 }
               }
@@ -123,9 +122,6 @@ class CustomerPage extends Component {
         cancelButtonColor: "#fcb70a",
         confirmButtonText: "Confirm",
       }).then((result) => {
-        //end sweetAlerts
-
-        //on confirm run the dispatch to send makeEntry info over to redux sagas
         if (result.value) {
           this.props.dispatch({
             type: "CUSTOMER_RESPONSE",
@@ -143,6 +139,7 @@ class CustomerPage extends Component {
         }
       });
     } else if (approve === "No" && comments !== null) {
+      //if "no" is picked and comments have been filled out
             Swal.fire({
               title: "Please confirm",
               html: `You're not approving the artwork<br/><br/>
@@ -241,7 +238,7 @@ class CustomerPage extends Component {
                 ) : this.state.approve === "No" ? (
                   <>
                     <p>2. Please leave any comments you have below</p>
-                    <TextField //box for student to enter in text
+                    <TextField
                       style={{
                         backgroundColor: "white",
                         margin: "5px",
@@ -268,6 +265,7 @@ class CustomerPage extends Component {
                 ) : (
                   <>
                     <b>I have reviewed and approve the following:</b>
+                    {/* check boxes customer needs to check to submit their approval */}
                     <br />
                     <input
                       type="checkbox"
@@ -306,7 +304,7 @@ class CustomerPage extends Component {
                   </>
                 )}
                 <center>
-                  <Button //button that, one clicked, submits the entry to the database
+                  <Button
                     style={{
                       //note that it only goes through if it passes all validation
                       marginTop: "3%",
@@ -335,6 +333,7 @@ class CustomerPage extends Component {
             <br />
             <br />
             <br />
+            {/*show this only after the customer has submitted, to confirm submission and also prevent duplicate submissions*/}
             <h1 style={{ textAlign: "center" }}>
               Thank you for your feedback.
               <br /> The art department will follow up with you shortly

@@ -94,19 +94,6 @@ router.delete("/deletecomplete/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
-// router.delete("/deletecompleteall", rejectUnauthenticated, (req, res) => {
-  //api to delete all completed orders, currently not being used
-//   pool
-//     .query('DELETE FROM "complete"')
-//     .then((result) => {
-//       res.sendStatus(204); //No Content
-//     })
-//     .catch((error) => {
-//       console.log("Error DELETE ", error);
-//       res.sendStatus(500);
-//     });
-// });
-
 router.put("/customassign", rejectUnauthenticated, (req, res) => {
   //api to assign custom orders to decovibe workers
   const { assigned, id } = req.body;
@@ -127,7 +114,6 @@ router.put("/customassign", rejectUnauthenticated, (req, res) => {
 router.put("/assign", rejectUnauthenticated, (req, res) => {
 //api to assign stock orders to decovibe workers
     const {assigned, id} = req.body;
-    // setting query text to update the username
     const queryText = 'UPDATE "item" SET assigned=$1 WHERE id=$2';
 
     pool.query(queryText, [assigned, id])
@@ -143,7 +129,6 @@ router.put("/assign", rejectUnauthenticated, (req, res) => {
 router.put("/cannededit", rejectUnauthenticated, (req, res) => {
   //Edits canned responses
   const { comments, canned } = req.body;
-  // setting query text to update the username
   const queryText = 'UPDATE "replies" SET reply=$1 WHERE reply=$2';
 
   pool
@@ -158,7 +143,7 @@ router.put("/cannededit", rejectUnauthenticated, (req, res) => {
 });
 
 router.delete("/canneddelete/:canned", rejectUnauthenticated, (req, res) => {
-  // setting query text to update the username
+  // deletes canned responses
   let canned = req.params.canned
   console.log (req.params.canned)
   if (canned.slice(canned.length - 1) === "1") {
@@ -182,7 +167,6 @@ router.delete("/canneddelete/:canned", rejectUnauthenticated, (req, res) => {
 router.put("/priority", rejectUnauthenticated, (req, res) => {
   //api to set priority of new stock items
   const { priority, id } = req.body;
-  // setting query text to update the username
   const queryText = 'UPDATE "item" SET priority=$1 WHERE id=$2';
 
   pool
@@ -374,7 +358,7 @@ router.get("/confirmlist", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/confirmlistcount", rejectUnauthenticated, (req, res) => {
-  //gets a total count of all odf the items sent to the customer
+  //gets a total count of all of the items sent to the customer
   const queryText = `SELECT count(*) FROM "customerconfirm";`;
   pool
     .query(queryText)
@@ -388,6 +372,7 @@ router.get("/confirmlistcount", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/respondlist", rejectUnauthenticated, (req, res) => {
+  //gets all of the custom items the customer responded to
   const queryText = `SELECT * FROM "customerrespond" ORDER BY id DESC;`;
   pool
     .query(queryText)
@@ -401,6 +386,7 @@ router.get("/respondlist", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/respondlistcount", rejectUnauthenticated, (req, res) => {
+  //gets a count of all of the items currently in the customer response queue
   const queryText = `SELECT count(*) FROM "customerrespond";`;
   pool
     .query(queryText)
@@ -414,7 +400,7 @@ router.get("/respondlistcount", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/completelist", rejectUnauthenticated, (req, res) => {
-
+//gets all of the completed items
   const queryText = `SELECT * FROM "complete" ORDER BY id DESC;`;
   pool
     .query(queryText)
@@ -428,6 +414,7 @@ router.get("/completelist", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/replies", rejectUnauthenticated, (req, res) => {
+  //gets a list of all of the canned responses
   const queryText = `SELECT * FROM "replies" ORDER BY id DESC;`;
   pool
     .query(queryText)
@@ -441,7 +428,7 @@ router.get("/replies", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/completelistcount", rejectUnauthenticated, (req, res) => {
-
+//gets a total count of all of the completed items
   const queryText = `SELECT count(*) FROM "complete";`;
   pool
     .query(queryText)
@@ -455,6 +442,7 @@ router.get("/completelistcount", rejectUnauthenticated, (req, res) => {
 });
 
 router.post("/orderdetails", (req, res) => {
+  //grabs all of the details for a specific order with the BigCommerce API
   let order_number = req.body.order_number;
   console.log("this is the payload before it reaches the get", order_number);
   axios

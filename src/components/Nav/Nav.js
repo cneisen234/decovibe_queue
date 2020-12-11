@@ -14,13 +14,16 @@ import HistoryIcon from "@material-ui/icons/History";
 import EditIcon from "@material-ui/icons/Edit";
 
 class Nav extends Component {
+
   state = {
     toggle: false,
+    //changes colors of navbar when toggled, used to identify which queue we are in
     backgroundcolor: "#000080",
     backgroundcolorclass: "nav-link",
   };
 
   componentDidMount() {
+    //grab counts of everything
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
@@ -57,15 +60,14 @@ class Nav extends Component {
           md={2}
           style={{ backgroundColor: "white", width: "15%", float: "left" }}
         >
+          {/*HTW logo at top*/}
           <img
             src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
             alt="HTW logo"
           ></img>
         </Grid>
 
-        {/* Show this link if they are logged in or not,
-        but call this link 'Home' if they are logged in,
-        and call this link 'Login / Register' if they are not */}
+        {/* Show these links if they are logged in*/}
         {this.state.toggle === false ? (
           <>
             {this.props.user.id ? (
@@ -83,6 +85,7 @@ class Nav extends Component {
                 >
                   <Link className={this.state.backgroundcolorclass} to="/home">
                     <EditIcon></EditIcon>New{" "}
+                    {/*used to display the count of all items in the new queue*/}
                     {`(${
                       this.props.itemlistcount[0] &&
                       this.props.itemlistcount[0].count
@@ -138,6 +141,7 @@ class Nav extends Component {
                       onClick={(event) => {
                         event.preventDefault();
                         this.setState({
+                          //toggles queue and nav color
                           toggle: !this.state.toggle,
                           backgroundcolor: "#8B008B",
                           backgroundcolorclass: "nav-link2",
@@ -377,32 +381,13 @@ class Nav extends Component {
           </>
         )}
 
-        {/* Show the link to the info page and the logout button if the user is logged in */}
-
         <>
-          {/* <Link className="nav-link" to="/resetpassword">
-          <RotateLeftIcon></RotateLeftIcon>
-          Reset Password
-        </Link> */}
-          {/* <Link className="nav-link" to="/instructions">
-          <DescriptionIcon></DescriptionIcon>
-          Instructions
-        </Link> */}
         </>
-        {/* Always show this link since the about page is not protected */}
-        {/* <Link className="nav-link" to="/about">
-        About
-      </Link> */}
       </Grid>
     );
   }
 }
-
-// Instead of taking everything from state, we just want the user
-// object to determine if they are logged in
-// if they are logged in, we show them a few more links 
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({ user }) => ({ user });
+//grab the count of all of the queues
 const mapStateToProps = (state) => ({
   user: state.user,
   itemlistcount: state.item.itemlistcount,
