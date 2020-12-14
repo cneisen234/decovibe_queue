@@ -853,18 +853,19 @@ router.post("/canned", rejectUnauthenticated, (req, res, next) => {
       res.sendStatus(500);
     });
 });
-router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
+router.post("/addadmin", (req, res, next) => {
   // used to reset user logins. It's on a permenent restricted path, only accessesable by manaully changing the code. Extremely secure and protected
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
   const email = req.body.email;
   const password = encryptLib.encryptPassword(req.body.password);
+  const role = req.body.role;
 
   //now lets add admin information to the user table
   const query2Text =
-    'INSERT INTO "user" (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING id';
+    'INSERT INTO "user" (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING id';
   pool
-    .query(query2Text, [first_name, last_name, email, password])
+    .query(query2Text, [first_name, last_name, email, password, role])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {
       console.log("Sorry, there was an error with your query: ", error);

@@ -262,6 +262,8 @@ class NewCustom extends Component {
         <div className="navbuttonscontainer"></div>
 
         <div style={{ padding: "1.5%" }}>
+          {this.props.user.role === "csr" ? (<span></span>) : (
+            <>
           <Button
             variant="success"
             onClick={(event) => {
@@ -512,6 +514,8 @@ class NewCustom extends Component {
           >
             <DeleteIcon></DeleteIcon>
           </Button>
+          </>
+          )}
           <MUITable
             data={data} //brings in data as an array, in this case, list of items
             columns={[
@@ -524,6 +528,9 @@ class NewCustom extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <input
                         type="checkbox"
                         id={dataIndex}
@@ -551,6 +558,7 @@ class NewCustom extends Component {
                           }
                         }}
                       ></input>
+                      )
                     );
                   },
                 },
@@ -631,7 +639,9 @@ class NewCustom extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
+                    return (   this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -646,6 +656,7 @@ class NewCustom extends Component {
                       >
                         <AssignmentIndIcon></AssignmentIndIcon>
                       </Button>
+                      )
                     );
                   },
                 },
@@ -657,7 +668,9 @@ class NewCustom extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
+                    return (   this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       this.props.customitemlist[dataIndex] && (
                         <Button
                           variant="success"
@@ -724,6 +737,7 @@ class NewCustom extends Component {
                           <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
                         </Button>
                       )
+                      )
                     );
                   },
                 },
@@ -736,7 +750,11 @@ class NewCustom extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     //if the priority is low, run the function to change it to high
-                    return this.props.customitemlist[dataIndex] &&
+                    return   this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
+                    
+                    this.props.customitemlist[dataIndex] &&
                       this.props.customitemlist[dataIndex].priority ===
                         "low" ? (
                       <Button
@@ -820,6 +838,7 @@ class NewCustom extends Component {
                       >
                         <FlagIcon></FlagIcon>
                       </Button>
+                    )
                     );
                   },
                 },
@@ -831,7 +850,9 @@ class NewCustom extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
+                    return (   this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <Button
                         variant="danger"
                         onClick={(event) => {
@@ -880,6 +901,7 @@ class NewCustom extends Component {
                       >
                         <DeleteIcon></DeleteIcon>
                       </Button>
+                      )
                     );
                   },
                 },
@@ -1077,6 +1099,9 @@ class NewCustom extends Component {
                           })}{" "}
                           <br />
                           <br />
+                          {this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
                           <tr>
                             <td>
                               {/* filestack for photo uploads */}
@@ -1098,7 +1123,8 @@ class NewCustom extends Component {
                               Uploaded file
                             </td>
                           </tr>
-                          {this.state[pic] !== "" ? (
+                          )}
+                          {this.state[pic] !== "" || this.props.user.role === "csr" ? (
                             <tr>
                               <td>
                                 <a href={this.state[pic]} target="_blank">
@@ -1115,6 +1141,10 @@ class NewCustom extends Component {
                   })}{" "}
                   <br />
                   <br />
+                   {this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
+                            <>
                   <tr>
                     <td>
                       {" "}
@@ -1264,13 +1294,17 @@ class NewCustom extends Component {
                         variant="danger"
                         onClick={(event) => {
                           event.preventDefault();
-                          let canned_edit = this.state.canned_edit
-                          if (canned_edit.slice(canned_edit.length - 1) === "?") {
-                            canned_edit = canned_edit.slice(0, canned_edit.length - 1)
-                            canned_edit = canned_edit + "1"
-
+                          let canned_edit = this.state.canned_edit;
+                          if (
+                            canned_edit.slice(canned_edit.length - 1) === "?"
+                          ) {
+                            canned_edit = canned_edit.slice(
+                              0,
+                              canned_edit.length - 1
+                            );
+                            canned_edit = canned_edit + "1";
                           }
-                          console.log(canned_edit)
+                          console.log(canned_edit);
                           this.props.dispatch({
                             type: "CANNED_DELETE",
                             payload: canned_edit,
@@ -1409,6 +1443,8 @@ class NewCustom extends Component {
                   </tr>
                   <br />
                   <br />
+                  </>
+                          )}
                   <tr>
                     <td>
                       {" "}
@@ -1552,6 +1588,7 @@ class NewCustom extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  user: state.user,
   customitemlist: state.item.customitemlist,
   detailslist: state.item.detailslist,
   replieslist: state.item.replieslist,

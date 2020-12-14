@@ -134,7 +134,7 @@ class History extends Component {
               <option value="">Pick From Below </option>{" "}
               {this.props.historylist
                 ? this.props.historylist.map((item) => (
-                  //select the names of customers
+                    //select the names of customers
                     <option key={item.id} value={item.email}>
                       {" "}
                       {String(item.first_name + " " + item.last_name)}{" "}
@@ -252,7 +252,7 @@ class History extends Component {
             >
               <table
                 style={{
-                  marginLeft: "auto",
+                  marginLeft: "200px",
                   marginRight: "auto",
                   marginTop: "20px",
                   width: "100%",
@@ -356,11 +356,12 @@ class History extends Component {
                   }
                 })}{" "}
                 <br />
+                {/* toggles display window back to not displaying */}
+                <Button onClick={this.toggle2} variant="success" type="submit">
+                  Close
+                </Button>
               </table>
-              {/* toggles display window back to not displaying */}
-              <Button onClick={this.toggle2} variant="success" type="submit">
-                Close
-              </Button>
+
               <br />
               <br />
               <br />

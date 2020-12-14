@@ -105,150 +105,93 @@ class Complete extends Component {
         </center>
 
         <div style={{ padding: "1.5%" }}>
-          {/*function to go back to in process for any selected skus*/}
-          <Button
-            variant="success"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
+          {this.props.user.role === "csr" ? (
+            <span></span>
+          ) : (
+            <>
+              {/*function to go back to in process for any selected skus*/}
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
 
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                let decoSku = element.sku;
-                //slice the skus to check only certain parts of them
-                let decoSku3 = decoSku.slice(0, 6);
-                let decoSku5 = decoSku.slice(0, 3);
-                let decoSku6 = decoSku.slice(0, 8);
-                if (
-                  //if the sliced skus meet the below conditions
-                  decoSku5 === "CD1" ||
-                  decoSku5 === "CD2" ||
-                  decoSku5 === "CD3" ||
-                  decoSku5 === "CD4" ||
-                  decoSku5 === "CD5" ||
-                  decoSku5 === "CD6" ||
-                  decoSku5 === "CD7" ||
-                  decoSku5 === "CD8" ||
-                  decoSku5 === "CD9" ||
-                  decoSku5 === "CS1" ||
-                  decoSku5 === "CS2" ||
-                  decoSku5 === "CS3" ||
-                  decoSku5 === "CS4" ||
-                  decoSku5 === "CS5" ||
-                  decoSku5 === "CS6" ||
-                  decoSku5 === "CS7" ||
-                  decoSku5 === "CS8" ||
-                  decoSku5 === "CS9" ||
-                  decoSku5 === "SD1" ||
-                  decoSku5 === "SD2" ||
-                  decoSku5 === "SD3" ||
-                  decoSku5 === "SD4" ||
-                  decoSku5 === "SD5" ||
-                  decoSku5 === "SD6" ||
-                  decoSku5 === "SD7" ||
-                  decoSku5 === "SD8" ||
-                  decoSku5 === "SD9" ||
-                  decoSku3 === "CUSTOM" ||
-                  decoSku3 === "SUBKIT" ||
-                  decoSku6 === "SETUPFEE" ||
-                  decoSku3 === "SISER-" ||
-                  decoSku5 === "SP-" ||
-                  decoSku5 === "CP-"
-                ) {
-                  //...then allows the item to go back to process, it's a stock item
-                  this.props.dispatch({
-                    type: "START_ITEM",
-                    payload: {
-                      id: element.id,
-                      email: element.email,
-                      first_name: element.first_name,
-                      last_name: element.last_name,
-                      order_number: element.order_number,
-                      sku: element.sku,
-                      description: element.description,
-                      product_length: element.product_length,
-                      product_options: element.product_options,
-                      qty: element.qty,
-                      assigned: element.assigned,
-                      created_at: element.created_at,
-                      priority: element.priority,
-                    },
-                  });
-                  this.props.dispatch({
-                    type: "DELETE_COMPLETE",
-                    payload: element.id,
-                  });
-                } else {
-                  //...ignore any custom skus
-                  console.log("skipping custom order");
-                }
-              }
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              //uncheck all of the checkboxes
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                console.log(element.checked);
-                element.checked = false;
-              }
-              //empty data selector because nothing is checked
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <RestoreIcon></RestoreIcon>
-          </Button>
-            {/* button to delete selected items */}
-          <Button
-            variant="danger"
-            onClick={(event) => {
-              event.preventDefault();
-              //sweet alerts, this actions can't be undone
-              swal({
-                title: "Are you sure?",
-                text:
-                  "Once deleted, you will not be able to recover the sku on these orders!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-              }).then((willDelete) => {
-                if (willDelete) {
-                  //loops through all selected items and deletes them
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
-                    this.props.dispatch({
-                      type: "DELETE_COMPLETE",
-                      payload: element.id,
-                    });
+                    let decoSku = element.sku;
+                    //slice the skus to check only certain parts of them
+                    let decoSku3 = decoSku.slice(0, 6);
+                    let decoSku5 = decoSku.slice(0, 3);
+                    let decoSku6 = decoSku.slice(0, 8);
+                    if (
+                      //if the sliced skus meet the below conditions
+                      decoSku5 === "CD1" ||
+                      decoSku5 === "CD2" ||
+                      decoSku5 === "CD3" ||
+                      decoSku5 === "CD4" ||
+                      decoSku5 === "CD5" ||
+                      decoSku5 === "CD6" ||
+                      decoSku5 === "CD7" ||
+                      decoSku5 === "CD8" ||
+                      decoSku5 === "CD9" ||
+                      decoSku5 === "CS1" ||
+                      decoSku5 === "CS2" ||
+                      decoSku5 === "CS3" ||
+                      decoSku5 === "CS4" ||
+                      decoSku5 === "CS5" ||
+                      decoSku5 === "CS6" ||
+                      decoSku5 === "CS7" ||
+                      decoSku5 === "CS8" ||
+                      decoSku5 === "CS9" ||
+                      decoSku5 === "SD1" ||
+                      decoSku5 === "SD2" ||
+                      decoSku5 === "SD3" ||
+                      decoSku5 === "SD4" ||
+                      decoSku5 === "SD5" ||
+                      decoSku5 === "SD6" ||
+                      decoSku5 === "SD7" ||
+                      decoSku5 === "SD8" ||
+                      decoSku5 === "SD9" ||
+                      decoSku3 === "CUSTOM" ||
+                      decoSku3 === "SUBKIT" ||
+                      decoSku6 === "SETUPFEE" ||
+                      decoSku3 === "SISER-" ||
+                      decoSku5 === "SP-" ||
+                      decoSku5 === "CP-"
+                    ) {
+                      //...then allows the item to go back to process, it's a stock item
+                      this.props.dispatch({
+                        type: "START_ITEM",
+                        payload: {
+                          id: element.id,
+                          email: element.email,
+                          first_name: element.first_name,
+                          last_name: element.last_name,
+                          order_number: element.order_number,
+                          sku: element.sku,
+                          description: element.description,
+                          product_length: element.product_length,
+                          product_options: element.product_options,
+                          qty: element.qty,
+                          assigned: element.assigned,
+                          created_at: element.created_at,
+                          priority: element.priority,
+                        },
+                      });
+                      this.props.dispatch({
+                        type: "DELETE_COMPLETE",
+                        payload: element.id,
+                      });
+                    } else {
+                      //...ignore any custom skus
+                      console.log("skipping custom order");
+                    }
                   }
                   this.props.dispatch({
-                    type: "GET_COMPLETE_LIST",
+                    type: "GET_PROGRESS_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST",
                   });
                   this.props.dispatch({
                     type: "GET_ITEM_LIST_COUNT",
@@ -268,25 +211,92 @@ class Complete extends Component {
                   this.props.dispatch({
                     type: "GET_COMPLETE_LIST_COUNT",
                   });
+                  //uncheck all of the checkboxes
                   let checkInput = document.getElementsByTagName("input");
                   for (let index = 0; index < checkInput.length; index++) {
                     const element = checkInput[index];
                     console.log(element.checked);
                     element.checked = false;
                   }
+                  //empty data selector because nothing is checked
                   dataSelector = [];
                   this.setState({
                     dataSelector: [],
                     toggle3: false,
                   });
-                } else {
-                  console.log("delete canceled");
-                }
-              });
-            }}
-          >
-            <DeleteIcon></DeleteIcon>
-          </Button>
+                }}
+              >
+                <RestoreIcon></RestoreIcon>
+              </Button>
+              {/* button to delete selected items */}
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  //sweet alerts, this actions can't be undone
+                  swal({
+                    title: "Are you sure?",
+                    text:
+                      "Once deleted, you will not be able to recover the sku on these orders!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                      //loops through all selected items and deletes them
+                      for (
+                        let index = 0;
+                        index < dataSelector.length;
+                        index++
+                      ) {
+                        const element = dataSelector[index];
+                        this.props.dispatch({
+                          type: "DELETE_COMPLETE",
+                          payload: element.id,
+                        });
+                      }
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                      let checkInput = document.getElementsByTagName("input");
+                      for (let index = 0; index < checkInput.length; index++) {
+                        const element = checkInput[index];
+                        console.log(element.checked);
+                        element.checked = false;
+                      }
+                      dataSelector = [];
+                      this.setState({
+                        dataSelector: [],
+                        toggle3: false,
+                      });
+                    } else {
+                      console.log("delete canceled");
+                    }
+                  });
+                }}
+              >
+                <DeleteIcon></DeleteIcon>
+              </Button>
+            </>
+          )}
           {/* start table */}
           <MUITable
             data={data} //brings in data as an array, in this case, list of admins
@@ -301,10 +311,13 @@ class Complete extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <input
                         type="checkbox"
                         id={dataIndex}
-                        style={{ cursor: "pointer"}}
+                        style={{ cursor: "pointer" }}
                         name=""
                         value=""
                         onClick={(event) => {
@@ -331,10 +344,12 @@ class Complete extends Component {
                           }
                         }}
                       ></input>
+                      )
                     );
                   },
                 },
               },
+
               { name: "Order Number" },
               { name: "SKU" },
               { name: "Description" },
@@ -403,7 +418,9 @@ class Complete extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -510,6 +527,7 @@ class Complete extends Component {
                   },
                 },
               },
+
               // deletes the sku
               {
                 name: "Delete",
@@ -518,7 +536,9 @@ class Complete extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <Button
                         variant="danger"
                         onClick={(event) => {
@@ -607,11 +627,10 @@ class Complete extends Component {
             >
               <table
                 style={{
-                  marginLeft: "auto",
+                  marginLeft: "200px",
                   marginRight: "auto",
                   marginTop: "20px",
                   width: "100%",
-                  textAlign: "center",
                 }}
               >
                 <tr>
@@ -690,7 +709,7 @@ class Complete extends Component {
                           </td>
                         </tr>
                         {item.product_options.map((product, index) => {
-                          //map the product options of that sku to show the details 
+                          //map the product options of that sku to show the details
                           let display_name = product.display_name;
                           let display_value = product.display_value;
                           return (
@@ -741,6 +760,7 @@ class Complete extends Component {
 }
 //bring in complete table and order details from BigCommerce API
 const mapStateToProps = (state) => ({
+  user: state.user,
   completelist: state.item.completelist,
   detailslist: state.item.detailslist,
 });

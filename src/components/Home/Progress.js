@@ -75,6 +75,10 @@ class Progress extends Component {
           <h1>In Progress</h1>
         </center>
         <div style={{ padding: "1.5%" }}>
+           {this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
+                            <>
           <Button
             variant="success"
             onClick={(event) => {
@@ -374,7 +378,8 @@ class Progress extends Component {
           >
             <DeleteIcon></DeleteIcon>
           </Button>
-
+</>
+                          )}
           <MUITable
             data={data}
             columns={[
@@ -387,6 +392,9 @@ class Progress extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                       this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
                       <input
                         type="checkbox"
                         id={dataIndex}
@@ -414,6 +422,7 @@ class Progress extends Component {
                           }
                         }}
                       ></input>
+                          )
                     );
                   },
                 },
@@ -434,6 +443,9 @@ class Progress extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -487,6 +499,7 @@ class Progress extends Component {
                       >
                         <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
                       </Button>
+                          )
                     );
                   },
                 },
@@ -499,6 +512,9 @@ class Progress extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -552,6 +568,7 @@ class Progress extends Component {
                       >
                         <RestoreIcon></RestoreIcon>
                       </Button>
+                          )
                     );
                   },
                 },
@@ -563,7 +580,11 @@ class Progress extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.progresslist[dataIndex] &&
+                    return   this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
+                    
+                    this.props.progresslist[dataIndex] &&
                       this.props.progresslist[dataIndex].priority === "low" ? (
                       <Button
                         variant="success"
@@ -643,6 +664,7 @@ class Progress extends Component {
                       >
                         <FlagIcon></FlagIcon>
                       </Button>
+                    )
                     );
                   },
                 },
@@ -655,6 +677,9 @@ class Progress extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
                       <Button
                         variant="danger"
                         onClick={(event) => {
@@ -703,6 +728,7 @@ class Progress extends Component {
                       >
                         <DeleteIcon></DeleteIcon>
                       </Button>
+                          )
                     );
                   },
                 },
@@ -720,6 +746,7 @@ class Progress extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  user: state.user,
   progresslist: state.item.progresslist,
 });
 export default connect(mapStateToProps)(Progress);

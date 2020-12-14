@@ -273,204 +273,106 @@ class Response extends Component {
         </center>
 
         <div style={{ padding: "1.5%" }}>
-          <Button
-            variant="success"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              swal({
-                title: "Mark Complete?",
-                text:
-                  "The customer has approved this order! Click 'ok' to mark as complete",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-              }).then((willDelete) => {
-                if (willDelete) {
+          {this.props.user.role === "csr" ? (
+            <span></span>
+          ) : (
+            <>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  swal({
+                    title: "Mark Complete?",
+                    text:
+                      "The customer has approved this order! Click 'ok' to mark as complete",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                      for (
+                        let index = 0;
+                        index < dataSelector.length;
+                        index++
+                      ) {
+                        const element = dataSelector[index];
+                        this.props.dispatch({
+                          type: "MARK_COMPLETE",
+                          payload: {
+                            id: element.id,
+                            email: element.email,
+                            first_name: element.first_name,
+                            last_name: element.last_name,
+                            order_number: element.order_number,
+                            sku: element.sku,
+                            description: element.description,
+                            product_length: element.product_length,
+                            product_options: element.product_options,
+                            qty: element.qty,
+                            assigned: element.assigned,
+                            created_at: element.created_at,
+                          },
+                        });
+                        this.props.dispatch({
+                          type: "DELETE_RESPOND",
+                          payload: element.id,
+                        });
+                      }
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                      let checkInput = document.getElementsByTagName("input");
+                      for (let index = 0; index < checkInput.length; index++) {
+                        const element = checkInput[index];
+                        console.log(element.checked);
+                        element.checked = false;
+                      }
+
+                      dataSelector = [];
+                      this.setState({
+                        dataSelector: [],
+                        toggle3: false,
+                      });
+                    } else {
+                      console.log("action canceled");
+                    }
+                  });
+                }}
+              >
+                <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
                     this.props.dispatch({
-                      type: "MARK_COMPLETE",
+                      type: "MARK_PRIORITY_RESPOND",
                       payload: {
                         id: element.id,
-                        email: element.email,
-                        first_name: element.first_name,
-                        last_name: element.last_name,
-                        order_number: element.order_number,
-                        sku: element.sku,
-                        description: element.description,
-                        product_length: element.product_length,
-                        product_options: element.product_options,
-                        qty: element.qty,
-                        assigned: element.assigned,
-                        created_at: element.created_at,
+                        priority: "high",
                       },
-                    });
-                    this.props.dispatch({
-                      type: "DELETE_RESPOND",
-                      payload: element.id,
-                    });
-                  }
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST",
-                  });
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_RESPOND_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CONFIRM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_PROGRESS_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_COMPLETE_LIST_COUNT",
-                  });
-                  let checkInput = document.getElementsByTagName("input");
-                  for (let index = 0; index < checkInput.length; index++) {
-                    const element = checkInput[index];
-                    console.log(element.checked);
-                    element.checked = false;
-                  }
-
-                  dataSelector = [];
-                  this.setState({
-                    dataSelector: [],
-                    toggle3: false,
-                  });
-                } else {
-                  console.log("action canceled");
-                }
-              });
-            }}
-          >
-            <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
-          </Button>
-          <Button
-            variant="danger"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "MARK_PRIORITY_RESPOND",
-                  payload: {
-                    id: element.id,
-                    priority: "high",
-                  },
-                });
-              }
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                console.log(element.checked);
-                element.checked = false;
-              }
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <FlagIcon></FlagIcon>
-          </Button>
-          <Button
-            variant="success"
-            onClick={(event) => {
-              event.preventDefault();
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "MARK_PRIORITY_RESPOND",
-                  payload: {
-                    id: element.id,
-                    priority: "low",
-                  },
-                });
-              }
-              this.props.dispatch({
-                type: "GET_ITEM_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                element.checked = false;
-              }
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <FlagIcon></FlagIcon>
-          </Button>
-          <Button
-            variant="danger"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              swal({
-                title: "Are you sure?",
-                text:
-                  "Once deleted, you will not be able to recover the sku on these orders!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-              }).then((willDelete) => {
-                if (willDelete) {
-                  for (let index = 0; index < dataSelector.length; index++) {
-                    const element = dataSelector[index];
-                    this.props.dispatch({
-                      type: "DELETE_RESPOND",
-                      payload: element.id,
                     });
                   }
                   this.props.dispatch({
@@ -505,14 +407,126 @@ class Response extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
-                } else {
-                  console.log("delete canceled");
-                }
-              });
-            }}
-          >
-            <DeleteIcon></DeleteIcon>
-          </Button>
+                }}
+              >
+                <FlagIcon></FlagIcon>
+              </Button>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "MARK_PRIORITY_RESPOND",
+                      payload: {
+                        id: element.id,
+                        priority: "low",
+                      },
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                    const element = checkInput[index];
+                    element.checked = false;
+                  }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
+                }}
+              >
+                <FlagIcon></FlagIcon>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  swal({
+                    title: "Are you sure?",
+                    text:
+                      "Once deleted, you will not be able to recover the sku on these orders!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                      for (
+                        let index = 0;
+                        index < dataSelector.length;
+                        index++
+                      ) {
+                        const element = dataSelector[index];
+                        this.props.dispatch({
+                          type: "DELETE_RESPOND",
+                          payload: element.id,
+                        });
+                      }
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                      let checkInput = document.getElementsByTagName("input");
+                      for (let index = 0; index < checkInput.length; index++) {
+                        const element = checkInput[index];
+                        console.log(element.checked);
+                        element.checked = false;
+                      }
+                      dataSelector = [];
+                      this.setState({
+                        dataSelector: [],
+                        toggle3: false,
+                      });
+                    } else {
+                      console.log("delete canceled");
+                    }
+                  });
+                }}
+              >
+                <DeleteIcon></DeleteIcon>
+              </Button>
+            </>
+          )}
           <MUITable
             data={data}
             columns={[
@@ -524,7 +538,9 @@ class Response extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <input
                         type="checkbox"
                         id={dataIndex}
@@ -635,7 +651,8 @@ class Response extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return this.props.respondlist[dataIndex] &&
-                      this.props.respondlist[dataIndex].approve === "Yes" ? (
+                      this.props.respondlist[dataIndex].approve === "Yes" &&
+                      this.props.user.role !== "csr" ? (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -712,7 +729,9 @@ class Response extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.respondlist[dataIndex] &&
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : this.props.respondlist[dataIndex] &&
                       this.props.respondlist[dataIndex].priority === "low" ? (
                       <Button
                         variant="success"
@@ -802,7 +821,9 @@ class Response extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <Button
                         variant="danger"
                         onClick={(event) => {
@@ -866,133 +887,135 @@ class Response extends Component {
           //if toggle is false, render nothing. This is the default
           <span></span>
         ) : (
-     
-            //...else render the details window
-            <Paper
+          //...else render the details window
+          <Paper
+            style={{
+              right: 0,
+              bottom: 0,
+              position: "fixed",
+              height: "100%",
+              width: "100%",
+              zIndex: "1000000000",
+              border: "50px",
+              overflow: "scroll",
+              fontSize: "15px",
+              backgroundColor: "white",
+            }}
+            elevation="24"
+            className="loginBox"
+          >
+            <div
               style={{
-                right: 0,
-                bottom: 0,
-                position: "fixed",
-                height: "100%",
-                width: "100%",
-                zIndex: "1000000000",
-                border: "50px",
-                overflow: "scroll",
-                fontSize: "15px",
                 backgroundColor: "white",
               }}
-              elevation="24"
-              className="loginBox"
             >
-              <div
+              <table
                 style={{
-                  backgroundColor: "white",
+                  marginLeft: "200px",
+                  marginRight: "auto",
+                  marginTop: "20px",
+                  width: "100%",
                 }}
               >
-                <table
-                  style={{
-                    marginLeft: "200px",
-                    marginRight: "auto",
-                    marginTop: "20px",
-                    width: "100%",
-                  }}
-                >
-                  <tr>
-                    <td
-                      style={{
-                        marginLeft: "3%",
-                        padding: "10px",
-                        width: "25%",
-                      }}
+                <tr>
+                  <td
+                    style={{
+                      marginLeft: "3%",
+                      padding: "10px",
+                      width: "25%",
+                    }}
+                  >
+                    {" "}
+                    <Button
+                      onClick={this.toggle2}
+                      variant="success"
+                      type="submit"
                     >
-                      {" "}
-                      <Button
-                        onClick={this.toggle2}
-                        variant="success"
-                        type="submit"
-                      >
-                        Close
-                      </Button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        marginLeft: "3%",
-                        padding: "10px",
-                        width: "25%",
-                      }}
-                    >
-                      <b>Order Number: </b>{" "}
-                      {this.props.detailslist[0] &&
-                        this.props.detailslist[0].order_id}
-                    </td>
-                  </tr>
-                  {this.props.detailslist.map((item, index) => {
-                    if (this.state.sku == item.sku) {
-                      let newIndex = index + 1;
-                      //define pic as pic and concatnate the index number, this should match with state
-                      let pic = "pic" + newIndex;
-                      let filename = "filename" + newIndex;
-                      let itemname = item.name;
-                      let itemsku = item.sku;
-                      let itemcost = Number(item.base_price).toFixed(2);
-                      return (
-                        <>
-                          <tr>
-                            <td
-                              style={{
-                                marginLeft: "3%",
-                                padding: "10px",
-                                width: "25%",
-                              }}
-                            >
-                              <b>Name:</b> {itemname}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td
-                              style={{
-                                marginLeft: "3%",
-                                padding: "10px",
-                                width: "25%",
-                              }}
-                            >
-                              <b>Sku:</b> {itemsku}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td
-                              style={{
-                                marginLeft: "3%",
-                                padding: "10px",
-                                width: "25%",
-                              }}
-                            >
-                              <b>Price:</b> {itemcost}
-                            </td>
-                          </tr>
-                          {item.product_options.map((product, index) => {
-                            let display_name = product.display_name;
-                            let display_value = product.display_value;
-                            return (
-                              <>
-                                <tr>
-                                  <td
-                                    style={{
-                                      marginLeft: "3%",
-                                      padding: "10px",
-                                      width: "25%",
-                                    }}
-                                  >
-                                    <b>{display_name}:</b> {display_value}
-                                  </td>
-                                </tr>
-                              </>
-                            );
-                          })}{" "}
-                          <br />
-                          <br />
+                      Close
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      marginLeft: "3%",
+                      padding: "10px",
+                      width: "25%",
+                    }}
+                  >
+                    <b>Order Number: </b>{" "}
+                    {this.props.detailslist[0] &&
+                      this.props.detailslist[0].order_id}
+                  </td>
+                </tr>
+                {this.props.detailslist.map((item, index) => {
+                  if (this.state.sku == item.sku) {
+                    let newIndex = index + 1;
+                    //define pic as pic and concatnate the index number, this should match with state
+                    let pic = "pic" + newIndex;
+                    let filename = "filename" + newIndex;
+                    let itemname = item.name;
+                    let itemsku = item.sku;
+                    let itemcost = Number(item.base_price).toFixed(2);
+                    return (
+                      <>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Name:</b> {itemname}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Sku:</b> {itemsku}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Price:</b> {itemcost}
+                          </td>
+                        </tr>
+                        {item.product_options.map((product, index) => {
+                          let display_name = product.display_name;
+                          let display_value = product.display_value;
+                          return (
+                            <>
+                              <tr>
+                                <td
+                                  style={{
+                                    marginLeft: "3%",
+                                    padding: "10px",
+                                    width: "25%",
+                                  }}
+                                >
+                                  <b>{display_name}:</b> {display_value}
+                                </td>
+                              </tr>
+                            </>
+                          );
+                        })}{" "}
+                        <br />
+                        <br />
+                        {this.props.user.role === "csr" ? (
+                          <span></span>
+                        ) : (
                           <tr>
                             <td>
                               {/* filestack for photo uploads */}
@@ -1014,339 +1037,345 @@ class Response extends Component {
                               Uploaded file
                             </td>
                           </tr>
-                          {this.state[pic] !== "" ? (
-                            <tr>
-                              <td>
-                                <a href={this.state[pic]} target="_blank">
-                                  <b>{this.state[filename]}</b>
-                                </a>
-                              </td>
-                            </tr>
-                          ) : (
-                            <span></span>
-                          )}
-                        </>
-                      );
-                    }
-                  })}{" "}
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      {" "}
-                      <TextField
-                        style={{
-                          width: "50%",
-                        }}
-                        variant="outlined"
-                        label="Customer email"
-                        name="edit"
-                        placeholder="...enter email"
-                        // value of local state as text value
-                        value={this.state.email}
-                        type="text"
-                        maxLength={10000}
-                        //runs handleChange on input change
-                        onChange={(event) => this.handleChange(event, "email")}
-                      />
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      {" "}
-                      <TextField
-                        style={{
-                          width: "50%",
-                        }}
-                        variant="outlined"
-                        label="Payment link"
-                        name="edit"
-                        placeholder="...enter payment link"
-                        // value of local state as text value
-                        value={this.state.payment_link}
-                        type="text"
-                        maxLength={10000}
-                        //runs handleChange on input change
-                        onChange={(event) =>
-                          this.handleChange(event, "payment_link")
-                        }
-                      />
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <Form.Control
-                        as="select"
-                        onChange={(event) =>
-                          this.setState({
-                            comments: event.target.value,
-                            canned_edit: event.target.value,
-                          })
-                        }
-                        style={{
-                          width: "50%",
-                        }}
-                      >
-                        <option value="">Canned Responses</option>{" "}
-                        {this.props.replieslist
-                          ? this.props.replieslist.map((item) => (
-                              <option key={item.id} value={item.reply}>
-                                {" "}
-                                {String(item.reply)}{" "}
-                              </option>
-                            ))
-                          : ""}
-                      </Form.Control>
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <TextField
-                        style={{
-                          width: "50%",
-                        }}
-                        //per material UI changes textfield to act like a textarea tag
-                        multiline
-                        //input field takes up for rows by defaults
-                        rows={4}
-                        //...will expand up to 8 rows
-                        rowsMax={8}
-                        variant="outlined"
-                        label="Comments"
-                        name="edit"
-                        placeholder="Comments"
-                        // value of local state as text value
-                        value={this.state.comments}
-                        type="text"
-                        maxLength={10000}
-                        //runs handleChange on input change
-                        onChange={(event) =>
-                          this.handleChange(event, "comments")
-                        }
-                      />
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          this.props.dispatch({
-                            type: "CANNED",
-                            payload: {
-                              canned: this.state.comments,
-                            },
-                          });
-                          this.setState({
-                            canned: "",
-                          });
-                          this.props.dispatch({
-                            type: "GET_REPLIES",
-                          });
-                        }}
-                      >
-                        Add Canned Response
-                      </Button>
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
+                        )}
+                        {this.state[pic] !== "" ||
+                        this.props.user.role === "csr" ? (
+                          <tr>
+                            <td>
+                              <a href={this.state[pic]} target="_blank">
+                                <b>{this.state[filename]}</b>
+                              </a>
+                            </td>
+                          </tr>
+                        ) : (
+                          <span></span>
+                        )}
+                      </>
+                    );
+                  }
+                })}{" "}
+                <br />
+                <br />
+                {this.props.user.role === "csr" ? (<span></span>) : (
+                  <>
+                <tr>
+                  <td>
+                    {" "}
+                    <TextField
+                      style={{
+                        width: "50%",
+                      }}
+                      variant="outlined"
+                      label="Customer email"
+                      name="edit"
+                      placeholder="...enter email"
+                      // value of local state as text value
+                      value={this.state.email}
+                      type="text"
+                      maxLength={10000}
+                      //runs handleChange on input change
+                      onChange={(event) => this.handleChange(event, "email")}
+                    />
+                  </td>
+                </tr>
+                <br />
+                <br />
+                <tr>
+                  <td>
+                    {" "}
+                    <TextField
+                      style={{
+                        width: "50%",
+                      }}
+                      variant="outlined"
+                      label="Payment link"
+                      name="edit"
+                      placeholder="...enter payment link"
+                      // value of local state as text value
+                      value={this.state.payment_link}
+                      type="text"
+                      maxLength={10000}
+                      //runs handleChange on input change
+                      onChange={(event) =>
+                        this.handleChange(event, "payment_link")
+                      }
+                    />
+                  </td>
+                </tr>
+                <br />
+                <br />
+                <tr>
+                  <td>
+                    <Form.Control
+                      as="select"
+                      onChange={(event) =>
+                        this.setState({
+                          comments: event.target.value,
+                          canned_edit: event.target.value,
+                        })
+                      }
+                      style={{
+                        width: "50%",
+                      }}
+                    >
+                      <option value="">Canned Responses</option>{" "}
+                      {this.props.replieslist
+                        ? this.props.replieslist.map((item) => (
+                            <option key={item.id} value={item.reply}>
+                              {" "}
+                              {String(item.reply)}{" "}
+                            </option>
+                          ))
+                        : ""}
+                    </Form.Control>
+                  </td>
+                </tr>
+                <br />
+                <br />
+                <tr>
+                  <td>
+                    <TextField
+                      style={{
+                        width: "50%",
+                      }}
+                      //per material UI changes textfield to act like a textarea tag
+                      multiline
+                      //input field takes up for rows by defaults
+                      rows={4}
+                      //...will expand up to 8 rows
+                      rowsMax={8}
+                      variant="outlined"
+                      label="Comments"
+                      name="edit"
+                      placeholder="Comments"
+                      // value of local state as text value
+                      value={this.state.comments}
+                      type="text"
+                      maxLength={10000}
+                      //runs handleChange on input change
+                      onChange={(event) => this.handleChange(event, "comments")}
+                    />
+                  </td>
+                </tr>
+                <br />
+                <br />
+                <tr>
+                  <td>
+                    <Button
+                      variant="success"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        this.props.dispatch({
+                          type: "CANNED",
+                          payload: {
+                            canned: this.state.comments,
+                          },
+                        });
+                        this.setState({
+                          canned: "",
+                        });
+                        this.props.dispatch({
+                          type: "GET_REPLIES",
+                        });
+                      }}
+                    >
+                      Add Canned Response
+                    </Button>
+                    <Button
+                      variant="success"
+                      onClick={(event) => {
+                        event.preventDefault();
 
+                        event.preventDefault();
+                        this.props.dispatch({
+                          type: "CANNED_EDIT",
+                          payload: {
+                            canned: this.state.canned_edit,
+                            comments: this.state.comments,
+                          },
+                        });
+                        this.props.dispatch({
+                          type: "GET_REPLIES",
+                        });
+                      }}
+                    >
+                      Edit Canned Response
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        let canned_edit = this.state.canned_edit;
+                        if (canned_edit.slice(canned_edit.length - 1) === "?") {
+                          canned_edit = canned_edit.slice(
+                            0,
+                            canned_edit.length - 1
+                          );
+                          canned_edit = canned_edit + "1";
+                        }
+                        console.log(canned_edit);
+                        this.props.dispatch({
+                          type: "CANNED_DELETE",
+                          payload: canned_edit,
+                        });
+                        this.props.dispatch({
+                          type: "GET_REPLIES",
+                        });
+                      }}
+                    >
+                      Delete Canned Response
+                    </Button>
+                  </td>
+                </tr>
+                <br />
+                <br />
+                <tr>
+                  <td>
+                    <Button
+                      variant="success"
+                      onClick={(event) => {
+                        if (
+                          this.state.pic1 === "" &&
+                          this.state.pic2 === "" &&
+                          this.state.pic3 === "" &&
+                          this.state.pic4 === "" &&
+                          this.state.pic5 === "" &&
+                          this.state.pic6 === "" &&
+                          this.state.pic7 === "" &&
+                          this.state.pic8 === "" &&
+                          this.state.pic9 === "" &&
+                          this.state.pic10 === "" &&
+                          this.state.pic11 === "" &&
+                          this.state.pic12 === "" &&
+                          this.state.pic13 === "" &&
+                          this.state.pic14 === "" &&
+                          this.state.pic15 === "" &&
+                          this.state.pic16 === "" &&
+                          this.state.pic17 === "" &&
+                          this.state.pic18 === "" &&
+                          this.state.pic19 === "" &&
+                          this.state.pic20 === ""
+                        ) {
+                          this.setState({
+                            error: true,
+                          });
+                          //...set it back to false after 5 secondss
+                          setTimeout(() => {
+                            this.setState({
+                              error: false,
+                            });
+                          }, 5000);
+                          return;
+                        } else {
                           event.preventDefault();
                           this.props.dispatch({
-                            type: "CANNED_EDIT",
+                            type: "CUSTOMER_CONFIRM",
                             payload: {
-                              canned: this.state.canned_edit,
+                              pic1: this.state.pic1,
+                              pic2: this.state.pic2,
+                              pic3: this.state.pic3,
+                              pic4: this.state.pic4,
+                              pic5: this.state.pic5,
+                              pic6: this.state.pic6,
+                              pic7: this.state.pic7,
+                              pic8: this.state.pic8,
+                              pic9: this.state.pic9,
+                              pic10: this.state.pic10,
+                              pic11: this.state.pic11,
+                              pic12: this.state.pic12,
+                              pic13: this.state.pic13,
+                              pic14: this.state.pic14,
+                              pic15: this.state.pic15,
+                              pic16: this.state.pic16,
+                              pic17: this.state.pic17,
+                              pic18: this.state.pic18,
+                              pic19: this.state.pic19,
+                              pic20: this.state.pic20,
                               comments: this.state.comments,
+                              email: this.state.email,
+                              first_name: this.state.first_name,
+                              last_name: this.state.last_name,
+                              order_number: this.state.order_number,
+                              sku: this.state.sku,
+                              description: this.state.description,
+                              qty: this.state.qty,
+                              assigned: this.state.assigned,
+                              created_at: this.state.created_at,
+                              priority: this.state.priority,
+                              payment_link: this.state.payment_link,
                             },
                           });
                           this.props.dispatch({
-                            type: "GET_REPLIES",
-                          });
-                        }}
-                      >
-                        Edit Canned Response
-                      </Button>
-                      <Button
-                        variant="danger"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          let canned_edit = this.state.canned_edit
-                          if (canned_edit.slice(canned_edit.length - 1) === "?") {
-                            canned_edit = canned_edit.slice(0, canned_edit.length - 1)
-                            canned_edit = canned_edit + "1"
-
-                          }
-                          console.log(canned_edit)
-                          this.props.dispatch({
-                            type: "CANNED_DELETE",
-                            payload: canned_edit,
+                            type: "DELETE_CUSTOM_ITEM",
+                            payload: this.state.id,
                           });
                           this.props.dispatch({
-                            type: "GET_REPLIES",
+                            type: "GET_ITEM_LIST",
                           });
-                        }}
-                      >
-                        Delete Canned Response
-                      </Button>
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          if (
-                            this.state.pic1 === "" &&
-                            this.state.pic2 === "" &&
-                            this.state.pic3 === "" &&
-                            this.state.pic4 === "" &&
-                            this.state.pic5 === "" &&
-                            this.state.pic6 === "" &&
-                            this.state.pic7 === "" &&
-                            this.state.pic8 === "" &&
-                            this.state.pic9 === "" &&
-                            this.state.pic10 === "" &&
-                            this.state.pic11 === "" &&
-                            this.state.pic12 === "" &&
-                            this.state.pic13 === "" &&
-                            this.state.pic14 === "" &&
-                            this.state.pic15 === "" &&
-                            this.state.pic16 === "" &&
-                            this.state.pic17 === "" &&
-                            this.state.pic18 === "" &&
-                            this.state.pic19 === "" &&
-                            this.state.pic20 === ""
-                          ) {
-                            this.setState({
-                              error: true,
-                            });
-                            //...set it back to false after 5 secondss
-                            setTimeout(() => {
-                              this.setState({
-                                error: false,
-                              });
-                            }, 5000);
-                            return;
-                          } else {
-                            event.preventDefault();
-                            this.props.dispatch({
-                              type: "CUSTOMER_CONFIRM",
-                              payload: {
-                                pic1: this.state.pic1,
-                                pic2: this.state.pic2,
-                                pic3: this.state.pic3,
-                                pic4: this.state.pic4,
-                                pic5: this.state.pic5,
-                                pic6: this.state.pic6,
-                                pic7: this.state.pic7,
-                                pic8: this.state.pic8,
-                                pic9: this.state.pic9,
-                                pic10: this.state.pic10,
-                                pic11: this.state.pic11,
-                                pic12: this.state.pic12,
-                                pic13: this.state.pic13,
-                                pic14: this.state.pic14,
-                                pic15: this.state.pic15,
-                                pic16: this.state.pic16,
-                                pic17: this.state.pic17,
-                                pic18: this.state.pic18,
-                                pic19: this.state.pic19,
-                                pic20: this.state.pic20,
-                                comments: this.state.comments,
-                                email: this.state.email,
-                                first_name: this.state.first_name,
-                                last_name: this.state.last_name,
-                                order_number: this.state.order_number,
-                                sku: this.state.sku,
-                                description: this.state.description,
-                                qty: this.state.qty,
-                                assigned: this.state.assigned,
-                                created_at: this.state.created_at,
-                                priority: this.state.priority,
-                                payment_link: this.state.payment_link,
-                              },
-                            });
-                            this.props.dispatch({
-                              type: "DELETE_CUSTOM_ITEM",
-                              payload: this.state.id,
-                            });
-                            this.props.dispatch({
-                              type: "GET_ITEM_LIST",
-                            });
-                            this.props.dispatch({
-                              type: "GET_ITEM_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_RESPOND_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_CONFIRM_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_PROGRESS_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_COMPLETE_LIST_COUNT",
-                            });
-                            this.setState({
-                              toggle2: !this.state.toggle2,
-                              comments: "",
-                            });
-                          }
-                        }}
-                      >
-                        Send to Customer
-                      </Button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      {this.state.error === true && (
-                        <Alert className="error" style={{}} severity="error">
-                          {"Don't forget the upload :)"}
-                        </Alert>
-                      )}
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      {" "}
-                      <Button
-                        onClick={this.toggle2}
-                        variant="success"
-                        type="submit"
-                      >
-                        Close
-                      </Button>
-                    </td>
-                  </tr>
-                </table>
-                {/* toggles edit window back to not displaying */}
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                          this.setState({
+                            toggle2: !this.state.toggle2,
+                            comments: "",
+                          });
+                        }
+                      }}
+                    >
+                      Send to Customer
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {this.state.error === true && (
+                      <Alert className="error" style={{}} severity="error">
+                        {"Don't forget the upload :)"}
+                      </Alert>
+                    )}
+                  </td>
+                </tr>
                 <br />
                 <br />
-                <br />
-                <br />
-                <br />
-                <br />
-              </div>
-            </Paper>
+                </>
+                )}
+                <tr>
+                  <td>
+                    {" "}
+                    <Button
+                      onClick={this.toggle2}
+                      variant="success"
+                      type="submit"
+                    >
+                      Close
+                    </Button>
+                  </td>
+                </tr>
+              </table>
+              {/* toggles edit window back to not displaying */}
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </div>
+          </Paper>
         )}
       </div>
     );
@@ -1354,6 +1383,7 @@ class Response extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  user: state.user,
   customitemlist: state.item.customitemlist,
   respondlist: state.item.respondlist,
   detailslist: state.item.detailslist,

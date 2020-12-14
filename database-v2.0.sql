@@ -5,7 +5,8 @@ CREATE TABLE "user" (
 	"email" VARCHAR (320) UNIQUE NOT NULL,
 	"password" varchar(255) NOT NULL,
 	"created_at" DATE NOT NULL DEFAULT 'now()',
-	"last_login" DATE
+	"last_login" DATE,
+	"role" varchar(10)
     
 );
 

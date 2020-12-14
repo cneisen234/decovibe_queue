@@ -214,6 +214,10 @@ class New extends Component {
         </center>
         <div className="navbuttonscontainer"></div>
         <div style={{ padding: "1.5%" }}>
+          {this.props.user.role === "csr" ? (
+            <span></span>
+          ) : (
+            <>
           <Button
             variant="success"
             onClick={(event) => {
@@ -524,6 +528,8 @@ class New extends Component {
           >
             <DeleteIcon></DeleteIcon>
           </Button>
+          </>
+          )}
           <MUITable
             data={data} //brings in data as an array, in this case, list of items
             columns={[
@@ -537,6 +543,9 @@ class New extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <input
                         type="checkbox"
                         id={dataIndex}
@@ -568,6 +577,7 @@ class New extends Component {
                           console.log(dataSelector);
                         }}
                       ></input>
+                      )
                     );
                   },
                 },
@@ -588,6 +598,9 @@ class New extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                      this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -602,6 +615,7 @@ class New extends Component {
                       >
                         <AssignmentIndIcon></AssignmentIndIcon>
                       </Button>
+                      )
                     );
                   },
                 },
@@ -614,6 +628,9 @@ class New extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -667,6 +684,7 @@ class New extends Component {
                       >
                         <PlayArrowIcon></PlayArrowIcon>
                       </Button>
+                      )
                     );
                   },
                 },
@@ -679,6 +697,9 @@ class New extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -733,6 +754,7 @@ class New extends Component {
                       >
                         <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
                       </Button>
+                      )
                     );
                   },
                 },
@@ -744,7 +766,10 @@ class New extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.itemlist[dataIndex] &&
+                    return   this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
+                    this.props.itemlist[dataIndex] &&
                       this.props.itemlist[dataIndex].priority === "low" ? (
                       <Button
                         variant="success"
@@ -827,6 +852,7 @@ class New extends Component {
                       >
                         <FlagIcon></FlagIcon>
                       </Button>
+                    )
                     );
                   },
                 },
@@ -839,6 +865,9 @@ class New extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
+                        this.props.user.role === "csr" ? (
+                        <span></span>
+                      ) : (
                       <Button
                         variant="danger"
                         onClick={(event) => {
@@ -889,6 +918,7 @@ class New extends Component {
                       >
                         <DeleteIcon></DeleteIcon>
                       </Button>
+                      )
                     );
                   },
                 },
@@ -1079,6 +1109,7 @@ class New extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  user: state.user,
   itemlist: state.item.itemlist,
 });
 export default connect(mapStateToProps)(New);
