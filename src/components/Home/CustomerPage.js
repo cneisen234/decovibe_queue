@@ -111,7 +111,7 @@ componentDidMount() {
       Swal.fire({
         title: "Please confirm",
         html: `You are approving the artwork<br/><br/>
-        <b>Disclaimer: Once artwork is approved there are no changes or cancelations</b><br/><br/>
+        <b>Disclaimer: Once artwork is approved there are no changes or cancellations</b><br/><br/>
         Please click "confirm" to confirm your submission<br/><br/>`,
         icon: "success",
         customClass: {
@@ -146,7 +146,6 @@ componentDidMount() {
               Your Feedback: ${comments} <br/><br/>
               Please click "confirm" to send this back to the art department<br/><br/>
               `,
-              icon: "error",
                 customClass: {
     actions: 'confirm',
   },

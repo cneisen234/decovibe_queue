@@ -708,7 +708,7 @@ ${comments}</div><br><br>
               ],
             },
           ],
-          from: "sales@heattransferwarehouse.com", // Use the email address or domain you verified above
+          from: "Transfers@heattransferwarehouse.com", // Use the email address or domain you verified above
           subject: `Please confirm details for your order: ${order_number}`,
           //send the entire finalArray as one string
           html: finalArray,
