@@ -177,12 +177,20 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                       decoSku3 === "CUSTOM" ||
                       decoSku3 === "SUBKIT" ||
                       decoSku6 === "SETUPFEE" ||
-                      decoSku3 === "SISER-" ||
+                      decoSku7 === "SISER-1" ||
+                      decoSku7 === "SISER-2" ||
+                      decoSku7 === "SISER-3" ||
+                      decoSku7 === "SISER-4" ||
+                      decoSku7 === "SISER-5" ||
+                      decoSku7 === "SISER-6" ||
+                      decoSku7 === "SISER-7" ||
+                      decoSku7 === "SISER-8" ||
+                      decoSku7 === "SISER-9" ||
                       decoSku5 === "SP-" ||
                       decoSku5 === "CP-"
                     ) {
                       //run the logic that places the skus in the stock queue
-                      console.log("goes into stock queue")
+                      console.log("goes into stock queue");
                       let product_length = "";
                       for (let j = 0; j < options.length; j++) {
                         const opt = options[j];
@@ -262,8 +270,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                       decoSku7 === "DYESUB-" ||
                       decoSku4 === "FINAL"
                     ) {
-           //...place in the custom queue
-           console.log("goes into custom queue")
+                      //...place in the custom queue
+                      console.log("goes into custom queue");
                       const query2Text =
                         'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id';
                       pool.query(query2Text, [
