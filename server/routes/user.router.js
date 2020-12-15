@@ -18,7 +18,7 @@ let storeHash = process.env.STORE_HASH
 
 //defines dates to auto delete certain things from the database.
 let daterange = moment().subtract(6, "hours").subtract(30, "days");
-let daterange2 = moment().subtract(6, "hours").subtract(60, "days");
+let daterange2 = moment().subtract(6, "hours").subtract(2, "years");
 
 //BigCommerce API tokens and keys
 let config = {
@@ -621,8 +621,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
         let commentsString = `
 <div><b>Comments from the art department:</b> <br><br>
 ${comments}</div><br><br>
-<div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
-  <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Continue</a></div><br><br>`;
+`
         let array = response.data;
         //defines array to be used for pushing html later
         let newArray = [];
@@ -657,6 +656,7 @@ ${comments}</div><br><br>
                 `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
                   pic[index]
                 }>View Proof ${index + 1}</a><br><br>
+                <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
                              <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
               );
             } else {
@@ -665,6 +665,7 @@ ${comments}</div><br><br>
                 `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
                   pic[index]
                 }>View Proof ${index + 1}</a><br><br>
+                <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
                              <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
               );
 
