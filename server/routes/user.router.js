@@ -674,7 +674,7 @@ ${comments}</div><br><br>
                   pic[index]
                 }>View Proof ${index + 1}</a><br><br>
                 <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
-                             <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve</a></div>`
+                             <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
               );
 
               newArray.push(
@@ -706,7 +706,7 @@ ${comments}</div><br><br>
               to: [
                 //send to the customers email address
                 {
-                  email: email,
+                  email: "christopherjay71186@gmail.com",
                 },
               ],
               bcc: [

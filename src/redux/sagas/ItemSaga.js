@@ -440,6 +440,15 @@ function* orderDetails(action) {
   }
 }
 
+function* sendSupaColor(action) {
+  try {
+    yield axios.post("/api/item/automatesupa", action.payload);
+    yield put({ type: "GET_RESPOND_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
 
 
 
@@ -485,6 +494,7 @@ function* itemSaga() {
      yield takeLatest('DELETE_COMPLETE_RANGE', deleteCompleteRange);
      yield takeLatest('DELETE_HISTORY_RANGE', deleteHistoryRange);
      yield takeLatest('ORDER_DETAILS', orderDetails);
+      yield takeLatest('SEND_SUPACOLOR', sendSupaColor);
 }
 
 export default itemSaga;
