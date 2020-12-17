@@ -704,7 +704,7 @@ ${comments}</div><br><br>
           personalizations: [
             {
               to: [
-                //send to the customers email address
+                //send to the customer email address
                 {
                   email: "christopherjay71186@gmail.com",
                 },
