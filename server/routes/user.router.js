@@ -706,7 +706,7 @@ ${comments}</div><br><br>
               to: [
                 //send to the customers email address
                 {
-                  email: email,
+                  email: "christopherjay71186@gmail.com",
                 },
               ],
               bcc: [
