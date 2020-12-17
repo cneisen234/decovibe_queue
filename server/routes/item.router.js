@@ -61,8 +61,6 @@ const {
                 (async () => {
                   const browser = await puppeteer.launch({
                     args: ["--no-sandbox"],
-                    executablePath:
-                      "/workspace/node_modules/puppeteer/.local-chromium/linux-818858",
                     headless: false,
                   });
                   const page = await browser.newPage();
