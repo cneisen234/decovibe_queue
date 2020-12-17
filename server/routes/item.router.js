@@ -60,7 +60,7 @@ const {
                 let tenthnumber = contactphonenumber[9];
                 (async () => {
                   const browser = await puppeteer.launch({
-                    args: ["--no-sandbox"],
+                    args: ["--no-sandbox", "--disable-setuid-sandbox"],
                     headless: false,
                   });
                   const page = await browser.newPage();
