@@ -3,6 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const axios = require("axios");
 const puppeteer = require("puppeteer");
+const chromium = require("chromium");
 
 let config = {
   //authenticate Big Commerce API
@@ -61,6 +62,7 @@ const {
                 (async () => {
                   const browser = await puppeteer.launch({
                     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                    executablePath: chromium.path,
                     headless: false,
                   });
                   const page = await browser.newPage();
