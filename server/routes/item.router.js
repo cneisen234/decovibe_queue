@@ -64,7 +64,7 @@ const {
                   const browser = await puppeteer.launch({
                     args: ["--no-sandbox", "--disable-setuid-sandbox"],
                     executablePath:
-                      "/workspace/node_modules/puppeteer/.local-chromium/linux-706915/chrome-linux/chrome",
+                      "/workspace/node_modules/puppeteer/.local-chromium/linux-706915",
                     headless: false,
                   });
                   const page = await browser.newPage();
