@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "src/index.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>index.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>;
+<span class="hljs-keyword">import</span> { createStore, applyMiddleware, compose } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux'</span>;
+<span class="hljs-keyword">import</span> { Provider } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-redux'</span>;
+<span class="hljs-keyword">import</span> createSagaMiddleware <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-saga'</span>;
+<span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-logger'</span>;
+
+<span class="hljs-keyword">import</span> rootReducer <span class="hljs-keyword">from</span> <span class="hljs-string">'./redux/reducers'</span>; <span class="hljs-comment">// imports ./redux/reducers/index.js</span>
+<span class="hljs-keyword">import</span> rootSaga <span class="hljs-keyword">from</span> <span class="hljs-string">'./redux/sagas'</span>; <span class="hljs-comment">// imports ./redux/sagas/index.js</span>
+
+<span class="hljs-keyword">import</span> App <span class="hljs-keyword">from</span> <span class="hljs-string">'./components/App/App'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Much of this file was brought in from the project template</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+<span class="hljs-keyword">const</span> sagaMiddleware = createSagaMiddleware();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>this line creates an array of all of redux middleware you want to use
+we don't want a whole ton of console logs in our production code
+logger will only be added to your project if your in development mode</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> middlewareList = process.env.NODE_ENV === <span class="hljs-string">'development'</span> ?
+  [sagaMiddleware, logger] :
+  [sagaMiddleware];
+
+<span class="hljs-keyword">const</span> store = createStore(
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>tells the saga middleware to use the rootReducer
+rootSaga contains all of our other reducers</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  rootReducer,
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>adds all middleware to our project including saga and logger</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  compose(
+    applyMiddleware(...middlewareList)
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>window.<strong>REDUX_DEVTOOLS_EXTENSION</strong> &amp;&amp; window.<strong>REDUX_DEVTOOLS_EXTENSION</strong>()
+^--------Redux tools removed for production builds (error on mobile and Safari)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  )
+);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>tells the saga middleware to use the rootSaga
+rootSaga contains all of our other sagas</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">sagaMiddleware.run(rootSaga);
+
+ReactDOM.render(<span class="hljs-comment">// need to bring App itself in</span>
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>=<span class="hljs-string">{store}</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span> 
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span>,
+  <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'react-root'</span>),
+);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>
