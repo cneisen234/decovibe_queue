@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const axios = require("axios");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 const pptrFirefox = require("puppeteer-firefox");
 const chromium = require("chromium");
 
@@ -62,7 +62,9 @@ const {
                 let tenthnumber = contactphonenumber[9];
                 (async () => {
                   const browser = await puppeteer.launch({
-                     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                    executablePath:
+                      "/workspace/node_modules/puppeteer/.local-chromium/linux-706915/chrome-linux/chrome",
                     headless: false,
                   });
                   const page = await browser.newPage();
