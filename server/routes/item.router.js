@@ -3,6 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const axios = require("axios");
 const puppeteer = require("puppeteer");
+const pptrFirefox = require("puppeteer-firefox");
 const chromium = require("chromium");
 
 let config = {
@@ -60,9 +61,8 @@ const {
                 let ninthnumber = contactphonenumber[8];
                 let tenthnumber = contactphonenumber[9];
                 (async () => {
-                  const browser = await puppeteer.launch({
-                    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-                    executablePath: chromium.path,
+                  const browser = await pptrFirefox.launch({
+                     args: ["--no-sandbox", "--disable-setuid-sandbox"],
                     headless: false,
                   });
                   const page = await browser.newPage();
@@ -75,7 +75,7 @@ const {
                   await password.type(process.env.PASSWORD);
                   const login = await page.$("#btnLogin");
                   await login.click();
-                  await page.waitFor(3000);
+                  await page.waitFor(1000);
                   await page.evaluate(
                     () =>
                       (document.getElementById("txtDeliveryContact").value = "")
@@ -109,10 +109,10 @@ const {
                   await contactAddress.type(
                     `${response.data.billing_address.first_name} ${response.data.billing_address.last_name} \n ${shipping.street_1} ${shipping.street_2} \n ${shipping.city}, ${shipping.state} ${shipping.zip}`
                   );
-                  await page.waitFor(3000);
+                  await page.waitFor(1000);
                   const addTransfer = await page.$("[data-action='add-item']");
                   await addTransfer.click();
-                  await page.waitFor(3000)
+                  await page.waitFor(1000)
                   const addPriceCode = await page.$("[name='item_0_product_id']")
                      await addPriceCode.type(
                        `${globalSku}`
