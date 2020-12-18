@@ -61,7 +61,7 @@ const {
                 let ninthnumber = contactphonenumber[8];
                 let tenthnumber = contactphonenumber[9];
                 (async () => {
-                  const browser = await pptrFirefox.launch({
+                  const browser = await puppeteer.launch({
                      args: ["--no-sandbox", "--disable-setuid-sandbox"],
                     headless: false,
                   });

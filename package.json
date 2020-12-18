@@ -29,7 +29,7 @@
     "passport-local": "^1.0.0",
     "pg": "^8.5.1",
     "prop-types": "^15.7.2",
-    "puppeteer": "^5.5.0",
+    "puppeteer": "^2.0.0",
     "puppeteer-firefox": "^0.5.1",
     "query-string": "^6.13.7",
     "react": "^16.8.6",
