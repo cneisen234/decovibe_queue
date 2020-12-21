@@ -18,8 +18,8 @@ const passport = require('./strategies/user.strategy');
 
 
 // Route includes
-const userRouter = require('./routes/user.router');
-const itemRouter = require('./routes/item.router');
+const userRouter = require('./routes/userrouter');
+const itemRouter = require('./routes/itemrouter');
 
 
 // Body parser middleware
