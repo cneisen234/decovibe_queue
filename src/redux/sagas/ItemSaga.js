@@ -451,7 +451,7 @@ function* sendSupaColor(action) {
 
 
 
-
+//this takes all of the Saga functions and dispatches them
 function* itemSaga() {
    yield takeLatest('ADD_NEW_ITEM', addNewItem);
     yield takeLatest('CHECK_HISTORY', checkHistory);
