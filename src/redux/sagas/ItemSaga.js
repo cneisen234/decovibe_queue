@@ -442,7 +442,7 @@ function* orderDetails(action) {
 
 function* sendSupaColor(action) {
   try {
-    yield axios.post("/api/item/automatesupa", action.payload);
+    yield axios.post("/api/auto/automatesupa", action.payload);
     yield put({ type: "GET_RESPOND_LIST" });
   } catch (error) {
     console.log("Error with adding a new item:", error);
