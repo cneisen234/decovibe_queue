@@ -54,7 +54,7 @@
     "webdriver-manager": "^12.1.7"
   },
   "scripts": {
-    "start": "react-scripts build && node example/server/server.js",
+    "start": "react-scripts build && node example/server/server.js && docker run",
     "client": "react-scripts start",
     "server": "nodemon --watch server example/server/server.js",
     "build": "react-scripts build",
