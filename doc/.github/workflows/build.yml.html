@@ -59,7 +59,7 @@
     <span class="hljs-attr">steps:</span>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span>
-      <span class="hljs-attr">run:</span> <span class="hljs-string">docker</span> <span class="hljs-string">build</span> <span class="hljs-string">.</span> <span class="hljs-string">--tag</span> <span class="hljs-string">cneisen234/decovibe_queue:latest</span>
+      <span class="hljs-attr">run:</span>  <span class="hljs-string">docker</span> <span class="hljs-string">build</span> <span class="hljs-string">.</span> <span class="hljs-string">--tag</span> <span class="hljs-string">cneisen234/decovibe_queue:latest</span> <span class="hljs-string">&amp;&amp;</span> <span class="hljs-string">docker</span> <span class="hljs-string">build</span> <span class="hljs-string">-t</span> <span class="hljs-string">puppeteer-chrome-linux</span> <span class="hljs-string">.</span>
     <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Test</span>
       <span class="hljs-attr">run:</span> <span class="hljs-string">|
         cd example
