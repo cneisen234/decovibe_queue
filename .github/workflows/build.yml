@@ -13,7 +13,6 @@ jobs:
     - name: Build
       run: | 
       docker build . --tag cneisen234/decovibe_queue:latest
-      docker build -t puppeteer-chrome-linux .
     - name: Test
       run: |
         cd example

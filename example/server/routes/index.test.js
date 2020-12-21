@@ -57,7 +57,14 @@ router.post("/automatesupa", (req, res) => {
               let tenthnumber = contactphonenumber[9];
               (async () => {
                 const browser = await puppeteer.launch({
-                  args: ["--no-sandbox", "--disable-setuid-sandbox"],
+                  args: [
+                    // Required for Docker version of Puppeteer
+                    "--no-sandbox",
+                    "--disable-setuid-sandbox",
+                    // This will write shared memory files into /tmp instead of /dev/shm,
+                    // because Docker’s default for /dev/shm is 64MB
+                    "--disable-dev-shm-usage",
+                  ],
                   headless: false,
                 });
                 const page = await browser.newPage();
