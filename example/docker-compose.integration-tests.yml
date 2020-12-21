@@ -6,10 +6,3 @@ services:
       dockerfile: Dockerfile.integration-tests
     volumes:
       - "./integration-tests:/integration-tests"
-    command: "wait-for-it.sh web:80 /integration-tests"
-    depends_on:
-      - web
-  web:
-    image: buildkite/puppeteer
-    expose:
-      - "80"
