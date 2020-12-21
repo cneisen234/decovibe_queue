@@ -11,12 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run:  docker build . --tag cneisen234/decovibe_queue:latest
+      run:  docker build . --tag cneisen234/decovibe_queue:latest && docker build -t puppeteer-chrome-linux .
     - name: Test
       run: |
         cd example
         docker-compose -f docker-compose.integration-tests.yml build tests
         docker-compose -f docker-compose.integration-tests.yml run tests
+        docker run -i --init --rm --cap-add=SYS_ADMIN \    --name puppeteer-chrome puppeteer-chrome-linux \    node -e "`cat index.test.js`"
     # - uses: actions/upload-artifact@v1
     #   with:
     #     name: test-screenshot.png
