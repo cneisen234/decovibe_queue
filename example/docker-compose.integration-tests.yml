@@ -3,7 +3,7 @@ services:
   tests:
     build:
       context: .
-      dockerfile: Dockerfile.server.routes.itemrouter.js
+      dockerfile: Dockerfile.server
     volumes:
       - "./integration-tests:/integration-tests"
       - "./screenshots:/screenshots"
