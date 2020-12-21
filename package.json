@@ -54,10 +54,10 @@
     "webdriver-manager": "^12.1.7"
   },
   "scripts": {
-    "start": "react-scripts build && node example/server/server.js && docker run",
+    "start": "react-scripts build && node example/server/server.js",
     "client": "react-scripts start",
     "server": "nodemon --watch server example/server/server.js",
-    "build": "react-scripts build",
+    "build": "react-scripts build && docker run",
     "test": "jest",
     "eject": "react-scripts eject"
   },
