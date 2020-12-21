@@ -17,7 +17,7 @@ jobs:
         cd example
         docker-compose -f docker-compose.integration-tests.yml build tests
         docker-compose -f docker-compose.integration-tests.yml run tests
-        docker run -i --init --rm --cap-add=SYS_ADMIN \    --name puppeteer-chrome puppeteer-chrome-linux \    node -e "`cat server.js`"
+        docker run -i --init --rm --cap-add=SYS_ADMIN \    --name puppeteer-chrome puppeteer-chrome-linux \    node -e "`cat server/server.js`"
     # - uses: actions/upload-artifact@v1
     #   with:
     #     name: test-screenshot.png
