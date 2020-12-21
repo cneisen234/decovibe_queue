@@ -11,8 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: | 
-      docker build . --tag cneisen234/decovibe_queue:latest
+      run:  docker build . --tag cneisen234/decovibe_queue:latest
     - name: Test
       run: |
         cd example
