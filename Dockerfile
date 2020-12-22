@@ -25,6 +25,7 @@ RUN npm install
 ADD src /usr/src/app/src
 ADD public /usr/src/app/public
 RUN npm run build
+ADD server /usr/src/app/server
 RUN npm start
 
 #66e3dd7c887d
