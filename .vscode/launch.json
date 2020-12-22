@@ -11,7 +11,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/example/server/server.js"
+            "program": "${workspaceFolder}/server/server.js"
         }
     ]
 }
