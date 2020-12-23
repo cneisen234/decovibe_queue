@@ -157,18 +157,18 @@ const {
 //       });
 //   });
 
-// router.delete("/deleteitem/:id", rejectUnauthenticated, (req, res) => {
-//   //api to delete new stock orders
-//   pool
-//     .query('DELETE FROM "item" WHERE id=$1', [req.params.id])
-//     .then((result) => {
-//       res.sendStatus(204); //No Content
-//     })
-//     .catch((error) => {
-//       console.log("Error DELETE ", error);
-//       res.sendStatus(500);
-//     });
-// });
+router.delete("/deleteitem/:id", rejectUnauthenticated, (req, res) => {
+  //api to delete new stock orders
+  pool
+    .query('DELETE FROM "item" WHERE id=$1', [req.params.id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error DELETE ", error);
+      res.sendStatus(500);
+    });
+});
 
 router.delete("/deletehistory/:id", rejectUnauthenticated, (req, res) => {
   //api to delete conversation history
