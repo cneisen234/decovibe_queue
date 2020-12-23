@@ -262,216 +262,115 @@ class NewCustom extends Component {
         <div className="navbuttonscontainer"></div>
 
         <div style={{ padding: "1.5%" }}>
-          {this.props.user.role === "csr" ? (<span></span>) : (
+          {this.props.user.role === "csr" ? (
+            <span></span>
+          ) : (
             <>
-          <Button
-            variant="success"
-            onClick={(event) => {
-              this.setState({
-                toggle4: !this.state.toggle4,
-                toggle3: false,
-              });
-            }}
-          >
-            <AssignmentIndIcon></AssignmentIndIcon>
-          </Button>
-          <Button
-            variant="success"
-            onClick={(event) => {
-              event.preventDefault();
-              swal({
-                title: "Mark Complete?",
-                text:
-                  "Click 'ok' to mark the selected orders complete, this can't be undone!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-              }).then((willDelete) => {
-                if (willDelete) {
-                  for (let index = 0; index < dataSelector.length; index++) {
-                    const element = dataSelector[index];
-                    this.props.dispatch({
-                      type: "MARK_COMPLETE",
-                      payload: {
-                        id: element.id,
-                        email: element.email,
-                        first_name: element.first_name,
-                        last_name: element.last_name,
-                        order_number: element.order_number,
-                        sku: element.sku,
-                        description: element.description,
-                        product_length: element.product_length,
-                        product_options: element.product_options,
-                        qty: element.qty,
-                        assigned: element.assigned,
-                        created_at: element.created_at,
-                        priority: element.priority,
-                      },
-                    });
-                    this.props.dispatch({
-                      type: "DELETE_CUSTOM_ITEM",
-                      payload: element.id,
-                    });
-                  }
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST",
-                  });
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_RESPOND_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CONFIRM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_PROGRESS_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_COMPLETE_LIST_COUNT",
-                  });
-                  let checkInput = document.getElementsByTagName("input");
-                  for (let index = 0; index < checkInput.length; index++) {
-                    const element = checkInput[index];
-                    element.checked = false;
-                  }
-                  dataSelector = [];
+              <Button
+                variant="success"
+                onClick={(event) => {
                   this.setState({
-                    dataSelector: [],
+                    toggle4: !this.state.toggle4,
                     toggle3: false,
                   });
-                } else {
-                  console.log("action canceled");
-                }
-              });
-            }}
-          >
-            <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
-          </Button>
-          <Button
-            variant="danger"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "MARK_PRIORITY_CUSTOM",
-                  payload: {
-                    id: element.id,
-                    priority: "high",
-                  },
-                });
-              }
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                console.log(element.checked);
-                element.checked = false;
-              }
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <FlagIcon></FlagIcon>
-          </Button>
-          <Button
-            variant="success"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "MARK_PRIORITY_CUSTOM",
-                  payload: {
-                    id: element.id,
-                    priority: "low",
-                  },
-                });
-              }
-              this.props.dispatch({
-                type: "GET_ITEM_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                element.checked = false;
-              }
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <FlagIcon></FlagIcon>
-          </Button>
-          <Button
-            variant="danger"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              swal({
-                title: "Are you sure?",
-                text:
-                  "Once deleted, you will not be able to recover the sku on these orders!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-              }).then((willDelete) => {
-                if (willDelete) {
+                }}
+              >
+                <AssignmentIndIcon></AssignmentIndIcon>
+              </Button>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
+                  swal({
+                    title: "Mark Complete?",
+                    text:
+                      "Click 'ok' to mark the selected orders complete, this can't be undone!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                      for (
+                        let index = 0;
+                        index < dataSelector.length;
+                        index++
+                      ) {
+                        const element = dataSelector[index];
+                        this.props.dispatch({
+                          type: "MARK_COMPLETE",
+                          payload: {
+                            id: element.id,
+                            email: element.email,
+                            first_name: element.first_name,
+                            last_name: element.last_name,
+                            order_number: element.order_number,
+                            sku: element.sku,
+                            description: element.description,
+                            product_length: element.product_length,
+                            product_options: element.product_options,
+                            qty: element.qty,
+                            assigned: element.assigned,
+                            created_at: element.created_at,
+                            priority: element.priority,
+                          },
+                        });
+                        this.props.dispatch({
+                          type: "DELETE_CUSTOM_ITEM",
+                          payload: element.id,
+                        });
+                      }
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                      let checkInput = document.getElementsByTagName("input");
+                      for (let index = 0; index < checkInput.length; index++) {
+                        const element = checkInput[index];
+                        element.checked = false;
+                      }
+                      dataSelector = [];
+                      this.setState({
+                        dataSelector: [],
+                        toggle3: false,
+                      });
+                    } else {
+                      console.log("action canceled");
+                    }
+                  });
+                }}
+              >
+                <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
                     this.props.dispatch({
-                      type: "DELETE_CUSTOM_ITEM",
-                      payload: element.id,
+                      type: "MARK_PRIORITY_CUSTOM",
+                      payload: {
+                        id: element.id,
+                        priority: "high",
+                      },
                     });
                   }
                   this.props.dispatch({
@@ -506,15 +405,126 @@ class NewCustom extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
-                } else {
-                  console.log("delete canceled");
-                }
-              });
-            }}
-          >
-            <DeleteIcon></DeleteIcon>
-          </Button>
-          </>
+                }}
+              >
+                <FlagIcon></FlagIcon>
+              </Button>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "MARK_PRIORITY_CUSTOM",
+                      payload: {
+                        id: element.id,
+                        priority: "low",
+                      },
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                    const element = checkInput[index];
+                    element.checked = false;
+                  }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
+                }}
+              >
+                <FlagIcon></FlagIcon>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  swal({
+                    title: "Are you sure?",
+                    text:
+                      "Once deleted, you will not be able to recover the sku on these orders!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                      for (
+                        let index = 0;
+                        index < dataSelector.length;
+                        index++
+                      ) {
+                        const element = dataSelector[index];
+                        this.props.dispatch({
+                          type: "DELETE_CUSTOM_ITEM",
+                          payload: element.id,
+                        });
+                      }
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                      let checkInput = document.getElementsByTagName("input");
+                      for (let index = 0; index < checkInput.length; index++) {
+                        const element = checkInput[index];
+                        console.log(element.checked);
+                        element.checked = false;
+                      }
+                      dataSelector = [];
+                      this.setState({
+                        dataSelector: [],
+                        toggle3: false,
+                      });
+                    } else {
+                      console.log("delete canceled");
+                    }
+                  });
+                }}
+              >
+                <DeleteIcon></DeleteIcon>
+              </Button>
+            </>
           )}
           <MUITable
             data={data} //brings in data as an array, in this case, list of items
@@ -527,10 +537,9 @@ class NewCustom extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                        this.props.user.role === "csr" ? (
-                        <span></span>
-                      ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <input
                         type="checkbox"
                         id={dataIndex}
@@ -558,7 +567,6 @@ class NewCustom extends Component {
                           }
                         }}
                       ></input>
-                      )
                     );
                   },
                 },
@@ -639,9 +647,9 @@ class NewCustom extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (   this.props.user.role === "csr" ? (
-                        <span></span>
-                      ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -656,7 +664,6 @@ class NewCustom extends Component {
                       >
                         <AssignmentIndIcon></AssignmentIndIcon>
                       </Button>
-                      )
                     );
                   },
                 },
@@ -668,9 +675,9 @@ class NewCustom extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (   this.props.user.role === "csr" ? (
-                        <span></span>
-                      ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       this.props.customitemlist[dataIndex] && (
                         <Button
                           variant="success"
@@ -737,7 +744,6 @@ class NewCustom extends Component {
                           <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
                         </Button>
                       )
-                      )
                     );
                   },
                 },
@@ -750,11 +756,9 @@ class NewCustom extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     //if the priority is low, run the function to change it to high
-                    return   this.props.user.role === "csr" ? (
-                        <span></span>
-                      ) : (
-                    
-                    this.props.customitemlist[dataIndex] &&
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : this.props.customitemlist[dataIndex] &&
                       this.props.customitemlist[dataIndex].priority ===
                         "low" ? (
                       <Button
@@ -838,7 +842,6 @@ class NewCustom extends Component {
                       >
                         <FlagIcon></FlagIcon>
                       </Button>
-                    )
                     );
                   },
                 },
@@ -850,9 +853,9 @@ class NewCustom extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (   this.props.user.role === "csr" ? (
-                        <span></span>
-                      ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <Button
                         variant="danger"
                         onClick={(event) => {
@@ -901,7 +904,6 @@ class NewCustom extends Component {
                       >
                         <DeleteIcon></DeleteIcon>
                       </Button>
-                      )
                     );
                   },
                 },
@@ -1102,29 +1104,30 @@ class NewCustom extends Component {
                           {this.props.user.role === "csr" ? (
                             <span></span>
                           ) : (
-                          <tr>
-                            <td>
-                              {/* filestack for photo uploads */}
-                              <ReactFilestack
-                                apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
-                                componentDisplayMode={{
-                                  customText: "Upload artwork",
-                                  customClass: "picUploader",
-                                }}
-                                onSuccess={(res) =>
-                                  this.setState({
-                                    //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
-                                    [pic]: res.filesUploaded[0].url,
-                                    [filename]:
-                                      res.filesUploaded[0].originalPath,
-                                  })
-                                }
-                              />
-                              Uploaded file
-                            </td>
-                          </tr>
+                            <tr>
+                              <td>
+                                {/* filestack for photo uploads */}
+                                <ReactFilestack
+                                  apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
+                                  componentDisplayMode={{
+                                    customText: "Upload artwork",
+                                    customClass: "picUploader",
+                                  }}
+                                  onSuccess={(res) =>
+                                    this.setState({
+                                      //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
+                                      [pic]: res.filesUploaded[0].url,
+                                      [filename]:
+                                        res.filesUploaded[0].originalPath,
+                                    })
+                                  }
+                                />
+                                Uploaded file
+                              </td>
+                            </tr>
                           )}
-                          {this.state[pic] !== "" || this.props.user.role === "csr" ? (
+                          {this.state[pic] !== "" ||
+                          this.props.user.role === "csr" ? (
                             <tr>
                               <td>
                                 <a href={this.state[pic]} target="_blank">
@@ -1141,310 +1144,317 @@ class NewCustom extends Component {
                   })}{" "}
                   <br />
                   <br />
-                   {this.props.user.role === "csr" ? (
-                            <span></span>
-                          ) : (
-                            <>
-                  <tr>
-                    <td>
-                      {" "}
-                      <TextField
-                        style={{
-                          width: "50%",
-                        }}
-                        variant="outlined"
-                        label="Customer email"
-                        name="edit"
-                        placeholder="...enter email"
-                        // value of local state as text value
-                        value={this.state.email}
-                        type="text"
-                        maxLength={10000}
-                        //runs handleChange on input change
-                        onChange={(event) => this.handleChange(event, "email")}
-                      />
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      {" "}
-                      <TextField
-                        style={{
-                          width: "50%",
-                        }}
-                        variant="outlined"
-                        label="Payment link"
-                        name="edit"
-                        placeholder="...enter payment link"
-                        // value of local state as text value
-                        value={this.state.payment_link}
-                        type="text"
-                        maxLength={10000}
-                        //runs handleChange on input change
-                        onChange={(event) =>
-                          this.handleChange(event, "payment_link")
-                        }
-                      />
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <Form.Control
-                        as="select"
-                        onChange={(event) =>
-                          this.setState({
-                            comments: event.target.value,
-                            canned_edit: event.target.value,
-                          })
-                        }
-                        style={{
-                          width: "50%",
-                        }}
-                      >
-                        <option value="">Canned Responses</option>{" "}
-                        {this.props.replieslist
-                          ? this.props.replieslist.map((item) => (
-                              <option key={item.id} value={item.reply}>
-                                {" "}
-                                {String(item.reply)}{" "}
-                              </option>
-                            ))
-                          : ""}
-                      </Form.Control>
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <TextField
-                        style={{
-                          width: "50%",
-                        }}
-                        //per material UI changes textfield to act like a textarea tag
-                        multiline
-                        //input field takes up for rows by defaults
-                        rows={4}
-                        //...will expand up to 8 rows
-                        rowsMax={8}
-                        variant="outlined"
-                        label="Comments"
-                        name="edit"
-                        placeholder="Comments"
-                        // value of local state as text value
-                        value={this.state.comments}
-                        type="text"
-                        maxLength={10000}
-                        //runs handleChange on input change
-                        onChange={(event) =>
-                          this.handleChange(event, "comments")
-                        }
-                      />
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          this.props.dispatch({
-                            type: "CANNED",
-                            payload: {
-                              canned: this.state.comments,
-                            },
-                          });
-                          this.setState({
-                            canned: "",
-                          });
-                          this.props.dispatch({
-                            type: "GET_REPLIES",
-                          });
-                        }}
-                      >
-                        Add Canned Response
-                      </Button>
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-
-                          event.preventDefault();
-                          this.props.dispatch({
-                            type: "CANNED_EDIT",
-                            payload: {
-                              canned: this.state.canned_edit,
-                              comments: this.state.comments,
-                            },
-                          });
-                          this.props.dispatch({
-                            type: "GET_REPLIES",
-                          });
-                        }}
-                      >
-                        Edit Canned Response
-                      </Button>
-                      <Button
-                        variant="danger"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          let canned_edit = this.state.canned_edit;
-                          if (
-                            canned_edit.slice(canned_edit.length - 1) === "?"
-                          ) {
-                            canned_edit = canned_edit.slice(
-                              0,
-                              canned_edit.length - 1
-                            );
-                            canned_edit = canned_edit + "1";
-                          }
-                          console.log(canned_edit);
-                          this.props.dispatch({
-                            type: "CANNED_DELETE",
-                            payload: canned_edit,
-                          });
-                          this.props.dispatch({
-                            type: "GET_REPLIES",
-                          });
-                        }}
-                      >
-                        Delete Canned Response
-                      </Button>
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  <tr>
-                    <td>
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          if (
-                            this.state.pic1 === "" &&
-                            this.state.pic2 === "" &&
-                            this.state.pic3 === "" &&
-                            this.state.pic4 === "" &&
-                            this.state.pic5 === "" &&
-                            this.state.pic6 === "" &&
-                            this.state.pic7 === "" &&
-                            this.state.pic8 === "" &&
-                            this.state.pic9 === "" &&
-                            this.state.pic10 === "" &&
-                            this.state.pic11 === "" &&
-                            this.state.pic12 === "" &&
-                            this.state.pic13 === "" &&
-                            this.state.pic14 === "" &&
-                            this.state.pic15 === "" &&
-                            this.state.pic16 === "" &&
-                            this.state.pic17 === "" &&
-                            this.state.pic18 === "" &&
-                            this.state.pic19 === "" &&
-                            this.state.pic20 === ""
-                          ) {
-                            this.setState({
-                              error: true,
-                            });
-                            //...set it back to false after 5 secondss
-                            setTimeout(() => {
+                  {this.props.user.role === "csr" ? (
+                    <span></span>
+                  ) : (
+                    <>
+                      <tr>
+                        <td>
+                          {" "}
+                          <TextField
+                            style={{
+                              width: "50%",
+                            }}
+                            variant="outlined"
+                            label="Customer email"
+                            name="edit"
+                            placeholder="...enter email"
+                            // value of local state as text value
+                            value={this.state.email}
+                            type="text"
+                            maxLength={10000}
+                            //runs handleChange on input change
+                            onChange={(event) =>
+                              this.handleChange(event, "email")
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <br />
+                      <br />
+                      <tr>
+                        <td>
+                          {" "}
+                          <TextField
+                            style={{
+                              width: "50%",
+                            }}
+                            variant="outlined"
+                            label="Payment link"
+                            name="edit"
+                            placeholder="...enter payment link"
+                            // value of local state as text value
+                            value={this.state.payment_link}
+                            type="text"
+                            maxLength={10000}
+                            //runs handleChange on input change
+                            onChange={(event) =>
+                              this.handleChange(event, "payment_link")
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <br />
+                      <br />
+                      <tr>
+                        <td>
+                          <Form.Control
+                            as="select"
+                            onChange={(event) =>
                               this.setState({
-                                error: false,
+                                comments: event.target.value,
+                                canned_edit: event.target.value,
+                              })
+                            }
+                            style={{
+                              width: "50%",
+                            }}
+                          >
+                            <option value="">Canned Responses</option>{" "}
+                            {this.props.replieslist
+                              ? this.props.replieslist.map((item) => (
+                                  <option key={item.id} value={item.reply}>
+                                    {" "}
+                                    {String(item.reply)}{" "}
+                                  </option>
+                                ))
+                              : ""}
+                          </Form.Control>
+                        </td>
+                      </tr>
+                      <br />
+                      <br />
+                      <tr>
+                        <td>
+                          <TextField
+                            style={{
+                              width: "50%",
+                            }}
+                            //per material UI changes textfield to act like a textarea tag
+                            multiline
+                            //input field takes up for rows by defaults
+                            rows={4}
+                            //...will expand up to 8 rows
+                            rowsMax={8}
+                            variant="outlined"
+                            label="Comments"
+                            name="edit"
+                            placeholder="Comments"
+                            // value of local state as text value
+                            value={this.state.comments}
+                            type="text"
+                            maxLength={10000}
+                            //runs handleChange on input change
+                            onChange={(event) =>
+                              this.handleChange(event, "comments")
+                            }
+                          />
+                        </td>
+                      </tr>
+                      <br />
+                      <br />
+                      <tr>
+                        <td>
+                          <Button
+                            variant="success"
+                            onClick={(event) => {
+                              event.preventDefault();
+                              this.props.dispatch({
+                                type: "CANNED",
+                                payload: {
+                                  canned: this.state.comments,
+                                },
                               });
-                            }, 5000);
-                            return;
-                          } else {
-                            event.preventDefault();
-                            this.props.dispatch({
-                              type: "CUSTOMER_CONFIRM",
-                              payload: {
-                                pic1: this.state.pic1,
-                                pic2: this.state.pic2,
-                                pic3: this.state.pic3,
-                                pic4: this.state.pic4,
-                                pic5: this.state.pic5,
-                                pic6: this.state.pic6,
-                                pic7: this.state.pic7,
-                                pic8: this.state.pic8,
-                                pic9: this.state.pic9,
-                                pic10: this.state.pic10,
-                                pic11: this.state.pic11,
-                                pic12: this.state.pic12,
-                                pic13: this.state.pic13,
-                                pic14: this.state.pic14,
-                                pic15: this.state.pic15,
-                                pic16: this.state.pic16,
-                                pic17: this.state.pic17,
-                                pic18: this.state.pic18,
-                                pic19: this.state.pic19,
-                                pic20: this.state.pic20,
-                                comments: this.state.comments,
-                                email: this.state.email,
-                                first_name: this.state.first_name,
-                                last_name: this.state.last_name,
-                                order_number: this.state.order_number,
-                                sku: this.state.sku,
-                                description: this.state.description,
-                                qty: this.state.qty,
-                                assigned: this.state.assigned,
-                                created_at: this.state.created_at,
-                                priority: this.state.priority,
-                                payment_link: this.state.payment_link,
-                              },
-                            });
-                            this.props.dispatch({
-                              type: "DELETE_CUSTOM_ITEM",
-                              payload: this.state.id,
-                            });
-                            this.props.dispatch({
-                              type: "GET_ITEM_LIST",
-                            });
-                            this.props.dispatch({
-                              type: "GET_ITEM_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_RESPOND_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_CONFIRM_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_PROGRESS_LIST_COUNT",
-                            });
-                            this.props.dispatch({
-                              type: "GET_COMPLETE_LIST_COUNT",
-                            });
-                            this.setState({
-                              toggle2: !this.state.toggle2,
-                              comments: "",
-                            });
-                          }
-                        }}
-                      >
-                        Send to Customer
-                      </Button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      {this.state.error === true && (
-                        <Alert className="error" style={{}} severity="error">
-                          {"Don't forget the upload :)"}
-                        </Alert>
-                      )}
-                    </td>
-                  </tr>
-                  <br />
-                  <br />
-                  </>
+                              this.setState({
+                                canned: "",
+                              });
+                              this.props.dispatch({
+                                type: "GET_REPLIES",
+                              });
+                            }}
+                          >
+                            Add Canned Response
+                          </Button>
+                          <Button
+                            variant="success"
+                            onClick={(event) => {
+                              event.preventDefault();
+
+                              event.preventDefault();
+                              this.props.dispatch({
+                                type: "CANNED_EDIT",
+                                payload: {
+                                  canned: this.state.canned_edit,
+                                  comments: this.state.comments,
+                                },
+                              });
+                              this.props.dispatch({
+                                type: "GET_REPLIES",
+                              });
+                            }}
+                          >
+                            Edit Canned Response
+                          </Button>
+                          <Button
+                            variant="danger"
+                            onClick={(event) => {
+                              event.preventDefault();
+                              let canned_edit = this.state.canned_edit;
+                              if (
+                                canned_edit.slice(canned_edit.length - 1) ===
+                                "?"
+                              ) {
+                                canned_edit = canned_edit.slice(
+                                  0,
+                                  canned_edit.length - 1
+                                );
+                                canned_edit = canned_edit + "1";
+                              }
+                              console.log(canned_edit);
+                              this.props.dispatch({
+                                type: "CANNED_DELETE",
+                                payload: canned_edit,
+                              });
+                              this.props.dispatch({
+                                type: "GET_REPLIES",
+                              });
+                            }}
+                          >
+                            Delete Canned Response
+                          </Button>
+                        </td>
+                      </tr>
+                      <br />
+                      <br />
+                      <tr>
+                        <td>
+                          <Button
+                            variant="success"
+                            onClick={(event) => {
+                              if (
+                                this.state.pic1 === "" &&
+                                this.state.pic2 === "" &&
+                                this.state.pic3 === "" &&
+                                this.state.pic4 === "" &&
+                                this.state.pic5 === "" &&
+                                this.state.pic6 === "" &&
+                                this.state.pic7 === "" &&
+                                this.state.pic8 === "" &&
+                                this.state.pic9 === "" &&
+                                this.state.pic10 === "" &&
+                                this.state.pic11 === "" &&
+                                this.state.pic12 === "" &&
+                                this.state.pic13 === "" &&
+                                this.state.pic14 === "" &&
+                                this.state.pic15 === "" &&
+                                this.state.pic16 === "" &&
+                                this.state.pic17 === "" &&
+                                this.state.pic18 === "" &&
+                                this.state.pic19 === "" &&
+                                this.state.pic20 === ""
+                              ) {
+                                this.setState({
+                                  error: true,
+                                });
+                                //...set it back to false after 5 secondss
+                                setTimeout(() => {
+                                  this.setState({
+                                    error: false,
+                                  });
+                                }, 5000);
+                                return;
+                              } else {
+                                event.preventDefault();
+                                this.props.dispatch({
+                                  type: "CUSTOMER_CONFIRM",
+                                  payload: {
+                                    pic1: this.state.pic1,
+                                    pic2: this.state.pic2,
+                                    pic3: this.state.pic3,
+                                    pic4: this.state.pic4,
+                                    pic5: this.state.pic5,
+                                    pic6: this.state.pic6,
+                                    pic7: this.state.pic7,
+                                    pic8: this.state.pic8,
+                                    pic9: this.state.pic9,
+                                    pic10: this.state.pic10,
+                                    pic11: this.state.pic11,
+                                    pic12: this.state.pic12,
+                                    pic13: this.state.pic13,
+                                    pic14: this.state.pic14,
+                                    pic15: this.state.pic15,
+                                    pic16: this.state.pic16,
+                                    pic17: this.state.pic17,
+                                    pic18: this.state.pic18,
+                                    pic19: this.state.pic19,
+                                    pic20: this.state.pic20,
+                                    comments: this.state.comments,
+                                    email: this.state.email,
+                                    first_name: this.state.first_name,
+                                    last_name: this.state.last_name,
+                                    order_number: this.state.order_number,
+                                    sku: this.state.sku,
+                                    description: this.state.description,
+                                    qty: this.state.qty,
+                                    assigned: this.state.assigned,
+                                    created_at: this.state.created_at,
+                                    priority: this.state.priority,
+                                    payment_link: this.state.payment_link,
+                                  },
+                                });
+                                this.props.dispatch({
+                                  type: "DELETE_CUSTOM_ITEM",
+                                  payload: this.state.id,
+                                });
+                                this.props.dispatch({
+                                  type: "GET_ITEM_LIST",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_ITEM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_RESPOND_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_CONFIRM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_PROGRESS_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_COMPLETE_LIST_COUNT",
+                                });
+                                this.setState({
+                                  toggle2: !this.state.toggle2,
+                                  comments: "",
+                                });
+                              }
+                            }}
+                          >
+                            Send to Customer
+                          </Button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          {this.state.error === true && (
+                            <Alert
+                              className="error"
+                              style={{}}
+                              severity="error"
+                            >
+                              {"Don't forget the upload :)"}
+                            </Alert>
                           )}
+                        </td>
+                      </tr>
+                      <br />
+                      <br />
+                    </>
+                  )}
                   <tr>
                     <td>
                       {" "}
@@ -1559,6 +1569,7 @@ class NewCustom extends Component {
                     <option value="Maggi">Maggi </option>{" "}
                     <option value="Zach">Zach </option>{" "}
                     <option value="Levi">Levi </option>{" "}
+                    <option value="Heather">Heather </option>{" "}
                   </Form.Control>
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}
