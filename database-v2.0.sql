@@ -139,6 +139,6 @@ CREATE TABLE "complete"
 CREATE TABLE "replies" (
 	"id" serial NOT NULL,
 	"reply" TEXT
-)
+);
 
 
