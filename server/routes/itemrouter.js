@@ -158,7 +158,7 @@ const {
 //   });
 
 router.delete("/deleteitem/:id", rejectUnauthenticated, (req, res) => {
-  //api to delete new stock orders
+  //deletes new stock orders
   pool
     .query('DELETE FROM "item" WHERE id=$1', [req.params.id])
     .then((result) => {
