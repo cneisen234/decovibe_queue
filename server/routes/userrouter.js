@@ -706,7 +706,7 @@ ${comments}</div><br><br>
               to: [
                 //send to the customers email address
                 {
-                  email: "christopherjay71186@gmail.com",
+                  email: email,
                 },
               ],
               bcc: [
@@ -862,7 +862,7 @@ router.post("/canned", rejectUnauthenticated, (req, res, next) => {
       res.sendStatus(500);
     });
 });
-router.post("/addadmin", (req, res, next) => {
+router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
   // used to reset user logins. It's on a permenent restricted path, only accessesable by manaully changing the code. Extremely secure and protected
   const first_name = req.body.first_name;
   const last_name = req.body.last_name;
