@@ -729,9 +729,6 @@ ${comments}</div><br><br>
                 {
                   email: email,
                 },
-                // {
-                //   email: "christopherjay71186@gmail.com",
-                // },
               ],
               bcc: [
                 //bcc me for testing purposes
