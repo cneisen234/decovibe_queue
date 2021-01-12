@@ -9,7 +9,6 @@ import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import LoopIcon from "@material-ui/icons/Loop";
 import EmailIcon from "@material-ui/icons/Email";
 import ReplyIcon from "@material-ui/icons/Reply";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HistoryIcon from "@material-ui/icons/History";
 import EditIcon from "@material-ui/icons/Edit";
 

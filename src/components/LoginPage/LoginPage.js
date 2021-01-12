@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import Swal from "sweetalert2";
 import "./LoginPage.css";
 
 class LoginPage extends Component {

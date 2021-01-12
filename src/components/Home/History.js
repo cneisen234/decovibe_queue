@@ -1,15 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
-import moment from "moment";
 import MUITable from "../MUITable/MUITable";
-import swal from "sweetalert";
-import ReactFilestack from "filestack-react";
-import { Paper, TextField } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import Form from "react-bootstrap/Form";
-import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ViewListIcon from "@material-ui/icons/ViewList";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 class History extends Component {
   state = {
@@ -22,7 +17,6 @@ class History extends Component {
     qty: "",
     id: "",
     sku: "",
-    qty: "",
     assigned: "",
     created_at: "",
     comments: "",
@@ -291,9 +285,9 @@ class History extends Component {
                 </tr>
                 {this.props.detailslist.map((item, index) => {
                   if (this.state.sku == item.sku) {
-                    let newIndex = index + 1;
                     let itemname = item.name;
                     let itemsku = item.sku;
+                    let itemqty = item.quantity;
                     let itemcost = Number(item.base_price).toFixed(2);
                     return (
                       <>
@@ -327,27 +321,53 @@ class History extends Component {
                               width: "25%",
                             }}
                           >
+                            <b>QTY:</b> {itemqty}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
                             <b>Price:</b> {itemcost}
                           </td>
                         </tr>
                         {item.product_options.map((product, index) => {
                           let display_name = product.display_name;
                           let display_value = product.display_value;
-                          return (
-                            <>
-                              <tr>
-                                <td
-                                  style={{
-                                    marginLeft: "3%",
-                                    padding: "10px",
-                                    width: "25%",
-                                  }}
-                                >
-                                  <b>{display_name}:</b> {display_value}
-                                </td>
-                              </tr>
-                            </>
-                          );
+                         let new_display_name = display_name.slice(0, 10);
+                         return (
+                           <>
+                             {new_display_name === "Sheet Size" ? (
+                               <tr>
+                                 <td
+                                   style={{
+                                     marginLeft: "3%",
+                                     padding: "10px",
+                                     width: "25%",
+                                   }}
+                                 >
+                                   <b>{new_display_name}:</b> {display_value}
+                                 </td>
+                               </tr>
+                             ) : (
+                               <tr>
+                                 <td
+                                   style={{
+                                     marginLeft: "3%",
+                                     padding: "10px",
+                                     width: "25%",
+                                   }}
+                                 >
+                                   <b>{display_name}:</b> {display_value}
+                                 </td>
+                               </tr>
+                             )}
+                           </>
+                         );
                         })}{" "}
                         <br />
                         <br />

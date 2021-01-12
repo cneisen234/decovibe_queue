@@ -11,7 +11,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FlagIcon from "@material-ui/icons/Flag";
 import { Alert } from "@material-ui/lab";
 import Form from "react-bootstrap/Form";
-import ForwardIcon from "@material-ui/icons/Forward";
 
 class Response extends Component {
   state = {
@@ -25,7 +24,6 @@ class Response extends Component {
     qty: "",
     id: "",
     sku: "",
-    qty: "",
     assigned: "",
     created_at: "",
     pic1: "",
@@ -610,7 +608,6 @@ class Response extends Component {
                             const id = item.id;
                             this.setState({
                               toggle2: !this.state.toggle2,
-                              id: item.id,
                               order_number: order_number,
                               sku: sku,
                               email: email,
@@ -1038,6 +1035,7 @@ class Response extends Component {
                     let filename = "filename" + newIndex;
                     let itemname = item.name;
                     let itemsku = item.sku;
+                     let itemqty = item.quantity;
                     let itemcost = Number(item.base_price).toFixed(2);
                     return (
                       <>
@@ -1071,27 +1069,53 @@ class Response extends Component {
                               width: "25%",
                             }}
                           >
+                            <b>QTY:</b> {itemqty}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
                             <b>Price:</b> {itemcost}
                           </td>
                         </tr>
                         {item.product_options.map((product, index) => {
                           let display_name = product.display_name;
                           let display_value = product.display_value;
-                          return (
-                            <>
-                              <tr>
-                                <td
-                                  style={{
-                                    marginLeft: "3%",
-                                    padding: "10px",
-                                    width: "25%",
-                                  }}
-                                >
-                                  <b>{display_name}:</b> {display_value}
-                                </td>
-                              </tr>
-                            </>
-                          );
+                       let new_display_name = display_name.slice(0, 10);
+                       return (
+                         <>
+                           {new_display_name === "Sheet Size" ? (
+                             <tr>
+                               <td
+                                 style={{
+                                   marginLeft: "3%",
+                                   padding: "10px",
+                                   width: "25%",
+                                 }}
+                               >
+                                 <b>{new_display_name}:</b> {display_value}
+                               </td>
+                             </tr>
+                           ) : (
+                             <tr>
+                               <td
+                                 style={{
+                                   marginLeft: "3%",
+                                   padding: "10px",
+                                   width: "25%",
+                                 }}
+                               >
+                                 <b>{display_name}:</b> {display_value}
+                               </td>
+                             </tr>
+                           )}
+                         </>
+                       );
                         })}{" "}
                         <br />
                         <br />
@@ -1396,7 +1420,7 @@ class Response extends Component {
                                 },
                               });
                               this.props.dispatch({
-                                type: "DELETE_CUSTOM_ITEM",
+                                type: "DELETE_RESPOND",
                                 payload: this.state.id,
                               });
                               this.props.dispatch({

@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
-import moment from "moment";
 import MUITable from "../MUITable/MUITable";
-import { Paper, TextField } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ViewListIcon from "@material-ui/icons/ViewList";
-import { auto } from "async";
 import swal from "sweetalert";
 import RestoreIcon from "@material-ui/icons/Restore";
 
@@ -21,7 +18,6 @@ class Complete extends Component {
     id: "",
     sku: "",
     sku_description: "",
-    qty: "",
     brand: "",
     dataSelector: [],
   };
@@ -669,9 +665,9 @@ class Complete extends Component {
                   //map from details reducer to show details pulled from api request from BigCommerce
                   if (this.state.sku == item.sku) {
                     //only show details for the sku that was clicked on
-                    let newIndex = index + 1;
                     let itemname = item.name;
                     let itemsku = item.sku;
+                    let itemqty = item.quantity;
                     let itemcost = Number(item.base_price).toFixed(2);
                     return (
                       <>
@@ -705,6 +701,17 @@ class Complete extends Component {
                               width: "25%",
                             }}
                           >
+                            <b>QTY:</b> {itemqty}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
                             <b>Price:</b> {itemcost}
                           </td>
                         </tr>
@@ -712,21 +719,36 @@ class Complete extends Component {
                           //map the product options of that sku to show the details
                           let display_name = product.display_name;
                           let display_value = product.display_value;
-                          return (
-                            <>
-                              <tr>
-                                <td
-                                  style={{
-                                    marginLeft: "3%",
-                                    padding: "10px",
-                                    width: "25%",
-                                  }}
-                                >
-                                  <b>{display_name}:</b> {display_value}
-                                </td>
-                              </tr>
-                            </>
-                          );
+                       let new_display_name = display_name.slice(0, 10);
+                       return (
+                         <>
+                           {new_display_name === "Sheet Size" ? (
+                             <tr>
+                               <td
+                                 style={{
+                                   marginLeft: "3%",
+                                   padding: "10px",
+                                   width: "25%",
+                                 }}
+                               >
+                                 <b>{new_display_name}:</b> {display_value}
+                               </td>
+                             </tr>
+                           ) : (
+                             <tr>
+                               <td
+                                 style={{
+                                   marginLeft: "3%",
+                                   padding: "10px",
+                                   width: "25%",
+                                 }}
+                               >
+                                 <b>{display_name}:</b> {display_value}
+                               </td>
+                             </tr>
+                           )}
+                         </>
+                       );
                         })}{" "}
                         <br />
                         <br />

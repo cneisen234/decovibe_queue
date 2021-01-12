@@ -15,8 +15,7 @@ import {
 import { Alert } from "@material-ui/lab";
 import Swal from "sweetalert2";
 import Paper from "@material-ui/core/Paper";
-// import "./MakeEntry.css";
-import moment from "moment";
+
 
 const GreenRadio = withStyles({
   // turns the radio button green
@@ -291,7 +290,8 @@ componentDidMount() {
                       value="All spelling and grammar"
                       style={{ cursor: "pointer" }}
                     ></input>
-                    <span>All spelling and grammar</span><br/>
+                    <span>All spelling and grammar</span>
+                    <br />
                     <input
                       type="checkbox"
                       className="input"
@@ -326,7 +326,7 @@ componentDidMount() {
             {/*Add a little buffer on the bottom of page (prevent cutoff on mobile) */}
             <br />
           </>
-        ) : (
+        ) : this.state.approve === "No" ? (
           <>
             <br />
             <br />
@@ -335,7 +335,20 @@ componentDidMount() {
             {/*show this only after the customer has submitted, to confirm submission and also prevent duplicate submissions*/}
             <h1 style={{ textAlign: "center" }}>
               Thank you for your feedback.
-              <br /> The art department will follow up with you shortly
+              <br /> The art department will follow up with you after they've
+              reviewed your response
+            </h1>
+          </>
+        ) : (
+          <>
+            <br />
+            <br />
+            <br />
+            <br />
+            {/*show this only after the customer has submitted, to confirm submission and also prevent duplicate submissions*/}
+            <h1 style={{ textAlign: "center" }}>
+              This is for yes
+              <br /> 
             </h1>
           </>
         )}

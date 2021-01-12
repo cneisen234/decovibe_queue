@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
-import moment from "moment";
 import MUITable from "../MUITable/MUITable";
-import { Paper, TextField, Checkbox } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import Form from "react-bootstrap/Form";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import FlagIcon from "@material-ui/icons/Flag";
-import { auto } from "async";
 import swal from "sweetalert";
 //import { response } from "express";
 
@@ -29,7 +26,6 @@ class New extends Component {
     qty: "",
     id: "",
     sku: "",
-    qty: "",
     assigned: "",
     created_at: "",
     dataSelector: [],
@@ -961,6 +957,7 @@ class New extends Component {
                     <option value="Zach">Zach </option>{" "}
                     <option value="Levi">Levi </option>{" "}
                     <option value="Heather">Heather </option>{" "}
+                    <option value="Sasha">Sasha </option>{" "}
                   </Form.Control>
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}
@@ -1073,6 +1070,8 @@ class New extends Component {
                     <option value="Maggi">Maggi </option>{" "}
                     <option value="Zach">Zach </option>{" "}
                     <option value="Levi">Levi </option>{" "}
+                    <option value="Heather">Heather </option>{" "}
+                    <option value="Sasha">Sasha </option>{" "}
                   </Form.Control>
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}

@@ -11,7 +11,6 @@ class SentCustomer extends Component {
     qty: "",
     id: "",
     sku: "",
-    qty: "",
     assigned: "",
     created_at: "",
   };

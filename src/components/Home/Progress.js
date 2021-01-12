@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
-import moment from "moment";
 import MUITable from "../MUITable/MUITable";
 import swal from "sweetalert";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
@@ -21,7 +20,6 @@ class Progress extends Component {
     qty: "",
     id: "",
     sku: "",
-    qty: "",
     assigned: "",
     created_at: "",
     dataSelector: [],

@@ -159,6 +159,7 @@ function* addNewItem(action){
     try {
       yield axios.post("/api/user/markcomplete", action.payload);
       yield put({ type: "GET_COMPLETE_LIST" });
+      yield put({ type: "GET_COMPLETE_LIST_COUNT" });
     } catch (error) {
       console.log("Error with adding a new item:", error);
     }

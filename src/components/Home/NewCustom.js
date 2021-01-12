@@ -29,7 +29,6 @@ class NewCustom extends Component {
     id: "",
     sku: "",
     description: "",
-    qty: "",
     assigned: "",
     created_at: "",
     pic1: "",
@@ -953,6 +952,8 @@ class NewCustom extends Component {
                     <option value="Maggi">Maggi </option>{" "}
                     <option value="Zach">Zach </option>{" "}
                     <option value="Levi">Levi </option>{" "}
+                    <option value="Heather">Heather </option>{" "}
+                    <option value="Sasha">Sasha </option>{" "}
                   </Form.Control>
                   <br />
                   <Button variant="success" type="submit">
@@ -1044,6 +1045,7 @@ class NewCustom extends Component {
                       let filename = "filename" + newIndex;
                       let itemname = item.name;
                       let itemsku = item.sku;
+                      let itemqty = item.quantity;
                       let itemcost = Number(item.base_price).toFixed(2);
                       return (
                         <>
@@ -1077,14 +1079,39 @@ class NewCustom extends Component {
                                 width: "25%",
                               }}
                             >
+                              <b>QTY:</b> {itemqty}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
                               <b>Price:</b> {itemcost}
                             </td>
                           </tr>
                           {item.product_options.map((product, index) => {
                             let display_name = product.display_name;
                             let display_value = product.display_value;
+                            let new_display_name = display_name.slice(0, 10)
                             return (
                               <>
+                                {new_display_name === "Sheet Size" ? (
+                                <tr>
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                  >
+                                    <b>{new_display_name}:</b> {display_value}
+                                  </td>
+                                </tr>
+                                ) : (
                                 <tr>
                                   <td
                                     style={{
@@ -1096,6 +1123,7 @@ class NewCustom extends Component {
                                     <b>{display_name}:</b> {display_value}
                                   </td>
                                 </tr>
+                                )}
                               </>
                             );
                           })}{" "}
@@ -1570,6 +1598,7 @@ class NewCustom extends Component {
                     <option value="Zach">Zach </option>{" "}
                     <option value="Levi">Levi </option>{" "}
                     <option value="Heather">Heather </option>{" "}
+                    <option value="Sasha">Sasha </option>{" "}
                   </Form.Control>
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}

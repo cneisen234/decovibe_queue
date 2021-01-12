@@ -227,7 +227,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                         }
                       }
                       //join the arrays as one string
-                      let optionsJoined = optionsArray.join();
+                      let optionsJoined = optionsArray.join("");
                       //...and throw them in the database
                       const query2Text =
                         'INSERT INTO "item" (email, first_name, last_name, order_number, sku, qty, product_length, product_options, created_at, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id';
@@ -624,7 +624,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
        width="150"
       /></div>
-                     <div>Please confirm the details below for your recent custom order</div>,<br><br>
+                     <div>Please confirm the details below for your recent custom order</div><br><br>
 <div><b>Order number:</b> ${order_number} <br><br>`;
         let commentsString = `
 <div><b>Comments from the art department:</b> <br><br>
@@ -641,19 +641,28 @@ ${comments}</div><br><br>
             //checks if the sku is the one that matches the one the email is pertaining to
             //...if so, push the array
             newArray.push(
-              `<div><b>Details of your original order are listed below</b></div><br><br><div><b>Item Name:</b> ${element.name}</div>`
+              `<div><b>Details of your original order are listed below</b></div><br><br><div><b>Item Name:</b> ${element.name}</div>
+              <br><div><b>Qauntity:</b> ${element.quantity}</div>`
             );
             let options = element.product_options;
             for (let j = 0; j < options.length; j++) {
               //...then loop through the product options for that sku
               const opt = options[j];
               //...and push into the options array
+                let display_name = opt.display_name
+               let new_display_name = display_name.slice(0, 10);
+               if (new_display_name === "Sheet Size") {
+                   optionsArray.push(
+                     `<div><b>${new_display_name}:</b> ${opt.display_value}</div>`
+                   );
+               } else {
               optionsArray.push(
                 `<div><b>${opt.display_name}:</b> ${opt.display_value}</div>`
               );
+               }
             }
             //join into one string
-            let optionsJoined = optionsArray.join();
+            let optionsJoined = optionsArray.join("");
             //...then push that joined array into the main array
             newArray.push(optionsJoined);
             //empty the optionsArray to get ready for the next order
@@ -661,11 +670,17 @@ ${comments}</div><br><br>
             if (payment_link === "" || payment_link === null) {
               //...if a payment link was not sent, push the below html
               newArray.push(
+                // `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
+                //   pic[index]
+                // }>View Proof ${index + 1}</a><br><br>
+                // <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
+                //              <div><a style="font-size:30px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
+
                 `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
                   pic[index]
                 }>View Proof ${index + 1}</a><br><br>
                 <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
-                             <div><a style="font-size:30px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
+                             <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
               );
             } else {
               //...if a payment link was sent, push the below html which includes a payment link
@@ -675,6 +690,12 @@ ${comments}</div><br><br>
                 }>View Proof ${index + 1}</a><br><br>
                 <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
                              <div><a style="font-size:30px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
+
+                // `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
+                //   pic[index]
+                // }>View Proof ${index + 1}</a><br><br>
+                // <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
+                //              <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
               );
 
               newArray.push(
@@ -688,7 +709,7 @@ ${comments}</div><br><br>
           }
         }
         //join the array into one string
-        let joinedArray = newArray.join();
+        let joinedArray = newArray.join("");
         //then define the final string to be sent
         let finalArray =
           `<div style="margin-left:50px;">` +
@@ -708,6 +729,9 @@ ${comments}</div><br><br>
                 {
                   email: email,
                 },
+                // {
+                //   email: "christopherjay71186@gmail.com",
+                // },
               ],
               bcc: [
                 //bcc me for testing purposes
