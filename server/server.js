@@ -42,7 +42,7 @@ app.use("/api/auto", autoRouter);
 
 
 // Serve static files
-app.use(express.static('build'));
+app.use(express.static('static/build'));
 
 // App Set //
 const PORT = process.env.PORT || 5000;
