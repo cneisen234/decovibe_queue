@@ -1038,7 +1038,7 @@ class NewCustom extends Component {
                     </td>
                   </tr>
                   {this.props.detailslist.map((item, index) => {
-                    if (this.state.sku == item.sku) {
+                    if (this.state.sku === item.sku) {
                       let newIndex = index + 1;
                       //define pic as pic and concatnate the index number, this should match with state
                       let pic = "pic" + newIndex;
@@ -1096,33 +1096,33 @@ class NewCustom extends Component {
                           {item.product_options.map((product, index) => {
                             let display_name = product.display_name;
                             let display_value = product.display_value;
-                            let new_display_name = display_name.slice(0, 10)
+                            let new_display_name = display_name.slice(0, 10);
                             return (
                               <>
                                 {new_display_name === "Sheet Size" ? (
-                                <tr>
-                                  <td
-                                    style={{
-                                      marginLeft: "3%",
-                                      padding: "10px",
-                                      width: "25%",
-                                    }}
-                                  >
-                                    <b>{new_display_name}:</b> {display_value}
-                                  </td>
-                                </tr>
+                                  <tr>
+                                    <td
+                                      style={{
+                                        marginLeft: "3%",
+                                        padding: "10px",
+                                        width: "25%",
+                                      }}
+                                    >
+                                      <b>{new_display_name}:</b> {display_value}
+                                    </td>
+                                  </tr>
                                 ) : (
-                                <tr>
-                                  <td
-                                    style={{
-                                      marginLeft: "3%",
-                                      padding: "10px",
-                                      width: "25%",
-                                    }}
-                                  >
-                                    <b>{display_name}:</b> {display_value}
-                                  </td>
-                                </tr>
+                                  <tr>
+                                    <td
+                                      style={{
+                                        marginLeft: "3%",
+                                        padding: "10px",
+                                        width: "25%",
+                                      }}
+                                    >
+                                      <b>{display_name}:</b> {display_value}
+                                    </td>
+                                  </tr>
                                 )}
                               </>
                             );
@@ -1158,7 +1158,11 @@ class NewCustom extends Component {
                           this.props.user.role === "csr" ? (
                             <tr>
                               <td>
-                                <a href={this.state[pic]} target="_blank">
+                                <a
+                                  href={this.state[pic]}
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                >
                                   <b>{this.state[filename]}</b>
                                 </a>
                               </td>
@@ -1169,6 +1173,7 @@ class NewCustom extends Component {
                         </>
                       );
                     }
+                    return null;
                   })}{" "}
                   <br />
                   <br />

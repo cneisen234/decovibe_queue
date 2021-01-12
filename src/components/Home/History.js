@@ -284,7 +284,7 @@ class History extends Component {
                   </td>
                 </tr>
                 {this.props.detailslist.map((item, index) => {
-                  if (this.state.sku == item.sku) {
+                  if (this.state.sku === item.sku) {
                     let itemname = item.name;
                     let itemsku = item.sku;
                     let itemqty = item.quantity;
@@ -374,6 +374,7 @@ class History extends Component {
                       </>
                     );
                   }
+                  return null;
                 })}{" "}
                 <br />
                 {/* toggles display window back to not displaying */}

@@ -663,7 +663,7 @@ class Complete extends Component {
                 </tr>
                 {this.props.detailslist.map((item, index) => {
                   //map from details reducer to show details pulled from api request from BigCommerce
-                  if (this.state.sku == item.sku) {
+                  if (this.state.sku === item.sku) {
                     //only show details for the sku that was clicked on
                     let itemname = item.name;
                     let itemsku = item.sku;
@@ -762,6 +762,7 @@ class Complete extends Component {
                       </>
                     );
                   }
+                  return null;
                 })}{" "}
                 <br />
               </table>
