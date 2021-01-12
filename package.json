@@ -45,10 +45,9 @@
     "webdriver-manager": "^12.1.7"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "react-scripts build && node server/server.js",
     "client": "react-scripts start",
     "server": "nodemon --watch server server/server.js",
-    "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject"
   },
