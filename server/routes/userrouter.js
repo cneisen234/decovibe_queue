@@ -624,16 +624,17 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
        width="150"
       /></div>
-                     <div>Please confirm the details below for your recent custom order</div><br><br>
-<div><b>Order number:</b> ${order_number} <br><br>`;
-        let commentsString = `
-<div><b>Comments from the art department:</b> <br><br>
-${comments}</div><br><br>
-`
+                     <div style="color:black; margin-left:30px; padding-left: 30px; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
+<table style="margin-left:30px; border-collapse: collapse; width: 80%; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
+<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Sku:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${sku} </td></tr>`;
+               let commentsString = `
+<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Art Room Comments:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;">${comments}</td></tr></table><br><br><br>
+`;
         let array = response.data;
         //defines array to be used for pushing html later
         let newArray = [];
         let optionsArray = [];
+        let buttonsArray = [];
         for (let index = 0; index < array.length; index++) {
           //loops through the response data
           const element = array[index];
@@ -641,8 +642,8 @@ ${comments}</div><br><br>
             //checks if the sku is the one that matches the one the email is pertaining to
             //...if so, push the array
             newArray.push(
-              `<div><b>Details of your original order are listed below</b></div><br><br><div><b>Item Name:</b> ${element.name}</div>
-              <br><div><b>Qauntity:</b> ${element.quantity}</div>`
+              `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+              <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Qauntity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
             );
             let options = element.product_options;
             for (let j = 0; j < options.length; j++) {
@@ -650,72 +651,63 @@ ${comments}</div><br><br>
               const opt = options[j];
               //...and push into the options array
                 let display_name = opt.display_name
-               let new_display_name = display_name.slice(0, 10);
+               let new_display_name = String(display_name.slice(0, 10));
+                let reorder_display_name = String(display_name.slice(0, 18));
+                let transfer_display_name = String(display_name.slice(0, 14));
                if (new_display_name === "Sheet Size") {
                    optionsArray.push(
-                     `<div><b>${new_display_name}:</b> ${opt.display_value}</div>`
+                     `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${new_display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
                    );
+               } else if (reorder_display_name === "Is this a reorder?" || reorder_display_name === "Garment Type/Color") {
+                 optionsArray.push(
+                   `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${reorder_display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                 );
+               } else if (transfer_display_name === "Transfer Count") {
+                console.log("skipping Transfer Count")
                } else {
-              optionsArray.push(
-                `<div><b>${opt.display_name}:</b> ${opt.display_value}</div>`
-              );
+                 optionsArray.push(
+                   `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                 );
                }
             }
             //join into one string
             let optionsJoined = optionsArray.join("");
             //...then push that joined array into the main array
             newArray.push(optionsJoined);
+            newArray.push(commentsString);
             //empty the optionsArray to get ready for the next order
             optionsArray = [];
             if (payment_link === "" || payment_link === null) {
               //...if a payment link was not sent, push the below html
-              newArray.push(
-                // `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
-                //   pic[index]
-                // }>View Proof ${index + 1}</a><br><br>
-                // <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
-                //              <div><a style="font-size:30px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
-
-                `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
-                  pic[index]
-                }>View Proof ${index + 1}</a><br><br>
-                <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
-                             <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
+              buttonsArray.push(
+                `<div style="width: 80%; margin-left:30px;"><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px; width: 100%;"><i>View Proof</i></button></a><br><br>
+                            <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
+                             <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div><br><br><br><br>
+`
               );
             } else {
               //...if a payment link was sent, push the below html which includes a payment link
-              newArray.push(
-                `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
-                  pic[index]
-                }>View Proof ${index + 1}</a><br><br>
-                <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
-                             <div><a style="font-size:30px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
-
-                // `<p><b>Please click the link to view your artwork in a PDF: </b></p><a style="font-size:30px; text-decoration: none;" href=${
-                //   pic[index]
-                // }>View Proof ${index + 1}</a><br><br>
-                // <div><b>After you've reviewed your artwork please click the link below to approve it.</b></div><br><br>
-                //              <div><a style="font-size:30px; text-decoration: none;" href="http://localhost:3000/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}">Click to Approve or Update</a></div>`
-              );
-
-              newArray.push(
-                `<p><b>Please finalize your payment by clicking the link below</b></p><a style="font-size:30px; text-decoration: none;" href=${payment_link}>Pay Here</a><br><br>`
+              buttonsArray.push(
+                `<div style="width: 80%; margin-left:30px;"><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px; width: 100%;"><i>View Proof</i></button></a>
+                            <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
+                             <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div>
+                             <div><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 100%;"><i>Finalize Payment</i></button></a><br><br></div>`
               );
             }
-            //push to create space
-            newArray.push(
-              "<br><br> --------------------------------------------"
-            );
           }
         }
         //join the array into one string
+         let buttonsJoined = buttonsArray.join("");
+         newArray.push(buttonsJoined);
         let joinedArray = newArray.join("");
+        
         //then define the final string to be sent
+        let lastString = `<div style="color:#DCDCDC; margin-left:30px; padding-left: 30px; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
         let finalArray =
-          `<div style="margin-left:50px;">` +
+          `<div>` +
           titleString +
-          commentsString +
           joinedArray +
+          lastString +
           `</div>`;
           //empty newArray for next order
         newArray = [];

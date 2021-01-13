@@ -2,20 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import {
+  TextField,
   Button,
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import Swal from "sweetalert2";
 import Paper from "@material-ui/core/Paper";
+
 class CustomerPage extends Component {
   state = {
     toggle: false,
-    approve: "yes",
+    approve: "no",
     comments: null,
     token: "",
     error: false,
   };
-componentDidMount() {
+  componentDidMount() {
     // grabs the token from the header, this comes in from the token generated
     // this is used for verification purposes
     let token = window.location.hash;
@@ -38,31 +40,27 @@ componentDidMount() {
     event.preventDefault();
     //grabs local state and defines it in a var of the same name
     const { approve, comments, token } = this.state;
-              let checkInput = document.getElementsByClassName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                if (element.checked === false) {
-                  //...if any are missed, deny action set error to true
-                      this.setState({
-                        error: true,
-                      });
-                      //...set it back to false after 5 secondss
-                      setTimeout(() => {
-                        this.setState({
-                          error: false,
-                        });
-                      }, 5000);
-                      //...and stop
-                      return;
-                }
-              }
-      //begin sweetAlerts
+    //don't run function if any of these values below are null
+  if (comments === null || comments === "") {
+      this.setState({
+        error: true,
+      });
+      //...set it back to false after 5 secondss
+      setTimeout(() => {
+        this.setState({
+          error: false,
+        });
+      }, 5000);
+      //stop the function
+      return;
+    } else {
+      //if comments have been filled out
       Swal.fire({
         title: "Please confirm",
-        html: `You are approving the artwork<br/><br/>
-        <b>Disclaimer: Once artwork is approved there are no changes or cancellations</b><br/><br/>
-        Please click "confirm" to confirm your submission<br/><br/>`,
-        icon: "success",
+        html: `You're requesting changes to your artwork for the following reasons below:<br/><br/>
+              Your Feedback: ${comments} <br/><br/>
+              Please click "confirm" to send this back to the art department<br/><br/>
+              `,
         customClass: {
           actions: "confirm",
         },
@@ -71,10 +69,17 @@ componentDidMount() {
         cancelButtonColor: "#fcb70a",
         confirmButtonText: "Confirm",
       }).then((result) => {
+        //end sweetAlerts
+
+        //on confirm run the dispatch to send makeEntry info over to redux sagas
         if (result.value) {
           this.props.dispatch({
             type: "CUSTOMER_RESPONSE",
-            payload: { approve: approve, comments: comments, token: token },
+            payload: {
+              approve: approve,
+              comments: comments,
+              token: token,
+            },
           });
           //begin sweetAlerts
           Swal.fire(
@@ -87,6 +92,7 @@ componentDidMount() {
           });
         }
       });
+    }
   }; //ends SubmitInfo
   render() {
     return (
@@ -112,44 +118,30 @@ componentDidMount() {
             >
               <form onSubmit={this.submitInfo}>
                   <>
-                    <b>I have reviewed and approve the following:</b>
-                    {/* check boxes customer needs to check to submit their approval */}
-                    <br />
-                    <input
-                      type="checkbox"
-                      className="input"
-                      name="transfer"
-                      value="Type of Transfer"
-                      style={{ cursor: "pointer" }}
-                    ></input>
-                    <span>Type of Transfer</span>
-                    <br />
-                    <input
-                      type="checkbox"
-                      className="input"
-                      name="size"
-                      value="Transfer size, color and resolution"
-                      style={{ cursor: "pointer" }}
-                    ></input>
-                    <span>Transfer size, color and resolution</span>
-                    <br />
-                    <input
-                      type="checkbox"
-                      className="input"
-                      name="spelling"
-                      value="All spelling and grammar"
-                      style={{ cursor: "pointer" }}
-                    ></input>
-                    <span>All spelling and grammar</span>
-                    <br />
-                    <input
-                      type="checkbox"
-                      className="input"
-                      name="qty"
-                      value="Quantity of each Transfer"
-                      style={{ cursor: "pointer" }}
-                    ></input>
-                    <span>Quantity of each Transfer</span>
+                    <p>Please request any changes you have below</p>
+                    <TextField
+                      style={{
+                        backgroundColor: "white",
+                        margin: "5px",
+                        width: "100%",
+                      }}
+                      //per material UI changes textfield to act like a textarea tag
+                      multiline
+                      //input field takes up for rows by defaults
+                      rows={4}
+                      //...will expand up to 8 rows
+                      rowsMax={8}
+                      variant="outlined"
+                      fullWidth
+                      label="Write comments here"
+                      name="comments"
+                      // sets value of input to local state
+                      value={this.state.comments}
+                      type="text"
+                      maxLength={1000}
+                      //onChange of input values set local state
+                      onChange={(event) => this.handleChange(event, "comments")} //onChange of input values set local state
+                    />
                   </>
                 <center>
                   <Button
@@ -183,8 +175,9 @@ componentDidMount() {
             <br />
             {/*show this only after the customer has submitted, to confirm submission and also prevent duplicate submissions*/}
             <h1 style={{ textAlign: "center" }}>
-              Thank you for your approval.
-              <br />Please review our website for production details.
+              Thank you for your feedback.
+              <br /> The art department will follow up with you after they've
+              reviewed your response
             </h1>
           </>
         )}
@@ -193,8 +186,6 @@ componentDidMount() {
   }
 }
 
-const mapStateToProps = (state) => ({
-
-});
+const mapStateToProps = (state) => ({});
 
 export default withRouter(connect(mapStateToProps)(CustomerPage));

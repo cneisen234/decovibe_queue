@@ -16,6 +16,7 @@ import "./App.css";
 import Progress from '../Home/Progress';
 import SentCustomer from "../Home/SentCustomer";
 import CustomerPage from "../Home/CustomerPage";
+import CustomerDeny from "../Home/CustomerDeny";
 import Response from "../Home/Response";
 import History from "../Home/History";
 import Complete from "../Home/Complete";
@@ -37,6 +38,11 @@ class App extends Component {
               exact
               path="/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/:token"
               component={CustomerPage}
+            />
+            <Route //customer path to confirm order, not in protected route, but verified by admin generated token followed by unique customer token
+              exact
+              path="/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/:token"
+              component={CustomerDeny}
             />
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/home will show the UserPage if the user is logged in.

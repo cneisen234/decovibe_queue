@@ -617,6 +617,7 @@ class Response extends Component {
                               assigned: assigned,
                               created_at: created_at,
                               id: id,
+                              payment_link: null,
                             });
                             console.log(
                               "this is state",
