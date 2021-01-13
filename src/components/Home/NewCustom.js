@@ -619,7 +619,7 @@ class NewCustom extends Component {
                               created_at: created_at,
                               id: id,
                               priority: priority,
-                              payment_link: null,
+                              payment_link: payment_link,
                             });
                             this.props.dispatch({
                               type: "ORDER_DETAILS",

@@ -700,7 +700,6 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
          let buttonsJoined = buttonsArray.join("");
          newArray.push(buttonsJoined);
         let joinedArray = newArray.join("");
-        
         //then define the final string to be sent
         let lastString = `<div style="color:#DCDCDC; margin-left:30px; padding-left: 30px; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
         let finalArray =
