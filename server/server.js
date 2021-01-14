@@ -40,6 +40,10 @@ app.use('/api/user', userRouter);
 app.use('/api/item', itemRouter);
 app.use("/api/auto", autoRouter);
 
+app.get("/healthcheck", (req, res) => {
+res.sendStatus(200)
+});
+
 
 // Serve static files
 app.use(express.static('build'));
