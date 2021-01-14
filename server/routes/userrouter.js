@@ -12,7 +12,6 @@ const moment = require('moment');
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 require("dotenv").config();
-const fs = require("fs");
 
 let storeHash = process.env.STORE_HASH
 
