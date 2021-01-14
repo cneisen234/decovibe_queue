@@ -2,6 +2,7 @@
   "name": "prime-solo-project",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://decoqueue.heattransferwarehouse.com/",
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@material-ui/core": "^4.11.1",
@@ -45,7 +46,7 @@
     "webdriver-manager": "^12.1.7"
   },
   "scripts": {
-    "start": "react-scripts build && node server/server.js",
+    "start": "node server/server.js",
     "client": "react-scripts start",
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
