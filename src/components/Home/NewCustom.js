@@ -1039,7 +1039,7 @@ class NewCustom extends Component {
                   </tr>
                   {this.props.detailslist.map((item, index) => {
                       let newIndex = index + 1;
-                      //define pic as pic and concatnate the index number, this should match with state
+                      //define pic as pic and concatnate the index number
                       let pic = "pic" + newIndex;
                       let filename = "filename" + newIndex;
                       let itemname = item.name;
