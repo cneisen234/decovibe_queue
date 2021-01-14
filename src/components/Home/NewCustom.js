@@ -1099,6 +1099,7 @@ class NewCustom extends Component {
                             return (
                               <>
                                 {new_display_name === "Sheet Size" ? (
+                                  //if sheet size, cut off extra text
                                   <tr>
                                     <td
                                       style={{
