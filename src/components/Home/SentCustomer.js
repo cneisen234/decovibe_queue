@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MUITable from "../MUITable/MUITable";
+import { Paper} from "@material-ui/core";
+import Button from "react-bootstrap/Button";
+import ViewListIcon from "@material-ui/icons/ViewList";
 class SentCustomer extends Component {
   state = {
     email: "",
@@ -13,6 +16,7 @@ class SentCustomer extends Component {
     sku: "",
     assigned: "",
     created_at: "",
+    toggle2: false,
   };
   componentDidMount() {
     this.props.dispatch({
@@ -21,15 +25,15 @@ class SentCustomer extends Component {
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_RESPOND_LIST_COUNT",
-     });
-      this.props.dispatch({
-        type: "GET_CUSTOM_ITEM_LIST_COUNT",
-      });
-         this.props.dispatch({
-           type: "GET_CONFIRM_LIST_COUNT",
-         });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_PROGRESS_LIST_COUNT",
     });
@@ -39,17 +43,40 @@ class SentCustomer extends Component {
     this.props.dispatch({
       type: "DELETE_COMPLETE_RANGE",
     });
-     this.props.dispatch({
-       type: "DELETE_HISTORY_RANGE",
-     });
+    this.props.dispatch({
+      type: "DELETE_HISTORY_RANGE",
+    });
   }
+  toggle2 = () => {
+    this.setState({
+      toggle2: !this.state.toggle2,
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
+  };
 
   render() {
     const data = this.props.confirmlist.map((item) => [
       item.order_number,
-      item.sku,
-      item.description,
-      item.qty,
       item.first_name,
       item.last_name,
       item.assigned,
@@ -68,17 +95,261 @@ class SentCustomer extends Component {
             columns={[
               //names the columns found on MUI table
               { name: "Order Number" },
-              { name: "SKU" },
-              { name: "Description" },
-              { name: "QTY" },
               { name: "First Name" },
               { name: "Last Name" },
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
+              {
+                name: "View Details",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <>
+                        <Button
+                          variant="success"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const itemArray = this.props.customitemlist;
+                            const item = itemArray[dataIndex];
+                            const order_number = item.order_number;
+                            const sku = item.sku;
+                            const description = item.description;
+                            const email = item.email;
+                            const first_name = item.first_name;
+                            const last_name = item.last_name;
+                            const qty = item.qty;
+                            const assigned = item.assigned;
+                            const created_at = item.created_at;
+                            const id = item.id;
+                            const priority = item.priority;
+                            const payment_link = this.state.payment_link;
+                            this.setState({
+                              toggle2: !this.state.toggle2,
+                              order_number: order_number,
+                              sku: sku,
+                              description: description,
+                              email: email,
+                              first_name: first_name,
+                              last_name: last_name,
+                              qty: qty,
+                              assigned: assigned,
+                              created_at: created_at,
+                              id: id,
+                              priority: priority,
+                              payment_link: payment_link,
+                            });
+                            this.props.dispatch({
+                              type: "ORDER_DETAILS",
+                              payload: {
+                                order_number: order_number,
+                              },
+                            });
+                            this.props.dispatch({
+                              type: "GET_REPLIES",
+                            });
+                          }}
+                        >
+                          <ViewListIcon></ViewListIcon>
+                        </Button>
+                      </>
+                    );
+                  },
+                },
+              },
             ]}
             title={"Items Sent to Customer"} //give the table a name
           />
+          {this.state.toggle2 === false ? (
+            //if toggle is false, render nothing. This is the default
+            <span></span>
+          ) : (
+            //...else render the details window
+            <Paper
+              style={{
+                right: 0,
+                bottom: 0,
+                position: "fixed",
+                height: "100%",
+                width: "100%",
+                zIndex: "1000000000",
+                border: "50px",
+                overflow: "scroll",
+                fontSize: "15px",
+                backgroundColor: "white",
+              }}
+              elevation="24"
+              className="loginBox"
+            >
+              <div
+                style={{
+                  backgroundColor: "white",
+                }}
+              >
+                <table
+                  style={{
+                    marginLeft: "200px",
+                    marginRight: "auto",
+                    marginTop: "20px",
+                    width: "100%",
+                  }}
+                >
+                  <tr>
+                    <td
+                      style={{
+                        marginLeft: "3%",
+                        padding: "10px",
+                        width: "25%",
+                      }}
+                    >
+                      {" "}
+                      <Button
+                        onClick={this.toggle2}
+                        variant="success"
+                        type="submit"
+                      >
+                        Close
+                      </Button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      style={{
+                        marginLeft: "3%",
+                        padding: "10px",
+                        width: "25%",
+                      }}
+                    >
+                      <b>Order Number: </b>{" "}
+                      {this.props.detailslist[0] &&
+                        this.props.detailslist[0].order_id}
+                    </td>
+                  </tr>
+                  {this.props.detailslist.map((item, index) => {
+                    //define pic as pic and concatnate the index number
+                    let itemname = item.name;
+                    let itemsku = item.sku;
+                    let itemqty = item.quantity;
+                    let itemcost = Number(item.base_price).toFixed(2);
+                    return (
+                      <>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Name:</b> {itemname}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Sku:</b> {itemsku}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>QTY:</b> {itemqty}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Price:</b> {itemcost}
+                          </td>
+                        </tr>
+                        {item.product_options.map((product, index) => {
+                          let display_name = product.display_name;
+                          let display_value = product.display_value;
+                          let new_display_name = display_name.slice(0, 10);
+                          return (
+                            <>
+                              {new_display_name === "Sheet Size" ? (
+                                //if sheet size, cut off extra text
+                                <tr>
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                  >
+                                    <b>{new_display_name}:</b> {display_value}
+                                  </td>
+                                </tr>
+                              ) : (
+                                <tr>
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                  >
+                                    <b>{display_name}:</b> {display_value}
+                                  </td>
+                                </tr>
+                              )}
+                            </>
+                          );
+                        })}{" "}
+                        <br />
+                        <br />
+                        <tr>
+                          <td>
+                            ----------------------------------------------
+                          </td>
+                        </tr>
+                      </>
+                    );
+                  })}{" "}
+                  <br />
+                  <br />
+                  <tr>
+                    <td>
+                      {" "}
+                      <Button
+                        onClick={this.toggle2}
+                        variant="success"
+                        type="submit"
+                      >
+                        Close
+                      </Button>
+                    </td>
+                  </tr>
+                </table>
+                {/* toggles edit window back to not displaying */}
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+              </div>
+            </Paper>
+          )}
         </div>
         <br />
         <br />
@@ -89,6 +360,8 @@ class SentCustomer extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  customitemlist: state.item.customitemlist,
   confirmlist: state.item.confirmlist,
+  detailslist: state.item.detailslist,
 });
 export default connect(mapStateToProps)(SentCustomer);

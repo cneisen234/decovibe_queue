@@ -306,10 +306,9 @@ class Complete extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                        this.props.user.role === "csr" ? (
-                        <span></span>
-                      ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <input
                         type="checkbox"
                         id={dataIndex}
@@ -340,7 +339,6 @@ class Complete extends Component {
                           }
                         }}
                       ></input>
-                      )
                     );
                   },
                 },
@@ -663,103 +661,102 @@ class Complete extends Component {
                 </tr>
                 {this.props.detailslist.map((item, index) => {
                   //map from details reducer to show details pulled from api request from BigCommerce
-                    let itemname = item.name;
-                    let itemsku = item.sku;
-                    let itemqty = item.quantity;
-                    let itemcost = Number(item.base_price).toFixed(2);
-                    return (
-                      <>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>Name:</b> {itemname}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>Sku:</b> {itemsku}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>QTY:</b> {itemqty}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>Price:</b> {itemcost}
-                          </td>
-                        </tr>
-                        {item.product_options.map((product, index) => {
-                          //map the product options of that sku to show the details
-                          let display_name = product.display_name;
-                          let display_value = product.display_value;
-                       let new_display_name = display_name.slice(0, 10);
-                       return (
-                         <>
-                           {new_display_name === "Sheet Size" ? (
-                             <tr>
-                               <td
-                                 style={{
-                                   marginLeft: "3%",
-                                   padding: "10px",
-                                   width: "25%",
-                                 }}
-                               >
-                                 <b>{new_display_name}:</b> {display_value}
-                               </td>
-                             </tr>
-                           ) : (
-                             <tr>
-                               <td
-                                 style={{
-                                   marginLeft: "3%",
-                                   padding: "10px",
-                                   width: "25%",
-                                 }}
-                               >
-                                 <b>{display_name}:</b> {display_value}
-                               </td>
-                             </tr>
-                           )}
-                         </>
-                       );
-                        })}{" "}
-                        <br />
-                        <br />
-                        <Button
-                          onClick={this.toggle2}
-                          variant="success"
-                          type="submit"
+                  let itemname = item.name;
+                  let itemsku = item.sku;
+                  let itemqty = item.quantity;
+                  let itemcost = Number(item.base_price).toFixed(2);
+                  return (
+                    <>
+                      <tr>
+                        <td
+                          style={{
+                            marginLeft: "3%",
+                            padding: "10px",
+                            width: "25%",
+                          }}
                         >
-                          Close
-                        </Button>
-                      </>
-                    );
+                          <b>Name:</b> {itemname}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            marginLeft: "3%",
+                            padding: "10px",
+                            width: "25%",
+                          }}
+                        >
+                          <b>Sku:</b> {itemsku}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            marginLeft: "3%",
+                            padding: "10px",
+                            width: "25%",
+                          }}
+                        >
+                          <b>QTY:</b> {itemqty}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            marginLeft: "3%",
+                            padding: "10px",
+                            width: "25%",
+                          }}
+                        >
+                          <b>Price:</b> {itemcost}
+                        </td>
+                      </tr>
+                      {item.product_options.map((product, index) => {
+                        //map the product options of that sku to show the details
+                        let display_name = product.display_name;
+                        let display_value = product.display_value;
+                        let new_display_name = display_name.slice(0, 10);
+                        return (
+                          <>
+                            {new_display_name === "Sheet Size" ? (
+                              <tr>
+                                <td
+                                  style={{
+                                    marginLeft: "3%",
+                                    padding: "10px",
+                                    width: "25%",
+                                  }}
+                                >
+                                  <b>{new_display_name}:</b> {display_value}
+                                </td>
+                              </tr>
+                            ) : (
+                              <tr>
+                                <td
+                                  style={{
+                                    marginLeft: "3%",
+                                    padding: "10px",
+                                    width: "25%",
+                                  }}
+                                >
+                                  <b>{display_name}:</b> {display_value}
+                                </td>
+                              </tr>
+                            )}
+                          </>
+                        );
+                      })}{" "}
+                      <br />
+                      <br />
+                      <tr>
+                        <td>----------------------------------------------</td>
+                      </tr>
+                    </>
+                  );
                 })}{" "}
+                <Button onClick={this.toggle2} variant="success" type="submit">
+                  Close
+                </Button>
                 <br />
               </table>
               {/* toggles edit window back to not displaying */}

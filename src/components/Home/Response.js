@@ -253,9 +253,6 @@ class Response extends Component {
     let dataSelector = this.state.dataSelector;
     const data = this.props.respondlist.map((respond) => [
       respond.order_number,
-      respond.sku,
-      respond.description,
-      respond.qty,
       respond.first_name,
       respond.last_name,
       respond.approve,
@@ -572,9 +569,6 @@ class Response extends Component {
                 },
               },
               { name: "Order Number" },
-              { name: "SKU" },
-              { name: "Description" },
-              { name: "QTY" },
               { name: "First Name" },
               { name: "Last Name" },
               { name: "Approved" },
@@ -1160,6 +1154,11 @@ class Response extends Component {
                         ) : (
                           <span></span>
                         )}
+                        <tr>
+                          <td>
+                            ----------------------------------------------
+                          </td>
+                        </tr>
                       </>
                     );
                 })}{" "}

@@ -243,9 +243,6 @@ class NewCustom extends Component {
     let dataSelector = this.state.dataSelector;
     const data = this.props.customitemlist.map((item) => [
       item.order_number,
-      item.sku,
-      item.description,
-      item.qty,
       item.first_name,
       item.last_name,
       item.assigned,
@@ -571,9 +568,6 @@ class NewCustom extends Component {
                 },
               },
               { name: "Order Number" },
-              { name: "SKU" },
-              { name: "Description" },
-              { name: "QTY" },
               { name: "First Name" },
               { name: "Last Name" },
               { name: "Assigned" },
@@ -1170,6 +1164,11 @@ class NewCustom extends Component {
                           ) : (
                             <span></span>
                           )}
+                          <tr>
+                            <td>
+                              ----------------------------------------------
+                            </td>
+                          </tr>
                         </>
                       );
                   })}{" "}
