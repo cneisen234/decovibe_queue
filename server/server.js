@@ -45,7 +45,7 @@ app.use("/api/auto", autoRouter);
 app.use(express.static('build'));
 
 // App Set //
-const PORT = 8080 || 5000;
+const PORT = 8080;
 
 /** Listen * */
 app.listen(PORT, '0.0.0.0' , () => {
