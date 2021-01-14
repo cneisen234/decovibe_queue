@@ -638,7 +638,6 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
         for (let index = 0; index < array.length; index++) {
           //loops through the response data
           const element = array[index];
-          if (sku == element.sku) {
             //checks if the sku is the one that matches the one the email is pertaining to
             //...if so, push the array
             newArray.push(
@@ -694,7 +693,6 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                              <div><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 100%;"><i>Finalize Payment</i></button></a><br><br></div>`
               );
             }
-          }
         }
         //join the array into one string
          let buttonsJoined = buttonsArray.join("");

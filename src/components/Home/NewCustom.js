@@ -1038,7 +1038,6 @@ class NewCustom extends Component {
                     </td>
                   </tr>
                   {this.props.detailslist.map((item, index) => {
-                    if (this.state.sku === item.sku) {
                       let newIndex = index + 1;
                       //define pic as pic and concatnate the index number, this should match with state
                       let pic = "pic" + newIndex;
@@ -1172,8 +1171,6 @@ class NewCustom extends Component {
                           )}
                         </>
                       );
-                    }
-                    return null;
                   })}{" "}
                   <br />
                   <br />
