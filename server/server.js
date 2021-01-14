@@ -1,7 +1,6 @@
 
 const express = require('express');
 require('dotenv').config();
-const moment = require('moment')
 
 const app = express();
 const bodyParser = require('body-parser');
@@ -20,7 +19,6 @@ const passport = require('./strategies/user.strategy');
 // Route includes
 const userRouter = require('./routes/userrouter');
 const itemRouter = require('./routes/itemrouter');
-const autoRouter = require("./routes/autorouter.js");
 
 
 // Body parser middleware
@@ -38,7 +36,6 @@ app.use(passport.session());
 //i.e. helps direct necessary actions/data to the correct place
 app.use('/api/user', userRouter);
 app.use('/api/item', itemRouter);
-app.use("/api/auto", autoRouter);
 
 app.get("/healthcheck", (req, res) => {
 res.sendStatus(200)
