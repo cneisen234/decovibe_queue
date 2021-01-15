@@ -1040,6 +1040,34 @@ class NewCustom extends Component {
                       let itemsku = item.sku;
                       let itemqty = item.quantity;
                       let itemcost = Number(item.base_price).toFixed(2);
+                               let decoSku = itemsku;
+                               let decoSku3 = decoSku.slice(0, 6);
+                               let decoSku4 = decoSku.slice(0, 5);
+                               let decoSku7 = decoSku.slice(0, 7);
+                      if (
+                      //if the sliced skus meet the below conditions
+                      decoSku4 === "BL_A3" ||
+                      decoSku4 === "BL_A4" ||
+                      decoSku4 === "BL_A5" ||
+                      decoSku4 === "BL_LC" ||
+                      decoSku4 === "BL_SM" ||
+                      decoSku3 === "HW_CAP" ||
+                      decoSku3 === "PR_BAG" ||
+                      decoSku3 === "PR_UM_" ||
+                      decoSku4 === "SB_A5" ||
+                      decoSku4 === "SB_A4" ||
+                      decoSku4 === "SB_A3" ||
+                      decoSku4 === "SB_LC" ||
+                      decoSku4 === "SB_SM" ||
+                      decoSku4 === "SB_LS" ||
+                      decoSku4 === "WE_SM" ||
+                      decoSku4 === "WE_LC" ||
+                      decoSku4 === "WE_A5" ||
+                      decoSku4 === "WE_A4" ||
+                      decoSku4 === "WE_A3" ||
+                      decoSku7 === "DYESUB-" ||
+                      decoSku4 === "FINAL"
+                    ) {
                       return (
                         <>
                           <tr>
@@ -1120,6 +1148,7 @@ class NewCustom extends Component {
                                 )}
                               </>
                             );
+                            
                           })}{" "}
                           <br />
                           <br />
@@ -1171,6 +1200,8 @@ class NewCustom extends Component {
                           </tr>
                         </>
                       );
+                          }
+                          return null;
                   })}{" "}
                   <br />
                   <br />
@@ -1460,6 +1491,26 @@ class NewCustom extends Component {
                                 this.setState({
                                   toggle2: !this.state.toggle2,
                                   comments: "",
+                                  pic1: "",
+                                  pic2: "",
+                                  pic3: "",
+                                  pic4: "",
+                                  pic5: "",
+                                  pic6: "",
+                                  pic7: "",
+                                  pic8: "",
+                                  pic9: "",
+                                  pic10: "",
+                                  pic11: "",
+                                  pic12: "",
+                                  pic13: "",
+                                  pic14: "",
+                                  pic15: "",
+                                  pic16: "",
+                                  pic17: "",
+                                  pic18: "",
+                                  pic19: "",
+                                  pic20: "",
                                 });
                               }
                             }}

@@ -64,7 +64,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     //defines the dates to be used for the timestamp
       let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
       let nowYear = Number(moment().subtract(6, "hours").year());
-      let prevYear = Number(moment().subtract(6, "hours").year());
       let nowDay = Number(moment().subtract(6, "hours").date());
       let hour = Number(moment().subtract(6, "hours").hour());
       let min = Number(moment().subtract(6, "hours").minute());
@@ -135,7 +134,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                     //arrays used to determan how emails appear when sent
                     let optionsArray = [];
                     let orderComments = [];
-                    let basePrice = Number(element.base_price).toFixed(2);
                     let name = element.name;
                     //slices up the sku numbers to check certain parts of the string
                     let decoSku = element.sku;
@@ -558,11 +556,11 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   //defines the date
   let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
   let nowYear = Number(moment().subtract(6, "hours").year());
-  let prevYear = Number(moment().subtract(6, "hours").year());
   let nowDay = Number(moment().subtract(6, "hours").date());
   let hour = Number(moment().subtract(6, "hours").hour());
   let min = Number(moment().subtract(6, "hours").minute());
   let sec = Number(moment().subtract(6, "hours").second());
+  let proofString = ``
   if (hour < 10) {
     hour = "0" + String(hour);
   }
@@ -623,86 +621,121 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
        width="150"
       /></div>
-                     <div style="color:black; margin-left:30px; padding-left: 30px; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
-<table style="margin-left:30px; border-collapse: collapse; width: 80%; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
+<table style="border-collapse: collapse; width: 100%; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
 <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Sku:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${sku} </td></tr>`;
                let commentsString = `
-<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Art Room Comments:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;">${comments}</td></tr></table><br><br><br>
-`;
+<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Art Room Comments:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;">${comments}</td></tr></table><br><br><br>`;
         let array = response.data;
         //defines array to be used for pushing html later
         let newArray = [];
         let optionsArray = [];
-        let buttonsArray = [];
         for (let index = 0; index < array.length; index++) {
           //loops through the response data
           const element = array[index];
-            //checks if the sku is the one that matches the one the email is pertaining to
-            //...if so, push the array
-            newArray.push(
-              `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+                   let decoSku = element.sku;
+                   let decoSku3 = decoSku.slice(0, 6);
+                   let decoSku4 = decoSku.slice(0, 5);
+                   let decoSku7 = decoSku.slice(0, 7);
+                   if (
+                     //if the sliced skus meet the below conditions
+                     decoSku4 === "BL_A3" ||
+                     decoSku4 === "BL_A4" ||
+                     decoSku4 === "BL_A5" ||
+                     decoSku4 === "BL_LC" ||
+                     decoSku4 === "BL_SM" ||
+                     decoSku3 === "HW_CAP" ||
+                     decoSku3 === "PR_BAG" ||
+                     decoSku3 === "PR_UM_" ||
+                     decoSku4 === "SB_A5" ||
+                     decoSku4 === "SB_A4" ||
+                     decoSku4 === "SB_A3" ||
+                     decoSku4 === "SB_LC" ||
+                     decoSku4 === "SB_SM" ||
+                     decoSku4 === "SB_LS" ||
+                     decoSku4 === "WE_SM" ||
+                     decoSku4 === "WE_LC" ||
+                     decoSku4 === "WE_A5" ||
+                     decoSku4 === "WE_A4" ||
+                     decoSku4 === "WE_A3" ||
+                     decoSku7 === "DYESUB-" ||
+                     decoSku4 === "FINAL"
+                   ) {
+                     //checks if the sku is the one that matches the one the email is pertaining to
+                     //...if so, push the array
+                     proofString = `<div style="width: 100%;"><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px; width: 100%;"><i>View Proof</i></button></a></div><br><br>`;
+                     newArray.push(
+                       `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
               <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Qauntity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
-            );
-            let options = element.product_options;
-            for (let j = 0; j < options.length; j++) {
-              //...then loop through the product options for that sku
-              const opt = options[j];
-              //...and push into the options array
-                let display_name = opt.display_name
-               let new_display_name = String(display_name.slice(0, 10));
-                let reorder_display_name = String(display_name.slice(0, 18));
-                let transfer_display_name = String(display_name.slice(0, 14));
-               if (new_display_name === "Sheet Size") {
-                   optionsArray.push(
-                     `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${new_display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
-                   );
-               } else if (reorder_display_name === "Is this a reorder?" || reorder_display_name === "Garment Type/Color") {
-                 optionsArray.push(
-                   `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${reorder_display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
-                 );
-               } else if (transfer_display_name === "Transfer Count") {
-                console.log("skipping Transfer Count")
-               } else {
-                 optionsArray.push(
-                   `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
-                 );
-               }
-            }
-            //join into one string
-            let optionsJoined = optionsArray.join("");
-            //...then push that joined array into the main array
-            newArray.push(optionsJoined);
-            newArray.push(commentsString);
-            //empty the optionsArray to get ready for the next order
-            optionsArray = [];
-            if (payment_link === "" || payment_link === null) {
-              //...if a payment link was not sent, push the below html
-              buttonsArray.push(
-                `<div style="width: 80%; margin-left:30px;"><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px; width: 100%;"><i>View Proof</i></button></a><br><br>
-                            <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
-                             <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div><br><br><br><br>
-`
-              );
-            } else {
-              //...if a payment link was sent, push the below html which includes a payment link
-              buttonsArray.push(
-                `<div style="width: 80%; margin-left:30px;"><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px; width: 100%;"><i>View Proof</i></button></a>
-                            <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
-                             <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div>
-                             <div><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 100%;"><i>Finalize Payment</i></button></a><br><br></div>`
-              );
-            }
+                     );
+                     let options = element.product_options;
+                     for (let j = 0; j < options.length; j++) {
+                       //...then loop through the product options for that sku
+                       const opt = options[j];
+                       //...and push into the options array
+                       let display_name = opt.display_name;
+                       let new_display_name = String(display_name.slice(0, 10));
+                       let reorder_display_name = String(
+                         display_name.slice(0, 18)
+                       );
+                       let transfer_display_name = String(
+                         display_name.slice(0, 14)
+                       );
+                       if (new_display_name === "Sheet Size") {
+                         optionsArray.push(
+                           `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${new_display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                         );
+                       } else if (
+                         reorder_display_name === "Is this a reorder?" ||
+                         reorder_display_name === "Garment Type/Color"
+                       ) {
+                         optionsArray.push(
+                           `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${reorder_display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                         );
+                       } else if (transfer_display_name === "Transfer Count") {
+                         console.log("skipping Transfer Count");
+                       } else {
+                         optionsArray.push(
+                           `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                         );
+                       }
+                     }
+                     //join into one string
+                     let optionsJoined = optionsArray.join("");
+                     //...then push that joined array into the main array
+                     newArray.push(optionsJoined);
+                     newArray.push(commentsString);
+                     newArray.push(proofString)
+                     //empty the optionsArray to get ready for the next order
+                     optionsArray = [];
+                   }
         }
+         let buttonsArray = [];
         //join the array into one string
+                if (payment_link === "" || payment_link === null) {
+                  //...if a payment link was not sent, push the below html
+                  buttonsArray.push(
+                    `<div style="width:100%;"><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
+                             <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div></div><br><br><br><br>
+`
+                  );
+                } else {
+                  //...if a payment link was sent, push the below html which includes a payment link
+                  buttonsArray.push(
+                    `<div style="width:100%;"><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
+                             <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div>
+                             <div style="width:100%;"><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 100%;"><i>Finalize Payment</i></button></a><br><br></div>`
+                  );
+                }
          let buttonsJoined = buttonsArray.join("");
-         newArray.push(buttonsJoined);
         let joinedArray = newArray.join("");
         //then define the final string to be sent
-        let lastString = `<div style="color:#DCDCDC; margin-left:30px; padding-left: 30px; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
+        let lastString = `<div style="color:#DCDCDC; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
         let finalArray =
           `<div>` +
           titleString +
           joinedArray +
+          buttonsJoined +
           lastString +
           `</div>`;
           //empty newArray for next order

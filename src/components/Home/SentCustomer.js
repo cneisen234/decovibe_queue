@@ -234,6 +234,34 @@ class SentCustomer extends Component {
                     let itemsku = item.sku;
                     let itemqty = item.quantity;
                     let itemcost = Number(item.base_price).toFixed(2);
+                               let decoSku = itemsku;
+                               let decoSku3 = decoSku.slice(0, 6);
+                               let decoSku4 = decoSku.slice(0, 5);
+                               let decoSku7 = decoSku.slice(0, 7);
+                      if (
+                      //if the sliced skus meet the below conditions
+                      decoSku4 === "BL_A3" ||
+                      decoSku4 === "BL_A4" ||
+                      decoSku4 === "BL_A5" ||
+                      decoSku4 === "BL_LC" ||
+                      decoSku4 === "BL_SM" ||
+                      decoSku3 === "HW_CAP" ||
+                      decoSku3 === "PR_BAG" ||
+                      decoSku3 === "PR_UM_" ||
+                      decoSku4 === "SB_A5" ||
+                      decoSku4 === "SB_A4" ||
+                      decoSku4 === "SB_A3" ||
+                      decoSku4 === "SB_LC" ||
+                      decoSku4 === "SB_SM" ||
+                      decoSku4 === "SB_LS" ||
+                      decoSku4 === "WE_SM" ||
+                      decoSku4 === "WE_LC" ||
+                      decoSku4 === "WE_A5" ||
+                      decoSku4 === "WE_A4" ||
+                      decoSku4 === "WE_A3" ||
+                      decoSku7 === "DYESUB-" ||
+                      decoSku4 === "FINAL"
+                    ) {
                     return (
                       <>
                         <tr>
@@ -324,6 +352,8 @@ class SentCustomer extends Component {
                         </tr>
                       </>
                     );
+                      }
+                      return null;
                   })}{" "}
                   <br />
                   <br />
