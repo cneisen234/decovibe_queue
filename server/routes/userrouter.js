@@ -622,7 +622,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
        width="150"
       /></div>
                      <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
-<table style="border-collapse: collapse; width: 100%; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
+<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
 <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Sku:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${sku} </td></tr>`;
                let commentsString = `
 <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Art Room Comments:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;">${comments}</td></tr></table><br><br><br>`;
@@ -663,7 +663,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                    ) {
                      //checks if the sku is the one that matches the one the email is pertaining to
                      //...if so, push the array
-                     proofString = `<div style="width: 100%;"><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px; width: 100%;"><i>View Proof</i></button></a></div><br><br>`;
+                     proofString = `<div><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px;"><i>View Proof</i></button></a></div><br><br>`;
                      newArray.push(
                        `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
               <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Qauntity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
@@ -724,7 +724,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                   buttonsArray.push(
                     `<div><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
                              <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div>
-                             <div><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 100%;"><i>Finalize Payment</i></button></a><br><br></div>`
+                             <div><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px;"><i>Finalize Payment</i></button></a><br><br></div>`
                   );
                 }
          let buttonsJoined = buttonsArray.join("");
