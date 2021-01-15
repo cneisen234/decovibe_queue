@@ -621,7 +621,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
        width="150"
       /></div>
-                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; width:100%; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
 <table style="border-collapse: collapse; width: 100%; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
 <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Sku:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${sku} </td></tr>`;
                let commentsString = `
@@ -715,22 +715,22 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                 if (payment_link === "" || payment_link === null) {
                   //...if a payment link was not sent, push the below html
                   buttonsArray.push(
-                    `<div style="width:100%;"><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
+                    `<div><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
                              <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div></div><br><br><br><br>
 `
                   );
                 } else {
                   //...if a payment link was sent, push the below html which includes a payment link
                   buttonsArray.push(
-                    `<div style="width:100%;"><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
+                    `<div><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
                              <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div>
-                             <div style="width:100%;"><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 100%;"><i>Finalize Payment</i></button></a><br><br></div>`
+                             <div><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px; width: 100%;"><i>Finalize Payment</i></button></a><br><br></div>`
                   );
                 }
          let buttonsJoined = buttonsArray.join("");
         let joinedArray = newArray.join("");
         //then define the final string to be sent
-        let lastString = `<div style="color:#DCDCDC; background-color:#DCDCDC; width:100%; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
+        let lastString = `<div style="color:#DCDCDC; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
         let finalArray =
           `<div>` +
           titleString +
