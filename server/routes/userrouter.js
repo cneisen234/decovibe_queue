@@ -621,7 +621,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
        width="150"
       /></div>
-                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; width:100%; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
 <table style="border-collapse: collapse; width: 100%; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
 <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Sku:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${sku} </td></tr>`;
                let commentsString = `
@@ -730,7 +730,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
          let buttonsJoined = buttonsArray.join("");
         let joinedArray = newArray.join("");
         //then define the final string to be sent
-        let lastString = `<div style="color:#DCDCDC; background-color:#DCDCDC; width:77%; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
+        let lastString = `<div style="color:#DCDCDC; background-color:#DCDCDC; width:100%; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
         let finalArray =
           `<div>` +
           titleString +
