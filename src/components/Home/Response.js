@@ -725,7 +725,7 @@ class Response extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return this.props.respondlist[dataIndex] &&
-                      this.props.respondlist[dataIndex].approve === "Yes" &&
+                      this.props.respondlist[dataIndex].approve === "yes" &&
                       this.props.user.role !== "csr" ? (
                       <Button
                         variant="success"
