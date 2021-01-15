@@ -724,7 +724,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                   buttonsArray.push(
                     `<div style="width: 30%;"><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
                              <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div>
-                             <div style="width: 30%;"><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px;"><i>Finalize Payment</i></button></a><br><br></div>`
+                             <div style="width: 30%;"><div><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 15px;"><i>Finalize Payment</i></button></a><br><br></div></div>`
                   );
                 }
          let buttonsJoined = buttonsArray.join("");
