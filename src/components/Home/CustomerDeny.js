@@ -118,7 +118,7 @@ class CustomerPage extends Component {
             >
               <form onSubmit={this.submitInfo}>
                   <>
-                    <p>Please request any changes you have below</p>
+                    <p>Please request changes you have below</p>
                     <TextField
                       style={{
                         backgroundColor: "white",
