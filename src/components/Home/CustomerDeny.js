@@ -100,12 +100,6 @@ class CustomerPage extends Component {
         {this.state.toggle === false ? (
           <>
             <br />
-            {/* toast that appears on error, shows up when all required fields are not filled in */}
-            {this.state.error === true && (
-              <Alert className="error" style={{}} severity="error">
-                Please fill out all of the required fields
-              </Alert>
-            )}
             <br />
             <Paper
               elevation={5}
@@ -117,32 +111,32 @@ class CustomerPage extends Component {
               }}
             >
               <form onSubmit={this.submitInfo}>
-                  <>
-                    <p>Please request changes you have below</p>
-                    <TextField
-                      style={{
-                        backgroundColor: "white",
-                        margin: "5px",
-                        width: "100%",
-                      }}
-                      //per material UI changes textfield to act like a textarea tag
-                      multiline
-                      //input field takes up for rows by defaults
-                      rows={4}
-                      //...will expand up to 8 rows
-                      rowsMax={8}
-                      variant="outlined"
-                      fullWidth
-                      label="Write comments here"
-                      name="comments"
-                      // sets value of input to local state
-                      value={this.state.comments}
-                      type="text"
-                      maxLength={1000}
-                      //onChange of input values set local state
-                      onChange={(event) => this.handleChange(event, "comments")} //onChange of input values set local state
-                    />
-                  </>
+                <>
+                  <p>Please request changes you have below</p>
+                  <TextField
+                    style={{
+                      backgroundColor: "white",
+                      margin: "5px",
+                      width: "100%",
+                    }}
+                    //per material UI changes textfield to act like a textarea tag
+                    multiline
+                    //input field takes up for rows by defaults
+                    rows={4}
+                    //...will expand up to 8 rows
+                    rowsMax={8}
+                    variant="outlined"
+                    fullWidth
+                    label="Write comments here"
+                    name="comments"
+                    // sets value of input to local state
+                    value={this.state.comments}
+                    type="text"
+                    maxLength={1000}
+                    //onChange of input values set local state
+                    onChange={(event) => this.handleChange(event, "comments")} //onChange of input values set local state
+                  />
+                </>
                 <center>
                   <Button
                     style={{
@@ -160,6 +154,12 @@ class CustomerPage extends Component {
                   >
                     Submit Response
                   </Button>
+                  {/* toast that appears on error, shows up when all required fields are not filled in */}
+                  {this.state.error === true && (
+                    <Alert className="error" style={{}} severity="error">
+                      Please fill out all of the required fields
+                    </Alert>
+                  )}
                 </center>
               </form>
             </Paper>

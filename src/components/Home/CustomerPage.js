@@ -94,12 +94,6 @@ componentDidMount() {
         {this.state.toggle === false ? (
           <>
             <br />
-            {/* toast that appears on error, shows up when all required fields are not filled in */}
-            {this.state.error === true && (
-              <Alert className="error" style={{}} severity="error">
-                Please fill out all of the required fields
-              </Alert>
-            )}
             <br />
             <Paper
               elevation={5}
@@ -111,46 +105,46 @@ componentDidMount() {
               }}
             >
               <form onSubmit={this.submitInfo}>
-                  <>
-                    <b>I have reviewed and approve the following:</b>
-                    {/* check boxes customer needs to check to submit their approval */}
-                    <br />
-                    <input
-                      type="checkbox"
-                      className="input"
-                      name="transfer"
-                      value="Type of Transfer"
-                      style={{ cursor: "pointer" }}
-                    ></input>
-                    <span>Type of Transfer</span>
-                    <br />
-                    <input
-                      type="checkbox"
-                      className="input"
-                      name="size"
-                      value="Transfer size, color and resolution"
-                      style={{ cursor: "pointer" }}
-                    ></input>
-                    <span>Transfer size, color and resolution</span>
-                    <br />
-                    <input
-                      type="checkbox"
-                      className="input"
-                      name="spelling"
-                      value="All spelling and grammar"
-                      style={{ cursor: "pointer" }}
-                    ></input>
-                    <span>All spelling and grammar</span>
-                    <br />
-                    <input
-                      type="checkbox"
-                      className="input"
-                      name="qty"
-                      value="Quantity of each Transfer"
-                      style={{ cursor: "pointer" }}
-                    ></input>
-                    <span>Quantity of each Transfer</span>
-                  </>
+                <>
+                  <b>I have reviewed and approve the following:</b>
+                  {/* check boxes customer needs to check to submit their approval */}
+                  <br />
+                  <input
+                    type="checkbox"
+                    className="input"
+                    name="transfer"
+                    value="Type of Transfer"
+                    style={{ cursor: "pointer" }}
+                  ></input>
+                  <span>Type of Transfer</span>
+                  <br />
+                  <input
+                    type="checkbox"
+                    className="input"
+                    name="size"
+                    value="Transfer size, color and resolution"
+                    style={{ cursor: "pointer" }}
+                  ></input>
+                  <span>Transfer size, color and resolution</span>
+                  <br />
+                  <input
+                    type="checkbox"
+                    className="input"
+                    name="spelling"
+                    value="All spelling and grammar"
+                    style={{ cursor: "pointer" }}
+                  ></input>
+                  <span>All spelling and grammar</span>
+                  <br />
+                  <input
+                    type="checkbox"
+                    className="input"
+                    name="qty"
+                    value="Quantity of each Transfer"
+                    style={{ cursor: "pointer" }}
+                  ></input>
+                  <span>Quantity of each Transfer</span>
+                </>
                 <center>
                   <Button
                     style={{
@@ -168,6 +162,12 @@ componentDidMount() {
                   >
                     Submit Response
                   </Button>
+                  {/* toast that appears on error, shows up when all required fields are not filled in */}
+                  {this.state.error === true && (
+                    <Alert className="error" style={{}} severity="error">
+                      Please fill out all of the required fields
+                    </Alert>
+                  )}
                 </center>
               </form>
             </Paper>
@@ -184,7 +184,8 @@ componentDidMount() {
             {/*show this only after the customer has submitted, to confirm submission and also prevent duplicate submissions*/}
             <h1 style={{ textAlign: "center" }}>
               Thank you for your approval.
-              <br />Please review our website for production details.
+              <br />
+              Please review our website for production details.
             </h1>
           </>
         )}
