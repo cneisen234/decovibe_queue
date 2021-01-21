@@ -540,7 +540,7 @@ class Response extends Component {
                       <input
                         type="checkbox"
                         id={dataIndex}
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", width: 50, height: 50 }}
                         name=""
                         value=""
                         onClick={(event) => {

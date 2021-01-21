@@ -46,7 +46,7 @@ res.sendStatus(200)
 app.use(express.static('build'));
 
 // App Set //
-const PORT = 8080;
+const PORT = 5000;
 
 /** Listen * */
 app.listen(PORT, '0.0.0.0', () => {

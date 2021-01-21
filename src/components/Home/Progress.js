@@ -389,14 +389,13 @@ class Progress extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                       this.props.user.role === "csr" ? (
-                            <span></span>
-                          ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <input
                         type="checkbox"
                         id={dataIndex}
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: "pointer", width: 50, height: 50 }}
                         name=""
                         value=""
                         onClick={(event) => {
@@ -420,7 +419,6 @@ class Progress extends Component {
                           }
                         }}
                       ></input>
-                          )
                     );
                   },
                 },
