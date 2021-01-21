@@ -287,7 +287,6 @@ class History extends Component {
                     let itemname = item.name;
                     let itemsku = item.sku;
                     let itemqty = item.quantity;
-                    let itemcost = Number(item.base_price).toFixed(2);
                     return (
                       <>
                         <tr>
@@ -324,15 +323,6 @@ class History extends Component {
                           </td>
                         </tr>
                         <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>Price:</b> {itemcost}
-                          </td>
                         </tr>
                         {item.product_options.map((product, index) => {
                           let display_name = product.display_name;
@@ -352,6 +342,8 @@ class History extends Component {
                                    <b>{new_display_name}:</b> {display_value}
                                  </td>
                                </tr>
+                             ) : display_name === "Transfer Count" ? (
+                               <span></span>
                              ) : (
                                <tr>
                                  <td

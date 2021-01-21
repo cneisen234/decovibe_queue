@@ -1039,7 +1039,6 @@ class NewCustom extends Component {
                       let itemname = item.name;
                       let itemsku = item.sku;
                       let itemqty = item.quantity;
-                      let itemcost = Number(item.base_price).toFixed(2);
                                let decoSku = itemsku;
                                let decoSku3 = decoSku.slice(0, 6);
                                let decoSku4 = decoSku.slice(0, 5);
@@ -1104,15 +1103,6 @@ class NewCustom extends Component {
                             </td>
                           </tr>
                           <tr>
-                            <td
-                              style={{
-                                marginLeft: "3%",
-                                padding: "10px",
-                                width: "25%",
-                              }}
-                            >
-                              <b>Price:</b> {itemcost}
-                            </td>
                           </tr>
                           {item.product_options.map((product, index) => {
                             let display_name = product.display_name;
@@ -1133,6 +1123,8 @@ class NewCustom extends Component {
                                       <b>{new_display_name}:</b> {display_value}
                                     </td>
                                   </tr>
+                                ) : display_name === "Transfer Count" ? (
+                                  <span></span>
                                 ) : (
                                   <tr>
                                     <td
