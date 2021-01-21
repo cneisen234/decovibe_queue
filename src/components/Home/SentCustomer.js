@@ -107,6 +107,7 @@ class SentCustomer extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
+                    //shows order details
                     return (
                       <>
                         <Button
