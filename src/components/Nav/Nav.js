@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import swal from "sweetalert";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import { Grid } from "@material-ui/core";
+import { Grid, TextField, Button } from "@material-ui/core";
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import LoopIcon from "@material-ui/icons/Loop";
@@ -13,12 +14,12 @@ import HistoryIcon from "@material-ui/icons/History";
 import EditIcon from "@material-ui/icons/Edit";
 
 class Nav extends Component {
-
   state = {
     toggle: false,
     //changes colors of navbar when toggled, used to identify which queue we are in
     backgroundcolor: "#000080",
     backgroundcolorclass: "nav-link",
+    order_number: "",
   };
 
   componentDidMount() {
@@ -48,6 +49,9 @@ class Nav extends Component {
       type: "GET_COMPLETE_LIST_COUNT",
     });
   }
+  handleChange = (event, fieldName) => {
+    this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event
+  }; //end handleChange
 
   render() {
     return (
@@ -112,6 +116,78 @@ class Nav extends Component {
                       this.props.completelistcount[0].count
                     })`}
                   </Link>
+                  <>
+                    <TextField
+                      style={{
+                        backgroundColor: "white",
+                      }}
+                      // value of local state as text value
+                      value={this.state.order_number}
+                      type="text"
+                      maxLength={10000}
+                      //runs handleChange on input change
+                      onChange={(event) =>
+                        this.handleChange(event, "order_number")
+                      }
+                    ></TextField>
+                    <br />
+                    <Button
+                      variant="contained"
+                      onClick={(event) => {
+                        this.props.completelist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} has been completed and is in the complete tab`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.customitemlist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a custom order and has not been started yet, it's in the "new" tab on the custom side`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.confirmlist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a custom order. An email has been sent but the customer has not responded. This can be found in the "Sent To Customer" tab`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.respondlist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a custom order. The customer has responded to the order. This can be found in the "Customer Response" tab`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.itemlist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a stock order. The order has not been started yet. This can be found in the "New" tab on the stock side`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.progresslist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a stock order. The order has been started yet. This can be found in the "Progress" tab on the stock side`
+                            );
+                            return null;
+                          }
+                        });
+                        return null;
+                      }}
+                    >
+                      Check Order
+                    </Button>
+                  </>
                 </Grid>
                 <Grid
                   item
@@ -280,6 +356,78 @@ class Nav extends Component {
                     <HistoryIcon></HistoryIcon>
                     History{" "}
                   </Link>
+                  <>
+                    <TextField
+                      style={{
+                        backgroundColor: "white",
+                      }}
+                      // value of local state as text value
+                      value={this.state.order_number}
+                      type="text"
+                      maxLength={10000}
+                      //runs handleChange on input change
+                      onChange={(event) =>
+                        this.handleChange(event, "order_number")
+                      }
+                    ></TextField>
+                    <br />
+                    <Button
+                      variant="contained"
+                      onClick={(event) => {
+                        this.props.completelist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} has been completed and is in the complete tab`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.customitemlist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a custom order and has not been started yet, it's in the "new" tab on the custom side`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.confirmlist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a custom order. An email has been sent but the customer has not responded. This can be found in the "Sent To Customer" tab`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.respondlist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a custom order. The customer has responded to the order. This can be found in the "Customer Response" tab`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.itemlist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a stock order. The order has not been started yet. This can be found in the "New" tab on the stock side`
+                            );
+                            return null;
+                          }
+                        });
+                        this.props.progresslist.map((item, index) => {
+                          if (this.state.order_number === item.order_number) {
+                            swal(
+                              `${this.state.order_number} is a stock order. The order has been started yet. This can be found in the "Progress" tab on the stock side`
+                            );
+                            return null;
+                          }
+                        });
+                        return null;
+                      }}
+                    >
+                      Check Order
+                    </Button>
+                  </>
                 </Grid>
                 <Grid
                   item
@@ -380,8 +528,7 @@ class Nav extends Component {
           </>
         )}
 
-        <>
-        </>
+        <></>
       </Grid>
     );
   }
@@ -389,6 +536,12 @@ class Nav extends Component {
 //grab the count of all of the queues
 const mapStateToProps = (state) => ({
   user: state.user,
+  itemlist: state.item.itemlist,
+  customitemlist: state.item.customitemlist,
+  progresslist: state.item.progresslist,
+  confirmlist: state.item.confirmlist,
+  respondlist: state.item.respondlist,
+  completelist: state.item.completelist,
   itemlistcount: state.item.itemlistcount,
   customitemlistcount: state.item.customitemlistcount,
   progresslistcount: state.item.progresslistcount,
