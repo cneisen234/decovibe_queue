@@ -130,7 +130,6 @@ class Nav extends Component {
                         this.handleChange(event, "order_number")
                       }
                     ></TextField>
-                    <br />
                     <Button
                       variant="contained"
                       onClick={(event) => {
@@ -177,7 +176,7 @@ class Nav extends Component {
                         this.props.progresslist.map((item, index) => {
                           if (this.state.order_number === item.order_number) {
                             swal(
-                              `${this.state.order_number} is a stock order. The order has been started yet. This can be found in the "Progress" tab on the stock side`
+                              `${this.state.order_number} is a stock order. The order has been started. This can be found in the "Progress" tab on the stock side`
                             );
                             return null;
                           }
@@ -370,7 +369,6 @@ class Nav extends Component {
                         this.handleChange(event, "order_number")
                       }
                     ></TextField>
-                    <br />
                     <Button
                       variant="contained"
                       onClick={(event) => {
