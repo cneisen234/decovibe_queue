@@ -90,11 +90,13 @@ router.get("/", rejectUnauthenticated, (req, res) => {
       )
       .then(function (response) {
         let order = response.data[0];
+        let orderId = order.id
         let email = order.billing_address.email;
         let first_name = order.billing_address.first_name;
         let last_name = order.billing_address.last_name;
+        let payment_status = order.payment_status
         //converts to am/pm time
-        if (response.data !== []) {
+        if (response.data !== [] && payment_status === "captured") {
           let normalHour = Number(hour);
           let AmPm = "am";
           if (normalHour > 12) {
@@ -293,6 +295,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                 console.log(error);
               });
           }
+        } else {
+          console.log(`${orderId} not authorized`);
         }
       })
       .catch(function (error) {
