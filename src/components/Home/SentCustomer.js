@@ -114,7 +114,7 @@ class SentCustomer extends Component {
                           variant="success"
                           onClick={(event) => {
                             event.preventDefault();
-                            const itemArray = this.props.customitemlist;
+                            const itemArray = this.props.confirmlist;
                             const item = itemArray[dataIndex];
                             const order_number = item.order_number;
                             const sku = item.sku;
