@@ -253,7 +253,43 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_street_1"
                   >
-                    <b>Address:</b> <i>{shipping_street_1} {shipping_city} {shipping_state} {shipping_zip}</i>
+                    <b>Street:</b> <i>{shipping_street_1}</i>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      marginLeft: "3%",
+                      padding: "10px",
+                      width: "25%",
+                    }}
+                    className="shipping_city"
+                  >
+                    <b>City and State:</b> <i>{shipping_city} {shipping_state}</i>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      marginLeft: "3%",
+                      padding: "10px",
+                      width: "25%",
+                    }}
+                    className="shipping_zip"
+                  >
+                    <b>Zip:</b> <i>{shipping_zip}</i>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      marginLeft: "3%",
+                      padding: "10px",
+                      width: "25%",
+                    }}
+                    className="shipping_country"
+                  >
+                    <b>Country:</b> <i>{shipping_country}</i>
                   </td>
                 </tr>
                 <tr>
