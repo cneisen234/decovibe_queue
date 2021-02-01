@@ -238,19 +238,10 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_first_name"
                   >
-                    <b>First Name:</b> <i>{shipping_first_name}</i>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      marginLeft: "3%",
-                      padding: "10px",
-                      width: "25%",
-                    }}
-                    className="shipping_last_name"
-                  >
-                    <b>Last Name:</b> <i>{shipping_last_name}</i>
+                    <b>Name:</b>{" "}
+                    <i>
+                      {shipping_first_name} {shipping_last_name}
+                    </i>
                   </td>
                 </tr>
                 <tr>
@@ -262,67 +253,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_street_1"
                   >
-                    <b>Street 1:</b> <i>{shipping_street_1}</i>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      marginLeft: "3%",
-                      padding: "10px",
-                      width: "25%",
-                    }}
-                    className="shipping_street_2"
-                  >
-                    <b>Street 2:</b> <i>{shipping_street_2}</i>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      marginLeft: "3%",
-                      padding: "10px",
-                      width: "25%",
-                    }}
-                    className="shipping_city"
-                  >
-                    <b>City:</b> <i>{shipping_city}</i>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      marginLeft: "3%",
-                      padding: "10px",
-                      width: "25%",
-                    }}
-                    className="shipping_state"
-                  >
-                    <b>State:</b> <i>{shipping_state}</i>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      marginLeft: "3%",
-                      padding: "10px",
-                      width: "25%",
-                    }}
-                    className="shipping_zip"
-                  >
-                    <b>Zip:</b> <i>{shipping_zip}</i>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    style={{
-                      marginLeft: "3%",
-                      padding: "10px",
-                      width: "25%",
-                    }}
-                    className="shipping_country"
-                  >
-                    <b>Country:</b> <i>{shipping_country}</i>
+                    <b>Address:</b> <i>{shipping_street_1} {shipping_city} {shipping_state} {shipping_zip}</i>
                   </td>
                 </tr>
                 <tr>
