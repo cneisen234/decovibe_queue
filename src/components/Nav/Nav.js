@@ -191,8 +191,8 @@ class Nav extends Component {
                 </Grid>
                 <Grid
                   item
-                  xs={6}
-                  sm={6}
+                  xs={3}
+                  sm={3}
                   md={3}
                   style={{
                     backgroundColor: this.state.backgroundcolor,
@@ -202,9 +202,9 @@ class Nav extends Component {
                 >
                   <Grid
                     item
-                    xs={6}
-                    sm={6}
-                    md={6}
+                    xs={3}
+                    sm={3}
+                    md={3}
                     style={{
                       backgroundColor: this.state.backgroundcolor,
                       width: "50%",
@@ -251,6 +251,52 @@ class Nav extends Component {
                         <LoopIcon></LoopIcon>
                         Switch Queues{" "}
                       </Link>
+                    </div>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sm={3}
+                    md={3}
+                    style={{
+                      backgroundColor: this.state.backgroundcolor,
+                      width: "50%",
+                      float: "left",
+                    }}
+                  >
+                    <div
+                      style={{ float: "right" }}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        this.setState({
+                          //toggles queue and nav color
+                          toggle: !this.state.toggle,
+                          backgroundcolor: "#8B008B",
+                          backgroundcolorclass: "nav-link2",
+                        });
+                        this.props.dispatch({
+                          type: "GET_ITEM_LIST",
+                        });
+                        this.props.dispatch({
+                          type: "GET_ITEM_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_RESPOND_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_CONFIRM_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_PROGRESS_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_COMPLETE_LIST_COUNT",
+                        });
+                      }}
+                    >
                       <Link
                         className={this.state.backgroundcolorclass}
                         to="/orderlookup"
@@ -260,12 +306,11 @@ class Nav extends Component {
                       </Link>
                     </div>
                   </Grid>
-
                   <Grid
                     item
-                    xs={6}
-                    sm={6}
-                    md={6}
+                    xs={3}
+                    sm={3}
+                    md={3}
                     style={{
                       backgroundColor: this.state.backgroundcolor,
                       width: "50%",
@@ -437,8 +482,8 @@ class Nav extends Component {
                 </Grid>
                 <Grid
                   item
-                  xs={6}
-                  sm={6}
+                  xs={3}
+                  sm={3}
                   md={3}
                   style={{
                     backgroundColor: this.state.backgroundcolor,
@@ -448,9 +493,9 @@ class Nav extends Component {
                 >
                   <Grid
                     item
-                    xs={6}
-                    sm={6}
-                    md={6}
+                    xs={3}
+                    sm={3}
+                    md={3}
                     style={{
                       backgroundColor: this.state.backgroundcolor,
                       width: "50%",
@@ -496,6 +541,51 @@ class Nav extends Component {
                         <LoopIcon></LoopIcon>
                         Switch Queues{" "}
                       </Link>
+                    </div>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    sm={3}
+                    md={3}
+                    style={{
+                      backgroundColor: this.state.backgroundcolor,
+                      width: "50%",
+                      float: "left",
+                    }}
+                  >
+                    <div
+                      style={{ float: "right", margin: "0px", padding: "0px" }}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        this.setState({
+                          toggle: !this.state.toggle,
+                          backgroundcolor: "#000080",
+                          backgroundcolorclass: "nav-link",
+                        });
+                        this.props.dispatch({
+                          type: "GET_ITEM_LIST",
+                        });
+                        this.props.dispatch({
+                          type: "GET_ITEM_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_RESPOND_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_CONFIRM_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_PROGRESS_LIST_COUNT",
+                        });
+                        this.props.dispatch({
+                          type: "GET_COMPLETE_LIST_COUNT",
+                        });
+                      }}
+                    >
                       <Link
                         className={this.state.backgroundcolorclass}
                         to="/orderlookup"
@@ -507,9 +597,9 @@ class Nav extends Component {
                   </Grid>
                   <Grid
                     item
-                    xs={6}
-                    sm={6}
-                    md={6}
+                    xs={3}
+                    sm={3}
+                    md={3}
                     style={{
                       backgroundColor: this.state.backgroundcolor,
                       width: "50%",
