@@ -620,6 +620,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
     )
     .then(function (response) {
       if (response.data !== []) {
+        //START THE CONDITIONAL FOR MESSAGE SENDING HERE
         //defines the html being sent in the email
         let titleString = `  <div><img
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
@@ -745,7 +746,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
           //empty newArray for next order
         newArray = [];
         console.log(finalArray);
-
+//...END THE CONDITIONAL FOR MESSAGE SENDING HERE
         const msg = {
           personalizations: [
             {

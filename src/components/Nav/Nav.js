@@ -12,6 +12,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import ReplyIcon from "@material-ui/icons/Reply";
 import HistoryIcon from "@material-ui/icons/History";
 import EditIcon from "@material-ui/icons/Edit";
+import ViewListIcon from "@material-ui/icons/ViewList";
 
 class Nav extends Component {
   state = {
@@ -250,6 +251,13 @@ class Nav extends Component {
                         <LoopIcon></LoopIcon>
                         Switch Queues{" "}
                       </Link>
+                      <Link
+                        className={this.state.backgroundcolorclass}
+                        to="/orderlookup"
+                      >
+                        <ViewListIcon></ViewListIcon>
+                        Order Lookup{" "}
+                      </Link>
                     </div>
                   </Grid>
 
@@ -487,6 +495,13 @@ class Nav extends Component {
                       >
                         <LoopIcon></LoopIcon>
                         Switch Queues{" "}
+                      </Link>
+                      <Link
+                        className={this.state.backgroundcolorclass}
+                        to="/orderlookup"
+                      >
+                        <ViewListIcon></ViewListIcon>
+                        Order Lookup{" "}
                       </Link>
                     </div>
                   </Grid>

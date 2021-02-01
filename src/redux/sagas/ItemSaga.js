@@ -441,6 +441,30 @@ function* orderDetails(action) {
   }
 }
 
+function* orderLookup(action) {
+  try {
+    const response = yield axios.post("/api/item/orderlookup", action.payload);
+    yield put({
+      type: "SET_ORDER",
+      payload: response.data,
+    });
+  } catch (error) {
+    yield put({ type: "STUDENT_REGISTRATION_FAILED" });
+  }
+}
+
+function* shippingLookup(action) {
+  try {
+    const response = yield axios.post("/api/item/shippinglookup", action.payload);
+    yield put({
+      type: "SET_SHIPPING",
+      payload: response.data,
+    });
+  } catch (error) {
+    yield put({ type: "STUDENT_REGISTRATION_FAILED" });
+  }
+}
+
 function* sendSupaColor(action) {
   try {
     yield axios.post("/api/auto/automatesupa", action.payload);
@@ -495,6 +519,8 @@ function* itemSaga() {
      yield takeLatest('DELETE_COMPLETE_RANGE', deleteCompleteRange);
      yield takeLatest('DELETE_HISTORY_RANGE', deleteHistoryRange);
      yield takeLatest('ORDER_DETAILS', orderDetails);
+          yield takeLatest('ORDER_LOOKUP', orderLookup);
+               yield takeLatest('SHIPPING_LOOKUP', shippingLookup);
       yield takeLatest('SEND_SUPACOLOR', sendSupaColor);
 }
 
