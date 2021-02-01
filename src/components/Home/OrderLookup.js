@@ -118,8 +118,8 @@ class OrderLookup extends Component {
                       margin: "5px",
                     }}
                     variant="outlined"
-                    label="Write comments here"
-                    name="comments"
+                    label="Order Number here"
+                    name="order_number"
                     // sets value of input to local state
                     value={this.state.order_number}
                     type="text"
@@ -166,7 +166,7 @@ class OrderLookup extends Component {
                     }}
                     className="order_number"
                   >
-                    <b>Order Number:</b> {itemid}
+                    <b>Order Number:</b> <i>{itemid}</i>
                   </td>
                 </tr>
                 <tr>
@@ -178,7 +178,7 @@ class OrderLookup extends Component {
                     }}
                     className="status"
                   >
-                    <b>Status:</b> {status}
+                    <b>Status:</b> <i>{status}</i>
                   </td>
                 </tr>
                 <tr>
@@ -190,7 +190,7 @@ class OrderLookup extends Component {
                     }}
                     className="total_items"
                   >
-                    <b>Total Items:</b> {items_total}
+                    <b>Total Items:</b> <i>{items_total}</i>
                   </td>
                 </tr>
                 <tr>
@@ -202,7 +202,7 @@ class OrderLookup extends Component {
                     }}
                     className="total_items_shipped"
                   >
-                    <b>Total Items Shipped:</b> {items_shipped}
+                    <b>Total Items Shipped:</b> <i>{items_shipped}</i>
                   </td>
                 </tr>
                 <tr>
@@ -214,7 +214,7 @@ class OrderLookup extends Component {
                     }}
                     className="payment_status"
                   >
-                    <b>Payment Status:</b> {payment_status}
+                    <b>Payment Status:</b> <i>{payment_status}</i>
                   </td>
                 </tr>
                 <br />
@@ -238,7 +238,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_first_name"
                   >
-                    <b>First Name:</b> {shipping_first_name}
+                    <b>First Name:</b> <i>{shipping_first_name}</i>
                   </td>
                 </tr>
                 <tr>
@@ -250,7 +250,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_last_name"
                   >
-                    <b>Last Name:</b> {shipping_last_name}
+                    <b>Last Name:</b> <i>{shipping_last_name}</i>
                   </td>
                 </tr>
                 <tr>
@@ -262,7 +262,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_street_1"
                   >
-                    <b>Street 1:</b> {shipping_street_1}
+                    <b>Street 1:</b> <i>{shipping_street_1}</i>
                   </td>
                 </tr>
                 <tr>
@@ -274,7 +274,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_street_2"
                   >
-                    <b>Street 2:</b> {shipping_street_2}
+                    <b>Street 2:</b> <i>{shipping_street_2}</i>
                   </td>
                 </tr>
                 <tr>
@@ -286,7 +286,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_city"
                   >
-                    <b>City:</b> {shipping_city}
+                    <b>City:</b> <i>{shipping_city}</i>
                   </td>
                 </tr>
                 <tr>
@@ -298,7 +298,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_state"
                   >
-                    <b>State:</b> {shipping_state}
+                    <b>State:</b> <i>{shipping_state}</i>
                   </td>
                 </tr>
                 <tr>
@@ -310,7 +310,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_zip"
                   >
-                    <b>Zip:</b> {shipping_zip}
+                    <b>Zip:</b> <i>{shipping_zip}</i>
                   </td>
                 </tr>
                 <tr>
@@ -322,7 +322,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_country"
                   >
-                    <b>Country:</b> {shipping_country}
+                    <b>Country:</b> <i>{shipping_country}</i>
                   </td>
                 </tr>
                 <tr>
@@ -334,7 +334,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_phone"
                   >
-                    <b>Phone:</b> {shipping_phone}
+                    <b>Phone:</b> <i>{shipping_phone}</i>
                   </td>
                 </tr>
                 <tr>
@@ -346,7 +346,7 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_email"
                   >
-                    <b>Email:</b> {shipping_email}
+                    <b>Email:</b> <i>{shipping_email}</i>
                   </td>
                 </tr>
                 <br />
