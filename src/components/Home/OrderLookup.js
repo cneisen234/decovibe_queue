@@ -305,9 +305,9 @@ class OrderLookup extends Component {
                     }}
                     className="shipping_city_state"
                   >
-                    <b>City and State:</b>{" "}
+                    <b>City, State and Zip:</b>{" "}
                     <i>
-                      {shipping_city} {shipping_state}
+                      {shipping_city} {shipping_state} {shipping_zip}
                     </i>
                   </td>
                 </tr>
