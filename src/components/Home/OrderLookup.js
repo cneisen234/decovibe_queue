@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { TextField, Button } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import Swal from "sweetalert2";
+import Form from "react-bootstrap/Form";
 import Paper from "@material-ui/core/Paper";
 
 class OrderLookup extends Component {
   state = {
     toggle: false,
     order_number: "",
+    weight: 0,
+    ship_from: "Fargo"
   };
   componentDidMount() {
   } //end componentDidMount
@@ -25,7 +26,12 @@ class OrderLookup extends Component {
     event.preventDefault();
     //grabs local state and defines it in a var of the same name
     const { order_number } = this.state;
-        //end sweetAlerts
+            this.props.dispatch({
+              type: "ORDER_DETAILS",
+              payload: {
+                order_number: order_number,
+              },
+            });
           this.props.dispatch({
             type: "ORDER_LOOKUP",
             payload: {
@@ -38,33 +44,47 @@ class OrderLookup extends Component {
                 order_number: order_number,
               },
             });
+
+            setTimeout(() => {
+                 console.log(this.props.detailslist);
+                 this.props.detailslist.map((item, index) => {
+                   console.log("I'm being run");
+                   let weight = this.state.weight;
+                   let newWeight = Number(item.weight);
+                   weight += newWeight;
+                   this.setState({
+                     weight: weight,
+                   });
+                 });
+            }, 1000);
+           
   }; //ends SubmitInfo
   render() {
           let itemid = this.props.orderlist.id;
-          let date_created = this.props.orderlist.date_created;
-          let date_modified = this.props.orderlist.date_modified;
-          let date_shipped = this.props.orderlist.date_shipped;
+          // let date_created = this.props.orderlist.date_created;
+          // let date_modified = this.props.orderlist.date_modified;
+          // let date_shipped = this.props.orderlist.date_shipped;
           let status = this.props.orderlist.status;
-          let subtotal_ex_tax = this.props.orderlist.subtotal_ex_tax;
-          let subtotal_inc_tax = this.props.orderlist.subtotal_inc_tax;
-          let subtotal_tax = this.props.orderlist.subtotal_tax;
-          let base_shipping_cost = this.props.orderlist.base_shipping_cost;
-          let shipping_cost_ex_tax = this.props.orderlist.shipping_cost_ex_tax;
-          let shipping_cost_inc_tax = this.props.orderlist.shipping_cost_inc_tax;
-          let shipping_cost_tax = this.props.orderlist.shipping_cost_tax;
-          let total_ex_tax = this.props.orderlist.total_ex_tax;
-          let total_inc_tax = this.props.orderlist.total_inc_tax;
-          let total_tax = this.props.orderlist.total_tax;
+          // let subtotal_ex_tax = this.props.orderlist.subtotal_ex_tax;
+          // let subtotal_inc_tax = this.props.orderlist.subtotal_inc_tax;
+          // let subtotal_tax = this.props.orderlist.subtotal_tax;
+          // let base_shipping_cost = this.props.orderlist.base_shipping_cost;
+          // let shipping_cost_ex_tax = this.props.orderlist.shipping_cost_ex_tax;
+          // let shipping_cost_inc_tax = this.props.orderlist.shipping_cost_inc_tax;
+          // let shipping_cost_tax = this.props.orderlist.shipping_cost_tax;
+          // let total_ex_tax = this.props.orderlist.total_ex_tax;
+          // let total_inc_tax = this.props.orderlist.total_inc_tax;
+          // let total_tax = this.props.orderlist.total_tax;
           let items_total = this.props.orderlist.items_total;
           let items_shipped = this.props.orderlist.items_shipped;
-          let payment_method = this.props.orderlist.payment_method;
+          // let payment_method = this.props.orderlist.payment_method;
           let payment_status = this.props.orderlist.payment_status;
-          let refunded_amount = this.props.orderlist.refunded_amount;
-          let ip_address = this.props.orderlist.ip_address;
-          let geoip_country = this.props.orderlist.geoip_country;
-          let currency_code = this.props.orderlist.currency_code;
-          let discount_amount = this.props.orderlist.discount_amount;
-          let coupon_discount = this.props.orderlist.coupon_discount;
+          // let refunded_amount = this.props.orderlist.refunded_amount;
+          // let ip_address = this.props.orderlist.ip_address;
+          // let geoip_country = this.props.orderlist.geoip_country;
+          // let currency_code = this.props.orderlist.currency_code;
+          // let discount_amount = this.props.orderlist.discount_amount;
+          // let coupon_discount = this.props.orderlist.coupon_discount;
         //   let billing_first_name = this.props.orderlist.billing_address.first_name;
         //   let billing_last_name = this.props.orderlist.billing_address.last_name;
         //   let billing_street_1 = this.props.orderlist.billing_address.street_1;
@@ -80,8 +100,8 @@ class OrderLookup extends Component {
             this.props.shippinglist[0] && this.props.shippinglist[0].last_name;
           let shipping_street_1 =
             this.props.shippinglist[0] && this.props.shippinglist[0].street_1;
-          let shipping_street_2 =
-            this.props.shippinglist[0] && this.props.shippinglist[0].street_2;
+          // let shipping_street_2 =
+          //   this.props.shippinglist[0] && this.props.shippinglist[0].street_2;
           let shipping_city =
             this.props.shippinglist[0] && this.props.shippinglist[0].city;
           let shipping_state =
@@ -94,6 +114,8 @@ class OrderLookup extends Component {
             this.props.shippinglist[0] && this.props.shippinglist[0].phone;
           let shipping_email =
             this.props.shippinglist[0] && this.props.shippinglist[0].email;
+            let weightDOM = this.state.weight
+            weightDOM = weightDOM.toFixed(2)
     return (
       <div>
         {this.state.toggle === false ? (
@@ -129,6 +151,24 @@ class OrderLookup extends Component {
                       this.handleChange(event, "order_number")
                     } //onChange of input values set local state
                   />
+                </center>
+                <center>
+                  <p>
+                    Select your ship from warehouse NOTE: Warehouse use only
+                  </p>
+                  <Form.Control
+                    style={{ width: "300px" }}
+                    as="select"
+                    onChange={(event) =>
+                      this.setState({ ship_from: event.target.value })
+                    }
+                  >
+                    {" "}
+                    <option value="Fargo">Fargo </option>{" "}
+                    <option value="Cincinnati">Cincinnati </option>{" "}
+                    <option value="Vegas">Vegas </option>{" "}
+                    <option value="Jacksonville">Jacksonville </option>{" "}
+                  </Form.Control>
                 </center>
                 <center>
                   <Button
@@ -263,9 +303,12 @@ class OrderLookup extends Component {
                       padding: "10px",
                       width: "25%",
                     }}
-                    className="shipping_city"
+                    className="shipping_city_state"
                   >
-                    <b>City and State:</b> <i>{shipping_city} {shipping_state}</i>
+                    <b>City and State:</b>{" "}
+                    <i>
+                      {shipping_city} {shipping_state}
+                    </i>
                   </td>
                 </tr>
                 <tr>
@@ -316,6 +359,311 @@ class OrderLookup extends Component {
                     <b>Email:</b> <i>{shipping_email}</i>
                   </td>
                 </tr>
+                <tr>
+                  <td
+                    style={{
+                      marginLeft: "3%",
+                      padding: "10px",
+                      width: "25%",
+                    }}
+                    className="shipping_city"
+                  >
+                    <b>City</b> <i>{shipping_city}</i>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      marginLeft: "3%",
+                      padding: "10px",
+                      width: "25%",
+                    }}
+                    className="shipping_state"
+                  >
+                    <b>State:</b> <i>{shipping_state}</i>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      marginLeft: "3%",
+                      padding: "10px",
+                      width: "25%",
+                    }}
+                    className="weight"
+                  >
+                    <b>Weight:</b> <i>{weightDOM}</i>
+                  </td>
+                </tr>
+                <br />
+                <br />
+                <b>Ship From Address</b>
+                <br />
+                <br />
+                {this.state.ship_from === "Cincinnati" ? (
+                  <>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_address_1"
+                      >
+                        <b>Address 1:</b> <i>1445 Jamike Ave</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_address_2"
+                      >
+                        <b>Address 2:</b> <i>Suite 200</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_zip"
+                      >
+                        <b>Zip:</b> <i>41018</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_city"
+                      >
+                        <b>City:</b> <i>Erlanger</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_state"
+                      >
+                        <b>State:</b> <i>Kentucky</i>
+                      </td>
+                    </tr>
+                  </>
+                ) : (
+                  <span></span>
+                )}
+                {this.state.ship_from === "Vegas" ? (
+                  <>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_address_1"
+                      >
+                        <b>Address 1:</b> <i>7585 Commercial way</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_address_2"
+                      >
+                        <b>Address 2:</b> <i>Suite B</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_zip"
+                      >
+                        <b>Zip:</b> <i>89011</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_city"
+                      >
+                        <b>City:</b> <i>Henderson</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_state"
+                      >
+                        <b>State:</b> <i>Nevada</i>
+                      </td>
+                    </tr>
+                  </>
+                ) : (
+                  <span></span>
+                )}
+                {this.state.ship_from === "Jacksonville" ? (
+                  <>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_address_1"
+                      >
+                        <b>Address 1:</b> <i>13291 Vantage Way</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_address_2"
+                      >
+                        <b>Address 2:</b> <i>Suite 104</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_zip"
+                      >
+                        <b>Zip:</b> <i>32218</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_city"
+                      >
+                        <b>City:</b> <i>Jacksonville</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_state"
+                      >
+                        <b>State:</b> <i>Florida</i>
+                      </td>
+                    </tr>
+                  </>
+                ) : (
+                  <span></span>
+                )}
+                {this.state.ship_from === "Fargo" ? (
+                  <>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_address_1"
+                      >
+                        <b>Address 1:</b> <i>1501 21st Ave N</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_address_2"
+                      >
+                        <b>Address 2:</b> <i>Suite B</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_zip"
+                      >
+                        <b>Zip:</b> <i>58102</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_city"
+                      >
+                        <b>City:</b> <i>Fargo</i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={{
+                          marginLeft: "3%",
+                          padding: "10px",
+                          width: "25%",
+                        }}
+                        className="ship_from_state"
+                      >
+                        <b>State:</b> <i>North Dakota</i>
+                      </td>
+                    </tr>
+                  </>
+                ) : (
+                  <span></span>
+                )}
                 <br />
                 <br />
               </table>
@@ -346,6 +694,7 @@ class OrderLookup extends Component {
 const mapStateToProps = (state) => ({
   orderlist: state.item.orderlist,
   shippinglist: state.item.shippinglist,
+  detailslist: state.item.detailslist,
 });
 
 export default withRouter(connect(mapStateToProps)(OrderLookup));
