@@ -44,6 +44,9 @@ class OrderLookup extends Component {
                 order_number: order_number,
               },
             });
+            this.setState({
+              weight: 0,
+            })
 
             setTimeout(() => {
                  console.log(this.props.detailslist);
