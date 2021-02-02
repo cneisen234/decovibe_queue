@@ -268,12 +268,6 @@ class Nav extends Component {
                       style={{ float: "right" }}
                       onClick={(event) => {
                         event.preventDefault();
-                        this.setState({
-                          //toggles queue and nav color
-                          toggle: !this.state.toggle,
-                          backgroundcolor: "#8B008B",
-                          backgroundcolorclass: "nav-link2",
-                        });
                         this.props.dispatch({
                           type: "GET_ITEM_LIST",
                         });
@@ -558,11 +552,6 @@ class Nav extends Component {
                       style={{ float: "right", margin: "0px", padding: "0px" }}
                       onClick={(event) => {
                         event.preventDefault();
-                        this.setState({
-                          toggle: !this.state.toggle,
-                          backgroundcolor: "#000080",
-                          backgroundcolorclass: "nav-link",
-                        });
                         this.props.dispatch({
                           type: "GET_ITEM_LIST",
                         });
