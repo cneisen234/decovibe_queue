@@ -462,7 +462,7 @@ class OrderLookup extends Component {
                         }}
                         className="ship_from_state"
                       >
-                        <b>State:</b> <i>Kentucky</i>
+                        <b>State:</b> <i>KY</i>
                       </td>
                     </tr>
                   </>
@@ -528,7 +528,7 @@ class OrderLookup extends Component {
                         }}
                         className="ship_from_state"
                       >
-                        <b>State:</b> <i>Nevada</i>
+                        <b>State:</b> <i>NV</i>
                       </td>
                     </tr>
                   </>
@@ -594,7 +594,7 @@ class OrderLookup extends Component {
                         }}
                         className="ship_from_state"
                       >
-                        <b>State:</b> <i>Florida</i>
+                        <b>State:</b> <i>FL</i>
                       </td>
                     </tr>
                   </>
@@ -660,7 +660,7 @@ class OrderLookup extends Component {
                         }}
                         className="ship_from_state"
                       >
-                        <b>State:</b> <i>North Dakota</i>
+                        <b>State:</b> <i>ND</i>
                       </td>
                     </tr>
                   </>
