@@ -35,6 +35,21 @@ class New extends Component {
     this.props.dispatch({
       type: "GET_ITEM_LIST",
     });
+      this.props.dispatch({
+        type: "GET_PROGRESS_LIST",
+      });
+      this.props.dispatch({
+        type: "GET_CUSTOM_ITEM_LIST",
+      });
+       this.props.dispatch({
+         type: "GET_CONFIRM_LIST",
+       });
+         this.props.dispatch({
+           type: "GET_RESPOND_LIST",
+         });
+             this.props.dispatch({
+               type: "GET_COMPLETE_LIST",
+             });
     //get count of everything
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
