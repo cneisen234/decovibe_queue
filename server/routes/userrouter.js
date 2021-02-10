@@ -39,7 +39,7 @@ router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
    });
 })
 router.delete("/deletehistoryrange", rejectUnauthenticated, (req, res) => {
-  //deletes any customer coraspondance after 60 days
+  //deletes any customer coraspondance after 2 years
   pool
     .query('DELETE FROM "history" WHERE timestamp<=$1', [daterange2])
     .then((result) => {
@@ -85,18 +85,33 @@ router.get("/", rejectUnauthenticated, (req, res) => {
       //checks for new orders, always pulls up the most recent
     axios
       .get(
-        `https://api.bigcommerce.com/stores/${storeHash}/v2/orders?sort=date_created:desc&limit=1`,
+        `https://api.bigcommerce.com/stores/${storeHash}/v2/orders?sort=date_created:desc&limit=20`,
         config
       )
       .then(function (response) {
-        let order = response.data[0];
-        let orderId = order.id
+        let data = response.data
+        for (let index = 0; index < data.length; index++) {
+          let element = data[index];
+        let order = element;
+        let orderID = order.id
         let email = order.billing_address.email;
         let first_name = order.billing_address.first_name;
         let last_name = order.billing_address.last_name;
         let payment_status = order.payment_status
+         const queryText = `SELECT * from "item" where order_number=$1;`;
+         pool
+           .query(queryText, [orderID])
+           .then((result) => {
+            let rows = JSON.stringify(result.rows)
+             const query3Text = `SELECT * from "customitem" where order_number=$1;`;
+             pool
+               .query(query3Text, [orderID])
+               .then((result3) => {
+                 let rows3 = JSON.stringify(result3.rows)
+          if (rows === "[]" && rows3 === "[]") {
+            console.log(orderID, "checking order")
         //converts to am/pm time
-        if (response.data !== [] && payment_status === "captured") {
+        if (element !== [] && payment_status === "captured") {
           let normalHour = Number(hour);
           let AmPm = "am";
           if (normalHour > 12) {
@@ -108,42 +123,41 @@ router.get("/", rejectUnauthenticated, (req, res) => {
             AmPm = "am";
             normalHour = 12;
           }
-          //defines orderID to be the id of the recent order checked
-          orderID = response.data[0].id;
           //defines a datestring used for the timestamp
           let dateString = `Date: ${nowMonth}/${nowDay}/${nowYear} Time: ${normalHour}:${min}:${sec}${AmPm}`;
-          console.log(orderID)
-          console.log(prevOrderID)
-          console.log(dateString)
-          //is the current order ID different from the one that was checked last time? If so, check for decovibe skus
-          if (orderID !== prevOrderID) {
-            //instantly redefine the previous order number to be the same as the current to prepare for the next check
-            prevOrderID = response.data[0].id;
             //uses the url from the api to check the products url on that order
             axios
               .get(
-                `${response.data[0].products.url}`,
+                `${element.products.url}`,
                 config
               )
               .then(function (response) {
                 
-                if (response.data !== []) {
+                if (element !== []) {
                   let data = response.data;
                   for (let index = 0; index < data.length; index++) {
-                    const element = data[index];
-                    let options = element.product_options;
-                    let qty = element.quantity;
+                       let decoSku = ""
+                       let decoSku3 = ""
+                       let decoSku4 = ""
+                       let decoSku5 = ""
+                       let decoSku6 = ""
+                       let decoSku7 = ""
+                    
+                    const element2 = data[index];
+                    let options = element2.product_options;
+                    let qty = element2.quantity;
                     //arrays used to determan how emails appear when sent
                     let optionsArray = [];
                     let orderComments = [];
-                    let name = element.name;
+                    let name = element2.name;
                     //slices up the sku numbers to check certain parts of the string
-                    let decoSku = element.sku;
-                    let decoSku3 = decoSku.slice(0, 6);
-                    let decoSku4 = decoSku.slice(0, 5);
-                    let decoSku5 = decoSku.slice(0, 3);
-                    let decoSku6 = decoSku.slice(0, 8);
-                    let decoSku7 = decoSku.slice(0, 7);
+                    decoSku = element2.sku;
+                    decoSku3 = decoSku.slice(0, 6);
+                    decoSku4 = decoSku.slice(0, 5);
+                    decoSku5 = decoSku.slice(0, 3);
+                    decoSku6 = decoSku.slice(0, 8);
+                    decoSku7 = decoSku.slice(0, 7);
+                    
                     if (
                       //if the sliced skews match the below criteria...
                       decoSku5 === "CD1" ||
@@ -189,7 +203,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                       decoSku5 === "CP-"
                     ) {
                       //run the logic that places the skus in the stock queue
-                      console.log("goes into stock queue");
+                      console.log(orderID, "goes into stock queue");
                       let product_length = "";
                       for (let j = 0; j < options.length; j++) {
                         const opt = options[j];
@@ -270,7 +284,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                       decoSku4 === "FINAL"
                     ) {
                       //...place in the custom queue
-                      console.log("goes into custom queue");
+                      console.log(orderID, "goes into custom queue");
                       const query2Text =
                         'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id';
                       pool.query(query2Text, [
@@ -285,7 +299,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                       ]);
                     } else {
                       //...ignore everything else
-                      console.log("not a decovibe sku", decoSku);
+                      console.log("not a decovibe sku", decoSku, "for order", orderID);
                     }
                   }
                 }
@@ -294,17 +308,28 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                 // handle error
                 console.log(error);
               });
-          }
         } else {
-          console.log(`${orderId} not authorized`);
+          console.log(`${orderID} not authorized`);
         }
+      } else {
+        console.log(orderID, "already in the database")
+      }
+         })
+               .catch((error) => {
+                 console.log(`Error on item query ${error}`);
+               });
+         })
+           .catch((error) => {
+             console.log(`Error on item query ${error}`);
+           });
+      }
       })
       .catch(function (error) {
         // handle error
         console.log(error);
       });
-      //...check for new orders every second
-  }, 1000);
+      //...check for new orders every 2 min
+  }, 120000);
 
 router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
   // places items from the new col in the stock queue to in process
@@ -619,8 +644,171 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
       config
     )
     .then(function (response) {
+     
       if (response.data !== []) {
         //START THE CONDITIONAL FOR MESSAGE SENDING HERE
+         if (pic1 === "" &&
+          pic2 === "" &&
+          pic3 === "" &&
+          pic4 === "" &&
+          pic5 === "" &&
+          pic6 === "" &&
+          pic7 === "" &&
+          pic8 === "" &&
+          pic9 === "" &&
+          pic10 === "" &&
+          pic11 === "" &&
+          pic12 === "" &&
+          pic13 === "" &&
+          pic14 === "" &&
+          pic15 === "" &&
+          pic16 === "" &&
+          pic17 === "" &&
+          pic18 === "" &&
+          pic19 === "" &&
+          pic20 === "") {
+            //defines the html being sent in the email
+            let titleString = `  <div><img
+        src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
+       width="150"
+      /></div>
+                     <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>New Message from the Art Department below</i></div><br><br>
+<table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
+<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Sku:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${sku} </td></tr>`;
+            let commentsString = `
+</table><br><br><table><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Message from the Art Department:</td></tr><tr><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;">${comments}</td></tr></table><br><br><br>`;
+            let array = response.data;
+            //defines array to be used for pushing html later
+            let newArray = [];
+            let optionsArray = [];
+            for (let index = 0; index < array.length; index++) {
+              //loops through the response data
+              const element = array[index];
+              let decoSku = element.sku;
+              let decoSku3 = decoSku.slice(0, 6);
+              let decoSku4 = decoSku.slice(0, 5);
+              let decoSku7 = decoSku.slice(0, 7);
+              if (
+                //if the sliced skus meet the below conditions
+                decoSku4 === "BL_A3" ||
+                decoSku4 === "BL_A4" ||
+                decoSku4 === "BL_A5" ||
+                decoSku4 === "BL_LC" ||
+                decoSku4 === "BL_SM" ||
+                decoSku3 === "HW_CAP" ||
+                decoSku3 === "PR_BAG" ||
+                decoSku3 === "PR_UM_" ||
+                decoSku4 === "SB_A5" ||
+                decoSku4 === "SB_A4" ||
+                decoSku4 === "SB_A3" ||
+                decoSku4 === "SB_LC" ||
+                decoSku4 === "SB_SM" ||
+                decoSku4 === "SB_LS" ||
+                decoSku4 === "WE_SM" ||
+                decoSku4 === "WE_LC" ||
+                decoSku4 === "WE_A5" ||
+                decoSku4 === "WE_A4" ||
+                decoSku4 === "WE_A3" ||
+                decoSku7 === "DYESUB-" ||
+                decoSku4 === "FINAL"
+              ) {
+                newArray.push(
+                  `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
+              <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Qauntity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
+                );
+                let options = element.product_options;
+                for (let j = 0; j < options.length; j++) {
+                  //...then loop through the product options for that sku
+                  const opt = options[j];
+                  //...and push into the options array
+                  let display_name = opt.display_name;
+                  let new_display_name = String(display_name.slice(0, 10));
+                  let reorder_display_name = String(display_name.slice(0, 18));
+                  let transfer_display_name = String(display_name.slice(0, 14));
+                  if (new_display_name === "Sheet Size") {
+                    optionsArray.push(
+                      `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${new_display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                    );
+                  } else if (
+                    reorder_display_name === "Is this a reorder?" ||
+                    reorder_display_name === "Garment Type/Color"
+                  ) {
+                    optionsArray.push(
+                      `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${reorder_display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                    );
+                  } else if (transfer_display_name === "Transfer Count") {
+                    console.log("skipping Transfer Count");
+                  } else {
+                    optionsArray.push(
+                      `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">${opt.display_name}:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${opt.display_value}</td></tr>`
+                    );
+                  }
+                }
+                //join into one string
+                let optionsJoined = optionsArray.join("");
+                //...then push that joined array into the main array
+                newArray.push(optionsJoined);
+                newArray.push(commentsString);
+                newArray.push(proofString);
+                //empty the optionsArray to get ready for the next order
+                optionsArray = [];
+              }
+            }
+            let buttonsArray = [];
+            //join the array into one string
+              buttonsArray.push(
+                `<div style="width: 500px;"><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Click to Reply</i></button></a></div>
+`
+              );
+            let buttonsJoined = buttonsArray.join("");
+            let joinedArray = newArray.join("");
+            //then define the final string to be sent
+            let lastString = `<br><br><br><br><br><br><div style="color:#DCDCDC; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
+            let finalArray =
+              `<div>` +
+              titleString +
+              joinedArray +
+              buttonsJoined +
+              lastString +
+              `</div>`;
+            //empty newArray for next order
+            newArray = [];
+            console.log(finalArray);
+            //...END THE CONDITIONAL FOR MESSAGE SENDING HERE
+            const msg = {
+              personalizations: [
+                {
+                  to: [
+                    //send to the customers email address
+                    {
+                      email: email,
+                    },
+                  ],
+                  bcc: [
+                    //bcc me for testing purposes for emails
+                    {
+                      email: "chris.neisen@heattransferwarehouse.com",
+                    },
+                  ],
+                },
+              ],
+              from: "Transfers@heattransferwarehouse.com", // Use the email address or domain you verified above
+              subject: `New message from the Art Department regarding order ${order_number}`,
+              //send the entire finalArray as one string
+              html: finalArray,
+            };
+            (async () => {
+              try {
+                await sgMail.send(msg);
+              } catch (error) {
+                console.error(error);
+
+                if (error.response) {
+                  console.error(error.response.body);
+                }
+              }
+            })();
+          } else {
         //defines the html being sent in the email
         let titleString = `  <div><img
         src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
@@ -780,6 +968,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
             }
           }
         })();
+      }
       }
     });
     //...then place into the customer confirm table until the customer responds

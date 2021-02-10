@@ -8,6 +8,7 @@ import {
 import { Alert } from "@material-ui/lab";
 import Swal from "sweetalert2";
 import Paper from "@material-ui/core/Paper";
+import ReactFilestack from "filestack-react";
 
 class CustomerPage extends Component {
   state = {
@@ -16,6 +17,8 @@ class CustomerPage extends Component {
     comments: null,
     token: "",
     error: false,
+    pic: "",
+    filename: "",
   };
   componentDidMount() {
     // grabs the token from the header, this comes in from the token generated
@@ -41,7 +44,7 @@ class CustomerPage extends Component {
     //grabs local state and defines it in a var of the same name
     const { approve, comments, token } = this.state;
     //don't run function if any of these values below are null
-  if (comments === null || comments === "") {
+    if (comments === null || comments === "") {
       this.setState({
         error: true,
       });
@@ -57,9 +60,9 @@ class CustomerPage extends Component {
       //if comments have been filled out
       Swal.fire({
         title: "Please confirm",
-        html: `You're requesting changes to your artwork for the following reasons below:<br/><br/>
+        html: `Please review your message below:<br/><br/>
               Your Feedback: ${comments} <br/><br/>
-              Please click "confirm" to send this back to the art department<br/><br/>
+              Click "confirm" to send this message to the art department<br/><br/>
               `,
         customClass: {
           actions: "confirm",
@@ -112,7 +115,7 @@ class CustomerPage extends Component {
             >
               <form onSubmit={this.submitInfo}>
                 <>
-                  <p>Please request changes you have below</p>
+                  <p>Please reply to the artist below</p>
                   <TextField
                     style={{
                       backgroundColor: "white",
@@ -161,6 +164,42 @@ class CustomerPage extends Component {
                     </Alert>
                   )}
                 </center>
+                <table>
+                  <tr>
+                    <td>
+                      {/* filestack for photo uploads */}
+                      <ReactFilestack
+                        apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
+                        componentDisplayMode={{
+                          customText: "Upload artwork",
+                          customClass: "picUploader",
+                        }}
+                        onSuccess={(res) =>
+                          this.setState({
+                            //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
+                            pic: res.filesUploaded[0].url,
+                            filename: res.filesUploaded[0].originalPath,
+                          })
+                        }
+                      />
+                    </td>
+                  </tr>
+                  {this.state.pic !== "" ? (
+                    <tr>
+                      <td>
+                        <a
+                          href={this.state.pic}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          Uploaded file: <b>{this.state.filename}</b>
+                        </a>
+                      </td>
+                    </tr>
+                  ) : (
+                    <span></span>
+                  )}
+                </table>
               </form>
             </Paper>
             <br />{" "}

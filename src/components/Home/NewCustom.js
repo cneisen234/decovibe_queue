@@ -11,7 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FlagIcon from "@material-ui/icons/Flag";
 import ReactFilestack from "filestack-react";
 import swal from "sweetalert";
-import { Alert } from "@material-ui/lab";
+// import { Alert } from "@material-ui/lab";
 
 // This component is for NewCustom
 class NewCustom extends Component {
@@ -1384,39 +1384,6 @@ class NewCustom extends Component {
                           <Button
                             variant="success"
                             onClick={(event) => {
-                              if (
-                                this.state.pic1 === "" &&
-                                this.state.pic2 === "" &&
-                                this.state.pic3 === "" &&
-                                this.state.pic4 === "" &&
-                                this.state.pic5 === "" &&
-                                this.state.pic6 === "" &&
-                                this.state.pic7 === "" &&
-                                this.state.pic8 === "" &&
-                                this.state.pic9 === "" &&
-                                this.state.pic10 === "" &&
-                                this.state.pic11 === "" &&
-                                this.state.pic12 === "" &&
-                                this.state.pic13 === "" &&
-                                this.state.pic14 === "" &&
-                                this.state.pic15 === "" &&
-                                this.state.pic16 === "" &&
-                                this.state.pic17 === "" &&
-                                this.state.pic18 === "" &&
-                                this.state.pic19 === "" &&
-                                this.state.pic20 === ""
-                              ) {
-                                this.setState({
-                                  error: true,
-                                });
-                                //...set it back to false after 5 secondss
-                                setTimeout(() => {
-                                  this.setState({
-                                    error: false,
-                                  });
-                                }, 5000);
-                                return;
-                              } else {
                                 event.preventDefault();
                                 this.props.dispatch({
                                   type: "CUSTOMER_CONFIRM",
@@ -1504,24 +1471,10 @@ class NewCustom extends Component {
                                   pic19: "",
                                   pic20: "",
                                 });
-                              }
                             }}
                           >
                             Send to Customer
                           </Button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          {this.state.error === true && (
-                            <Alert
-                              className="error"
-                              style={{}}
-                              severity="error"
-                            >
-                              {"Don't forget the upload :)"}
-                            </Alert>
-                          )}
                         </td>
                       </tr>
                       <br />

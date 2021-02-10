@@ -97,7 +97,8 @@ CREATE TABLE "customerrespond"
 	"created_at" TEXT,
 	"token" TEXT,
 	"description" TEXT,
-	"priority" VARCHAR(5)
+	"priority" VARCHAR(5),
+	"upload_url" TEXT,
 );
 
 CREATE TABLE "history"

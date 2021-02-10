@@ -185,7 +185,7 @@ class Nav extends Component {
                         return null;
                       }}
                     >
-                      Check Order
+                      Locate Order
                     </Button>
                   </>
                 </Grid>
@@ -467,10 +467,9 @@ class Nav extends Component {
                             return null;
                           }
                         });
-                        return null;
                       }}
                     >
-                      Check Order
+                      Locate Order
                     </Button>
                   </>
                 </Grid>
