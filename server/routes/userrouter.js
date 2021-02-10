@@ -145,8 +145,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                           );
                                           //converts to am/pm time
                                           if (
-                                            element !== [] &&
-                                            payment_status === "captured"
+                                            element !== [] 
+                                          //  && payment_status === "captured"
                                           ) {
                                             let normalHour = Number(hour);
                                             let AmPm = "am";
