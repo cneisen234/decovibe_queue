@@ -9,7 +9,7 @@ import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FlagIcon from "@material-ui/icons/Flag";
-import { Alert } from "@material-ui/lab";
+import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import Form from "react-bootstrap/Form";
 
 class Response extends Component {
@@ -718,6 +718,32 @@ class Response extends Component {
               //   },
               // },
               {
+                name: "Artwork",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.respondlist[dataIndex] &&
+                      this.props.respondlist[dataIndex].upload_url !== null ? (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.respondlist;
+                          const item = itemArray[dataIndex];
+                          window.open(item.upload_url);
+                        }}
+                      >
+                        <CloudDownloadIcon></CloudDownloadIcon>
+                      </Button>
+                    ) : (
+                      <span></span>
+                    );
+                  },
+                },
+              },
+              {
                 name: "Mark Complete",
                 options: {
                   filter: false,
@@ -1023,41 +1049,41 @@ class Response extends Component {
                   </td>
                 </tr>
                 {this.props.detailslist.map((item, index) => {
-                    let newIndex = index + 1;
-                    //define pic as pic and concatnate the index number, this should match with state
-                    let pic = "pic" + newIndex;
-                    let filename = "filename" + newIndex;
-                    let itemname = item.name;
-                    let itemsku = item.sku;
-                     let itemqty = item.quantity;
-                               let decoSku = itemsku;
-                               let decoSku3 = decoSku.slice(0, 6);
-                               let decoSku4 = decoSku.slice(0, 5);
-                               let decoSku7 = decoSku.slice(0, 7);
-                      if (
-                      //if the sliced skus meet the below conditions
-                      decoSku4 === "BL_A3" ||
-                      decoSku4 === "BL_A4" ||
-                      decoSku4 === "BL_A5" ||
-                      decoSku4 === "BL_LC" ||
-                      decoSku4 === "BL_SM" ||
-                      decoSku3 === "HW_CAP" ||
-                      decoSku3 === "PR_BAG" ||
-                      decoSku3 === "PR_UM_" ||
-                      decoSku4 === "SB_A5" ||
-                      decoSku4 === "SB_A4" ||
-                      decoSku4 === "SB_A3" ||
-                      decoSku4 === "SB_LC" ||
-                      decoSku4 === "SB_SM" ||
-                      decoSku4 === "SB_LS" ||
-                      decoSku4 === "WE_SM" ||
-                      decoSku4 === "WE_LC" ||
-                      decoSku4 === "WE_A5" ||
-                      decoSku4 === "WE_A4" ||
-                      decoSku4 === "WE_A3" ||
-                      decoSku7 === "DYESUB-" ||
-                      decoSku4 === "FINAL"
-                    ) {
+                  let newIndex = index + 1;
+                  //define pic as pic and concatnate the index number, this should match with state
+                  let pic = "pic" + newIndex;
+                  let filename = "filename" + newIndex;
+                  let itemname = item.name;
+                  let itemsku = item.sku;
+                  let itemqty = item.quantity;
+                  let decoSku = itemsku;
+                  let decoSku3 = decoSku.slice(0, 6);
+                  let decoSku4 = decoSku.slice(0, 5);
+                  let decoSku7 = decoSku.slice(0, 7);
+                  if (
+                    //if the sliced skus meet the below conditions
+                    decoSku4 === "BL_A3" ||
+                    decoSku4 === "BL_A4" ||
+                    decoSku4 === "BL_A5" ||
+                    decoSku4 === "BL_LC" ||
+                    decoSku4 === "BL_SM" ||
+                    decoSku3 === "HW_CAP" ||
+                    decoSku3 === "PR_BAG" ||
+                    decoSku3 === "PR_UM_" ||
+                    decoSku4 === "SB_A5" ||
+                    decoSku4 === "SB_A4" ||
+                    decoSku4 === "SB_A3" ||
+                    decoSku4 === "SB_LC" ||
+                    decoSku4 === "SB_SM" ||
+                    decoSku4 === "SB_LS" ||
+                    decoSku4 === "WE_SM" ||
+                    decoSku4 === "WE_LC" ||
+                    decoSku4 === "WE_A5" ||
+                    decoSku4 === "WE_A4" ||
+                    decoSku4 === "WE_A3" ||
+                    decoSku7 === "DYESUB-" ||
+                    decoSku4 === "FINAL"
+                  ) {
                     return (
                       <>
                         <tr>
@@ -1093,8 +1119,7 @@ class Response extends Component {
                             <b>QTY:</b> {itemqty}
                           </td>
                         </tr>
-                        <tr>
-                        </tr>
+                        <tr></tr>
                         {item.product_options.map((product, index) => {
                           let display_name = product.display_name;
                           let display_value = product.display_value;
@@ -1181,8 +1206,8 @@ class Response extends Component {
                         </tr>
                       </>
                     );
-                        }
-                        return null
+                  }
+                  return null;
                 })}{" "}
                 <br />
                 <br />
@@ -1372,93 +1397,93 @@ class Response extends Component {
                         <Button
                           variant="success"
                           onClick={(event) => {
-                              event.preventDefault();
-                              this.props.dispatch({
-                                type: "CUSTOMER_CONFIRM",
-                                payload: {
-                                  pic1: this.state.pic1,
-                                  pic2: this.state.pic2,
-                                  pic3: this.state.pic3,
-                                  pic4: this.state.pic4,
-                                  pic5: this.state.pic5,
-                                  pic6: this.state.pic6,
-                                  pic7: this.state.pic7,
-                                  pic8: this.state.pic8,
-                                  pic9: this.state.pic9,
-                                  pic10: this.state.pic10,
-                                  pic11: this.state.pic11,
-                                  pic12: this.state.pic12,
-                                  pic13: this.state.pic13,
-                                  pic14: this.state.pic14,
-                                  pic15: this.state.pic15,
-                                  pic16: this.state.pic16,
-                                  pic17: this.state.pic17,
-                                  pic18: this.state.pic18,
-                                  pic19: this.state.pic19,
-                                  pic20: this.state.pic20,
-                                  comments: this.state.comments,
-                                  email: this.state.email,
-                                  first_name: this.state.first_name,
-                                  last_name: this.state.last_name,
-                                  order_number: this.state.order_number,
-                                  sku: this.state.sku,
-                                  description: this.state.description,
-                                  qty: this.state.qty,
-                                  assigned: this.state.assigned,
-                                  created_at: this.state.created_at,
-                                  priority: this.state.priority,
-                                  payment_link: this.state.payment_link,
-                                },
-                              });
-                              this.props.dispatch({
-                                type: "DELETE_RESPOND",
-                                payload: this.state.id,
-                              });
-                              this.props.dispatch({
-                                type: "GET_ITEM_LIST",
-                              });
-                              this.props.dispatch({
-                                type: "GET_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_RESPOND_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CONFIRM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_PROGRESS_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_COMPLETE_LIST_COUNT",
-                              });
-                              this.setState({
-                                toggle2: !this.state.toggle2,
-                                comments: "",
-                                pic1: "",
-                                pic2: "",
-                                pic3: "",
-                                pic4: "",
-                                pic5: "",
-                                pic6: "",
-                                pic7: "",
-                                pic8: "",
-                                pic9: "",
-                                pic10: "",
-                                pic11: "",
-                                pic12: "",
-                                pic13: "",
-                                pic14: "",
-                                pic15: "",
-                                pic16: "",
-                                pic17: "",
-                                pic18: "",
-                                pic19: "",
-                                pic20: "",
-                              });
+                            event.preventDefault();
+                            this.props.dispatch({
+                              type: "CUSTOMER_CONFIRM",
+                              payload: {
+                                pic1: this.state.pic1,
+                                pic2: this.state.pic2,
+                                pic3: this.state.pic3,
+                                pic4: this.state.pic4,
+                                pic5: this.state.pic5,
+                                pic6: this.state.pic6,
+                                pic7: this.state.pic7,
+                                pic8: this.state.pic8,
+                                pic9: this.state.pic9,
+                                pic10: this.state.pic10,
+                                pic11: this.state.pic11,
+                                pic12: this.state.pic12,
+                                pic13: this.state.pic13,
+                                pic14: this.state.pic14,
+                                pic15: this.state.pic15,
+                                pic16: this.state.pic16,
+                                pic17: this.state.pic17,
+                                pic18: this.state.pic18,
+                                pic19: this.state.pic19,
+                                pic20: this.state.pic20,
+                                comments: this.state.comments,
+                                email: this.state.email,
+                                first_name: this.state.first_name,
+                                last_name: this.state.last_name,
+                                order_number: this.state.order_number,
+                                sku: this.state.sku,
+                                description: this.state.description,
+                                qty: this.state.qty,
+                                assigned: this.state.assigned,
+                                created_at: this.state.created_at,
+                                priority: this.state.priority,
+                                payment_link: this.state.payment_link,
+                              },
+                            });
+                            this.props.dispatch({
+                              type: "DELETE_RESPOND",
+                              payload: this.state.id,
+                            });
+                            this.props.dispatch({
+                              type: "GET_ITEM_LIST",
+                            });
+                            this.props.dispatch({
+                              type: "GET_ITEM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_RESPOND_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_CONFIRM_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_PROGRESS_LIST_COUNT",
+                            });
+                            this.props.dispatch({
+                              type: "GET_COMPLETE_LIST_COUNT",
+                            });
+                            this.setState({
+                              toggle2: !this.state.toggle2,
+                              comments: "",
+                              pic1: "",
+                              pic2: "",
+                              pic3: "",
+                              pic4: "",
+                              pic5: "",
+                              pic6: "",
+                              pic7: "",
+                              pic8: "",
+                              pic9: "",
+                              pic10: "",
+                              pic11: "",
+                              pic12: "",
+                              pic13: "",
+                              pic14: "",
+                              pic15: "",
+                              pic16: "",
+                              pic17: "",
+                              pic18: "",
+                              pic19: "",
+                              pic20: "",
+                            });
                           }}
                         >
                           Send to Customer

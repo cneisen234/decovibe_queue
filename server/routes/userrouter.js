@@ -537,6 +537,7 @@ router.post("/gobacknew", rejectUnauthenticated, (req, res, next) => {
 
 router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
   // function that's run when customer responds to their email query
+  let pic = req.body.pic
   let approve = req.body.approve
   let comments = req.body.comments;
   //generates unique customer identifier
@@ -596,7 +597,7 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
       priority = result.rows[0].priority;
       //populate info into the response table that's pulled from the previous query
       const query2Text =
-        'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id';
+        'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority, upload_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id';
       pool
         .query(query2Text, [
           email,
@@ -612,6 +613,7 @@ router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
           token,
           description,
           priority,
+          pic,
         ])
         //...and save any cooraspondance into the history
          const query3Text =

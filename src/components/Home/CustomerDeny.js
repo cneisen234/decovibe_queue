@@ -42,7 +42,7 @@ class CustomerPage extends Component {
     //prevents any default actions
     event.preventDefault();
     //grabs local state and defines it in a var of the same name
-    const { approve, comments, token } = this.state;
+    const { approve, comments, token, filename, pic } = this.state;
     //don't run function if any of these values below are null
     if (comments === null || comments === "") {
       this.setState({
@@ -62,6 +62,7 @@ class CustomerPage extends Component {
         title: "Please confirm",
         html: `Please review your message below:<br/><br/>
               Your Feedback: ${comments} <br/><br/>
+              Your upload file: ${filename} <br/><br/>
               Click "confirm" to send this message to the art department<br/><br/>
               `,
         customClass: {
@@ -81,6 +82,7 @@ class CustomerPage extends Component {
             payload: {
               approve: approve,
               comments: comments,
+              pic: pic,
               token: token,
             },
           });
