@@ -827,7 +827,7 @@ class OrderLookup extends Component {
                                     }}
                                     className={"sku" + index}
                                   >
-                                    <b>SKU:</b> {item.sku.slice(0, 5)}
+                                    <b>SKU:</b> <i>{item.sku.slice(0, 5)}</i>
                                   </td>
                                 </tr>
                                 <tr>
@@ -839,7 +839,7 @@ class OrderLookup extends Component {
                                     }}
                                     className={"qty" + index}
                                   >
-                                    <b>QTY:</b> {item.quantity}
+                                    <b>QTY:</b> <i>{item.quantity}</i>
                                   </td>
                                 </tr>
                               </>
