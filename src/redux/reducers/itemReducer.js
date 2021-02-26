@@ -161,6 +161,15 @@ const shippinglist = (state = [], action) => {
   }
 };
 
+const productlist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_PRODUCT":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 
 export default combineReducers({
   itemlist,
@@ -181,4 +190,5 @@ export default combineReducers({
   detailslist,
   orderlist,
   shippinglist,
+  productlist,
 });

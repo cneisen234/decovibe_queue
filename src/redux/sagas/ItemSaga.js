@@ -465,6 +465,21 @@ function* shippingLookup(action) {
   }
 }
 
+function* productLookup(action) {
+  try {
+    const response = yield axios.post(
+      "/api/item/productlookup",
+      action.payload
+    );
+    yield put({
+      type: "SET_PRODUCT",
+      payload: response.data,
+    });
+  } catch (error) {
+    yield put({ type: "STUDENT_REGISTRATION_FAILED" });
+  }
+}
+
 function* sendSupaColor(action) {
   try {
     yield axios.post("/api/auto/automatesupa", action.payload);
@@ -521,6 +536,7 @@ function* itemSaga() {
      yield takeLatest('ORDER_DETAILS', orderDetails);
           yield takeLatest('ORDER_LOOKUP', orderLookup);
                yield takeLatest('SHIPPING_LOOKUP', shippingLookup);
+               yield takeLatest('PRODUCT_LOOKUP', productLookup);
       yield takeLatest('SEND_SUPACOLOR', sendSupaColor);
 }
 

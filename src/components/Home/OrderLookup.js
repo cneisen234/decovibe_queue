@@ -44,6 +44,12 @@ class OrderLookup extends Component {
                 order_number: order_number,
               },
             });
+              this.props.dispatch({
+                type: "PRODUCT_LOOKUP",
+                payload: {
+                  order_number: order_number,
+                },
+              });
             this.setState({
               weight: 0,
             })
@@ -63,6 +69,7 @@ class OrderLookup extends Component {
            
   }; //ends SubmitInfo
   render() {
+          let productlist = this.props.productlist
           let itemid = this.props.orderlist.id;
           // let date_created = this.props.orderlist.date_created;
           // let date_modified = this.props.orderlist.date_modified;
@@ -773,6 +780,61 @@ class OrderLookup extends Component {
                           )}
                           <br />
                           <br />
+                          <tr>
+                            <td>
+                              <b>Products</b>
+                            </td>
+                          </tr>
+                          {productlist.map((item, index) => [
+                                                item.sku.slice(0, 5) === "BL_A3" ||
+                                                item.sku.slice(0, 5) === "BL_A4" ||
+                                                item.sku.slice(0, 5) === "BL_A5" ||
+                                                item.sku.slice(0, 5) === "BL_LC" ||
+                                                item.sku.slice(0, 5) === "BL_SM" ||
+                                                item.sku.slice(0, 6) === "HW_CAP" ||
+                                                item.sku.slice(0, 6) === "PR_BAG" ||
+                                                item.sku.slice(0, 6) === "PR_UM_" ||
+                                                item.sku.slice(0, 5) === "SB_A5" ||
+                                                item.sku.slice(0, 5) === "SB_A4" ||
+                                                item.sku.slice(0, 5) === "SB_A3" ||
+                                                item.sku.slice(0, 5) === "SB_LC" ||
+                                                item.sku.slice(0, 5) === "SB_SM" ||
+                                                item.sku.slice(0, 5) === "SB_LS" ||
+                                                item.sku.slice(0, 5) === "WE_SM" ||
+                                                item.sku.slice(0, 5) === "WE_LC" ||
+                                                item.sku.slice(0, 5) === "WE_A5" ||
+                                                item.sku.slice(0, 5) === "WE_A4" ||
+                                                item.sku.slice(0, 5) === "WE_A3" ? (
+                            <>
+                              <tr>
+                                <td
+                                  style={{
+                                    marginLeft: "3%",
+                                    padding: "10px",
+                                    width: "25%",
+                                  }}
+                                  className={"sku" + index}
+                                >
+                                  <b>SKU:</b> {item.sku.slice(0, 5)}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style={{
+                                    marginLeft: "3%",
+                                    padding: "10px",
+                                    width: "25%",
+                                  }}
+                                  className={"qty" + index}
+                                >
+                                  <b>QTY:</b> {item.quantity}
+                                </td>
+                              </tr>
+                            </>
+                                                ) : (
+                                                  <span></span>
+                                                )
+                          ])}
                         </table>
                       </Paper>
                       <br />{" "}
@@ -801,6 +863,7 @@ class OrderLookup extends Component {
 const mapStateToProps = (state) => ({
   orderlist: state.item.orderlist,
   shippinglist: state.item.shippinglist,
+  productlist: state.item.productlist,
   detailslist: state.item.detailslist,
 });
 
