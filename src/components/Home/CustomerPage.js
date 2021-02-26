@@ -25,6 +25,9 @@ componentDidMount() {
     this.setState({
       token: token,
     });
+       this.props.dispatch({
+         type: "GET_CONFIRM_LIST",
+       });
   } //end componentDidMount
 
   //This function handles storing input values into state on change
@@ -89,113 +92,147 @@ componentDidMount() {
       });
   }; //ends SubmitInfo
   render() {
-    return (
-      <div>
-        {this.state.toggle === false ? (
-          <>
-            <br />
-            <br />
-            <Paper
-              elevation={5}
-              style={{
-                padding: "5%",
-                marginLeft: "5%",
-                marginRight: "5%",
-                marginBottom: "5%",
-              }}
-            >
-              <form onSubmit={this.submitInfo}>
-                <>
-                  <b>I have reviewed and approve the following:</b>
-                  {/* check boxes customer needs to check to submit their approval */}
-                  <br />
-                  <input
-                    type="checkbox"
-                    className="input"
-                    name="transfer"
-                    value="Type of Transfer"
-                    style={{ cursor: "pointer" }}
-                  ></input>
-                  <span>Type of Transfer</span>
-                  <br />
-                  <input
-                    type="checkbox"
-                    className="input"
-                    name="size"
-                    value="Transfer size, color and resolution"
-                    style={{ cursor: "pointer" }}
-                  ></input>
-                  <span>Transfer size, color and resolution</span>
-                  <br />
-                  <input
-                    type="checkbox"
-                    className="input"
-                    name="spelling"
-                    value="All spelling and grammar"
-                    style={{ cursor: "pointer" }}
-                  ></input>
-                  <span>All spelling and grammar</span>
-                  <br />
-                  <input
-                    type="checkbox"
-                    className="input"
-                    name="qty"
-                    value="Quantity of each Transfer"
-                    style={{ cursor: "pointer" }}
-                  ></input>
-                  <span>Quantity of each Transfer</span>
-                </>
-                <center>
-                  <Button
-                    style={{
-                      //note that it only goes through if it passes all validation
-                      marginTop: "3%",
-                      marginLeft: "5%",
-                      marginRight: "5%",
-                      backgroundColor: "green",
-                      color: "white",
-                    }}
-                    variant="contained"
-                    type="submit"
-                    color="primary"
-                    className="button"
-                  >
-                    Submit Response
-                  </Button>
-                  {/* toast that appears on error, shows up when all required fields are not filled in */}
-                  {this.state.error === true && (
-                    <Alert className="error" style={{}} severity="error">
-                      Please fill out all of the required fields
-                    </Alert>
-                  )}
-                </center>
-              </form>
-            </Paper>
-            <br />{" "}
-            {/*Add a little buffer on the bottom of page (prevent cutoff on mobile) */}
-            <br />
-          </>
-        ) : (
-          <>
-            <br />
-            <br />
-            <br />
-            <br />
-            {/*show this only after the customer has submitted, to confirm submission and also prevent duplicate submissions*/}
-            <h1 style={{ textAlign: "center" }}>
-              Thank you for your approval.
-              <br />
-              Please review our website for production details.
-            </h1>
-          </>
-        )}
-      </div>
-    );
+     let checkThis = false;
+     let confirmlist = this.props.confirmlist;
+     let token = this.state.token;
+     for (let index = 0; index < confirmlist.length; index++) {
+       const element = confirmlist[index];
+       if (element.token === token) {
+         checkThis = true;
+       }
+       if (checkThis === true) {
+           return (
+             <div>
+               {this.state.toggle === false ? (
+                 <>
+                   <br />
+                   <br />
+                   <Paper
+                     elevation={5}
+                     style={{
+                       padding: "5%",
+                       marginLeft: "5%",
+                       marginRight: "5%",
+                       marginBottom: "5%",
+                     }}
+                   >
+                     <form onSubmit={this.submitInfo}>
+                       <>
+                         <b>I have reviewed and approve the following:</b>
+                         {/* check boxes customer needs to check to submit their approval */}
+                         <br />
+                         <input
+                           type="checkbox"
+                           className="input"
+                           name="transfer"
+                           value="Type of Transfer"
+                           style={{ cursor: "pointer" }}
+                         ></input>
+                         <span>Type of Transfer</span>
+                         <br />
+                         <input
+                           type="checkbox"
+                           className="input"
+                           name="size"
+                           value="Transfer size, color and resolution"
+                           style={{ cursor: "pointer" }}
+                         ></input>
+                         <span>Transfer size, color and resolution</span>
+                         <br />
+                         <input
+                           type="checkbox"
+                           className="input"
+                           name="spelling"
+                           value="All spelling and grammar"
+                           style={{ cursor: "pointer" }}
+                         ></input>
+                         <span>All spelling and grammar</span>
+                         <br />
+                         <input
+                           type="checkbox"
+                           className="input"
+                           name="qty"
+                           value="Quantity of each Transfer"
+                           style={{ cursor: "pointer" }}
+                         ></input>
+                         <span>Quantity of each Transfer</span>
+                       </>
+                       <center>
+                         <Button
+                           style={{
+                             //note that it only goes through if it passes all validation
+                             marginTop: "3%",
+                             marginLeft: "5%",
+                             marginRight: "5%",
+                             backgroundColor: "green",
+                             color: "white",
+                           }}
+                           variant="contained"
+                           type="submit"
+                           color="primary"
+                           className="button"
+                         >
+                           Submit Response
+                         </Button>
+                         {/* toast that appears on error, shows up when all required fields are not filled in */}
+                         {this.state.error === true && (
+                           <Alert className="error" style={{}} severity="error">
+                             Please fill out all of the required fields
+                           </Alert>
+                         )}
+                       </center>
+                     </form>
+                   </Paper>
+                   <br />{" "}
+                   {/*Add a little buffer on the bottom of page (prevent cutoff on mobile) */}
+                   <br />
+                 </>
+               ) : (
+                 <>
+                   <br />
+                   <br />
+                   <br />
+                   <br />
+                   {/*show this only after the customer has submitted, to confirm submission and also prevent duplicate submissions*/}
+                   <h1 style={{ textAlign: "center" }}>
+                     Thank you for your approval.
+                     <br />
+                     Please review our website for production details.
+                   </h1>
+                 </>
+               )}
+             </div>
+           );
+       }
+     }
+     return (
+       <Paper
+         elevation={5}
+         style={{
+           padding: "5%",
+           marginLeft: "5%",
+           marginRight: "5%",
+           marginBottom: "5%",
+         }}
+       >
+         <>
+           <br />
+           <br />
+           <br />
+           <br />
+           {/*show this only after the customer has submitted, to confirm submission and also prevent duplicate submissions*/}
+           <h1 style={{ textAlign: "center" }}>
+             You've already responded to this email message, <br />
+             please wait for the next reply from the art department
+           </h1>
+         </>
+       </Paper>
+     );
   }
 }
 
 const mapStateToProps = (state) => ({
-
+  confirmlist: state.item.confirmlist,
 });
 
 export default withRouter(connect(mapStateToProps)(CustomerPage));

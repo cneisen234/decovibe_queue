@@ -83,6 +83,9 @@ class Complete extends Component {
 
   render() {
     let dataSelector = this.state.dataSelector;
+      let decoSku5 = "";
+      let decoSku7 = "";
+      let decoSku6 = "";
     const data = this.props.completelist.map((complete) => [
       complete.order_number,
       complete.sku,
@@ -312,9 +315,7 @@ class Complete extends Component {
                       <input
                         type="checkbox"
                         id={dataIndex}
-                        style={{ cursor: "pointer",
-                                  width: 50,
-                                height: 50 }}
+                        style={{ cursor: "pointer", width: 50, height: 50 }}
                         name=""
                         value=""
                         onClick={(event) => {
@@ -347,7 +348,115 @@ class Complete extends Component {
               },
 
               { name: "Order Number" },
-              { name: "SKU" },
+              {
+                name: "SKU",
+                options: {
+                  filter: true,
+                  sort: true,
+                  // empty: true,
+                  customBodyRender: (value, tableMeta, updateValue) => {
+                    decoSku5 = value.slice(0, 3);
+                    decoSku7 = value.slice(0, 7);
+                    decoSku6 = value.slice(0, 8);
+                    if (
+                      decoSku5 === "SD1" ||
+                      decoSku5 === "SD2" ||
+                      decoSku5 === "SD3" ||
+                      decoSku5 === "SD4" ||
+                      decoSku5 === "SD5" ||
+                      decoSku5 === "SD6" ||
+                      decoSku5 === "SD7" ||
+                      decoSku5 === "SD8" ||
+                      decoSku5 === "SD9" ||
+                      decoSku6 === "SETUPFEE"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#F7B665",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku5 === "CS1" ||
+                      decoSku5 === "CS2" ||
+                      decoSku5 === "CS3" ||
+                      decoSku5 === "CS4" ||
+                      decoSku5 === "CS5" ||
+                      decoSku5 === "CS6" ||
+                      decoSku5 === "CS7" ||
+                      decoSku5 === "CS8" ||
+                      decoSku5 === "CS9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#90CA6D",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku7 === "SISER-1" ||
+                      decoSku7 === "SISER-2" ||
+                      decoSku7 === "SISER-3" ||
+                      decoSku7 === "SISER-4" ||
+                      decoSku7 === "SISER-5" ||
+                      decoSku7 === "SISER-6" ||
+                      decoSku7 === "SISER-7" ||
+                      decoSku7 === "SISER-8" ||
+                      decoSku7 === "SISER-9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#F8F18A",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku5 === "CD1" ||
+                      decoSku5 === "CD2" ||
+                      decoSku5 === "CD3" ||
+                      decoSku5 === "CD4" ||
+                      decoSku5 === "CD5" ||
+                      decoSku5 === "CD6" ||
+                      decoSku5 === "CD7" ||
+                      decoSku5 === "CD8" ||
+                      decoSku5 === "CD9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#EEB7D2",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else {
+                      return <div>{value}</div>;
+                    }
+                  },
+                },
+              },
               { name: "Description" },
               { name: "Length" },
               { name: "QTY" },
@@ -666,117 +775,118 @@ class Complete extends Component {
                   let itemname = item.name;
                   let itemsku = item.sku;
                   let itemqty = item.quantity;
-                             let decoSku = itemsku;
-                               let decoSku3 = decoSku.slice(0, 6);
-                               let decoSku4 = decoSku.slice(0, 5);
-                               let decoSku7 = decoSku.slice(0, 7);
-                      if (
-                      //if the sliced skus meet the below conditions
-                      decoSku4 === "BL_A3" ||
-                      decoSku4 === "BL_A4" ||
-                      decoSku4 === "BL_A5" ||
-                      decoSku4 === "BL_LC" ||
-                      decoSku4 === "BL_SM" ||
-                      decoSku3 === "HW_CAP" ||
-                      decoSku3 === "PR_BAG" ||
-                      decoSku3 === "PR_UM_" ||
-                      decoSku4 === "SB_A5" ||
-                      decoSku4 === "SB_A4" ||
-                      decoSku4 === "SB_A3" ||
-                      decoSku4 === "SB_LC" ||
-                      decoSku4 === "SB_SM" ||
-                      decoSku4 === "SB_LS" ||
-                      decoSku4 === "WE_SM" ||
-                      decoSku4 === "WE_LC" ||
-                      decoSku4 === "WE_A5" ||
-                      decoSku4 === "WE_A4" ||
-                      decoSku4 === "WE_A3" ||
-                      decoSku7 === "DYESUB-" ||
-                      decoSku4 === "FINAL"
-                    ) {
-                  return (
-                    <>
-                      <tr>
-                        <td
-                          style={{
-                            marginLeft: "3%",
-                            padding: "10px",
-                            width: "25%",
-                          }}
-                        >
-                          <b>Name:</b> {itemname}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          style={{
-                            marginLeft: "3%",
-                            padding: "10px",
-                            width: "25%",
-                          }}
-                        >
-                          <b>Sku:</b> {itemsku}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          style={{
-                            marginLeft: "3%",
-                            padding: "10px",
-                            width: "25%",
-                          }}
-                        >
-                          <b>QTY:</b> {itemqty}
-                        </td>
-                      </tr>
-                      <tr>
-                      </tr>
-                      {item.product_options.map((product, index) => {
-                        //map the product options of that sku to show the details
-                        let display_name = product.display_name;
-                        let display_value = product.display_value;
-                        let new_display_name = display_name.slice(0, 10);
-                        return (
-                          <>
-                            {new_display_name === "Sheet Size" ? (
-                              <tr>
-                                <td
-                                  style={{
-                                    marginLeft: "3%",
-                                    padding: "10px",
-                                    width: "25%",
-                                  }}
-                                >
-                                  <b>{new_display_name}:</b> {display_value}
-                                </td>
-                              </tr>
-                            ) : display_name === "Transfer Count" ? (
-                              <span></span>
-                            ) : (
-                              <tr>
-                                <td
-                                  style={{
-                                    marginLeft: "3%",
-                                    padding: "10px",
-                                    width: "25%",
-                                  }}
-                                >
-                                  <b>{display_name}:</b> {display_value}
-                                </td>
-                              </tr>
-                            )}
-                          </>
-                        );
-                      })}{" "}
-                      <br />
-                      <br />
-                      <tr>
-                        <td>----------------------------------------------</td>
-                      </tr>
-                    </>
-                  );
-                    }
-                    return null
+                  let decoSku = itemsku;
+                  let decoSku3 = decoSku.slice(0, 6);
+                  let decoSku4 = decoSku.slice(0, 5);
+                  let decoSku7 = decoSku.slice(0, 7);
+                  if (
+                    //if the sliced skus meet the below conditions
+                    decoSku4 === "BL_A3" ||
+                    decoSku4 === "BL_A4" ||
+                    decoSku4 === "BL_A5" ||
+                    decoSku4 === "BL_LC" ||
+                    decoSku4 === "BL_SM" ||
+                    decoSku3 === "HW_CAP" ||
+                    decoSku3 === "PR_BAG" ||
+                    decoSku3 === "PR_UM_" ||
+                    decoSku4 === "SB_A5" ||
+                    decoSku4 === "SB_A4" ||
+                    decoSku4 === "SB_A3" ||
+                    decoSku4 === "SB_LC" ||
+                    decoSku4 === "SB_SM" ||
+                    decoSku4 === "SB_LS" ||
+                    decoSku4 === "WE_SM" ||
+                    decoSku4 === "WE_LC" ||
+                    decoSku4 === "WE_A5" ||
+                    decoSku4 === "WE_A4" ||
+                    decoSku4 === "WE_A3" ||
+                    decoSku7 === "DYESUB-" ||
+                    decoSku4 === "FINAL"
+                  ) {
+                    return (
+                      <>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Name:</b> {itemname}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Sku:</b> {itemsku}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>QTY:</b> {itemqty}
+                          </td>
+                        </tr>
+                        <tr></tr>
+                        {item.product_options.map((product, index) => {
+                          //map the product options of that sku to show the details
+                          let display_name = product.display_name;
+                          let display_value = product.display_value;
+                          let new_display_name = display_name.slice(0, 10);
+                          return (
+                            <>
+                              {new_display_name === "Sheet Size" ? (
+                                <tr>
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                  >
+                                    <b>{new_display_name}:</b> {display_value}
+                                  </td>
+                                </tr>
+                              ) : display_name === "Transfer Count" ? (
+                                <span></span>
+                              ) : (
+                                <tr>
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                  >
+                                    <b>{display_name}:</b> {display_value}
+                                  </td>
+                                </tr>
+                              )}
+                            </>
+                          );
+                        })}{" "}
+                        <br />
+                        <br />
+                        <tr>
+                          <td>
+                            ----------------------------------------------
+                          </td>
+                        </tr>
+                      </>
+                    );
+                  }
+                  return null;
                 })}{" "}
                 <Button onClick={this.toggle2} variant="success" type="submit">
                   Close

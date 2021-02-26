@@ -56,6 +56,9 @@ class Progress extends Component {
 
   render() {
     let dataSelector = this.state.dataSelector;
+      let decoSku5 = "";
+      let decoSku7 = "";
+      let decoSku6 = "";
     const data = this.props.progresslist.map((progress) => [
       progress.order_number,
       progress.sku,
@@ -73,264 +76,34 @@ class Progress extends Component {
           <h1>In Progress</h1>
         </center>
         <div style={{ padding: "1.5%" }}>
-           {this.props.user.role === "csr" ? (
-                            <span></span>
-                          ) : (
-                            <>
-          <Button
-            variant="success"
-            onClick={(event) => {
-              event.preventDefault();
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "MARK_COMPLETE",
-                  payload: {
-                    id: element.id,
-                    email: element.email,
-                    first_name: element.first_name,
-                    last_name: element.last_name,
-                    order_number: element.order_number,
-                    sku: element.sku,
-                    description: element.description,
-                    product_length: element.product_length,
-                    product_options: element.product_options,
-                    qty: element.qty,
-                    assigned: element.assigned,
-                    created_at: element.created_at,
-                    priority: element.priority,
-                  },
-                });
-                this.props.dispatch({
-                  type: "DELETE_PROGRESS",
-                  payload: element.id,
-                });
-              }
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                console.log(element.checked);
-                element.checked = false;
-              }
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
-          </Button>
-          <Button
-            variant="success"
-            onClick={(event) => {
-              event.preventDefault();
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "ADD_NEW",
-                  payload: {
-                    id: element.id,
-                    email: element.email,
-                    first_name: element.first_name,
-                    last_name: element.last_name,
-                    order_number: element.order_number,
-                    sku: element.sku,
-                    description: element.description,
-                    product_length: element.product_length,
-                    product_options: element.product_options,
-                    qty: element.qty,
-                    assigned: element.assigned,
-                    created_at: element.created_at,
-                    priority: element.priority,
-                  },
-                });
-                this.props.dispatch({
-                  type: "DELETE_PROGRESS",
-                  payload: element.id,
-                });
-              }
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                console.log(element.checked);
-                element.checked = false;
-              }
-              this.setState({
-                dataSelector: [],
-              });
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <RestoreIcon></RestoreIcon>
-          </Button>
-          <Button
-            variant="danger"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "MARK_PRIORITY_PROGRESS",
-                  payload: {
-                    id: element.id,
-                    priority: "high",
-                  },
-                });
-              }
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                console.log(element.checked);
-                element.checked = false;
-              }
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <FlagIcon></FlagIcon>
-          </Button>
-          <Button
-            variant="success"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              for (let index = 0; index < dataSelector.length; index++) {
-                const element = dataSelector[index];
-                this.props.dispatch({
-                  type: "MARK_PRIORITY_PROGRESS",
-                  payload: {
-                    id: element.id,
-                    priority: "low",
-                  },
-                });
-              }
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST",
-              });
-              this.props.dispatch({
-                type: "GET_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_RESPOND_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CONFIRM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_PROGRESS_LIST_COUNT",
-              });
-              this.props.dispatch({
-                type: "GET_COMPLETE_LIST_COUNT",
-              });
-              let checkInput = document.getElementsByTagName("input");
-              for (let index = 0; index < checkInput.length; index++) {
-                const element = checkInput[index];
-                console.log(element.checked);
-                element.checked = false;
-              }
-              dataSelector = [];
-              this.setState({
-                dataSelector: [],
-                toggle3: false,
-              });
-            }}
-          >
-            <FlagIcon></FlagIcon>
-          </Button>
-          <Button
-            variant="danger"
-            onClick={(event) => {
-              event.preventDefault();
-              console.log(dataSelector);
-              swal({
-                title: "Are you sure?",
-                text:
-                  "Once deleted, you will not be able to recover the sku on these orders!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-              }).then((willDelete) => {
-                if (willDelete) {
+          {this.props.user.role === "csr" ? (
+            <span></span>
+          ) : (
+            <>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "MARK_COMPLETE",
+                      payload: {
+                        id: element.id,
+                        email: element.email,
+                        first_name: element.first_name,
+                        last_name: element.last_name,
+                        order_number: element.order_number,
+                        sku: element.sku,
+                        description: element.description,
+                        product_length: element.product_length,
+                        product_options: element.product_options,
+                        qty: element.qty,
+                        assigned: element.assigned,
+                        created_at: element.created_at,
+                        priority: element.priority,
+                      },
+                    });
                     this.props.dispatch({
                       type: "DELETE_PROGRESS",
                       payload: element.id,
@@ -368,16 +141,250 @@ class Progress extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
-                } else {
-                  console.log("delete canceled");
-                }
-              });
-            }}
-          >
-            <DeleteIcon></DeleteIcon>
-          </Button>
-</>
-                          )}
+                }}
+              >
+                <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+              </Button>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "ADD_NEW",
+                      payload: {
+                        id: element.id,
+                        email: element.email,
+                        first_name: element.first_name,
+                        last_name: element.last_name,
+                        order_number: element.order_number,
+                        sku: element.sku,
+                        description: element.description,
+                        product_length: element.product_length,
+                        product_options: element.product_options,
+                        qty: element.qty,
+                        assigned: element.assigned,
+                        created_at: element.created_at,
+                        priority: element.priority,
+                      },
+                    });
+                    this.props.dispatch({
+                      type: "DELETE_PROGRESS",
+                      payload: element.id,
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
+                  }
+                  this.setState({
+                    dataSelector: [],
+                  });
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
+                }}
+              >
+                <RestoreIcon></RestoreIcon>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "MARK_PRIORITY_PROGRESS",
+                      payload: {
+                        id: element.id,
+                        priority: "high",
+                      },
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
+                  }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
+                }}
+              >
+                <FlagIcon></FlagIcon>
+              </Button>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "MARK_PRIORITY_PROGRESS",
+                      payload: {
+                        id: element.id,
+                        priority: "low",
+                      },
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
+                  }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
+                }}
+              >
+                <FlagIcon></FlagIcon>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  swal({
+                    title: "Are you sure?",
+                    text:
+                      "Once deleted, you will not be able to recover the sku on these orders!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                      for (
+                        let index = 0;
+                        index < dataSelector.length;
+                        index++
+                      ) {
+                        const element = dataSelector[index];
+                        this.props.dispatch({
+                          type: "DELETE_PROGRESS",
+                          payload: element.id,
+                        });
+                      }
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                      let checkInput = document.getElementsByTagName("input");
+                      for (let index = 0; index < checkInput.length; index++) {
+                        const element = checkInput[index];
+                        console.log(element.checked);
+                        element.checked = false;
+                      }
+                      dataSelector = [];
+                      this.setState({
+                        dataSelector: [],
+                        toggle3: false,
+                      });
+                    } else {
+                      console.log("delete canceled");
+                    }
+                  });
+                }}
+              >
+                <DeleteIcon></DeleteIcon>
+              </Button>
+            </>
+          )}
           <MUITable
             data={data}
             columns={[
@@ -424,7 +431,115 @@ class Progress extends Component {
                 },
               },
               { name: "Order Number" },
-              { name: "SKU" },
+              {
+                name: "SKU",
+                options: {
+                  filter: true,
+                  sort: true,
+                  // empty: true,
+                  customBodyRender: (value, tableMeta, updateValue) => {
+                    decoSku5 = value.slice(0, 3);
+                    decoSku7 = value.slice(0, 7);
+                    decoSku6 = value.slice(0, 8);
+                    if (
+                      decoSku5 === "SD1" ||
+                      decoSku5 === "SD2" ||
+                      decoSku5 === "SD3" ||
+                      decoSku5 === "SD4" ||
+                      decoSku5 === "SD5" ||
+                      decoSku5 === "SD6" ||
+                      decoSku5 === "SD7" ||
+                      decoSku5 === "SD8" ||
+                      decoSku5 === "SD9" ||
+                      decoSku6 === "SETUPFEE"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#F7B665",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku5 === "CS1" ||
+                      decoSku5 === "CS2" ||
+                      decoSku5 === "CS3" ||
+                      decoSku5 === "CS4" ||
+                      decoSku5 === "CS5" ||
+                      decoSku5 === "CS6" ||
+                      decoSku5 === "CS7" ||
+                      decoSku5 === "CS8" ||
+                      decoSku5 === "CS9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#90CA6D",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku7 === "SISER-1" ||
+                      decoSku7 === "SISER-2" ||
+                      decoSku7 === "SISER-3" ||
+                      decoSku7 === "SISER-4" ||
+                      decoSku7 === "SISER-5" ||
+                      decoSku7 === "SISER-6" ||
+                      decoSku7 === "SISER-7" ||
+                      decoSku7 === "SISER-8" ||
+                      decoSku7 === "SISER-9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#F8F18A",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku5 === "CD1" ||
+                      decoSku5 === "CD2" ||
+                      decoSku5 === "CD3" ||
+                      decoSku5 === "CD4" ||
+                      decoSku5 === "CD5" ||
+                      decoSku5 === "CD6" ||
+                      decoSku5 === "CD7" ||
+                      decoSku5 === "CD8" ||
+                      decoSku5 === "CD9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#EEB7D2",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else {
+                      return <div>{value}</div>;
+                    }
+                  },
+                },
+              },
               { name: "Description" },
               { name: "Length" },
               { name: "QTY" },
@@ -438,10 +553,9 @@ class Progress extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                        this.props.user.role === "csr" ? (
-                            <span></span>
-                          ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -495,7 +609,6 @@ class Progress extends Component {
                       >
                         <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
                       </Button>
-                          )
                     );
                   },
                 },
@@ -507,10 +620,9 @@ class Progress extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                        this.props.user.role === "csr" ? (
-                            <span></span>
-                          ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
@@ -564,7 +676,6 @@ class Progress extends Component {
                       >
                         <RestoreIcon></RestoreIcon>
                       </Button>
-                          )
                     );
                   },
                 },
@@ -576,11 +687,9 @@ class Progress extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return   this.props.user.role === "csr" ? (
-                            <span></span>
-                          ) : (
-                    
-                    this.props.progresslist[dataIndex] &&
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : this.props.progresslist[dataIndex] &&
                       this.props.progresslist[dataIndex].priority === "low" ? (
                       <Button
                         variant="success"
@@ -660,7 +769,6 @@ class Progress extends Component {
                       >
                         <FlagIcon></FlagIcon>
                       </Button>
-                    )
                     );
                   },
                 },
@@ -672,10 +780,9 @@ class Progress extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                        this.props.user.role === "csr" ? (
-                            <span></span>
-                          ) : (
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
                       <Button
                         variant="danger"
                         onClick={(event) => {
@@ -724,7 +831,6 @@ class Progress extends Component {
                       >
                         <DeleteIcon></DeleteIcon>
                       </Button>
-                          )
                     );
                   },
                 },
