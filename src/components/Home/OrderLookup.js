@@ -110,8 +110,8 @@ class OrderLookup extends Component {
             this.props.shippinglist[0] && this.props.shippinglist[0].last_name;
           let shipping_street_1 =
             this.props.shippinglist[0] && this.props.shippinglist[0].street_1;
-          // let shipping_street_2 =
-          //   this.props.shippinglist[0] && this.props.shippinglist[0].street_2;
+          let shipping_street_2 =
+            this.props.shippinglist[0] && this.props.shippinglist[0].street_2;
           let shipping_city =
             this.props.shippinglist[0] && this.props.shippinglist[0].city;
           let shipping_state =
@@ -408,6 +408,18 @@ class OrderLookup extends Component {
                               className="shipping_street_1"
                             >
                               <b>Street:</b> <i>{shipping_street_1}</i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                              className="shipping_street_2"
+                            >
+                              <b>Street 2:</b> <i>test data</i>
                             </td>
                           </tr>
                           <tr>
@@ -786,54 +798,54 @@ class OrderLookup extends Component {
                             </td>
                           </tr>
                           {productlist.map((item, index) => [
-                                                item.sku.slice(0, 5) === "BL_A3" ||
-                                                item.sku.slice(0, 5) === "BL_A4" ||
-                                                item.sku.slice(0, 5) === "BL_A5" ||
-                                                item.sku.slice(0, 5) === "BL_LC" ||
-                                                item.sku.slice(0, 5) === "BL_SM" ||
-                                                item.sku.slice(0, 6) === "HW_CAP" ||
-                                                item.sku.slice(0, 6) === "PR_BAG" ||
-                                                item.sku.slice(0, 6) === "PR_UM_" ||
-                                                item.sku.slice(0, 5) === "SB_A5" ||
-                                                item.sku.slice(0, 5) === "SB_A4" ||
-                                                item.sku.slice(0, 5) === "SB_A3" ||
-                                                item.sku.slice(0, 5) === "SB_LC" ||
-                                                item.sku.slice(0, 5) === "SB_SM" ||
-                                                item.sku.slice(0, 5) === "SB_LS" ||
-                                                item.sku.slice(0, 5) === "WE_SM" ||
-                                                item.sku.slice(0, 5) === "WE_LC" ||
-                                                item.sku.slice(0, 5) === "WE_A5" ||
-                                                item.sku.slice(0, 5) === "WE_A4" ||
-                                                item.sku.slice(0, 5) === "WE_A3" ? (
-                            <>
-                              <tr>
-                                <td
-                                  style={{
-                                    marginLeft: "3%",
-                                    padding: "10px",
-                                    width: "25%",
-                                  }}
-                                  className={"sku" + index}
-                                >
-                                  <b>SKU:</b> {item.sku.slice(0, 5)}
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                  style={{
-                                    marginLeft: "3%",
-                                    padding: "10px",
-                                    width: "25%",
-                                  }}
-                                  className={"qty" + index}
-                                >
-                                  <b>QTY:</b> {item.quantity}
-                                </td>
-                              </tr>
-                            </>
-                                                ) : (
-                                                  <span></span>
-                                                )
+                            item.sku.slice(0, 5) === "BL_A3" ||
+                            item.sku.slice(0, 5) === "BL_A4" ||
+                            item.sku.slice(0, 5) === "BL_A5" ||
+                            item.sku.slice(0, 5) === "BL_LC" ||
+                            item.sku.slice(0, 5) === "BL_SM" ||
+                            item.sku.slice(0, 6) === "HW_CAP" ||
+                            item.sku.slice(0, 6) === "PR_BAG" ||
+                            item.sku.slice(0, 6) === "PR_UM_" ||
+                            item.sku.slice(0, 5) === "SB_A5" ||
+                            item.sku.slice(0, 5) === "SB_A4" ||
+                            item.sku.slice(0, 5) === "SB_A3" ||
+                            item.sku.slice(0, 5) === "SB_LC" ||
+                            item.sku.slice(0, 5) === "SB_SM" ||
+                            item.sku.slice(0, 5) === "SB_LS" ||
+                            item.sku.slice(0, 5) === "WE_SM" ||
+                            item.sku.slice(0, 5) === "WE_LC" ||
+                            item.sku.slice(0, 5) === "WE_A5" ||
+                            item.sku.slice(0, 5) === "WE_A4" ||
+                            item.sku.slice(0, 5) === "WE_A3" ? (
+                              <>
+                                <tr>
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                    className={"sku" + index}
+                                  >
+                                    <b>SKU:</b> {item.sku.slice(0, 5)}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                    className={"qty" + index}
+                                  >
+                                    <b>QTY:</b> {item.quantity}
+                                  </td>
+                                </tr>
+                              </>
+                            ) : (
+                              <span></span>
+                            ),
                           ])}
                         </table>
                       </Paper>
