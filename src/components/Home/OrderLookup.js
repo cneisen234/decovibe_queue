@@ -419,7 +419,7 @@ class OrderLookup extends Component {
                               }}
                               className="shipping_street_2"
                             >
-                              <b>Street 2:</b> <i>test data</i>
+                              <b>Street 2:</b> <i>{shipping_street_2}</i>
                             </td>
                           </tr>
                           <tr>
