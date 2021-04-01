@@ -86,6 +86,7 @@ class Complete extends Component {
       let decoSku5 = "";
       let decoSku7 = "";
       let decoSku6 = "";
+      let descrip = "";
     const data = this.props.completelist.map((complete) => [
       complete.order_number,
       complete.sku,
@@ -457,7 +458,33 @@ class Complete extends Component {
                   },
                 },
               },
-              { name: "Description" },
+              {
+                name: "Description",
+                options: {
+                  filter: true,
+                  sort: true,
+                  // empty: true,
+                  customBodyRender: (value, tableMeta, updateValue) => {
+                    descrip = value.slice(value.length - 4);
+                    if (descrip === "Pack" || descrip === "pack") {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#5D82C1",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else {
+                      return <div>{value}</div>;
+                    }
+                  },
+                },
+              },
               { name: "Length" },
               { name: "QTY" },
               { name: "Assigned" },

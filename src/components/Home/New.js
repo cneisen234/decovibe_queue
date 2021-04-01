@@ -210,6 +210,7 @@ class New extends Component {
     let decoSku5 = ""
     let decoSku7 = ""
     let decoSku6 = ""
+    let descrip = ""
     const data = this.props.itemlist.map((item) => [
       item.order_number,
       item.sku,
@@ -606,114 +607,135 @@ class New extends Component {
                   sort: true,
                   // empty: true,
                   customBodyRender: (value, tableMeta, updateValue) => {
-                     decoSku5 = value.slice(0, 3);
-                     decoSku7 = value.slice(0, 7);
-                     decoSku6 = value.slice(0, 8);
-                          if (
-                            decoSku5 === "SD1" ||
-                            decoSku5 === "SD2" ||
-                            decoSku5 === "SD3" ||
-                            decoSku5 === "SD4" ||
-                            decoSku5 === "SD5" ||
-                            decoSku5 === "SD6" ||
-                            decoSku5 === "SD7" ||
-                            decoSku5 === "SD8" ||
-                            decoSku5 === "SD9" ||
-                            decoSku6 === "SETUPFEE"
-
-                          ) {
-                            return (
-                              <div
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  backgroundColor: "#F7B665",
-                                  color: "black",
-                                }}
-                              >
-                                {value}
-                              </div>
-                            );
-                          } else if (
-                            decoSku5 === "CS1" ||
-                            decoSku5 === "CS2" ||
-                            decoSku5 === "CS3" ||
-                            decoSku5 === "CS4" ||
-                            decoSku5 === "CS5" ||
-                            decoSku5 === "CS6" ||
-                            decoSku5 === "CS7" ||
-                            decoSku5 === "CS8" ||
-                            decoSku5 === "CS9"
-                          ) {
-                            return (
-                              <div
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  backgroundColor: "#90CA6D",
-                                  color: "black",
-                                }}
-                              >
-                                {value}
-                              </div>
-                            );
-                          } else if (
-                            decoSku7 === "SISER-1" ||
-                            decoSku7 === "SISER-2" ||
-                            decoSku7 === "SISER-3" ||
-                            decoSku7 === "SISER-4" ||
-                            decoSku7 === "SISER-5" ||
-                            decoSku7 === "SISER-6" ||
-                            decoSku7 === "SISER-7" ||
-                            decoSku7 === "SISER-8" ||
-                            decoSku7 === "SISER-9"
-                          ) {
-                            return (
-                              <div
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  backgroundColor: "#F8F18A",
-                                  color: "black",
-                                }}
-                              >
-                                {value}
-                              </div>
-                            );
-                          } else if (
-                            decoSku5 === "CD1" ||
-                            decoSku5 === "CD2" ||
-                            decoSku5 === "CD3" ||
-                            decoSku5 === "CD4" ||
-                            decoSku5 === "CD5" ||
-                            decoSku5 === "CD6" ||
-                            decoSku5 === "CD7" ||
-                            decoSku5 === "CD8" ||
-                            decoSku5 === "CD9"
-                          ) {
-                            return (
-                              <div
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  backgroundColor: "#EEB7D2",
-                                  color: "black",
-                                }}
-                              >
-                                {value}
-                              </div>
-                            );
-                          } else {
-                                 return (
-                                   <div>
-                                     {value}
-                                   </div>
-                                 );
-                          }
+                    decoSku5 = value.slice(0, 3);
+                    decoSku7 = value.slice(0, 7);
+                    decoSku6 = value.slice(0, 8);
+                    if (
+                      decoSku5 === "SD1" ||
+                      decoSku5 === "SD2" ||
+                      decoSku5 === "SD3" ||
+                      decoSku5 === "SD4" ||
+                      decoSku5 === "SD5" ||
+                      decoSku5 === "SD6" ||
+                      decoSku5 === "SD7" ||
+                      decoSku5 === "SD8" ||
+                      decoSku5 === "SD9" ||
+                      decoSku6 === "SETUPFEE"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#F7B665",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku5 === "CS1" ||
+                      decoSku5 === "CS2" ||
+                      decoSku5 === "CS3" ||
+                      decoSku5 === "CS4" ||
+                      decoSku5 === "CS5" ||
+                      decoSku5 === "CS6" ||
+                      decoSku5 === "CS7" ||
+                      decoSku5 === "CS8" ||
+                      decoSku5 === "CS9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#90CA6D",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku7 === "SISER-1" ||
+                      decoSku7 === "SISER-2" ||
+                      decoSku7 === "SISER-3" ||
+                      decoSku7 === "SISER-4" ||
+                      decoSku7 === "SISER-5" ||
+                      decoSku7 === "SISER-6" ||
+                      decoSku7 === "SISER-7" ||
+                      decoSku7 === "SISER-8" ||
+                      decoSku7 === "SISER-9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#F8F18A",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (
+                      decoSku5 === "CD1" ||
+                      decoSku5 === "CD2" ||
+                      decoSku5 === "CD3" ||
+                      decoSku5 === "CD4" ||
+                      decoSku5 === "CD5" ||
+                      decoSku5 === "CD6" ||
+                      decoSku5 === "CD7" ||
+                      decoSku5 === "CD8" ||
+                      decoSku5 === "CD9"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#EEB7D2",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else {
+                      return <div>{value}</div>;
+                    }
                   },
                 },
               },
-              { name: "Description" },
+              {
+                name: "Description",
+                options: {
+                  filter: true,
+                  sort: true,
+                  // empty: true,
+                  customBodyRender: (value, tableMeta, updateValue) => {
+                    descrip = value.slice(value.length - 4);
+                    if ((descrip === "Pack" || descrip === "pack")) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#5D82C1",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else {
+                      return <div>{value}</div>;
+                    }
+                  },
+                },
+              },
               { name: "Length" },
               { name: "QTY" },
               { name: "Assigned" },
