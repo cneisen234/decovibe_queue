@@ -830,7 +830,7 @@ class OrderLookup extends Component {
                                   >
                                     <b>SKU:</b>{" "}
                                     <i>
-                                      {" "}
+                                      {/* {" "}
                                       {item.sku.slice(0, 5) === "BL_A3"
                                         ? (skuHolder = "BL_A3")
                                         : item.sku.slice(0, 7) === "BL_A4-1"
@@ -907,7 +907,8 @@ class OrderLookup extends Component {
                                         ? (skuHolder = "WE_LC")
                                         : item.sku.slice(0, 5) === "WE_SM"
                                         ? (skuHolder = "WE_SM")
-                                        : (skuHolder = "SB_SM")}
+                                        : (skuHolder = "SB_SM")} */}
+                                      {item.sku.slice(0, 5)}
                                     </i>
                                   </td>
                                 </tr>
