@@ -819,7 +819,6 @@ class OrderLookup extends Component {
                             item.sku.slice(0, 5) === "WE_A4" ||
                             item.sku.slice(0, 5) === "WE_A3" ? (
                               <>
-                              
                                 <tr>
                                   <td
                                     style={{
@@ -829,106 +828,87 @@ class OrderLookup extends Component {
                                     }}
                                     className={"sku" + index}
                                   >
-                                    <b>SKU:</b> <i>  {item.sku.slice(0, 5) === "BL_A3"
-                                  ? (
-                                    skuHolder = "BL_A3"
-                                  )
-                                  : item.sku.slice(0, 7) ===
-                                    "BL_A4-1" ? (
-                                    skuHolder = 'BL_A4:SubBlock-A4 16.5" 5.85"'
-                                    ) : item.sku.slice(0, 7) ===
-                                    "BL_A4-8" ? (
-                                      skuHolder = 'BL_A4:SubBlock-A4 8.3" 11.7"'
-                                    ) : item.sku.slice(0, 7) ===
-                                    "BL_A5-1" ? (
-                                      skuHolder = 'BL_A5:SubBlock-A5 11.7" 4.25"'
-                                    ) : item.sku.slice(0, 7) ===
-                                    "BL_A5-5" ? (
-                                   skuHolder = 'BL_A5:SubBlock-A5 5.8" 8.3"'
-                                    ) : item.sku.slice(0, 5) ===
-                                    "BL_LC" ? (
-                                     skuHolder = 'BL_LC'
-                                    ) : item.sku.slice(0, 5) ===
-                                    "BL_SM" ? (
-                                      skuHolder = 'BL_SM'
-                                    ) : item.sku.slice(0, 8) ===
-                                    "HW_CAP_L" ? (
-                                     skuHolder = 'HW_CAP_L'
-                                    ) : item.sku.slice(0, 8) ===
-                                    "HW_CAP_S" ? (
-                                     skuHolder = 'HW_CAP_S'
-                                    ) : item.sku.slice(0, 11) ===
-                                    "PR_BAG_A4-1" ? (
-                                     skuHolder = 'PR_BAG_A4:BAG-A4 16.5'
-                                    ) : item.sku.slice(0, 11) ===
-                                    "PR_BAG_A4-8" ? (
-                                     skuHolder = 'PR_BAG_A4:BAG-A4 8.3'
-                                    ) : item.sku.slice(0, 11) ===
-                                    "PR_BAG_A5-1" ? (
-                                     skuHolder = 'PR_BAG_A5:Bag-A5 11.7'
-                                    ) : item.sku.slice(0, 11) ===
-                                    "PR_BAG_A5-5" ? (
-                                     skuHolder = 'PR_BAG_A5:Bag-A5 5.8'
-                                    ) : item.sku.slice(0, 11) ===
-                                    "PR_BAG_A6-4" ? (
-                                     skuHolder = 'PR_BAG_A6:Bag-A6 4.1'
-                                    ) : item.sku.slice(0, 8) ===
-                                    "PR_UM_A3" ? (
-                                     skuHolder = 'PR_UM_A3'
-                                    ) : item.sku.slice(0, 11) ===
-                                    "PR_UM_A4-11" ? (
-                                     skuHolder = 'PR_UM_A4 11.7'
-                                    ) : item.sku.slice(0, 11) ===
-                                    "PR_UM_A4-16" ? (
-                                     skuHolder = 'PR_UM_A4 16.5'
-                                    ) : item.sku.slice(0, 11) ===
-                                    "PR_UM_A5-11" ? (
-                                     skuHolder = 'PR_UM_A5 11.7'
-                                    ) : item.sku.slice(0, 10) ===
-                                    "PR_UM_A5-5" ? (
-                                     skuHolder = 'PR_UM_A5 5.8'
-                                    ) : item.sku.slice(0, 5) ===
-                                    "SB_A3" ? (
-                                     skuHolder = 'SB_A3'
-                                    ) : item.sku.slice(0, 7) ===
-                                    "SB_A4-1" ? (
-                                     skuHolder = 'SB_A4 16.5'
-                                    ) : item.sku.slice(0, 7) ===
-                                    "SB_A4-8" ? (
-                                     skuHolder = 'SB_A4 8.3'
-                                    ) : item.sku.slice(0, 8) ===
-                                    "SB_A5-11" ? (
-                                     skuHolder = 'SB_A5 11.7'
-                                    ) : item.sku.slice(0, 7) ===
-                                    "SB_A5-5" ? (
-                                     skuHolder = 'SB_A5 5.8'
-                                    ) : item.sku.slice(0, 5) ===
-                                    "SB_LC" ? (
-                                     skuHolder = 'SB_LC'
-                                    ) : item.sku.slice(0, 5) ===
-                                    "SB_SM" ? (
-                                     skuHolder = 'SB_SM'
-                                    ) : item.sku.slice(0, 8) ===
-                                    "WE_A4-16" ? (
-                                     skuHolder = 'WE_A4 16.5'
-                                    ) : item.sku.slice(0, 7) ===
-                                    "WE_A4-8" ? (
-                                     skuHolder = 'WE_A4 8.3'
-                                    ) : item.sku.slice(0, 8) ===
-                                    "WE_A5-11" ? (
-                                     skuHolder = 'WE_A5 11.7'
-                                    ) : item.sku.slice(0, 8) ===
-                                    "WE_A5-5" ? (
-                                     skuHolder = 'WE_A5 5.8'
-                                    ) : item.sku.slice(0, 5) ===
-                                    "WE_LC" ? (
-                                     skuHolder = 'WE_LC'
-                                    ) : item.sku.slice(0, 5) ===
-                                    "WE_SM" ? (
-                                     skuHolder = 'WE_SM'
-                                    ) : (
-                                     skuHolder = 'SB_SM'
-                                    )}</i>
+                                    <b>SKU:</b>{" "}
+                                    <i>
+                                      {" "}
+                                      {item.sku.slice(0, 5) === "BL_A3"
+                                        ? (skuHolder = "BL_A3")
+                                        : item.sku.slice(0, 7) === "BL_A4-1"
+                                        ? (skuHolder =
+                                            'BL_A4:SubBlock-A4 16.5" 5.85"')
+                                        : item.sku.slice(0, 7) === "BL_A4-8"
+                                        ? (skuHolder =
+                                            'BL_A4:SubBlock-A4 8.3" 11.7"')
+                                        : item.sku.slice(0, 7) === "BL_A5-1"
+                                        ? (skuHolder =
+                                            'BL_A5:SubBlock-A5 11.7" 4.25"')
+                                        : item.sku.slice(0, 7) === "BL_A5-5"
+                                        ? (skuHolder =
+                                            'BL_A5:SubBlock-A5 5.8" 8.3"')
+                                        : item.sku.slice(0, 5) === "BL_LC"
+                                        ? (skuHolder = "BL_LC")
+                                        : item.sku.slice(0, 5) === "BL_SM"
+                                        ? (skuHolder = "BL_SM")
+                                        : item.sku.slice(0, 8) === "HW_CAP_L"
+                                        ? (skuHolder = "HW_CAP_L")
+                                        : item.sku.slice(0, 8) === "HW_CAP_S"
+                                        ? (skuHolder = "HW_CAP_S")
+                                        : item.sku.slice(0, 11) ===
+                                          "PR_BAG_A4-1"
+                                        ? (skuHolder = "PR_BAG_A4:BAG-A4 16.5")
+                                        : item.sku.slice(0, 11) ===
+                                          "PR_BAG_A4-8"
+                                        ? (skuHolder = "PR_BAG_A4:BAG-A4 8.3")
+                                        : item.sku.slice(0, 11) ===
+                                          "PR_BAG_A5-1"
+                                        ? (skuHolder = "PR_BAG_A5:Bag-A5 11.7")
+                                        : item.sku.slice(0, 11) ===
+                                          "PR_BAG_A5-5"
+                                        ? (skuHolder = "PR_BAG_A5:Bag-A5 5.8")
+                                        : item.sku.slice(0, 11) ===
+                                          "PR_BAG_A6-4"
+                                        ? (skuHolder = "PR_BAG_A6:Bag-A6 4.1")
+                                        : item.sku.slice(0, 8) === "PR_UM_A3"
+                                        ? (skuHolder = "PR_UM_A3")
+                                        : item.sku.slice(0, 11) ===
+                                          "PR_UM_A4-11"
+                                        ? (skuHolder = "PR_UM_A4 11.7")
+                                        : item.sku.slice(0, 11) ===
+                                          "PR_UM_A4-16"
+                                        ? (skuHolder = "PR_UM_A4 16.5")
+                                        : item.sku.slice(0, 11) ===
+                                          "PR_UM_A5-11"
+                                        ? (skuHolder = "PR_UM_A5 11.7")
+                                        : item.sku.slice(0, 10) === "PR_UM_A5-5"
+                                        ? (skuHolder = "PR_UM_A5 5.8")
+                                        : item.sku.slice(0, 5) === "SB_A3"
+                                        ? (skuHolder = "SB_A3")
+                                        : item.sku.slice(0, 7) === "SB_A4-1"
+                                        ? (skuHolder = "SB_A4 16.5")
+                                        : item.sku.slice(0, 7) === "SB_A4-8"
+                                        ? (skuHolder = "SB_A4 8.3")
+                                        : item.sku.slice(0, 8) === "SB_A5-11"
+                                        ? (skuHolder = "SB_A5 11.7")
+                                        : item.sku.slice(0, 7) === "SB_A5-5"
+                                        ? (skuHolder = "SB_A5 5.8")
+                                        : item.sku.slice(0, 5) === "SB_LC"
+                                        ? (skuHolder = "SB_LC")
+                                        : item.sku.slice(0, 5) === "SB_SM"
+                                        ? (skuHolder = "SB_SM")
+                                        : item.sku.slice(0, 8) === "WE_A4-16"
+                                        ? (skuHolder = "WE_A4 16.5")
+                                        : item.sku.slice(0, 7) === "WE_A4-8"
+                                        ? (skuHolder = "WE_A4 8.3")
+                                        : item.sku.slice(0, 8) === "WE_A5-11"
+                                        ? (skuHolder = "WE_A5 11.7")
+                                        : item.sku.slice(0, 8) === "WE_A5-5"
+                                        ? (skuHolder = "WE_A5 5.8")
+                                        : item.sku.slice(0, 5) === "WE_LC"
+                                        ? (skuHolder = "WE_LC")
+                                        : item.sku.slice(0, 5) === "WE_SM"
+                                        ? (skuHolder = "WE_SM")
+                                        : (skuHolder = "SB_SM")}
+                                    </i>
                                   </td>
                                 </tr>
                                 <tr>
@@ -941,6 +921,21 @@ class OrderLookup extends Component {
                                     className={"qty" + index}
                                   >
                                     <b>QTY:</b> <i>{item.quantity}</i>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                    className={"qty" + index}
+                                  >
+                                    <b>Color/Type:</b>{" "}
+                                    <i>
+                                      {item.product_options[3].display_value} {item.product_options[2].display_value}
+                                    </i>
                                   </td>
                                 </tr>
                               </>
