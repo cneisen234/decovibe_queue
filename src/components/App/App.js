@@ -18,6 +18,7 @@ import SentCustomer from "../Home/SentCustomer";
 import CustomerPage from "../Home/CustomerPage";
 import CustomerDeny from "../Home/CustomerDeny";
 import OrderLookup from "../Home/OrderLookup";
+import OrderLookupTest from "../Home/OrderLookupTest";
 import Response from "../Home/Response";
 import History from "../Home/History";
 import Complete from "../Home/Complete";
@@ -50,6 +51,7 @@ class App extends Component {
             If the user is not logged in, the ProtectedRoute will show the 'Login' page.
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
             <ProtectedRoute exact path="/orderlookup" component={OrderLookup} />
+            <ProtectedRoute exact path="/orderlookuptest" component={OrderLookupTest} />
             <ProtectedRoute exact path="/home" component={New} />
             <ProtectedRoute exact path="/newcustom" component={NewCustom} />
             {/* This works the same as the other protected route, except that if the user is logged in,
