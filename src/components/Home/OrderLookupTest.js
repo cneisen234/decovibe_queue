@@ -957,7 +957,7 @@ class OrderLookupTest extends Component {
                                         ? (skuHolder = "WE_A4 8.3")
                                         : item.sku.slice(0, 8) === "WE_A5-11"
                                         ? (skuHolder = "WE_A5 11.7")
-                                        : item.sku.slice(0, 8) === "WE_A5-5"
+                                        : item.sku.slice(0, 7) === "WE_A5-5"
                                         ? (skuHolder = "WE_A5 5.8")
                                         : item.sku.slice(0, 5) === "WE_LC"
                                         ? (skuHolder = "WE_LC")
