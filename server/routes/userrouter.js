@@ -807,7 +807,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
               ) {
                 newArray.push(
                   `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
-              <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Qauntity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
+              <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Quantity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
                 );
                 let options = element.product_options;
                 for (let j = 0; j < options.length; j++) {
@@ -952,7 +952,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                      proofString = `<div><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; width: 250px; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px;"><i>View Proof</i></button></a></div><br><br>`;
                      newArray.push(
                        `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
-              <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Qauntity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
+              <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Quantity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
                      );
                      let options = element.product_options;
                      for (let j = 0; j < options.length; j++) {
