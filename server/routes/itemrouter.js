@@ -483,7 +483,7 @@ router.get("/progresslistcount", rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.get("/confirmlist", rejectUnauthenticated, (req, res) => {
+router.get("/confirmlist", (req, res) => {
   //gets all of the custom items that were sent to the customer
   const queryText = `SELECT * FROM "customerconfirm" ORDER BY id DESC;`;
   pool
