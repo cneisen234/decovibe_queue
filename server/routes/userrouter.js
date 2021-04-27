@@ -505,7 +505,7 @@ router.post("/gobacknew", rejectUnauthenticated, (req, res, next) => {
     })
 });
 
-router.post("/customerresponse", rejectUnauthenticated, (req, res, next) => {
+router.post("/customerresponse", (req, res, next) => {
   // function that's run when customer responds to their email query
   let pic = req.body.pic
   let approve = req.body.approve
