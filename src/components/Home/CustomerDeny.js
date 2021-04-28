@@ -129,7 +129,10 @@ class CustomerPage extends Component {
                >
                  <form onSubmit={this.submitInfo}>
                    <>
-                     <p>Please reply to the artist below</p>
+                     <p>
+                       Since you are NOT approving the artwork, <br />Please explain
+                       what issues you are seeing in detail
+                     </p>
                      <TextField
                        style={{
                          backgroundColor: "white",
