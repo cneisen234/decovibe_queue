@@ -130,8 +130,9 @@ class CustomerPage extends Component {
                  <form onSubmit={this.submitInfo}>
                    <>
                      <p>
-                       Since you are NOT approving the artwork, <br />Please explain
-                       what issues you are seeing in detail
+                       Indicate in detail the changes or respond accordingly to
+                       the artists questions or comments. <br /><i>This is not an
+                       approval of Artwork</i>
                      </p>
                      <TextField
                        style={{
