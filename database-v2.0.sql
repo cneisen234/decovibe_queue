@@ -98,7 +98,26 @@ CREATE TABLE "customerrespond"
 	"token" TEXT,
 	"description" TEXT,
 	"priority" VARCHAR(5),
-	"upload_url" TEXT,
+	"upload_url" TEXT
+);
+
+CREATE TABLE "customerapproved"
+(
+	"id" serial NOT NULL,
+	"email" varchar(320),
+	"first_name" varchar(255),
+	"last_name" varchar(255),
+	"order_number" varchar(255) NOT NULL,
+	"sku" varchar(255) NOT NULL,
+	"qty" VARCHAR(10),
+	"assigned" VARCHAR(255),
+	"approve" VARCHAR(10),
+	"comments" TEXT,
+	"created_at" TEXT,
+	"token" TEXT,
+	"description" TEXT,
+	"priority" VARCHAR(5),
+	"upload_url" TEXT
 );
 
 CREATE TABLE "history"

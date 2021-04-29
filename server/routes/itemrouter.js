@@ -208,6 +208,19 @@ router.delete("/deleterespond/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.delete("/deleteapprove/:id", rejectUnauthenticated, (req, res) => {
+  //api to delete items customers have responded to
+  pool
+    .query('DELETE FROM "customerapproved" WHERE id=$1', [req.params.id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error DELETE ", error);
+      res.sendStatus(500);
+    });
+});
+
 router.delete("/deleteprogress/:id", rejectUnauthenticated, (req, res) => {
   //api to delete stock orders currently in process
   pool
@@ -356,6 +369,22 @@ router.put("/priorityrespond", rejectUnauthenticated, (req, res) => {
   //api to set priority of custom items customers have responded to
   const { priority, id } = req.body;
   const queryText = 'UPDATE "customerrespond" SET priority=$1 WHERE id=$2';
+
+  pool
+    .query(queryText, [priority, id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
+router.put("/priorityapprove", rejectUnauthenticated, (req, res) => {
+  //api to set priority of custom items customers have responded to
+  const { priority, id } = req.body;
+  const queryText = 'UPDATE "customerapproved" SET priority=$1 WHERE id=$2';
 
   pool
     .query(queryText, [priority, id])
@@ -528,6 +557,34 @@ router.get("/respondlist", rejectUnauthenticated, (req, res) => {
 router.get("/respondlistcount", rejectUnauthenticated, (req, res) => {
   //gets a count of all of the items currently in the customer response queue
   const queryText = `SELECT count(*) FROM "customerrespond";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/approvelist", rejectUnauthenticated, (req, res) => {
+  //gets all of the custom items the customer responded to
+  const queryText = `SELECT * FROM "customerapproved" ORDER BY id DESC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/approvelistcount", rejectUnauthenticated, (req, res) => {
+  //gets a count of all of the items currently in the customer response queue
+  const queryText = `SELECT count(*) FROM "customerapproved";`;
   pool
     .query(queryText)
     .then((result) => {

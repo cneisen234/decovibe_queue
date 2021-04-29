@@ -29,6 +29,15 @@ function* deleteRespond(action) {
   }
 }
 
+function* deleteApprove(action) {
+  try {
+    yield axios.delete(`/api/item/deleteapprove/${action.payload}`);
+    yield put({ type: "GET_APPROVE_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
+
 function* deleteProgress(action) {
   try {
     yield axios.delete(`/api/item/deleteprogress/${action.payload}`);
@@ -208,6 +217,14 @@ function* addNewItem(action){
             console.log("Error with editing an item:", error);
           }
         }
+             function* markPriorityApprove(action) {
+               try {
+                 yield axios.put("/api/item/priorityapprove", action.payload);
+                 yield put({ type: "GET_APPROVE_LIST" });
+               } catch (error) {
+                 console.log("Error with editing an item:", error);
+               }
+             }
 
   function* assignTask(action) {
     try {
@@ -393,6 +410,30 @@ function* getrespondlistcount(action) {
   }
 }
 
+function* getapprovelist(action) {
+  try {
+    const response = yield axios.get(`/api/item/approvelist`);
+    yield put({
+      type: "SET_APPROVE",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* getapprovelistcount(action) {
+  try {
+    const response = yield axios.get(`/api/item/approvelistcount`);
+    yield put({
+      type: "SET_APPROVE_COUNT",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* getcompletelist(action) {
   try {
     const response = yield axios.get(`/api/item/completelist`);
@@ -507,6 +548,7 @@ function* itemSaga() {
       yield takeLatest('MARK_PRIORITY_PROGRESS', markPriorityProgress);
       yield takeLatest('MARK_PRIORITY_CUSTOM', markPriorityCustom);
       yield takeLatest('MARK_PRIORITY_RESPOND', markPriorityRespond);
+            yield takeLatest('MARK_PRIORITY_APPROVE', markPriorityApprove);
     yield takeLatest('ASSIGN_TASK', assignTask);
     yield takeLatest('ASSIGN_CUSTOM_TASK', assignCustomTask);
     yield takeLatest('GET_USER', getUser);
@@ -521,12 +563,15 @@ function* itemSaga() {
     yield takeLatest('GET_CONFIRM_LIST_COUNT', getconfirmlistcount);
     yield takeLatest('GET_RESPOND_LIST', getrespondlist);
     yield takeLatest('GET_RESPOND_LIST_COUNT', getrespondlistcount);
+    yield takeLatest('GET_APPROVE_LIST', getapprovelist);
+    yield takeLatest('GET_APPROVE_LIST_COUNT', getapprovelistcount);
     yield takeLatest('GET_COMPLETE_LIST', getcompletelist);
     yield takeLatest('GET_COMPLETE_LIST_COUNT', getcompletelistcount);
     yield takeLatest('GET_REPLIES', getreplies);
     yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('DELETE_CUSTOM_ITEM', deleteCustomItem);
      yield takeLatest('DELETE_RESPOND', deleteRespond);
+     yield takeLatest('DELETE_APPROVE', deleteApprove);
     yield takeLatest('DELETE_PROGRESS', deleteProgress);
      yield takeLatest('DELETE_HISTORY', deleteHistory);
     yield takeLatest('DELETE_COMPLETE', deleteComplete);

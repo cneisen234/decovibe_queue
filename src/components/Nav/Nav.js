@@ -13,6 +13,7 @@ import ReplyIcon from "@material-ui/icons/Reply";
 import HistoryIcon from "@material-ui/icons/History";
 import EditIcon from "@material-ui/icons/Edit";
 import ViewListIcon from "@material-ui/icons/ViewList";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
 class Nav extends Component {
   state = {
@@ -38,7 +39,7 @@ class Nav extends Component {
       type: "GET_RESPOND_LIST_COUNT",
     });
     this.props.dispatch({
-      type: "GET_RESPOND_LIST_COUNT",
+      type: "GET_APPROVE_LIST_COUNT",
     });
     this.props.dispatch({
       type: "GET_PROGRESS_LIST_COUNT",
@@ -230,6 +231,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_RESPOND_LIST_COUNT",
                         });
+                         this.props.dispatch({
+                           type: "GET_APPROVE_LIST_COUNT",
+                         });
                         this.props.dispatch({
                           type: "GET_CONFIRM_LIST_COUNT",
                         });
@@ -277,6 +281,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_RESPOND_LIST_COUNT",
                         });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                         this.props.dispatch({
                           type: "GET_CONFIRM_LIST_COUNT",
                         });
@@ -382,6 +389,17 @@ class Nav extends Component {
                     {`(${
                       this.props.respondlistcount[0] &&
                       this.props.respondlistcount[0].count
+                    })`}
+                  </Link>
+                  <Link
+                    className={this.state.backgroundcolorclass}
+                    to="/Approved"
+                  >
+                    <ThumbUpIcon></ThumbUpIcon>
+                    Approved{" "}
+                    {`(${
+                      this.props.approvelistcount[0] &&
+                      this.props.approvelistcount[0].count
                     })`}
                   </Link>
                   <Link
@@ -513,6 +531,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_RESPOND_LIST_COUNT",
                         });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                         this.props.dispatch({
                           type: "GET_CONFIRM_LIST_COUNT",
                         });
@@ -560,6 +581,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_RESPOND_LIST_COUNT",
                         });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                         this.props.dispatch({
                           type: "GET_CONFIRM_LIST_COUNT",
                         });
@@ -638,6 +662,7 @@ const mapStateToProps = (state) => ({
   progresslistcount: state.item.progresslistcount,
   confirmlistcount: state.item.confirmlistcount,
   respondlistcount: state.item.respondlistcount,
+  approvelistcount: state.item.approvelistcount,
   completelistcount: state.item.completelistcount,
 });
 

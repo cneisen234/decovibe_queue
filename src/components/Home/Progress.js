@@ -35,6 +35,9 @@ class Progress extends Component {
            type: "GET_RESPOND_LIST_COUNT",
          });
           this.props.dispatch({
+            type: "GET_APPROVE_LIST_COUNT",
+          });
+          this.props.dispatch({
             type: "GET_CUSTOM_ITEM_LIST_COUNT",
           });
              this.props.dispatch({
@@ -119,6 +122,9 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
+                   this.props.dispatch({
+                     type: "GET_APPROVE_LIST_COUNT",
+                   });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -187,6 +193,9 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
+                   this.props.dispatch({
+                     type: "GET_APPROVE_LIST_COUNT",
+                   });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -241,6 +250,9 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
+                   this.props.dispatch({
+                     type: "GET_APPROVE_LIST_COUNT",
+                   });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -292,6 +304,9 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
+                   this.props.dispatch({
+                     type: "GET_APPROVE_LIST_COUNT",
+                   });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -353,6 +368,9 @@ class Progress extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
+                       this.props.dispatch({
+                         type: "GET_APPROVE_LIST_COUNT",
+                       });
                       this.props.dispatch({
                         type: "GET_CONFIRM_LIST_COUNT",
                       });
@@ -620,6 +638,9 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
+                           this.props.dispatch({
+                             type: "GET_APPROVE_LIST_COUNT",
+                           });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -687,6 +708,9 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
+                           this.props.dispatch({
+                             type: "GET_APPROVE_LIST_COUNT",
+                           });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -741,6 +765,9 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
+                           this.props.dispatch({
+                             type: "GET_APPROVE_LIST_COUNT",
+                           });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -780,6 +807,9 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
+                           this.props.dispatch({
+                             type: "GET_APPROVE_LIST_COUNT",
+                           });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -838,6 +868,9 @@ class Progress extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
+                               this.props.dispatch({
+                                 type: "GET_APPROVE_LIST_COUNT",
+                               });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });

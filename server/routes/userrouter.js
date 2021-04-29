@@ -566,6 +566,26 @@ router.post("/customerresponse", (req, res, next) => {
       created_at = result.rows[0].created_at;
       priority = result.rows[0].priority;
       //populate info into the response table that's pulled from the previous query
+      if (approve === 'yes') {
+           const query2Text =
+             'INSERT INTO "customerapproved" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority, upload_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id';
+           pool.query(query2Text, [
+             email,
+             first_name,
+             last_name,
+             order_number,
+             sku,
+             qty,
+             assigned,
+             approve,
+             comments,
+             created_at,
+             token,
+             description,
+             priority,
+             pic,
+           ]);
+      } else {
       const query2Text =
         'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority, upload_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id';
       pool
@@ -585,6 +605,7 @@ router.post("/customerresponse", (req, res, next) => {
           priority,
           pic,
         ])
+      }
         //...and save any cooraspondance into the history
          const query3Text =
         'INSERT INTO "history" (email, first_name, last_name, order_number, sku, qty, assigned, comment_made_at, customercomments) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
@@ -850,7 +871,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
             let buttonsArray = [];
             //join the array into one string
               buttonsArray.push(
-                `<div style="width: 500px;"><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Click to Reply</i></button></a></div>
+                `<div style="width: 500px;"><a style="font-size:15px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Click to Reply</i></button></a></div>
 `
               );
             let buttonsJoined = buttonsArray.join("");
@@ -1001,15 +1022,15 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                 if (payment_link === "" || payment_link === null) {
                   //...if a payment link was not sent, push the below html
                   buttonsArray.push(
-                    `<div style="width: 250px;"><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
-                             <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div><br><br><br><br>
+                    `<div style="width: 250px;"><div><a style="font-size:15px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
+                             <div><a style="font-size:15px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div><br><br><br><br>
 `
                   );
                 } else {
                   //...if a payment link was sent, push the below html which includes a payment link
                   buttonsArray.push(
-                    `<div style="width: 250px;"><div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
-                             <div><a style="font-size:15px; text-decoration: none;" href="https://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div>
+                    `<div style="width: 250px;"><div><a style="font-size:15px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/${token}"><button style="background-color: white; color: #909090; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:left;"><i>Request Changes</i></button></a></div>
+                             <div><a style="font-size:15px; text-decoration: none;" href="http://decoqueue.heattransferwarehouse.com/#/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/${token}"><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; padding: 15px; width: 50%; float:right;"><i>Approve</i></button></a></div></div>
                              <div><a style="font-size:30px; text-decoration: none;" href=${payment_link}><button style="background-color: #006bd6; color: white; font-family:Arial Narrow, sans-serif; text-align: center; width: 250px; margin: 0px; padding: 15px;"><i>Finalize Payment</i></button></a><br><br></div>`
                   );
                 }

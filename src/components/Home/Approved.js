@@ -12,7 +12,7 @@ import FlagIcon from "@material-ui/icons/Flag";
 import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import Form from "react-bootstrap/Form";
 
-class Response extends Component {
+class Approved extends Component {
   state = {
     toggle2: false,
     toggle3: false,
@@ -79,9 +79,12 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST",
     });
-      this.props.dispatch({
-        type: "GET_REPLIES",
-      });
+     this.props.dispatch({
+       type: "GET_APPROVE_LIST",
+     });
+    this.props.dispatch({
+      type: "GET_REPLIES",
+    });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
@@ -91,9 +94,9 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+       this.props.dispatch({
+         type: "GET_APPROVE_LIST_COUNT",
+       });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST_COUNT",
     });
@@ -122,8 +125,11 @@ class Response extends Component {
     this.setState({
       toggle: !this.state.toggle,
     });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
       this.props.dispatch({
-        type: "GET_RESPOND_LIST",
+        type: "GET_APPROVE_LIST",
       });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
@@ -134,9 +140,9 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+       this.props.dispatch({
+         type: "GET_APPROVE_LIST_COUNT",
+       });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -154,9 +160,12 @@ class Response extends Component {
     this.setState({
       toggle2: !this.state.toggle2,
     });
-      this.props.dispatch({
-        type: "GET_RESPOND_LIST",
-      });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
+     this.props.dispatch({
+       type: "GET_APPROVE_LIST",
+     });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
@@ -166,9 +175,9 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+      this.props.dispatch({
+        type: "GET_APPROVE_LIST_COUNT",
+      });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -186,8 +195,11 @@ class Response extends Component {
     this.setState({
       toggle4: !this.state.toggle4,
     });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
       this.props.dispatch({
-        type: "GET_RESPOND_LIST",
+        type: "GET_APPROVE_LIST",
       });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
@@ -231,9 +243,12 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
-      this.props.dispatch({
-        type: "GET_RESPOND_LIST",
-      });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
+        this.props.dispatch({
+          type: "GET_APPROVE_LIST",
+        });
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
@@ -266,21 +281,21 @@ class Response extends Component {
 
   render() {
     let dataSelector = this.state.dataSelector;
-    const data = this.props.respondlist.map((respond) => [
-      respond.order_number,
-      respond.first_name,
-      respond.last_name,
-      respond.approve,
-      respond.assigned,
-      respond.comments,
-      respond.created_at,
-      respond.priority,
+    const data = this.props.approvelist.map((approve) => [
+      approve.order_number,
+      approve.first_name,
+      approve.last_name,
+      approve.approve,
+      approve.assigned,
+      approve.comments,
+      approve.created_at,
+      approve.priority,
     ]);
     return (
       <div>
         <br />
         <center>
-          <h1>Customer Response</h1>
+          <h1>Approvals</h1>
         </center>
 
         <div style={{ padding: "1.5%" }}>
@@ -326,7 +341,7 @@ class Response extends Component {
                           },
                         });
                         this.props.dispatch({
-                          type: "DELETE_RESPOND",
+                          type: "DELETE_APPROVE",
                           payload: element.id,
                         });
                       }
@@ -339,9 +354,9 @@ class Response extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
+                        this.props.dispatch({
+                          type: "GET_APPROVE_LIST_COUNT",
+                        });
                       this.props.dispatch({
                         type: "GET_CONFIRM_LIST_COUNT",
                       });
@@ -382,7 +397,7 @@ class Response extends Component {
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
                     this.props.dispatch({
-                      type: "MARK_PRIORITY_RESPOND",
+                      type: "MARK_PRIORITY_APPROVE",
                       payload: {
                         id: element.id,
                         priority: "high",
@@ -392,6 +407,9 @@ class Response extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST",
                   });
+                   this.props.dispatch({
+                     type: "GET_APPROVE_LIST",
+                   });
                   this.props.dispatch({
                     type: "GET_ITEM_LIST_COUNT",
                   });
@@ -435,7 +453,7 @@ class Response extends Component {
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
                     this.props.dispatch({
-                      type: "MARK_PRIORITY_RESPOND",
+                      type: "MARK_PRIORITY_APPROVE",
                       payload: {
                         id: element.id,
                         priority: "low",
@@ -451,9 +469,9 @@ class Response extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
+                    this.props.dispatch({
+                      type: "GET_APPROVE_LIST_COUNT",
+                    });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -501,22 +519,25 @@ class Response extends Component {
                       ) {
                         const element = dataSelector[index];
                         this.props.dispatch({
-                          type: "DELETE_RESPOND",
+                          type: "DELETE_APPROVE",
                           payload: element.id,
                         });
                       }
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST",
                       });
+                       this.props.dispatch({
+                         type: "GET_APPROVE_LIST",
+                       });
                       this.props.dispatch({
                         type: "GET_ITEM_LIST_COUNT",
                       });
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
+                        this.props.dispatch({
+                          type: "GET_APPROVE_LIST_COUNT",
+                        });
                       this.props.dispatch({
                         type: "GET_CONFIRM_LIST_COUNT",
                       });
@@ -573,7 +594,7 @@ class Response extends Component {
                         onClick={(event) => {
                           let checkChecked = document.getElementById(dataIndex)
                             .checked;
-                          const itemArray = this.props.respondlist;
+                          const itemArray = this.props.approvelist;
                           const item = itemArray[dataIndex];
                           if (checkChecked === true) {
                             dataSelector.push(item);
@@ -611,12 +632,12 @@ class Response extends Component {
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return (
-                      this.props.respondlist[dataIndex] && (
+                      this.props.approvelist[dataIndex] && (
                         <Button
                           variant="success"
                           onClick={(event) => {
                             event.preventDefault();
-                            const itemArray = this.props.respondlist;
+                            const itemArray = this.props.approvelist;
                             const item = itemArray[dataIndex];
                             const order_number = item.order_number;
                             const sku = item.sku;
@@ -751,13 +772,13 @@ class Response extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.respondlist[dataIndex] &&
-                      this.props.respondlist[dataIndex].upload_url !== null ? (
+                    return this.props.approvelist[dataIndex] &&
+                      this.props.approvelist[dataIndex].upload_url !== null ? (
                       <Button
                         variant="success"
                         onClick={(event) => {
                           event.preventDefault();
-                          const itemArray = this.props.respondlist;
+                          const itemArray = this.props.approvelist;
                           const item = itemArray[dataIndex];
                           window.open(item.upload_url);
                         }}
@@ -777,14 +798,14 @@ class Response extends Component {
                   sort: false,
                   empty: true,
                   customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.respondlist[dataIndex] &&
-                      this.props.respondlist[dataIndex].approve === "yes" &&
+                    return this.props.approvelist[dataIndex] &&
+                      this.props.approvelist[dataIndex].approve === "yes" &&
                       this.props.user.role !== "csr" ? (
                       <Button
                         variant="success"
                         onClick={(event) => {
                           event.preventDefault();
-                          const itemArray = this.props.respondlist;
+                          const itemArray = this.props.approvelist;
                           const item = itemArray[dataIndex];
                           swal({
                             title: "Mark Complete?",
@@ -811,7 +832,7 @@ class Response extends Component {
                                 },
                               });
                               this.props.dispatch({
-                                type: "DELETE_RESPOND",
+                                type: "DELETE_APPROVE",
                                 payload: item.id,
                               });
                               this.props.dispatch({
@@ -823,9 +844,9 @@ class Response extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
-                               this.props.dispatch({
-                                 type: "GET_APPROVE_LIST_COUNT",
-                               });
+                                this.props.dispatch({
+                                  type: "GET_APPROVE_LIST_COUNT",
+                                });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });
@@ -861,16 +882,16 @@ class Response extends Component {
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return this.props.user.role === "csr" ? (
                       <span></span>
-                    ) : this.props.respondlist[dataIndex] &&
-                      this.props.respondlist[dataIndex].priority === "low" ? (
+                    ) : this.props.approvelist[dataIndex] &&
+                      this.props.approvelist[dataIndex].priority === "low" ? (
                       <Button
                         variant="success"
                         onClick={(event) => {
                           event.preventDefault();
-                          const itemArray = this.props.respondlist;
+                          const itemArray = this.props.approvelist;
                           const item = itemArray[dataIndex];
                           this.props.dispatch({
-                            type: "MARK_PRIORITY_RESPOND",
+                            type: "MARK_PRIORITY_APPROVE",
                             payload: {
                               id: item.id,
                               priority: "high",
@@ -879,6 +900,9 @@ class Response extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST",
                           });
+                            this.props.dispatch({
+                              type: "GET_APPROVE_LIST",
+                            });
                           this.props.dispatch({
                             type: "GET_ITEM_LIST_COUNT",
                           });
@@ -909,10 +933,10 @@ class Response extends Component {
                         variant="danger"
                         onClick={(event) => {
                           event.preventDefault();
-                          const itemArray = this.props.respondlist;
+                          const itemArray = this.props.approvelist;
                           const item = itemArray[dataIndex];
                           this.props.dispatch({
-                            type: "MARK_PRIORITY_RESPOND",
+                            type: "MARK_PRIORITY_APPROVE",
                             payload: {
                               id: item.id,
                               priority: "low",
@@ -921,6 +945,9 @@ class Response extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST",
                           });
+                            this.props.dispatch({
+                              type: "GET_APPROVE_LIST",
+                            });
                           this.props.dispatch({
                             type: "GET_ITEM_LIST_COUNT",
                           });
@@ -964,7 +991,7 @@ class Response extends Component {
                         variant="danger"
                         onClick={(event) => {
                           event.preventDefault();
-                          const itemArray = this.props.respondlist;
+                          const itemArray = this.props.approvelist;
                           const item = itemArray[dataIndex];
                           swal({
                             title: "Are you sure?",
@@ -976,7 +1003,7 @@ class Response extends Component {
                           }).then((willDelete) => {
                             if (willDelete) {
                               this.props.dispatch({
-                                type: "DELETE_RESPOND",
+                                type: "DELETE_APPROVE",
                                 payload: item.id,
                               });
                               this.props.dispatch({
@@ -988,9 +1015,9 @@ class Response extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
-                               this.props.dispatch({
-                                 type: "GET_APPROVE_LIST_COUNT",
-                               });
+                                this.props.dispatch({
+                                  type: "GET_APPROVE_LIST_COUNT",
+                                });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });
@@ -1475,7 +1502,7 @@ class Response extends Component {
                               },
                             });
                             this.props.dispatch({
-                              type: "DELETE_RESPOND",
+                              type: "DELETE_APPROVE",
                               payload: this.state.id,
                             });
                             this.props.dispatch({
@@ -1487,9 +1514,9 @@ class Response extends Component {
                             this.props.dispatch({
                               type: "GET_RESPOND_LIST_COUNT",
                             });
-                             this.props.dispatch({
-                               type: "GET_APPROVE_LIST_COUNT",
-                             });
+                               this.props.dispatch({
+                                 type: "GET_APPROVE_LIST_COUNT",
+                               });
                             this.props.dispatch({
                               type: "GET_CUSTOM_ITEM_LIST_COUNT",
                             });
@@ -1568,7 +1595,8 @@ const mapStateToProps = (state) => ({
   user: state.user,
   customitemlist: state.item.customitemlist,
   respondlist: state.item.respondlist,
+  approvelist: state.item.approvelist,
   detailslist: state.item.detailslist,
   replieslist: state.item.replieslist,
 });
-export default connect(mapStateToProps)(Response);
+export default connect(mapStateToProps)(Approved);
