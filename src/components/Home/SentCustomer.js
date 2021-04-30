@@ -16,6 +16,7 @@ class SentCustomer extends Component {
     sku: "",
     assigned: "",
     created_at: "",
+    item_type: "",
     toggle2: false,
   };
   componentDidMount() {
@@ -85,6 +86,7 @@ class SentCustomer extends Component {
       item.order_number,
       item.first_name,
       item.last_name,
+      item.item_type,
       item.assigned,
       item.created_at,
       item.priority,
@@ -103,6 +105,7 @@ class SentCustomer extends Component {
               { name: "Order Number" },
               { name: "First Name" },
               { name: "Last Name" },
+              { name: "Item Type"},
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
@@ -134,6 +137,7 @@ class SentCustomer extends Component {
                             const id = item.id;
                             const priority = item.priority;
                             const payment_link = this.state.payment_link;
+                            const item_type = item.item_type;
                             this.setState({
                               toggle2: !this.state.toggle2,
                               order_number: order_number,
@@ -148,6 +152,7 @@ class SentCustomer extends Component {
                               id: id,
                               priority: priority,
                               payment_link: payment_link,
+                              item_type: item_type,
                             });
                             this.props.dispatch({
                               type: "ORDER_DETAILS",

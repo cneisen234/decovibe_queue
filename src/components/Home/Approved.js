@@ -74,6 +74,7 @@ class Approved extends Component {
     comment_id: "",
     error: false,
     payment_link: null,
+    item_type: "",
   };
   componentDidMount() {
     this.props.dispatch({
@@ -285,6 +286,7 @@ class Approved extends Component {
       approve.order_number,
       approve.first_name,
       approve.last_name,
+      approve.item_type,
       approve.approve,
       approve.assigned,
       approve.comments,
@@ -330,6 +332,7 @@ class Approved extends Component {
                             email: element.email,
                             first_name: element.first_name,
                             last_name: element.last_name,
+                            item_type: element.item_type,
                             order_number: element.order_number,
                             sku: element.sku,
                             description: element.description,
@@ -619,6 +622,7 @@ class Approved extends Component {
               { name: "Order Number" },
               { name: "First Name" },
               { name: "Last Name" },
+              { name: "Item Type"},
               { name: "Approved" },
               { name: "Assigned" },
               { name: "Comments" },
@@ -647,6 +651,7 @@ class Approved extends Component {
                             const qty = item.qty;
                             const assigned = item.assigned;
                             const created_at = item.created_at;
+                            const item_type = item.item_type;
                             const id = item.id;
                             this.setState({
                               toggle2: !this.state.toggle2,
@@ -660,6 +665,7 @@ class Approved extends Component {
                               created_at: created_at,
                               id: id,
                               payment_link: null,
+                              item_type: item_type,
                             });
                             console.log(
                               "this is state",
@@ -823,6 +829,7 @@ class Approved extends Component {
                                   email: item.email,
                                   first_name: item.first_name,
                                   last_name: item.last_name,
+                                  item_type: item.item_type,
                                   order_number: item.order_number,
                                   sku: item.sku,
                                   description: item.description,
@@ -1499,6 +1506,7 @@ class Approved extends Component {
                                 created_at: this.state.created_at,
                                 priority: this.state.priority,
                                 payment_link: this.state.payment_link,
+                                item_type: this.state.item_type,
                               },
                             });
                             this.props.dispatch({

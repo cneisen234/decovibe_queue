@@ -79,6 +79,7 @@ class NewCustom extends Component {
     comment_id: "",
     error: false,
     payment_link: null,
+    item_type: "",
   };
   componentDidMount() {
     this.props.dispatch({
@@ -260,6 +261,7 @@ class NewCustom extends Component {
       item.order_number,
       item.first_name,
       item.last_name,
+      item.item_type,
       item.assigned,
       item.created_at,
       item.priority,
@@ -314,6 +316,7 @@ class NewCustom extends Component {
                             email: element.email,
                             first_name: element.first_name,
                             last_name: element.last_name,
+                            item_type: element.item_type,
                             order_number: element.order_number,
                             sku: element.sku,
                             description: element.description,
@@ -597,6 +600,7 @@ class NewCustom extends Component {
               { name: "Order Number" },
               { name: "First Name" },
               { name: "Last Name" },
+              { name: "Item Type"},
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
@@ -616,6 +620,7 @@ class NewCustom extends Component {
                             const itemArray = this.props.customitemlist;
                             const item = itemArray[dataIndex];
                             const order_number = item.order_number;
+                            const item_type = item.item_type;
                             const sku = item.sku;
                             const description = item.description;
                             const email = item.email;
@@ -641,6 +646,7 @@ class NewCustom extends Component {
                               id: id,
                               priority: priority,
                               payment_link: payment_link,
+                              item_type: item_type,
                             });
                             this.props.dispatch({
                               type: "ORDER_DETAILS",
@@ -721,6 +727,7 @@ class NewCustom extends Component {
                                     email: item.email,
                                     first_name: item.first_name,
                                     last_name: item.last_name,
+                                    item_type: item.item_type,
                                     order_number: item.order_number,
                                     sku: item.sku,
                                     description: item.description,
@@ -1451,6 +1458,7 @@ class NewCustom extends Component {
                                     email: this.state.email,
                                     first_name: this.state.first_name,
                                     last_name: this.state.last_name,
+                                    item_type: this.state.item_type,
                                     order_number: this.state.order_number,
                                     sku: this.state.sku,
                                     description: this.state.description,

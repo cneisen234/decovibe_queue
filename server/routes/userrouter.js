@@ -98,6 +98,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
           let first_name = order.billing_address.first_name;
           let last_name = order.billing_address.last_name;
           let payment_status = order.payment_status;
+          let item_type = "";
           const queryText = `SELECT * from "item" where order_number=$1;`;
           pool
             .query(queryText, [orderID])
@@ -189,6 +190,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                               decoSku5 = decoSku.slice(0, 3);
                                               decoSku6 = decoSku.slice(0, 8);
                                               decoSku7 = decoSku.slice(0, 7);
+                                              decoSku8 = decoSku.slice(0, 11);
 
                                               if (
                                                 //if the sliced skews match the below criteria...
@@ -347,13 +349,66 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 decoSku7 === "DYESUB-" ||
                                                 decoSku4 === "FINAL"
                                               ) {
+                                                       if (
+                                                         decoSku7 ===
+                                                           "DYESUB-" ||
+                                                         decoSku8 ===
+                                                           "FINAL-DYESU"
+                                                       ) {
+                                                         item_type =
+                                                           "Custom Dye Sublimation";
+                                                       } else if (
+                                                         decoSku8 ===
+                                                         "FINAL-RHINE"
+                                                       ) {
+                                                         item_type =
+                                                           "Custom Rhinestone";
+                                                       } else if (
+                                                         decoSku8 ===
+                                                         "FINAL-DIGIT"
+                                                       ) {
+                                                         item_type =
+                                                           "Custom Digital";
+                                                       } else if (
+                                                         decoSku8 ===
+                                                         "FINAL-SIGNT"
+                                                       ) {
+                                                         item_type =
+                                                           "Custom Sign";
+                                                       } else if (
+                                                         decoSku4 === "BL_A3" ||
+                                                         decoSku4 === "BL_A4" ||
+                                                         decoSku4 === "BL_A5" ||
+                                                         decoSku4 === "BL_LC" ||
+                                                         decoSku4 === "BL_SM" ||
+                                                         decoSku3 ===
+                                                           "HW_CAP" ||
+                                                         decoSku3 ===
+                                                           "PR_BAG" ||
+                                                         decoSku3 ===
+                                                           "PR_UM_" ||
+                                                         decoSku4 === "SB_A5" ||
+                                                         decoSku4 === "SB_A4" ||
+                                                         decoSku4 === "SB_A3" ||
+                                                         decoSku4 === "SB_LC" ||
+                                                         decoSku4 === "SB_SM" ||
+                                                         decoSku4 === "SB_LS" ||
+                                                         decoSku4 === "WE_SM" ||
+                                                         decoSku4 === "WE_LC" ||
+                                                         decoSku4 === "WE_A5" ||
+                                                         decoSku4 === "WE_A4" ||
+                                                         decoSku4 === "WE_A3"
+                                                       ) {
+                                                         item_type =
+                                                           "SupaColor";
+                                                       }
                                                 //...place in the custom queue
                                                 console.log(
                                                   orderID,
                                                   "goes into custom queue"
                                                 );
                                                 const query2Text =
-                                                  'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id';
+                                                  'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at, description, item_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
                                                 pool.query(query2Text, [
                                                   email,
                                                   first_name,
@@ -363,6 +418,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                   qty,
                                                   dateString,
                                                   name,
+                                                  item_type,
                                                 ]);
                                               } else {
                                                 //...ignore everything else
@@ -565,10 +621,11 @@ router.post("/customerresponse", (req, res, next) => {
       assigned = result.rows[0].assigned;
       created_at = result.rows[0].created_at;
       priority = result.rows[0].priority;
+      item_type = result.rows[0].item_type;
       //populate info into the response table that's pulled from the previous query
       if (approve === 'yes') {
            const query2Text =
-             'INSERT INTO "customerapproved" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority, upload_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id';
+             'INSERT INTO "customerapproved" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority, upload_url, item_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id';
            pool.query(query2Text, [
              email,
              first_name,
@@ -584,10 +641,11 @@ router.post("/customerresponse", (req, res, next) => {
              description,
              priority,
              pic,
+             item_type,
            ]);
       } else {
       const query2Text =
-        'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority, upload_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING id';
+        'INSERT INTO "customerrespond" (email, first_name, last_name, order_number, sku, qty, assigned, approve, comments, created_at, token, description, priority, upload_url, item_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id';
       pool
         .query(query2Text, [
           email,
@@ -604,6 +662,7 @@ router.post("/customerresponse", (req, res, next) => {
           description,
           priority,
           pic,
+          item_type,
         ])
       }
         //...and save any cooraspondance into the history
@@ -694,6 +753,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   const comments = req.body.comments;
   const priority = req.body.priority;
   const payment_link = req.body.payment_link;
+  const item_type = req.body.item_type;
   //generates unique customer identifer
   let token = crypto.randomBytes(16).toString("hex");
   //defines the date
@@ -968,9 +1028,9 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                      decoSku7 === "DYESUB-" ||
                      decoSku4 === "FINAL"
                    ) {
-                     //checks if the sku is the one that matches the one the email is pertaining to
-                     //...if so, push the array
-                     proofString = `<div><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; width: 250px; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px;"><i>View Proof</i></button></a></div><br><br>`;
+                       //checks if the sku is the one that matches the one the email is pertaining to
+                       //...if so, push the array
+                       proofString = `<div><a style="font-size:30px; text-decoration: none;" href=${pic[index]}><button style="background-color: #006bd6; width: 250px; color: white; font-size: 20px; font-family:Arial Narrow, sans-serif; text-align: center; margin: 0px; padding: 25px;"><i>View Proof</i></button></a></div><br><br>`;
                      newArray.push(
                        `<tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Item Name:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.name}</td></tr>
               <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Quantity:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${element.quantity}</td></tr>`
@@ -1087,7 +1147,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
     });
     //...then place into the customer confirm table until the customer responds
   const query2Text =
-    'INSERT INTO "customerconfirm" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, upload_url1, upload_url2, upload_url3, upload_url4, upload_url5, upload_url6, upload_url7, upload_url8, upload_url9, upload_url10, upload_url11, upload_url12, upload_url13, upload_url14, upload_url15, upload_url16, upload_url17, upload_url18, upload_url19, upload_url20, comments, token, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32) RETURNING id';
+    'INSERT INTO "customerconfirm" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, upload_url1, upload_url2, upload_url3, upload_url4, upload_url5, upload_url6, upload_url7, upload_url8, upload_url9, upload_url10, upload_url11, upload_url12, upload_url13, upload_url14, upload_url15, upload_url16, upload_url17, upload_url18, upload_url19, upload_url20, comments, token, description, priority, item_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33) RETURNING id';
   pool.query(query2Text, [
     email,
     first_name,
@@ -1121,6 +1181,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
     token,
     description,
     priority,
+    item_type,
   ]);
   //...then place into the history table to keep track of coraspondance
   const query3Text =
@@ -1163,8 +1224,9 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
   const assigned = req.body.assigned;
   const created_at = req.body.created_at;
   const priority = req.body.priority;
+  const item_type = req.body.item_type;
   const query2Text =
-    'INSERT INTO "complete" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at, description, priority) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id';
+    'INSERT INTO "complete" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at, description, priority, item_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id';
   pool
     .query(query2Text, [
       email,
@@ -1179,6 +1241,7 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
       created_at,
       description,
       priority,
+      item_type
     ])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {

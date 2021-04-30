@@ -74,6 +74,7 @@ class Response extends Component {
     comment_id: "",
     error: false,
     payment_link: null,
+    item_type: "",
   };
   componentDidMount() {
     this.props.dispatch({
@@ -270,6 +271,7 @@ class Response extends Component {
       respond.order_number,
       respond.first_name,
       respond.last_name,
+      respond.item_type,
       respond.approve,
       respond.assigned,
       respond.comments,
@@ -315,6 +317,7 @@ class Response extends Component {
                             email: element.email,
                             first_name: element.first_name,
                             last_name: element.last_name,
+                            item_type: element.item_type,
                             order_number: element.order_number,
                             sku: element.sku,
                             description: element.description,
@@ -598,6 +601,7 @@ class Response extends Component {
               { name: "Order Number" },
               { name: "First Name" },
               { name: "Last Name" },
+              { name: "Item Type"},
               { name: "Approved" },
               { name: "Assigned" },
               { name: "Comments" },
@@ -802,6 +806,7 @@ class Response extends Component {
                                   email: item.email,
                                   first_name: item.first_name,
                                   last_name: item.last_name,
+                                  item_type: item.item_type,
                                   order_number: item.order_number,
                                   sku: item.sku,
                                   description: item.description,
@@ -1472,6 +1477,7 @@ class Response extends Component {
                                 created_at: this.state.created_at,
                                 priority: this.state.priority,
                                 payment_link: this.state.payment_link,
+                                item_type: this.state.item_type,
                               },
                             });
                             this.props.dispatch({
