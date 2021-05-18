@@ -309,6 +309,175 @@ class NewCustom extends Component {
                         index++
                       ) {
                         const element = dataSelector[index];
+                          let order_id = element.order_number;
+                           let uploadArray = [];
+                                                      {
+                              this.props.customitemlist.map((orderItem) => {
+                                order_id = String(order_id);
+                                if (orderItem.order_number === order_id) {
+                                  if (
+                                    orderItem.upload_url1 !== "" &&
+                                    orderItem.upload_url1 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url1);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url2 !== "" &&
+                                    orderItem.upload_url2 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url2);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url3 !== "" &&
+                                    orderItem.upload_url3 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url3);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url4 !== "" &&
+                                    orderItem.upload_url4 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url4);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url5 !== "" &&
+                                    orderItem.upload_url5 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url5);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url6 !== "" &&
+                                    orderItem.upload_url6 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url1);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url7 !== "" &&
+                                    orderItem.upload_url7 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url7);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url8 !== "" &&
+                                    orderItem.upload_url8 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url8);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url9 !== "" &&
+                                    orderItem.upload_url9 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url9);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url10 !== "" &&
+                                    orderItem.upload_url10 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url10);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url11 !== "" &&
+                                    orderItem.upload_url11 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url11);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url12 !== "" &&
+                                    orderItem.upload_url12 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url12);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url13 !== "" &&
+                                    orderItem.upload_url13 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url13);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url14 !== "" &&
+                                    orderItem.upload_url14 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url14);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url15 !== "" &&
+                                    orderItem.upload_url15 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url15);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url16 !== "" &&
+                                    orderItem.upload_url16 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url16);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url17 !== "" &&
+                                    orderItem.upload_url17 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url17);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url18 !== "" &&
+                                    orderItem.upload_url18 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url18);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url19 !== "" &&
+                                    orderItem.upload_url19 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url19);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url20 !== "" &&
+                                    orderItem.upload_url20 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url20);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                }
+                              });
+                            }
                         this.props.dispatch({
                           type: "MARK_COMPLETE",
                           payload: {
@@ -324,6 +493,26 @@ class NewCustom extends Component {
                             product_options: element.product_options,
                             qty: element.qty,
                             assigned: element.assigned,
+                            pic1: uploadArray[0],
+                            pic2: uploadArray[1],
+                            pic3: uploadArray[2],
+                            pic4: uploadArray[3],
+                            pic5: uploadArray[4],
+                            pic6: uploadArray[5],
+                            pic7: uploadArray[6],
+                            pic8: uploadArray[7],
+                            pic9: uploadArray[8],
+                            pic10: uploadArray[9],
+                            pic11: uploadArray[10],
+                            pic12: uploadArray[11],
+                            pic13: uploadArray[12],
+                            pic14: uploadArray[13],
+                            pic15: uploadArray[14],
+                            pic16: uploadArray[15],
+                            pic17: uploadArray[16],
+                            pic18: uploadArray[17],
+                            pic19: uploadArray[18],
+                            pic20: uploadArray[19],
                             created_at: element.created_at,
                             priority: element.priority,
                           },
@@ -711,6 +900,219 @@ class NewCustom extends Component {
                             event.preventDefault();
                             const itemArray = this.props.customitemlist;
                             const item = itemArray[dataIndex];
+                                  let order_id = item.order_number;
+                                  let uploadArray = [];
+                                  {
+                                    this.props.customitemlist.map(
+                                      (orderItem) => {
+                                        order_id = String(order_id);
+                                        if (
+                                          orderItem.order_number === order_id
+                                        ) {
+                                          if (
+                                            orderItem.upload_url1 !== "" &&
+                                            orderItem.upload_url1 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url1
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url2 !== "" &&
+                                            orderItem.upload_url2 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url2
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url3 !== "" &&
+                                            orderItem.upload_url3 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url3
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url4 !== "" &&
+                                            orderItem.upload_url4 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url4
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url5 !== "" &&
+                                            orderItem.upload_url5 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url5
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url6 !== "" &&
+                                            orderItem.upload_url6 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url1
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url7 !== "" &&
+                                            orderItem.upload_url7 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url7
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url8 !== "" &&
+                                            orderItem.upload_url8 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url8
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url9 !== "" &&
+                                            orderItem.upload_url9 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url9
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url10 !== "" &&
+                                            orderItem.upload_url10 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url10
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url11 !== "" &&
+                                            orderItem.upload_url11 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url11
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url12 !== "" &&
+                                            orderItem.upload_url12 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url12
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url13 !== "" &&
+                                            orderItem.upload_url13 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url13
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url14 !== "" &&
+                                            orderItem.upload_url14 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url14
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url15 !== "" &&
+                                            orderItem.upload_url15 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url15
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url16 !== "" &&
+                                            orderItem.upload_url16 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url16
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url17 !== "" &&
+                                            orderItem.upload_url17 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url17
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url18 !== "" &&
+                                            orderItem.upload_url18 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url18
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url19 !== "" &&
+                                            orderItem.upload_url19 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url19
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                          if (
+                                            orderItem.upload_url20 !== "" &&
+                                            orderItem.upload_url20 !== null
+                                          ) {
+                                            uploadArray.push(
+                                              orderItem.upload_url20
+                                            );
+                                          } else {
+                                            uploadArray.push("");
+                                          }
+                                        }
+                                      }
+                                    );
+                                  }
                             swal({
                               title: "Mark Complete?",
                               text:
@@ -733,6 +1135,26 @@ class NewCustom extends Component {
                                     description: item.description,
                                     qty: item.qty,
                                     assigned: item.assigned,
+                                    pic1: uploadArray[0],
+                                    pic2: uploadArray[1],
+                                    pic3: uploadArray[2],
+                                    pic4: uploadArray[3],
+                                    pic5: uploadArray[4],
+                                    pic6: uploadArray[5],
+                                    pic7: uploadArray[6],
+                                    pic8: uploadArray[7],
+                                    pic9: uploadArray[8],
+                                    pic10: uploadArray[9],
+                                    pic11: uploadArray[10],
+                                    pic12: uploadArray[11],
+                                    pic13: uploadArray[12],
+                                    pic14: uploadArray[13],
+                                    pic15: uploadArray[14],
+                                    pic16: uploadArray[15],
+                                    pic17: uploadArray[16],
+                                    pic18: uploadArray[17],
+                                    pic19: uploadArray[18],
+                                    pic20: uploadArray[19],
                                     created_at: item.created_at,
                                     priority: item.priority,
                                   },
@@ -1089,156 +1511,157 @@ class NewCustom extends Component {
                                let decoSku3 = decoSku.slice(0, 6);
                                let decoSku4 = decoSku.slice(0, 5);
                                let decoSku7 = decoSku.slice(0, 7);
+                               let decoSku6 = decoSku.slice(0, 8);
                       if (
-                      //if the sliced skus meet the below conditions
-                      decoSku4 === "BL_A3" ||
-                      decoSku4 === "BL_A4" ||
-                      decoSku4 === "BL_A5" ||
-                      decoSku4 === "BL_LC" ||
-                      decoSku4 === "BL_SM" ||
-                      decoSku3 === "HW_CAP" ||
-                      decoSku3 === "PR_BAG" ||
-                      decoSku3 === "PR_UM_" ||
-                      decoSku4 === "SB_A5" ||
-                      decoSku4 === "SB_A4" ||
-                      decoSku4 === "SB_A3" ||
-                      decoSku4 === "SB_LC" ||
-                      decoSku4 === "SB_SM" ||
-                      decoSku4 === "SB_LS" ||
-                      decoSku4 === "WE_SM" ||
-                      decoSku4 === "WE_LC" ||
-                      decoSku4 === "WE_A5" ||
-                      decoSku4 === "WE_A4" ||
-                      decoSku4 === "WE_A3" ||
-                      decoSku7 === "DYESUB-" ||
-                      decoSku4 === "FINAL"
-                    ) {
-                      return (
-                        <>
-                          <tr>
-                            <td
-                              style={{
-                                marginLeft: "3%",
-                                padding: "10px",
-                                width: "25%",
-                              }}
-                            >
-                              <b>Name:</b> {itemname}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td
-                              style={{
-                                marginLeft: "3%",
-                                padding: "10px",
-                                width: "25%",
-                              }}
-                            >
-                              <b>Sku:</b> {itemsku}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td
-                              style={{
-                                marginLeft: "3%",
-                                padding: "10px",
-                                width: "25%",
-                              }}
-                            >
-                              <b>QTY:</b> {itemqty}
-                            </td>
-                          </tr>
-                          <tr>
-                          </tr>
-                          {item.product_options.map((product, index) => {
-                            let display_name = product.display_name;
-                            let display_value = product.display_value;
-                            let new_display_name = display_name.slice(0, 10);
-                            return (
-                              <>
-                                {new_display_name === "Sheet Size" ? (
-                                  //if sheet size, cut off extra text
-                                  <tr>
-                                    <td
-                                      style={{
-                                        marginLeft: "3%",
-                                        padding: "10px",
-                                        width: "25%",
-                                      }}
-                                    >
-                                      <b>{new_display_name}:</b> {display_value}
-                                    </td>
-                                  </tr>
-                                ) : display_name === "Transfer Count" ? (
-                                  <span></span>
-                                ) : (
-                                  <tr>
-                                    <td
-                                      style={{
-                                        marginLeft: "3%",
-                                        padding: "10px",
-                                        width: "25%",
-                                      }}
-                                    >
-                                      <b>{display_name}:</b> {display_value}
-                                    </td>
-                                  </tr>
-                                )}
-                              </>
-                            );
-                            
-                          })}{" "}
-                          <br />
-                          <br />
-                          {this.props.user.role === "csr" ? (
-                            <span></span>
-                          ) : (
+                        //if the sliced skus meet the below conditions
+                        decoSku4 === "BL_A3" ||
+                        decoSku4 === "BL_A4" ||
+                        decoSku4 === "BL_A5" ||
+                        decoSku4 === "BL_LC" ||
+                        decoSku4 === "BL_SM" ||
+                        decoSku3 === "HW_CAP" ||
+                        decoSku3 === "PR_BAG" ||
+                        decoSku3 === "PR_UM_" ||
+                        decoSku4 === "SB_A5" ||
+                        decoSku4 === "SB_A4" ||
+                        decoSku4 === "SB_A3" ||
+                        decoSku4 === "SB_LC" ||
+                        decoSku4 === "SB_SM" ||
+                        decoSku4 === "SB_LS" ||
+                        decoSku4 === "WE_SM" ||
+                        decoSku4 === "WE_LC" ||
+                        decoSku4 === "WE_A5" ||
+                        decoSku4 === "WE_A4" ||
+                        decoSku4 === "WE_A3" ||
+                        decoSku7 === "DYESUB-" ||
+                        decoSku4 === "FINAL" ||
+                        decoSku6 === "FEE-VECT"
+                      ) {
+                        return (
+                          <>
                             <tr>
-                              <td>
-                                {/* filestack for photo uploads */}
-                                <ReactFilestack
-                                  apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
-                                  componentDisplayMode={{
-                                    customText: "Upload artwork",
-                                    customClass: "picUploader",
-                                  }}
-                                  onSuccess={(res) =>
-                                    this.setState({
-                                      //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
-                                      [pic]: res.filesUploaded[0].url,
-                                      [filename]:
-                                        res.filesUploaded[0].originalPath,
-                                    })
-                                  }
-                                />
-                                Uploaded file
+                              <td
+                                style={{
+                                  marginLeft: "3%",
+                                  padding: "10px",
+                                  width: "25%",
+                                }}
+                              >
+                                <b>Name:</b> {itemname}
                               </td>
                             </tr>
-                          )}
-                          {this.state[pic] !== "" ||
-                          this.props.user.role === "csr" ? (
                             <tr>
-                              <td>
-                                <a
-                                  href={this.state[pic]}
-                                  rel="noopener noreferrer"
-                                  target="_blank"
-                                >
-                                  <b>{this.state[filename]}</b>
-                                </a>
+                              <td
+                                style={{
+                                  marginLeft: "3%",
+                                  padding: "10px",
+                                  width: "25%",
+                                }}
+                              >
+                                <b>Sku:</b> {itemsku}
                               </td>
                             </tr>
-                          ) : (
-                            <span></span>
-                          )}
-                          <tr>
-                            <td>
-                              ----------------------------------------------
-                            </td>
-                          </tr>
-                        </>
-                      );
-                          }
+                            <tr>
+                              <td
+                                style={{
+                                  marginLeft: "3%",
+                                  padding: "10px",
+                                  width: "25%",
+                                }}
+                              >
+                                <b>QTY:</b> {itemqty}
+                              </td>
+                            </tr>
+                            <tr></tr>
+                            {item.product_options.map((product, index) => {
+                              let display_name = product.display_name;
+                              let display_value = product.display_value;
+                              let new_display_name = display_name.slice(0, 10);
+                              return (
+                                <>
+                                  {new_display_name === "Sheet Size" ? (
+                                    //if sheet size, cut off extra text
+                                    <tr>
+                                      <td
+                                        style={{
+                                          marginLeft: "3%",
+                                          padding: "10px",
+                                          width: "25%",
+                                        }}
+                                      >
+                                        <b>{new_display_name}:</b>{" "}
+                                        {display_value}
+                                      </td>
+                                    </tr>
+                                  ) : display_name === "Transfer Count" ? (
+                                    <span></span>
+                                  ) : (
+                                    <tr>
+                                      <td
+                                        style={{
+                                          marginLeft: "3%",
+                                          padding: "10px",
+                                          width: "25%",
+                                        }}
+                                      >
+                                        <b>{display_name}:</b> {display_value}
+                                      </td>
+                                    </tr>
+                                  )}
+                                </>
+                              );
+                            })}{" "}
+                            <br />
+                            <br />
+                            {this.props.user.role === "csr" ? (
+                              <span></span>
+                            ) : (
+                              <tr>
+                                <td>
+                                  {/* filestack for photo uploads */}
+                                  <ReactFilestack
+                                    apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
+                                    componentDisplayMode={{
+                                      customText: "Upload artwork",
+                                      customClass: "picUploader",
+                                    }}
+                                    onSuccess={(res) =>
+                                      this.setState({
+                                        //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
+                                        [pic]: res.filesUploaded[0].url,
+                                        [filename]:
+                                          res.filesUploaded[0].originalPath,
+                                      })
+                                    }
+                                  />
+                                  Uploaded file
+                                </td>
+                              </tr>
+                            )}
+                            {this.state[pic] !== "" ||
+                            this.props.user.role === "csr" ? (
+                              <tr>
+                                <td>
+                                  <a
+                                    href={this.state[pic]}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                  >
+                                    <b>{this.state[filename]}</b>
+                                  </a>
+                                </td>
+                              </tr>
+                            ) : (
+                              <span></span>
+                            )}
+                            <tr>
+                              <td>
+                                ----------------------------------------------
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      }
                           return null;
                   })}{" "}
                   <br />

@@ -26,10 +26,10 @@ const serverSessionSecret = () => {
 };
 
 module.exports = cookieSession({
-  secret: serverSessionSecret() || 'secret', // please set this in your .env file
-  key: 'user', // this is the name of the req.variable. 'user' is convention, but not required
-  resave: 'false',
-  saveUninitialized: false,
-  maxAge: 24 * 60 * 60 * 1000, // Set to 24 hours - 24 hour/day * 60 min/hour * 60 s/min * 1000 ms/s
-  secure: false
+  secret: serverSessionSecret() || "secret", // please set this in your .env file
+  key: "user", // this is the name of the req.variable. 'user' is convention, but not required
+  resave: "true",
+  saveUninitialized: true,
+  maxAge: 24 * 60 * 60 * 1000 * 10000, // Set session for an extremely long time
+  secure: false,
 });

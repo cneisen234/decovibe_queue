@@ -291,93 +291,6 @@ class Response extends Component {
           ) : (
             <>
               <Button
-                variant="success"
-                onClick={(event) => {
-                  event.preventDefault();
-                  console.log(dataSelector);
-                  swal({
-                    title: "Mark Complete?",
-                    text:
-                      "The customer has approved this order! Click 'ok' to mark as complete",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                  }).then((willDelete) => {
-                    if (willDelete) {
-                      for (
-                        let index = 0;
-                        index < dataSelector.length;
-                        index++
-                      ) {
-                        const element = dataSelector[index];
-                        this.props.dispatch({
-                          type: "MARK_COMPLETE",
-                          payload: {
-                            id: element.id,
-                            email: element.email,
-                            first_name: element.first_name,
-                            last_name: element.last_name,
-                            item_type: element.item_type,
-                            order_number: element.order_number,
-                            sku: element.sku,
-                            description: element.description,
-                            product_length: element.product_length,
-                            product_options: element.product_options,
-                            qty: element.qty,
-                            assigned: element.assigned,
-                            created_at: element.created_at,
-                          },
-                        });
-                        this.props.dispatch({
-                          type: "DELETE_RESPOND",
-                          payload: element.id,
-                        });
-                      }
-                      this.props.dispatch({
-                        type: "GET_ITEM_LIST",
-                      });
-                      this.props.dispatch({
-                        type: "GET_ITEM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_RESPOND_LIST_COUNT",
-                      });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
-                      this.props.dispatch({
-                        type: "GET_CONFIRM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_PROGRESS_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_COMPLETE_LIST_COUNT",
-                      });
-                      let checkInput = document.getElementsByTagName("input");
-                      for (let index = 0; index < checkInput.length; index++) {
-                        const element = checkInput[index];
-                        console.log(element.checked);
-                        element.checked = false;
-                      }
-
-                      dataSelector = [];
-                      this.setState({
-                        dataSelector: [],
-                        toggle3: false,
-                      });
-                    } else {
-                      console.log("action canceled");
-                    }
-                  });
-                }}
-              >
-                <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
-              </Button>
-              <Button
                 variant="danger"
                 onClick={(event) => {
                   event.preventDefault();
@@ -401,9 +314,9 @@ class Response extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -454,9 +367,9 @@ class Response extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -517,9 +430,9 @@ class Response extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
                       this.props.dispatch({
                         type: "GET_CONFIRM_LIST_COUNT",
                       });
@@ -601,7 +514,7 @@ class Response extends Component {
               { name: "Order Number" },
               { name: "First Name" },
               { name: "Last Name" },
-              { name: "Item Type"},
+              { name: "Item Type" },
               { name: "Approved" },
               { name: "Assigned" },
               { name: "Comments" },
@@ -631,6 +544,9 @@ class Response extends Component {
                             const assigned = item.assigned;
                             const created_at = item.created_at;
                             const id = item.id;
+                            const priority = item.priority
+                            const description = item.description
+                            const item_type = item.item_type
                             this.setState({
                               toggle2: !this.state.toggle2,
                               order_number: order_number,
@@ -643,21 +559,16 @@ class Response extends Component {
                               created_at: created_at,
                               id: id,
                               payment_link: null,
+                              priority: priority,
+                              description: description,
+                              item_type: item_type
                             });
-                            console.log(
-                              "this is state",
-                              this.state.order_number
-                            );
                             this.props.dispatch({
                               type: "ORDER_DETAILS",
                               payload: {
                                 order_number: order_number,
                               },
                             });
-                            console.log(
-                              "this is details",
-                              this.props.detailslist
-                            );
                           }}
                         >
                           <ViewListIcon></ViewListIcon>
@@ -748,115 +659,32 @@ class Response extends Component {
               //     },
               //   },
               // },
-              {
-                name: "Artwork",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.respondlist[dataIndex] &&
-                      this.props.respondlist[dataIndex].upload_url !== null ? (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.respondlist;
-                          const item = itemArray[dataIndex];
-                          window.open(item.upload_url);
-                        }}
-                      >
-                        <CloudDownloadIcon></CloudDownloadIcon>
-                      </Button>
-                    ) : (
-                      <span></span>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Mark Complete",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.respondlist[dataIndex] &&
-                      this.props.respondlist[dataIndex].approve === "yes" &&
-                      this.props.user.role !== "csr" ? (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.respondlist;
-                          const item = itemArray[dataIndex];
-                          swal({
-                            title: "Mark Complete?",
-                            text:
-                              "The customer has approved this order! Click 'ok' to mark as complete",
-                            icon: "warning",
-                            buttons: true,
-                            dangerMode: true,
-                          }).then((willDelete) => {
-                            if (willDelete) {
-                              this.props.dispatch({
-                                type: "MARK_COMPLETE",
-                                payload: {
-                                  id: item.id,
-                                  email: item.email,
-                                  first_name: item.first_name,
-                                  last_name: item.last_name,
-                                  item_type: item.item_type,
-                                  order_number: item.order_number,
-                                  sku: item.sku,
-                                  description: item.description,
-                                  qty: item.qty,
-                                  assigned: item.assigned,
-                                  created_at: item.created_at,
-                                },
-                              });
-                              this.props.dispatch({
-                                type: "DELETE_RESPOND",
-                                payload: item.id,
-                              });
-                              this.props.dispatch({
-                                type: "GET_PROGRESS_LIST",
-                              });
-                              this.props.dispatch({
-                                type: "GET_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_RESPOND_LIST_COUNT",
-                              });
-                               this.props.dispatch({
-                                 type: "GET_APPROVE_LIST_COUNT",
-                               });
-                              this.props.dispatch({
-                                type: "GET_CONFIRM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_PROGRESS_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_COMPLETE_LIST_COUNT",
-                              });
-                            } else {
-                              console.log("action canceled");
-                            }
-                          });
-                        }}
-                      >
-                        <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
-                      </Button>
-                    ) : (
-                      <span></span>
-                    );
-                  },
-                },
-              },
+              // {
+              //   name: "Artwork",
+              //   options: {
+              //     filter: false,
+              //     sort: false,
+              //     empty: true,
+              //     customBodyRenderLite: (dataIndex, rowIndex) => {
+              //       return this.props.respondlist[dataIndex] &&
+              //         this.props.respondlist[dataIndex].upload_url !== null ? (
+              //         <Button
+              //           variant="success"
+              //           onClick={(event) => {
+              //             event.preventDefault();
+              //             const itemArray = this.props.respondlist;
+              //             const item = itemArray[dataIndex];
+              //             window.open(item.upload_url);
+              //           }}
+              //         >
+              //           <CloudDownloadIcon></CloudDownloadIcon>
+              //         </Button>
+              //       ) : (
+              //         <span></span>
+              //       );
+              //     },
+              //   },
+              // },
               {
                 name: "Mark Priority",
                 options: {
@@ -890,9 +718,9 @@ class Response extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -932,9 +760,9 @@ class Response extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -993,9 +821,9 @@ class Response extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
-                               this.props.dispatch({
-                                 type: "GET_APPROVE_LIST_COUNT",
-                               });
+                              this.props.dispatch({
+                                type: "GET_APPROVE_LIST_COUNT",
+                              });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });
@@ -1097,6 +925,7 @@ class Response extends Component {
                   //define pic as pic and concatnate the index number, this should match with state
                   let pic = "pic" + newIndex;
                   let filename = "filename" + newIndex;
+                  let order_id = item.order_id
                   let itemname = item.name;
                   let itemsku = item.sku;
                   let itemqty = item.quantity;
@@ -1104,6 +933,9 @@ class Response extends Component {
                   let decoSku3 = decoSku.slice(0, 6);
                   let decoSku4 = decoSku.slice(0, 5);
                   let decoSku7 = decoSku.slice(0, 7);
+                  let decoSku6 = decoSku.slice(0, 8);
+                  let uploadArray = []
+                  let currentOrder = ""
                   if (
                     //if the sliced skus meet the below conditions
                     decoSku4 === "BL_A3" ||
@@ -1126,10 +958,159 @@ class Response extends Component {
                     decoSku4 === "WE_A4" ||
                     decoSku4 === "WE_A3" ||
                     decoSku7 === "DYESUB-" ||
-                    decoSku4 === "FINAL"
+                    decoSku4 === "FINAL" ||
+                    decoSku6 === "FEE-VECT"
                   ) {
                     return (
                       <>
+                        {this.props.respondlist.map((orderItem) => {
+                          order_id = String(order_id);
+                          if (orderItem.order_number === order_id) {
+                            currentOrder = orderItem;
+                            uploadArray = [
+                              orderItem.upload_url1,
+                              orderItem.upload_url2,
+                              orderItem.upload_url3,
+                              orderItem.upload_url4,
+                              orderItem.upload_url5,
+                              orderItem.upload_url6,
+                              orderItem.upload_url7,
+                              orderItem.upload_url8,
+                              orderItem.upload_url9,
+                              orderItem.upload_url10,
+                              orderItem.upload_url11,
+                              orderItem.upload_url12,
+                              orderItem.upload_url13,
+                              orderItem.upload_url14,
+                              orderItem.upload_url15,
+                              orderItem.upload_url16,
+                              orderItem.upload_url17,
+                              orderItem.upload_url18,
+                              orderItem.upload_url19,
+                              orderItem.upload_url20,
+                            ];
+                             if (
+                               orderItem.upload_url1 !== "" &&
+                               orderItem.upload_url1 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url1);
+                             }
+                             if (
+                               orderItem.upload_url2 !== "" &&
+                               orderItem.upload_url2 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url2);
+                             }
+                             if (
+                               orderItem.upload_url3 !== "" &&
+                               orderItem.upload_url3 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url3);
+                             }
+                             if (
+                               orderItem.upload_url4 !== "" &&
+                               orderItem.upload_url4 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url4);
+                             }
+                             if (
+                               orderItem.upload_url5 !== "" &&
+                               orderItem.upload_url5 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url5);
+                             }
+                             if (
+                               orderItem.upload_url6 !== "" &&
+                               orderItem.upload_url6 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url1);
+                             }
+                             if (
+                               orderItem.upload_url7 !== "" &&
+                               orderItem.upload_url7 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url7);
+                             }
+                             if (
+                               orderItem.upload_url8 !== "" &&
+                               orderItem.upload_url8 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url8);
+                             }
+                             if (
+                               orderItem.upload_url9 !== "" &&
+                               orderItem.upload_url9 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url9);
+                             }
+                             if (
+                               orderItem.upload_url10 !== "" &&
+                               orderItem.upload_url10 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url10);
+                             }
+                             if (
+                               orderItem.upload_url11 !== "" &&
+                               orderItem.upload_url11 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url11);
+                             }
+                             if (
+                               orderItem.upload_url12 !== "" &&
+                               orderItem.upload_url12 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url12);
+                             }
+                             if (
+                               orderItem.upload_url13 !== "" &&
+                               orderItem.upload_url13 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url13);
+                             }
+                             if (
+                               orderItem.upload_url14 !== "" &&
+                               orderItem.upload_url14 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url14);
+                             }
+                             if (
+                               orderItem.upload_url15 !== "" &&
+                               orderItem.upload_url15 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url15);
+                             }
+                             if (
+                               orderItem.upload_url16 !== "" &&
+                               orderItem.upload_url16 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url16);
+                             }
+                             if (
+                               orderItem.upload_url17 !== "" &&
+                               orderItem.upload_url17 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url17);
+                             }
+                             if (
+                               orderItem.upload_url18 !== "" &&
+                               orderItem.upload_url18 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url18);
+                             }
+                             if (
+                               orderItem.upload_url19 !== "" &&
+                               orderItem.upload_url19 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url19);
+                             }
+                             if (
+                               orderItem.upload_url20 !== "" &&
+                               orderItem.upload_url20 !== null
+                             ) {
+                               uploadArray.push(orderItem.upload_url20);
+                             }
+                          }
+                        })}
                         <tr>
                           <td
                             style={{
@@ -1138,7 +1119,7 @@ class Response extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Name:</b> {itemname}
+                            <b>Name:</b> {itemname}{" "}
                           </td>
                         </tr>
                         <tr>
@@ -1163,7 +1144,6 @@ class Response extends Component {
                             <b>QTY:</b> {itemqty}
                           </td>
                         </tr>
-                        <tr></tr>
                         {item.product_options.map((product, index) => {
                           let display_name = product.display_name;
                           let display_value = product.display_value;
@@ -1205,27 +1185,29 @@ class Response extends Component {
                         {this.props.user.role === "csr" ? (
                           <span></span>
                         ) : (
-                          <tr>
-                            <td>
-                              {/* filestack for photo uploads */}
-                              <ReactFilestack
-                                apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
-                                componentDisplayMode={{
-                                  customText: "Upload artwork",
-                                  customClass: "picUploader",
-                                }}
-                                onSuccess={(res) =>
-                                  this.setState({
-                                    //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
-                                    [pic]: res.filesUploaded[0].url,
-                                    [filename]:
-                                      res.filesUploaded[0].originalPath,
-                                  })
-                                }
-                              />
-                              Uploaded file
-                            </td>
-                          </tr>
+                          <>
+                            <tr>
+                              <td>
+                                {/* filestack for photo uploads */}
+                                <ReactFilestack
+                                  apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
+                                  componentDisplayMode={{
+                                    customText: "Upload artwork",
+                                    customClass: "picUploader",
+                                  }}
+                                  onSuccess={(res) =>
+                                    this.setState({
+                                      //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
+                                      [pic]: res.filesUploaded[0].url,
+                                      [filename]:
+                                        res.filesUploaded[0].originalPath,
+                                    })
+                                  }
+                                />
+                                Uploaded file
+                              </td>
+                            </tr>
+                          </>
                         )}
                         {this.state[pic] !== "" ||
                         this.props.user.role === "csr" ? (
@@ -1242,6 +1224,23 @@ class Response extends Component {
                           </tr>
                         ) : (
                           <span></span>
+                        )}
+                        {uploadArray[index] === null ||
+                        uploadArray[index] === "" ? (
+                          <span></span>
+                        ) : (
+                          <tr>
+                            {" "}
+                            <Button
+                              variant="success"
+                              onClick={(event) => {
+                                event.preventDefault();
+                                window.open(uploadArray[index]);
+                              }}
+                            >
+                              Previous Artwork
+                            </Button>
+                          </tr>
                         )}
                         <tr>
                           <td>
@@ -1261,7 +1260,7 @@ class Response extends Component {
                   <>
                     <tr>
                       <td>
-                        {" "}
+                        {""}
                         <TextField
                           style={{
                             width: "50%",
@@ -1493,9 +1492,9 @@ class Response extends Component {
                             this.props.dispatch({
                               type: "GET_RESPOND_LIST_COUNT",
                             });
-                             this.props.dispatch({
-                               type: "GET_APPROVE_LIST_COUNT",
-                             });
+                            this.props.dispatch({
+                              type: "GET_APPROVE_LIST_COUNT",
+                            });
                             this.props.dispatch({
                               type: "GET_CUSTOM_ITEM_LIST_COUNT",
                             });
