@@ -32,7 +32,9 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Nav />
+          <div id="Nav">
+            <Nav />
+          </div>
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/home" />
