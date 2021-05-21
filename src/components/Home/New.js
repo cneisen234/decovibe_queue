@@ -247,7 +247,7 @@ class New extends Component {
           {this.props.user.role === "csr" ? (
             <span></span>
           ) : (
-            <>
+            <div className="multiButtons">
               <Button
                 variant="success"
                 onClick={(event) => {
@@ -577,7 +577,7 @@ class New extends Component {
               >
                 <DeleteIcon></DeleteIcon>
               </Button>
-            </>
+            </div>
           )}
           <MUITable
             data={data} //brings in data as an array, in this case, list of items
@@ -747,7 +747,7 @@ class New extends Component {
                   // empty: true,
                   customBodyRender: (value, tableMeta, updateValue) => {
                     descrip = value.slice(value.length - 4);
-                    if ((descrip === "Pack" || descrip === "pack")) {
+                    if (descrip === "Pack" || descrip === "pack") {
                       return (
                         <div
                           style={{
@@ -917,9 +917,9 @@ class New extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -975,9 +975,9 @@ class New extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -1019,9 +1019,9 @@ class New extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -1082,9 +1082,9 @@ class New extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
-                               this.props.dispatch({
-                                 type: "GET_APPROVE_LIST_COUNT",
-                               });
+                              this.props.dispatch({
+                                type: "GET_APPROVE_LIST_COUNT",
+                              });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });
@@ -1232,9 +1232,9 @@ class New extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
                       this.props.dispatch({
                         type: "GET_CUSTOM_ITEM_LIST_COUNT",
                       });

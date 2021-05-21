@@ -115,7 +115,7 @@ class Complete extends Component {
           {this.props.user.role === "csr" ? (
             <span></span>
           ) : (
-            <>
+            <div className="multiButtons">
               {/*function to go back to in process for any selected skus*/}
               <Button
                 variant="success"
@@ -206,9 +206,9 @@ class Complete extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                    this.props.dispatch({
-                      type: "GET_APPROVE_LIST_COUNT",
-                    });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -274,9 +274,9 @@ class Complete extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
                       this.props.dispatch({
                         type: "GET_CONFIRM_LIST_COUNT",
                       });
@@ -308,7 +308,7 @@ class Complete extends Component {
               >
                 <DeleteIcon></DeleteIcon>
               </Button>
-            </>
+            </div>
           )}
           {/* start table */}
           <MUITable
@@ -362,7 +362,7 @@ class Complete extends Component {
               },
 
               { name: "Order Number" },
-              { name: "Item Type"},
+              { name: "Item Type" },
               {
                 name: "SKU",
                 options: {

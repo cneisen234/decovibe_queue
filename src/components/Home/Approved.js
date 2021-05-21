@@ -303,7 +303,7 @@ class Approved extends Component {
           {this.props.user.role === "csr" ? (
             <span></span>
           ) : (
-            <>
+            <div className="multiButtons">
               <Button
                 variant="success"
                 onClick={(event) => {
@@ -322,177 +322,177 @@ class Approved extends Component {
                         let index = 0;
                         index < dataSelector.length;
                         index++
-                      ) {                     
+                      ) {
                         const element = dataSelector[index];
-                        let order_id = element.order_number
-                        let uploadArray = []
-                            {
-                              this.props.approvelist.map((orderItem) => {
-                                order_id = String(order_id);
-                                if (orderItem.order_number === order_id) {
-                                  if (
-                                    orderItem.upload_url1 !== "" &&
-                                    orderItem.upload_url1 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url1);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url2 !== "" &&
-                                    orderItem.upload_url2 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url2);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url3 !== "" &&
-                                    orderItem.upload_url3 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url3);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url4 !== "" &&
-                                    orderItem.upload_url4 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url4);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url5 !== "" &&
-                                    orderItem.upload_url5 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url5);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url6 !== "" &&
-                                    orderItem.upload_url6 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url1);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url7 !== "" &&
-                                    orderItem.upload_url7 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url7);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url8 !== "" &&
-                                    orderItem.upload_url8 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url8);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url9 !== "" &&
-                                    orderItem.upload_url9 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url9);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url10 !== "" &&
-                                    orderItem.upload_url10 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url10);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url11 !== "" &&
-                                    orderItem.upload_url11 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url11);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url12 !== "" &&
-                                    orderItem.upload_url12 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url12);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url13 !== "" &&
-                                    orderItem.upload_url13 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url13);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url14 !== "" &&
-                                    orderItem.upload_url14 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url14);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url15 !== "" &&
-                                    orderItem.upload_url15 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url15);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url16 !== "" &&
-                                    orderItem.upload_url16 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url16);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url17 !== "" &&
-                                    orderItem.upload_url17 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url17);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url18 !== "" &&
-                                    orderItem.upload_url18 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url18);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url19 !== "" &&
-                                    orderItem.upload_url19 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url19);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url20 !== "" &&
-                                    orderItem.upload_url20 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url20);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                }
-                              });
+                        let order_id = element.order_number;
+                        let uploadArray = [];
+                        {
+                          this.props.approvelist.map((orderItem) => {
+                            order_id = String(order_id);
+                            if (orderItem.order_number === order_id) {
+                              if (
+                                orderItem.upload_url1 !== "" &&
+                                orderItem.upload_url1 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url1);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url2 !== "" &&
+                                orderItem.upload_url2 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url2);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url3 !== "" &&
+                                orderItem.upload_url3 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url3);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url4 !== "" &&
+                                orderItem.upload_url4 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url4);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url5 !== "" &&
+                                orderItem.upload_url5 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url5);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url6 !== "" &&
+                                orderItem.upload_url6 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url1);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url7 !== "" &&
+                                orderItem.upload_url7 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url7);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url8 !== "" &&
+                                orderItem.upload_url8 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url8);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url9 !== "" &&
+                                orderItem.upload_url9 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url9);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url10 !== "" &&
+                                orderItem.upload_url10 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url10);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url11 !== "" &&
+                                orderItem.upload_url11 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url11);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url12 !== "" &&
+                                orderItem.upload_url12 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url12);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url13 !== "" &&
+                                orderItem.upload_url13 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url13);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url14 !== "" &&
+                                orderItem.upload_url14 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url14);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url15 !== "" &&
+                                orderItem.upload_url15 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url15);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url16 !== "" &&
+                                orderItem.upload_url16 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url16);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url17 !== "" &&
+                                orderItem.upload_url17 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url17);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url18 !== "" &&
+                                orderItem.upload_url18 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url18);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url19 !== "" &&
+                                orderItem.upload_url19 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url19);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url20 !== "" &&
+                                orderItem.upload_url20 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url20);
+                              } else {
+                                uploadArray.push("");
+                              }
                             }
+                          });
+                        }
                         this.props.dispatch({
                           type: "MARK_COMPLETE",
                           payload: {
@@ -545,9 +545,9 @@ class Approved extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                        this.props.dispatch({
-                          type: "GET_APPROVE_LIST_COUNT",
-                        });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
                       this.props.dispatch({
                         type: "GET_CONFIRM_LIST_COUNT",
                       });
@@ -598,18 +598,18 @@ class Approved extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST",
-                   });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST",
+                  });
                   this.props.dispatch({
                     type: "GET_ITEM_LIST_COUNT",
                   });
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -660,9 +660,9 @@ class Approved extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                    this.props.dispatch({
-                      type: "GET_APPROVE_LIST_COUNT",
-                    });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -717,18 +717,18 @@ class Approved extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST",
                       });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST",
-                       });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST",
+                      });
                       this.props.dispatch({
                         type: "GET_ITEM_LIST_COUNT",
                       });
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                        this.props.dispatch({
-                          type: "GET_APPROVE_LIST_COUNT",
-                        });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
                       this.props.dispatch({
                         type: "GET_CONFIRM_LIST_COUNT",
                       });
@@ -760,7 +760,7 @@ class Approved extends Component {
               >
                 <DeleteIcon></DeleteIcon>
               </Button>
-            </>
+            </div>
           )}
           <MUITable
             data={data}
@@ -810,7 +810,7 @@ class Approved extends Component {
               { name: "Order Number" },
               { name: "First Name" },
               { name: "Last Name" },
-              { name: "Item Type"},
+              { name: "Item Type" },
               { name: "Approved" },
               { name: "Assigned" },
               { name: "Created At" },
@@ -974,175 +974,175 @@ class Approved extends Component {
                           event.preventDefault();
                           const itemArray = this.props.approvelist;
                           const item = itemArray[dataIndex];
-                           let order_id = item.order_number;
-                           let uploadArray = [];
-                                                      {
-                              this.props.approvelist.map((orderItem) => {
-                                order_id = String(order_id);
-                                if (orderItem.order_number === order_id) {
-                                  if (
-                                    orderItem.upload_url1 !== "" &&
-                                    orderItem.upload_url1 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url1);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url2 !== "" &&
-                                    orderItem.upload_url2 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url2);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url3 !== "" &&
-                                    orderItem.upload_url3 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url3);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url4 !== "" &&
-                                    orderItem.upload_url4 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url4);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url5 !== "" &&
-                                    orderItem.upload_url5 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url5);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url6 !== "" &&
-                                    orderItem.upload_url6 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url1);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url7 !== "" &&
-                                    orderItem.upload_url7 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url7);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url8 !== "" &&
-                                    orderItem.upload_url8 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url8);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url9 !== "" &&
-                                    orderItem.upload_url9 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url9);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url10 !== "" &&
-                                    orderItem.upload_url10 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url10);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url11 !== "" &&
-                                    orderItem.upload_url11 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url11);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url12 !== "" &&
-                                    orderItem.upload_url12 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url12);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url13 !== "" &&
-                                    orderItem.upload_url13 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url13);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url14 !== "" &&
-                                    orderItem.upload_url14 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url14);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url15 !== "" &&
-                                    orderItem.upload_url15 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url15);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url16 !== "" &&
-                                    orderItem.upload_url16 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url16);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url17 !== "" &&
-                                    orderItem.upload_url17 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url17);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url18 !== "" &&
-                                    orderItem.upload_url18 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url18);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url19 !== "" &&
-                                    orderItem.upload_url19 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url19);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
-                                  if (
-                                    orderItem.upload_url20 !== "" &&
-                                    orderItem.upload_url20 !== null
-                                  ) {
-                                    uploadArray.push(orderItem.upload_url20);
-                                  } else {
-                                    uploadArray.push("");
-                                  } 
+                          let order_id = item.order_number;
+                          let uploadArray = [];
+                          {
+                            this.props.approvelist.map((orderItem) => {
+                              order_id = String(order_id);
+                              if (orderItem.order_number === order_id) {
+                                if (
+                                  orderItem.upload_url1 !== "" &&
+                                  orderItem.upload_url1 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url1);
+                                } else {
+                                  uploadArray.push("");
                                 }
-                              });
-                            }
+                                if (
+                                  orderItem.upload_url2 !== "" &&
+                                  orderItem.upload_url2 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url2);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url3 !== "" &&
+                                  orderItem.upload_url3 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url3);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url4 !== "" &&
+                                  orderItem.upload_url4 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url4);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url5 !== "" &&
+                                  orderItem.upload_url5 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url5);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url6 !== "" &&
+                                  orderItem.upload_url6 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url1);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url7 !== "" &&
+                                  orderItem.upload_url7 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url7);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url8 !== "" &&
+                                  orderItem.upload_url8 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url8);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url9 !== "" &&
+                                  orderItem.upload_url9 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url9);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url10 !== "" &&
+                                  orderItem.upload_url10 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url10);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url11 !== "" &&
+                                  orderItem.upload_url11 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url11);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url12 !== "" &&
+                                  orderItem.upload_url12 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url12);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url13 !== "" &&
+                                  orderItem.upload_url13 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url13);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url14 !== "" &&
+                                  orderItem.upload_url14 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url14);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url15 !== "" &&
+                                  orderItem.upload_url15 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url15);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url16 !== "" &&
+                                  orderItem.upload_url16 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url16);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url17 !== "" &&
+                                  orderItem.upload_url17 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url17);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url18 !== "" &&
+                                  orderItem.upload_url18 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url18);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url19 !== "" &&
+                                  orderItem.upload_url19 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url19);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                                if (
+                                  orderItem.upload_url20 !== "" &&
+                                  orderItem.upload_url20 !== null
+                                ) {
+                                  uploadArray.push(orderItem.upload_url20);
+                                } else {
+                                  uploadArray.push("");
+                                }
+                              }
+                            });
+                          }
                           swal({
                             title: "Mark Complete?",
                             text:
@@ -1201,9 +1201,9 @@ class Approved extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
-                                this.props.dispatch({
-                                  type: "GET_APPROVE_LIST_COUNT",
-                                });
+                              this.props.dispatch({
+                                type: "GET_APPROVE_LIST_COUNT",
+                              });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });
@@ -1257,18 +1257,18 @@ class Approved extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST",
                           });
-                            this.props.dispatch({
-                              type: "GET_APPROVE_LIST",
-                            });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST",
+                          });
                           this.props.dispatch({
                             type: "GET_ITEM_LIST_COUNT",
                           });
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -1302,18 +1302,18 @@ class Approved extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST",
                           });
-                            this.props.dispatch({
-                              type: "GET_APPROVE_LIST",
-                            });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST",
+                          });
                           this.props.dispatch({
                             type: "GET_ITEM_LIST_COUNT",
                           });
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -1372,9 +1372,9 @@ class Approved extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
-                                this.props.dispatch({
-                                  type: "GET_APPROVE_LIST_COUNT",
-                                });
+                              this.props.dispatch({
+                                type: "GET_APPROVE_LIST_COUNT",
+                              });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });
@@ -1485,7 +1485,7 @@ class Approved extends Component {
                   let decoSku4 = decoSku.slice(0, 5);
                   let decoSku7 = decoSku.slice(0, 7);
                   let decoSku6 = decoSku.slice(0, 8);
-                    let uploadArray = [];
+                  let uploadArray = [];
                   if (
                     //if the sliced skus meet the below conditions
                     decoSku4 === "BL_A3" ||
@@ -2014,9 +2014,9 @@ class Approved extends Component {
                             this.props.dispatch({
                               type: "GET_RESPOND_LIST_COUNT",
                             });
-                               this.props.dispatch({
-                                 type: "GET_APPROVE_LIST_COUNT",
-                               });
+                            this.props.dispatch({
+                              type: "GET_APPROVE_LIST_COUNT",
+                            });
                             this.props.dispatch({
                               type: "GET_CUSTOM_ITEM_LIST_COUNT",
                             });

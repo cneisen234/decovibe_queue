@@ -83,7 +83,7 @@ class Progress extends Component {
           {this.props.user.role === "csr" ? (
             <span></span>
           ) : (
-            <>
+            <div className="multiButtons">
               <Button
                 variant="success"
                 onClick={(event) => {
@@ -122,9 +122,9 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -193,9 +193,9 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -250,9 +250,9 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -304,9 +304,9 @@ class Progress extends Component {
                   this.props.dispatch({
                     type: "GET_RESPOND_LIST_COUNT",
                   });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
                   this.props.dispatch({
                     type: "GET_CONFIRM_LIST_COUNT",
                   });
@@ -368,9 +368,9 @@ class Progress extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
                       this.props.dispatch({
                         type: "GET_CONFIRM_LIST_COUNT",
                       });
@@ -402,7 +402,7 @@ class Progress extends Component {
               >
                 <DeleteIcon></DeleteIcon>
               </Button>
-            </>
+            </div>
           )}
           <MUITable
             data={data}
@@ -638,9 +638,9 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -708,9 +708,9 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -765,9 +765,9 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -807,9 +807,9 @@ class Progress extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -868,9 +868,9 @@ class Progress extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
-                               this.props.dispatch({
-                                 type: "GET_APPROVE_LIST_COUNT",
-                               });
+                              this.props.dispatch({
+                                type: "GET_APPROVE_LIST_COUNT",
+                              });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });

@@ -278,7 +278,7 @@ class NewCustom extends Component {
           {this.props.user.role === "csr" ? (
             <span></span>
           ) : (
-            <>
+            <div className="multiButtons">
               <Button
                 variant="success"
                 onClick={(event) => {
@@ -309,9 +309,600 @@ class NewCustom extends Component {
                         index++
                       ) {
                         const element = dataSelector[index];
-                          let order_id = element.order_number;
-                           let uploadArray = [];
-                                                      {
+                        let order_id = element.order_number;
+                        let uploadArray = [];
+                        {
+                          this.props.customitemlist.map((orderItem) => {
+                            order_id = String(order_id);
+                            if (orderItem.order_number === order_id) {
+                              if (
+                                orderItem.upload_url1 !== "" &&
+                                orderItem.upload_url1 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url1);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url2 !== "" &&
+                                orderItem.upload_url2 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url2);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url3 !== "" &&
+                                orderItem.upload_url3 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url3);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url4 !== "" &&
+                                orderItem.upload_url4 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url4);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url5 !== "" &&
+                                orderItem.upload_url5 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url5);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url6 !== "" &&
+                                orderItem.upload_url6 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url1);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url7 !== "" &&
+                                orderItem.upload_url7 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url7);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url8 !== "" &&
+                                orderItem.upload_url8 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url8);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url9 !== "" &&
+                                orderItem.upload_url9 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url9);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url10 !== "" &&
+                                orderItem.upload_url10 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url10);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url11 !== "" &&
+                                orderItem.upload_url11 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url11);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url12 !== "" &&
+                                orderItem.upload_url12 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url12);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url13 !== "" &&
+                                orderItem.upload_url13 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url13);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url14 !== "" &&
+                                orderItem.upload_url14 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url14);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url15 !== "" &&
+                                orderItem.upload_url15 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url15);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url16 !== "" &&
+                                orderItem.upload_url16 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url16);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url17 !== "" &&
+                                orderItem.upload_url17 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url17);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url18 !== "" &&
+                                orderItem.upload_url18 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url18);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url19 !== "" &&
+                                orderItem.upload_url19 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url19);
+                              } else {
+                                uploadArray.push("");
+                              }
+                              if (
+                                orderItem.upload_url20 !== "" &&
+                                orderItem.upload_url20 !== null
+                              ) {
+                                uploadArray.push(orderItem.upload_url20);
+                              } else {
+                                uploadArray.push("");
+                              }
+                            }
+                          });
+                        }
+                        this.props.dispatch({
+                          type: "MARK_COMPLETE",
+                          payload: {
+                            id: element.id,
+                            email: element.email,
+                            first_name: element.first_name,
+                            last_name: element.last_name,
+                            item_type: element.item_type,
+                            order_number: element.order_number,
+                            sku: element.sku,
+                            description: element.description,
+                            product_length: element.product_length,
+                            product_options: element.product_options,
+                            qty: element.qty,
+                            assigned: element.assigned,
+                            pic1: uploadArray[0],
+                            pic2: uploadArray[1],
+                            pic3: uploadArray[2],
+                            pic4: uploadArray[3],
+                            pic5: uploadArray[4],
+                            pic6: uploadArray[5],
+                            pic7: uploadArray[6],
+                            pic8: uploadArray[7],
+                            pic9: uploadArray[8],
+                            pic10: uploadArray[9],
+                            pic11: uploadArray[10],
+                            pic12: uploadArray[11],
+                            pic13: uploadArray[12],
+                            pic14: uploadArray[13],
+                            pic15: uploadArray[14],
+                            pic16: uploadArray[15],
+                            pic17: uploadArray[16],
+                            pic18: uploadArray[17],
+                            pic19: uploadArray[18],
+                            pic20: uploadArray[19],
+                            created_at: element.created_at,
+                            priority: element.priority,
+                          },
+                        });
+                        this.props.dispatch({
+                          type: "DELETE_CUSTOM_ITEM",
+                          payload: element.id,
+                        });
+                      }
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                      let checkInput = document.getElementsByTagName("input");
+                      for (let index = 0; index < checkInput.length; index++) {
+                        const element = checkInput[index];
+                        element.checked = false;
+                      }
+                      dataSelector = [];
+                      this.setState({
+                        dataSelector: [],
+                        toggle3: false,
+                      });
+                    } else {
+                      console.log("action canceled");
+                    }
+                  });
+                }}
+              >
+                <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "MARK_PRIORITY_CUSTOM",
+                      payload: {
+                        id: element.id,
+                        priority: "high",
+                      },
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                    const element = checkInput[index];
+                    console.log(element.checked);
+                    element.checked = false;
+                  }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
+                }}
+              >
+                <FlagIcon></FlagIcon>
+              </Button>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  for (let index = 0; index < dataSelector.length; index++) {
+                    const element = dataSelector[index];
+                    this.props.dispatch({
+                      type: "MARK_PRIORITY_CUSTOM",
+                      payload: {
+                        id: element.id,
+                        priority: "low",
+                      },
+                    });
+                  }
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST",
+                  });
+                  this.props.dispatch({
+                    type: "GET_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_RESPOND_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_APPROVE_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CONFIRM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_PROGRESS_LIST_COUNT",
+                  });
+                  this.props.dispatch({
+                    type: "GET_COMPLETE_LIST_COUNT",
+                  });
+                  let checkInput = document.getElementsByTagName("input");
+                  for (let index = 0; index < checkInput.length; index++) {
+                    const element = checkInput[index];
+                    element.checked = false;
+                  }
+                  dataSelector = [];
+                  this.setState({
+                    dataSelector: [],
+                    toggle3: false,
+                  });
+                }}
+              >
+                <FlagIcon></FlagIcon>
+              </Button>
+              <Button
+                variant="danger"
+                onClick={(event) => {
+                  event.preventDefault();
+                  console.log(dataSelector);
+                  swal({
+                    title: "Are you sure?",
+                    text:
+                      "Once deleted, you will not be able to recover the sku on these orders!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  }).then((willDelete) => {
+                    if (willDelete) {
+                      for (
+                        let index = 0;
+                        index < dataSelector.length;
+                        index++
+                      ) {
+                        const element = dataSelector[index];
+                        this.props.dispatch({
+                          type: "DELETE_CUSTOM_ITEM",
+                          payload: element.id,
+                        });
+                      }
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                      let checkInput = document.getElementsByTagName("input");
+                      for (let index = 0; index < checkInput.length; index++) {
+                        const element = checkInput[index];
+                        console.log(element.checked);
+                        element.checked = false;
+                      }
+                      dataSelector = [];
+                      this.setState({
+                        dataSelector: [],
+                        toggle3: false,
+                      });
+                    } else {
+                      console.log("delete canceled");
+                    }
+                  });
+                }}
+              >
+                <DeleteIcon></DeleteIcon>
+              </Button>
+            </div>
+          )}
+          <MUITable
+            data={data} //brings in data as an array, in this case, list of items
+            columns={[
+              //names the columns found on MUI table
+              {
+                name: "Select",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
+                      <input
+                        type="checkbox"
+                        id={dataIndex}
+                        style={{ cursor: "pointer", width: 50, height: 50 }}
+                        name=""
+                        value=""
+                        onClick={(event) => {
+                          let checkChecked = document.getElementById(dataIndex)
+                            .checked;
+                          const itemArray = this.props.customitemlist;
+                          const item = itemArray[dataIndex];
+                          if (checkChecked === true) {
+                            dataSelector.push(item);
+                          } else {
+                            for (
+                              let index = 0;
+                              index < dataSelector.length;
+                              index++
+                            ) {
+                              const element = dataSelector[index];
+                              if (item.id === element.id) {
+                                dataSelector.splice(index, 1);
+                              }
+                            }
+                          }
+                        }}
+                      ></input>
+                    );
+                  },
+                },
+              },
+              { name: "Order Number" },
+              { name: "First Name" },
+              { name: "Last Name" },
+              { name: "Item Type" },
+              { name: "Assigned" },
+              { name: "Created At" },
+              { name: "Priority" },
+              {
+                name: "View Details",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return (
+                      <>
+                        <Button
+                          variant="success"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const itemArray = this.props.customitemlist;
+                            const item = itemArray[dataIndex];
+                            const order_number = item.order_number;
+                            const item_type = item.item_type;
+                            const sku = item.sku;
+                            const description = item.description;
+                            const email = item.email;
+                            const first_name = item.first_name;
+                            const last_name = item.last_name;
+                            const qty = item.qty;
+                            const assigned = item.assigned;
+                            const created_at = item.created_at;
+                            const id = item.id;
+                            const priority = item.priority;
+                            const payment_link = this.state.payment_link;
+                            this.setState({
+                              toggle2: !this.state.toggle2,
+                              order_number: order_number,
+                              sku: sku,
+                              description: description,
+                              email: email,
+                              first_name: first_name,
+                              last_name: last_name,
+                              qty: qty,
+                              assigned: assigned,
+                              created_at: created_at,
+                              id: id,
+                              priority: priority,
+                              payment_link: payment_link,
+                              item_type: item_type,
+                            });
+                            this.props.dispatch({
+                              type: "ORDER_DETAILS",
+                              payload: {
+                                order_number: order_number,
+                              },
+                            });
+                            this.props.dispatch({
+                              type: "GET_REPLIES",
+                            });
+                          }}
+                        >
+                          <ViewListIcon></ViewListIcon>
+                        </Button>
+                      </>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Assign",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.customitemlist;
+                          const item = itemArray[dataIndex];
+                          this.setState({
+                            toggle: !this.state.toggle,
+                            id: item.id,
+                          });
+                        }}
+                      >
+                        <AssignmentIndIcon></AssignmentIndIcon>
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Mark Complete",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
+                      this.props.customitemlist[dataIndex] && (
+                        <Button
+                          variant="success"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const itemArray = this.props.customitemlist;
+                            const item = itemArray[dataIndex];
+                            let order_id = item.order_number;
+                            let uploadArray = [];
+                            {
                               this.props.customitemlist.map((orderItem) => {
                                 order_id = String(order_id);
                                 if (orderItem.order_number === order_id) {
@@ -478,641 +1069,6 @@ class NewCustom extends Component {
                                 }
                               });
                             }
-                        this.props.dispatch({
-                          type: "MARK_COMPLETE",
-                          payload: {
-                            id: element.id,
-                            email: element.email,
-                            first_name: element.first_name,
-                            last_name: element.last_name,
-                            item_type: element.item_type,
-                            order_number: element.order_number,
-                            sku: element.sku,
-                            description: element.description,
-                            product_length: element.product_length,
-                            product_options: element.product_options,
-                            qty: element.qty,
-                            assigned: element.assigned,
-                            pic1: uploadArray[0],
-                            pic2: uploadArray[1],
-                            pic3: uploadArray[2],
-                            pic4: uploadArray[3],
-                            pic5: uploadArray[4],
-                            pic6: uploadArray[5],
-                            pic7: uploadArray[6],
-                            pic8: uploadArray[7],
-                            pic9: uploadArray[8],
-                            pic10: uploadArray[9],
-                            pic11: uploadArray[10],
-                            pic12: uploadArray[11],
-                            pic13: uploadArray[12],
-                            pic14: uploadArray[13],
-                            pic15: uploadArray[14],
-                            pic16: uploadArray[15],
-                            pic17: uploadArray[16],
-                            pic18: uploadArray[17],
-                            pic19: uploadArray[18],
-                            pic20: uploadArray[19],
-                            created_at: element.created_at,
-                            priority: element.priority,
-                          },
-                        });
-                        this.props.dispatch({
-                          type: "DELETE_CUSTOM_ITEM",
-                          payload: element.id,
-                        });
-                      }
-                      this.props.dispatch({
-                        type: "GET_ITEM_LIST",
-                      });
-                      this.props.dispatch({
-                        type: "GET_ITEM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_RESPOND_LIST_COUNT",
-                      });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
-                      this.props.dispatch({
-                        type: "GET_CONFIRM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_PROGRESS_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_COMPLETE_LIST_COUNT",
-                      });
-                      let checkInput = document.getElementsByTagName("input");
-                      for (let index = 0; index < checkInput.length; index++) {
-                        const element = checkInput[index];
-                        element.checked = false;
-                      }
-                      dataSelector = [];
-                      this.setState({
-                        dataSelector: [],
-                        toggle3: false,
-                      });
-                    } else {
-                      console.log("action canceled");
-                    }
-                  });
-                }}
-              >
-                <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
-              </Button>
-              <Button
-                variant="danger"
-                onClick={(event) => {
-                  event.preventDefault();
-                  console.log(dataSelector);
-                  for (let index = 0; index < dataSelector.length; index++) {
-                    const element = dataSelector[index];
-                    this.props.dispatch({
-                      type: "MARK_PRIORITY_CUSTOM",
-                      payload: {
-                        id: element.id,
-                        priority: "high",
-                      },
-                    });
-                  }
-                  this.props.dispatch({
-                    type: "GET_CUSTOM_ITEM_LIST",
-                  });
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_RESPOND_LIST_COUNT",
-                  });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
-                  this.props.dispatch({
-                    type: "GET_CONFIRM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_PROGRESS_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_COMPLETE_LIST_COUNT",
-                  });
-                  let checkInput = document.getElementsByTagName("input");
-                  for (let index = 0; index < checkInput.length; index++) {
-                    const element = checkInput[index];
-                    console.log(element.checked);
-                    element.checked = false;
-                  }
-                  dataSelector = [];
-                  this.setState({
-                    dataSelector: [],
-                    toggle3: false,
-                  });
-                }}
-              >
-                <FlagIcon></FlagIcon>
-              </Button>
-              <Button
-                variant="success"
-                onClick={(event) => {
-                  event.preventDefault();
-                  console.log(dataSelector);
-                  for (let index = 0; index < dataSelector.length; index++) {
-                    const element = dataSelector[index];
-                    this.props.dispatch({
-                      type: "MARK_PRIORITY_CUSTOM",
-                      payload: {
-                        id: element.id,
-                        priority: "low",
-                      },
-                    });
-                  }
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST",
-                  });
-                  this.props.dispatch({
-                    type: "GET_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_RESPOND_LIST_COUNT",
-                  });
-                   this.props.dispatch({
-                     type: "GET_APPROVE_LIST_COUNT",
-                   });
-                  this.props.dispatch({
-                    type: "GET_CONFIRM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_PROGRESS_LIST_COUNT",
-                  });
-                  this.props.dispatch({
-                    type: "GET_COMPLETE_LIST_COUNT",
-                  });
-                  let checkInput = document.getElementsByTagName("input");
-                  for (let index = 0; index < checkInput.length; index++) {
-                    const element = checkInput[index];
-                    element.checked = false;
-                  }
-                  dataSelector = [];
-                  this.setState({
-                    dataSelector: [],
-                    toggle3: false,
-                  });
-                }}
-              >
-                <FlagIcon></FlagIcon>
-              </Button>
-              <Button
-                variant="danger"
-                onClick={(event) => {
-                  event.preventDefault();
-                  console.log(dataSelector);
-                  swal({
-                    title: "Are you sure?",
-                    text:
-                      "Once deleted, you will not be able to recover the sku on these orders!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                  }).then((willDelete) => {
-                    if (willDelete) {
-                      for (
-                        let index = 0;
-                        index < dataSelector.length;
-                        index++
-                      ) {
-                        const element = dataSelector[index];
-                        this.props.dispatch({
-                          type: "DELETE_CUSTOM_ITEM",
-                          payload: element.id,
-                        });
-                      }
-                      this.props.dispatch({
-                        type: "GET_CUSTOM_ITEM_LIST",
-                      });
-                      this.props.dispatch({
-                        type: "GET_ITEM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_RESPOND_LIST_COUNT",
-                      });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
-                      this.props.dispatch({
-                        type: "GET_CONFIRM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_PROGRESS_LIST_COUNT",
-                      });
-                      this.props.dispatch({
-                        type: "GET_COMPLETE_LIST_COUNT",
-                      });
-                      let checkInput = document.getElementsByTagName("input");
-                      for (let index = 0; index < checkInput.length; index++) {
-                        const element = checkInput[index];
-                        console.log(element.checked);
-                        element.checked = false;
-                      }
-                      dataSelector = [];
-                      this.setState({
-                        dataSelector: [],
-                        toggle3: false,
-                      });
-                    } else {
-                      console.log("delete canceled");
-                    }
-                  });
-                }}
-              >
-                <DeleteIcon></DeleteIcon>
-              </Button>
-            </>
-          )}
-          <MUITable
-            data={data} //brings in data as an array, in this case, list of items
-            columns={[
-              //names the columns found on MUI table
-              {
-                name: "Select",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : (
-                      <input
-                        type="checkbox"
-                        id={dataIndex}
-                        style={{ cursor: "pointer", width: 50, height: 50 }}
-                        name=""
-                        value=""
-                        onClick={(event) => {
-                          let checkChecked = document.getElementById(dataIndex)
-                            .checked;
-                          const itemArray = this.props.customitemlist;
-                          const item = itemArray[dataIndex];
-                          if (checkChecked === true) {
-                            dataSelector.push(item);
-                          } else {
-                            for (
-                              let index = 0;
-                              index < dataSelector.length;
-                              index++
-                            ) {
-                              const element = dataSelector[index];
-                              if (item.id === element.id) {
-                                dataSelector.splice(index, 1);
-                              }
-                            }
-                          }
-                        }}
-                      ></input>
-                    );
-                  },
-                },
-              },
-              { name: "Order Number" },
-              { name: "First Name" },
-              { name: "Last Name" },
-              { name: "Item Type"},
-              { name: "Assigned" },
-              { name: "Created At" },
-              { name: "Priority" },
-              {
-                name: "View Details",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return (
-                      <>
-                        <Button
-                          variant="success"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            const itemArray = this.props.customitemlist;
-                            const item = itemArray[dataIndex];
-                            const order_number = item.order_number;
-                            const item_type = item.item_type;
-                            const sku = item.sku;
-                            const description = item.description;
-                            const email = item.email;
-                            const first_name = item.first_name;
-                            const last_name = item.last_name;
-                            const qty = item.qty;
-                            const assigned = item.assigned;
-                            const created_at = item.created_at;
-                            const id = item.id;
-                            const priority = item.priority;
-                            const payment_link = this.state.payment_link;
-                            this.setState({
-                              toggle2: !this.state.toggle2,
-                              order_number: order_number,
-                              sku: sku,
-                              description: description,
-                              email: email,
-                              first_name: first_name,
-                              last_name: last_name,
-                              qty: qty,
-                              assigned: assigned,
-                              created_at: created_at,
-                              id: id,
-                              priority: priority,
-                              payment_link: payment_link,
-                              item_type: item_type,
-                            });
-                            this.props.dispatch({
-                              type: "ORDER_DETAILS",
-                              payload: {
-                                order_number: order_number,
-                              },
-                            });
-                            this.props.dispatch({
-                              type: "GET_REPLIES",
-                            });
-                          }}
-                        >
-                          <ViewListIcon></ViewListIcon>
-                        </Button>
-                      </>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Assign",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.customitemlist;
-                          const item = itemArray[dataIndex];
-                          this.setState({
-                            toggle: !this.state.toggle,
-                            id: item.id,
-                          });
-                        }}
-                      >
-                        <AssignmentIndIcon></AssignmentIndIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Mark Complete",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : (
-                      this.props.customitemlist[dataIndex] && (
-                        <Button
-                          variant="success"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            const itemArray = this.props.customitemlist;
-                            const item = itemArray[dataIndex];
-                                  let order_id = item.order_number;
-                                  let uploadArray = [];
-                                  {
-                                    this.props.customitemlist.map(
-                                      (orderItem) => {
-                                        order_id = String(order_id);
-                                        if (
-                                          orderItem.order_number === order_id
-                                        ) {
-                                          if (
-                                            orderItem.upload_url1 !== "" &&
-                                            orderItem.upload_url1 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url1
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url2 !== "" &&
-                                            orderItem.upload_url2 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url2
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url3 !== "" &&
-                                            orderItem.upload_url3 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url3
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url4 !== "" &&
-                                            orderItem.upload_url4 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url4
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url5 !== "" &&
-                                            orderItem.upload_url5 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url5
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url6 !== "" &&
-                                            orderItem.upload_url6 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url1
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url7 !== "" &&
-                                            orderItem.upload_url7 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url7
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url8 !== "" &&
-                                            orderItem.upload_url8 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url8
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url9 !== "" &&
-                                            orderItem.upload_url9 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url9
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url10 !== "" &&
-                                            orderItem.upload_url10 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url10
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url11 !== "" &&
-                                            orderItem.upload_url11 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url11
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url12 !== "" &&
-                                            orderItem.upload_url12 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url12
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url13 !== "" &&
-                                            orderItem.upload_url13 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url13
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url14 !== "" &&
-                                            orderItem.upload_url14 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url14
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url15 !== "" &&
-                                            orderItem.upload_url15 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url15
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url16 !== "" &&
-                                            orderItem.upload_url16 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url16
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url17 !== "" &&
-                                            orderItem.upload_url17 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url17
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url18 !== "" &&
-                                            orderItem.upload_url18 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url18
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url19 !== "" &&
-                                            orderItem.upload_url19 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url19
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                          if (
-                                            orderItem.upload_url20 !== "" &&
-                                            orderItem.upload_url20 !== null
-                                          ) {
-                                            uploadArray.push(
-                                              orderItem.upload_url20
-                                            );
-                                          } else {
-                                            uploadArray.push("");
-                                          }
-                                        }
-                                      }
-                                    );
-                                  }
                             swal({
                               title: "Mark Complete?",
                               text:
@@ -1172,9 +1128,9 @@ class NewCustom extends Component {
                                 this.props.dispatch({
                                   type: "GET_RESPOND_LIST_COUNT",
                                 });
-                                 this.props.dispatch({
-                                   type: "GET_APPROVE_LIST_COUNT",
-                                 });
+                                this.props.dispatch({
+                                  type: "GET_APPROVE_LIST_COUNT",
+                                });
                                 this.props.dispatch({
                                   type: "GET_CONFIRM_LIST_COUNT",
                                 });
@@ -1236,9 +1192,9 @@ class NewCustom extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -1281,9 +1237,9 @@ class NewCustom extends Component {
                           this.props.dispatch({
                             type: "GET_RESPOND_LIST_COUNT",
                           });
-                           this.props.dispatch({
-                             type: "GET_APPROVE_LIST_COUNT",
-                           });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
                           this.props.dispatch({
                             type: "GET_CONFIRM_LIST_COUNT",
                           });
@@ -1342,9 +1298,9 @@ class NewCustom extends Component {
                               this.props.dispatch({
                                 type: "GET_RESPOND_LIST_COUNT",
                               });
-                               this.props.dispatch({
-                                 type: "GET_APPROVE_LIST_COUNT",
-                               });
+                              this.props.dispatch({
+                                type: "GET_APPROVE_LIST_COUNT",
+                              });
                               this.props.dispatch({
                                 type: "GET_CONFIRM_LIST_COUNT",
                               });
@@ -1500,169 +1456,168 @@ class NewCustom extends Component {
                     </td>
                   </tr>
                   {this.props.detailslist.map((item, index) => {
-                      let newIndex = index + 1;
-                      //define pic as pic and concatnate the index number
-                      let pic = "pic" + newIndex;
-                      let filename = "filename" + newIndex;
-                      let itemname = item.name;
-                      let itemsku = item.sku;
-                      let itemqty = item.quantity;
-                               let decoSku = itemsku;
-                               let decoSku3 = decoSku.slice(0, 6);
-                               let decoSku4 = decoSku.slice(0, 5);
-                               let decoSku7 = decoSku.slice(0, 7);
-                               let decoSku6 = decoSku.slice(0, 8);
-                      if (
-                        //if the sliced skus meet the below conditions
-                        decoSku4 === "BL_A3" ||
-                        decoSku4 === "BL_A4" ||
-                        decoSku4 === "BL_A5" ||
-                        decoSku4 === "BL_LC" ||
-                        decoSku4 === "BL_SM" ||
-                        decoSku3 === "HW_CAP" ||
-                        decoSku3 === "PR_BAG" ||
-                        decoSku3 === "PR_UM_" ||
-                        decoSku4 === "SB_A5" ||
-                        decoSku4 === "SB_A4" ||
-                        decoSku4 === "SB_A3" ||
-                        decoSku4 === "SB_LC" ||
-                        decoSku4 === "SB_SM" ||
-                        decoSku4 === "SB_LS" ||
-                        decoSku4 === "WE_SM" ||
-                        decoSku4 === "WE_LC" ||
-                        decoSku4 === "WE_A5" ||
-                        decoSku4 === "WE_A4" ||
-                        decoSku4 === "WE_A3" ||
-                        decoSku7 === "DYESUB-" ||
-                        decoSku4 === "FINAL" ||
-                        decoSku6 === "FEE-VECT"
-                      ) {
-                        return (
-                          <>
-                            <tr>
-                              <td
-                                style={{
-                                  marginLeft: "3%",
-                                  padding: "10px",
-                                  width: "25%",
-                                }}
-                              >
-                                <b>Name:</b> {itemname}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td
-                                style={{
-                                  marginLeft: "3%",
-                                  padding: "10px",
-                                  width: "25%",
-                                }}
-                              >
-                                <b>Sku:</b> {itemsku}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td
-                                style={{
-                                  marginLeft: "3%",
-                                  padding: "10px",
-                                  width: "25%",
-                                }}
-                              >
-                                <b>QTY:</b> {itemqty}
-                              </td>
-                            </tr>
-                            <tr></tr>
-                            {item.product_options.map((product, index) => {
-                              let display_name = product.display_name;
-                              let display_value = product.display_value;
-                              let new_display_name = display_name.slice(0, 10);
-                              return (
-                                <>
-                                  {new_display_name === "Sheet Size" ? (
-                                    //if sheet size, cut off extra text
-                                    <tr>
-                                      <td
-                                        style={{
-                                          marginLeft: "3%",
-                                          padding: "10px",
-                                          width: "25%",
-                                        }}
-                                      >
-                                        <b>{new_display_name}:</b>{" "}
-                                        {display_value}
-                                      </td>
-                                    </tr>
-                                  ) : display_name === "Transfer Count" ? (
-                                    <span></span>
-                                  ) : (
-                                    <tr>
-                                      <td
-                                        style={{
-                                          marginLeft: "3%",
-                                          padding: "10px",
-                                          width: "25%",
-                                        }}
-                                      >
-                                        <b>{display_name}:</b> {display_value}
-                                      </td>
-                                    </tr>
-                                  )}
-                                </>
-                              );
-                            })}{" "}
-                            <br />
-                            <br />
-                            {this.props.user.role === "csr" ? (
-                              <span></span>
-                            ) : (
-                              <tr>
-                                <td>
-                                  {/* filestack for photo uploads */}
-                                  <ReactFilestack
-                                    apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
-                                    componentDisplayMode={{
-                                      customText: "Upload artwork",
-                                      customClass: "picUploader",
-                                    }}
-                                    onSuccess={(res) =>
-                                      this.setState({
-                                        //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
-                                        [pic]: res.filesUploaded[0].url,
-                                        [filename]:
-                                          res.filesUploaded[0].originalPath,
-                                      })
-                                    }
-                                  />
-                                  Uploaded file
-                                </td>
-                              </tr>
-                            )}
-                            {this.state[pic] !== "" ||
-                            this.props.user.role === "csr" ? (
-                              <tr>
-                                <td>
-                                  <a
-                                    href={this.state[pic]}
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                  >
-                                    <b>{this.state[filename]}</b>
-                                  </a>
-                                </td>
-                              </tr>
-                            ) : (
-                              <span></span>
-                            )}
+                    let newIndex = index + 1;
+                    //define pic as pic and concatnate the index number
+                    let pic = "pic" + newIndex;
+                    let filename = "filename" + newIndex;
+                    let itemname = item.name;
+                    let itemsku = item.sku;
+                    let itemqty = item.quantity;
+                    let decoSku = itemsku;
+                    let decoSku3 = decoSku.slice(0, 6);
+                    let decoSku4 = decoSku.slice(0, 5);
+                    let decoSku7 = decoSku.slice(0, 7);
+                    let decoSku6 = decoSku.slice(0, 8);
+                    if (
+                      //if the sliced skus meet the below conditions
+                      decoSku4 === "BL_A3" ||
+                      decoSku4 === "BL_A4" ||
+                      decoSku4 === "BL_A5" ||
+                      decoSku4 === "BL_LC" ||
+                      decoSku4 === "BL_SM" ||
+                      decoSku3 === "HW_CAP" ||
+                      decoSku3 === "PR_BAG" ||
+                      decoSku3 === "PR_UM_" ||
+                      decoSku4 === "SB_A5" ||
+                      decoSku4 === "SB_A4" ||
+                      decoSku4 === "SB_A3" ||
+                      decoSku4 === "SB_LC" ||
+                      decoSku4 === "SB_SM" ||
+                      decoSku4 === "SB_LS" ||
+                      decoSku4 === "WE_SM" ||
+                      decoSku4 === "WE_LC" ||
+                      decoSku4 === "WE_A5" ||
+                      decoSku4 === "WE_A4" ||
+                      decoSku4 === "WE_A3" ||
+                      decoSku7 === "DYESUB-" ||
+                      decoSku4 === "FINAL" ||
+                      decoSku6 === "FEE-VECT"
+                    ) {
+                      return (
+                        <>
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>Name:</b> {itemname}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>Sku:</b> {itemsku}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>QTY:</b> {itemqty}
+                            </td>
+                          </tr>
+                          <tr></tr>
+                          {item.product_options.map((product, index) => {
+                            let display_name = product.display_name;
+                            let display_value = product.display_value;
+                            let new_display_name = display_name.slice(0, 10);
+                            return (
+                              <>
+                                {new_display_name === "Sheet Size" ? (
+                                  //if sheet size, cut off extra text
+                                  <tr>
+                                    <td
+                                      style={{
+                                        marginLeft: "3%",
+                                        padding: "10px",
+                                        width: "25%",
+                                      }}
+                                    >
+                                      <b>{new_display_name}:</b> {display_value}
+                                    </td>
+                                  </tr>
+                                ) : display_name === "Transfer Count" ? (
+                                  <span></span>
+                                ) : (
+                                  <tr>
+                                    <td
+                                      style={{
+                                        marginLeft: "3%",
+                                        padding: "10px",
+                                        width: "25%",
+                                      }}
+                                    >
+                                      <b>{display_name}:</b> {display_value}
+                                    </td>
+                                  </tr>
+                                )}
+                              </>
+                            );
+                          })}{" "}
+                          <br />
+                          <br />
+                          {this.props.user.role === "csr" ? (
+                            <span></span>
+                          ) : (
                             <tr>
                               <td>
-                                ----------------------------------------------
+                                {/* filestack for photo uploads */}
+                                <ReactFilestack
+                                  apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
+                                  componentDisplayMode={{
+                                    customText: "Upload artwork",
+                                    customClass: "picUploader",
+                                  }}
+                                  onSuccess={(res) =>
+                                    this.setState({
+                                      //path for uploaded file, set it to state to get ready to send, up to 20 can be selected
+                                      [pic]: res.filesUploaded[0].url,
+                                      [filename]:
+                                        res.filesUploaded[0].originalPath,
+                                    })
+                                  }
+                                />
+                                Uploaded file
                               </td>
                             </tr>
-                          </>
-                        );
-                      }
-                          return null;
+                          )}
+                          {this.state[pic] !== "" ||
+                          this.props.user.role === "csr" ? (
+                            <tr>
+                              <td>
+                                <a
+                                  href={this.state[pic]}
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                >
+                                  <b>{this.state[filename]}</b>
+                                </a>
+                              </td>
+                            </tr>
+                          ) : (
+                            <span></span>
+                          )}
+                          <tr>
+                            <td>
+                              ----------------------------------------------
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    }
+                    return null;
                   })}{" "}
                   <br />
                   <br />
@@ -1853,97 +1808,97 @@ class NewCustom extends Component {
                           <Button
                             variant="success"
                             onClick={(event) => {
-                                event.preventDefault();
-                                this.props.dispatch({
-                                  type: "CUSTOMER_CONFIRM",
-                                  payload: {
-                                    pic1: this.state.pic1,
-                                    pic2: this.state.pic2,
-                                    pic3: this.state.pic3,
-                                    pic4: this.state.pic4,
-                                    pic5: this.state.pic5,
-                                    pic6: this.state.pic6,
-                                    pic7: this.state.pic7,
-                                    pic8: this.state.pic8,
-                                    pic9: this.state.pic9,
-                                    pic10: this.state.pic10,
-                                    pic11: this.state.pic11,
-                                    pic12: this.state.pic12,
-                                    pic13: this.state.pic13,
-                                    pic14: this.state.pic14,
-                                    pic15: this.state.pic15,
-                                    pic16: this.state.pic16,
-                                    pic17: this.state.pic17,
-                                    pic18: this.state.pic18,
-                                    pic19: this.state.pic19,
-                                    pic20: this.state.pic20,
-                                    comments: this.state.comments,
-                                    email: this.state.email,
-                                    first_name: this.state.first_name,
-                                    last_name: this.state.last_name,
-                                    item_type: this.state.item_type,
-                                    order_number: this.state.order_number,
-                                    sku: this.state.sku,
-                                    description: this.state.description,
-                                    qty: this.state.qty,
-                                    assigned: this.state.assigned,
-                                    created_at: this.state.created_at,
-                                    priority: this.state.priority,
-                                    payment_link: this.state.payment_link,
-                                  },
-                                });
-                                this.props.dispatch({
-                                  type: "DELETE_CUSTOM_ITEM",
-                                  payload: this.state.id,
-                                });
-                                this.props.dispatch({
-                                  type: "GET_ITEM_LIST",
-                                });
-                                this.props.dispatch({
-                                  type: "GET_ITEM_LIST_COUNT",
-                                });
-                                this.props.dispatch({
-                                  type: "GET_RESPOND_LIST_COUNT",
-                                });
-                                 this.props.dispatch({
-                                   type: "GET_APPROVE_LIST_COUNT",
-                                 });
-                                this.props.dispatch({
-                                  type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                                });
-                                this.props.dispatch({
-                                  type: "GET_CONFIRM_LIST_COUNT",
-                                });
-                                this.props.dispatch({
-                                  type: "GET_PROGRESS_LIST_COUNT",
-                                });
-                                this.props.dispatch({
-                                  type: "GET_COMPLETE_LIST_COUNT",
-                                });
-                                this.setState({
-                                  toggle2: !this.state.toggle2,
-                                  comments: "",
-                                  pic1: "",
-                                  pic2: "",
-                                  pic3: "",
-                                  pic4: "",
-                                  pic5: "",
-                                  pic6: "",
-                                  pic7: "",
-                                  pic8: "",
-                                  pic9: "",
-                                  pic10: "",
-                                  pic11: "",
-                                  pic12: "",
-                                  pic13: "",
-                                  pic14: "",
-                                  pic15: "",
-                                  pic16: "",
-                                  pic17: "",
-                                  pic18: "",
-                                  pic19: "",
-                                  pic20: "",
-                                });
+                              event.preventDefault();
+                              this.props.dispatch({
+                                type: "CUSTOMER_CONFIRM",
+                                payload: {
+                                  pic1: this.state.pic1,
+                                  pic2: this.state.pic2,
+                                  pic3: this.state.pic3,
+                                  pic4: this.state.pic4,
+                                  pic5: this.state.pic5,
+                                  pic6: this.state.pic6,
+                                  pic7: this.state.pic7,
+                                  pic8: this.state.pic8,
+                                  pic9: this.state.pic9,
+                                  pic10: this.state.pic10,
+                                  pic11: this.state.pic11,
+                                  pic12: this.state.pic12,
+                                  pic13: this.state.pic13,
+                                  pic14: this.state.pic14,
+                                  pic15: this.state.pic15,
+                                  pic16: this.state.pic16,
+                                  pic17: this.state.pic17,
+                                  pic18: this.state.pic18,
+                                  pic19: this.state.pic19,
+                                  pic20: this.state.pic20,
+                                  comments: this.state.comments,
+                                  email: this.state.email,
+                                  first_name: this.state.first_name,
+                                  last_name: this.state.last_name,
+                                  item_type: this.state.item_type,
+                                  order_number: this.state.order_number,
+                                  sku: this.state.sku,
+                                  description: this.state.description,
+                                  qty: this.state.qty,
+                                  assigned: this.state.assigned,
+                                  created_at: this.state.created_at,
+                                  priority: this.state.priority,
+                                  payment_link: this.state.payment_link,
+                                },
+                              });
+                              this.props.dispatch({
+                                type: "DELETE_CUSTOM_ITEM",
+                                payload: this.state.id,
+                              });
+                              this.props.dispatch({
+                                type: "GET_ITEM_LIST",
+                              });
+                              this.props.dispatch({
+                                type: "GET_ITEM_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_RESPOND_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_APPROVE_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_CONFIRM_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_PROGRESS_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_COMPLETE_LIST_COUNT",
+                              });
+                              this.setState({
+                                toggle2: !this.state.toggle2,
+                                comments: "",
+                                pic1: "",
+                                pic2: "",
+                                pic3: "",
+                                pic4: "",
+                                pic5: "",
+                                pic6: "",
+                                pic7: "",
+                                pic8: "",
+                                pic9: "",
+                                pic10: "",
+                                pic11: "",
+                                pic12: "",
+                                pic13: "",
+                                pic14: "",
+                                pic15: "",
+                                pic16: "",
+                                pic17: "",
+                                pic18: "",
+                                pic19: "",
+                                pic20: "",
+                              });
                             }}
                           >
                             Send to Customer
@@ -2032,9 +1987,9 @@ class NewCustom extends Component {
                       this.props.dispatch({
                         type: "GET_RESPOND_LIST_COUNT",
                       });
-                       this.props.dispatch({
-                         type: "GET_APPROVE_LIST_COUNT",
-                       });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
                       this.props.dispatch({
                         type: "GET_CUSTOM_ITEM_LIST_COUNT",
                       });
