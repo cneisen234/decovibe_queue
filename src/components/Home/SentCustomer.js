@@ -98,6 +98,9 @@ class SentCustomer extends Component {
           <h1>Sent To Customer</h1>
         </center>
         <div style={{ padding: "1.5%" }}>
+          <br />
+          <br />
+          <br />
           <MUITable
             data={data}
             columns={[
@@ -105,7 +108,7 @@ class SentCustomer extends Component {
               { name: "Order Number" },
               { name: "First Name" },
               { name: "Last Name" },
-              { name: "Item Type"},
+              { name: "Item Type" },
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
@@ -245,121 +248,120 @@ class SentCustomer extends Component {
                     let itemname = item.name;
                     let itemsku = item.sku;
                     let itemqty = item.quantity;
-                               let decoSku = itemsku;
-                               let decoSku3 = decoSku.slice(0, 6);
-                               let decoSku4 = decoSku.slice(0, 5);
-                               let decoSku7 = decoSku.slice(0, 7);
-                               let decoSku6 = decoSku.slice(0, 8);
-                      if (
-                        //if the sliced skus meet the below conditions
-                        decoSku4 === "BL_A3" ||
-                        decoSku4 === "BL_A4" ||
-                        decoSku4 === "BL_A5" ||
-                        decoSku4 === "BL_LC" ||
-                        decoSku4 === "BL_SM" ||
-                        decoSku3 === "HW_CAP" ||
-                        decoSku3 === "PR_BAG" ||
-                        decoSku3 === "PR_UM_" ||
-                        decoSku4 === "SB_A5" ||
-                        decoSku4 === "SB_A4" ||
-                        decoSku4 === "SB_A3" ||
-                        decoSku4 === "SB_LC" ||
-                        decoSku4 === "SB_SM" ||
-                        decoSku4 === "SB_LS" ||
-                        decoSku4 === "WE_SM" ||
-                        decoSku4 === "WE_LC" ||
-                        decoSku4 === "WE_A5" ||
-                        decoSku4 === "WE_A4" ||
-                        decoSku4 === "WE_A3" ||
-                        decoSku7 === "DYESUB-" ||
-                        decoSku4 === "FINAL" ||
-                        decoSku6 === "FEE-VECT"
-                      ) {
-                        return (
-                          <>
-                            <tr>
-                              <td
-                                style={{
-                                  marginLeft: "3%",
-                                  padding: "10px",
-                                  width: "25%",
-                                }}
-                              >
-                                <b>Name:</b> {itemname}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td
-                                style={{
-                                  marginLeft: "3%",
-                                  padding: "10px",
-                                  width: "25%",
-                                }}
-                              >
-                                <b>Sku:</b> {itemsku}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td
-                                style={{
-                                  marginLeft: "3%",
-                                  padding: "10px",
-                                  width: "25%",
-                                }}
-                              >
-                                <b>QTY:</b> {itemqty}
-                              </td>
-                            </tr>
-                            <tr></tr>
-                            {item.product_options.map((product, index) => {
-                              let display_name = product.display_name;
-                              let display_value = product.display_value;
-                              let new_display_name = display_name.slice(0, 10);
-                              return (
-                                <>
-                                  {new_display_name === "Sheet Size" ? (
-                                    //if sheet size, cut off extra text
-                                    <tr>
-                                      <td
-                                        style={{
-                                          marginLeft: "3%",
-                                          padding: "10px",
-                                          width: "25%",
-                                        }}
-                                      >
-                                        <b>{new_display_name}:</b>{" "}
-                                        {display_value}
-                                      </td>
-                                    </tr>
-                                  ) : display_name === "Transfer Count" ? (
-                                    <span></span>
-                                  ) : (
-                                    <tr>
-                                      <td
-                                        style={{
-                                          marginLeft: "3%",
-                                          padding: "10px",
-                                          width: "25%",
-                                        }}
-                                      >
-                                        <b>{display_name}:</b> {display_value}
-                                      </td>
-                                    </tr>
-                                  )}
-                                </>
-                              );
-                            })}{" "}
-                            <br />
-                            <br />
-                            <tr>
-                              <td>
-                                ----------------------------------------------
-                              </td>
-                            </tr>
-                          </>
-                        );
-                      }
-                      return null;
+                    let decoSku = itemsku;
+                    let decoSku3 = decoSku.slice(0, 6);
+                    let decoSku4 = decoSku.slice(0, 5);
+                    let decoSku7 = decoSku.slice(0, 7);
+                    let decoSku6 = decoSku.slice(0, 8);
+                    if (
+                      //if the sliced skus meet the below conditions
+                      decoSku4 === "BL_A3" ||
+                      decoSku4 === "BL_A4" ||
+                      decoSku4 === "BL_A5" ||
+                      decoSku4 === "BL_LC" ||
+                      decoSku4 === "BL_SM" ||
+                      decoSku3 === "HW_CAP" ||
+                      decoSku3 === "PR_BAG" ||
+                      decoSku3 === "PR_UM_" ||
+                      decoSku4 === "SB_A5" ||
+                      decoSku4 === "SB_A4" ||
+                      decoSku4 === "SB_A3" ||
+                      decoSku4 === "SB_LC" ||
+                      decoSku4 === "SB_SM" ||
+                      decoSku4 === "SB_LS" ||
+                      decoSku4 === "WE_SM" ||
+                      decoSku4 === "WE_LC" ||
+                      decoSku4 === "WE_A5" ||
+                      decoSku4 === "WE_A4" ||
+                      decoSku4 === "WE_A3" ||
+                      decoSku7 === "DYESUB-" ||
+                      decoSku4 === "FINAL" ||
+                      decoSku6 === "FEE-VECT"
+                    ) {
+                      return (
+                        <>
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>Name:</b> {itemname}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>Sku:</b> {itemsku}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>QTY:</b> {itemqty}
+                            </td>
+                          </tr>
+                          <tr></tr>
+                          {item.product_options.map((product, index) => {
+                            let display_name = product.display_name;
+                            let display_value = product.display_value;
+                            let new_display_name = display_name.slice(0, 10);
+                            return (
+                              <>
+                                {new_display_name === "Sheet Size" ? (
+                                  //if sheet size, cut off extra text
+                                  <tr>
+                                    <td
+                                      style={{
+                                        marginLeft: "3%",
+                                        padding: "10px",
+                                        width: "25%",
+                                      }}
+                                    >
+                                      <b>{new_display_name}:</b> {display_value}
+                                    </td>
+                                  </tr>
+                                ) : display_name === "Transfer Count" ? (
+                                  <span></span>
+                                ) : (
+                                  <tr>
+                                    <td
+                                      style={{
+                                        marginLeft: "3%",
+                                        padding: "10px",
+                                        width: "25%",
+                                      }}
+                                    >
+                                      <b>{display_name}:</b> {display_value}
+                                    </td>
+                                  </tr>
+                                )}
+                              </>
+                            );
+                          })}{" "}
+                          <br />
+                          <br />
+                          <tr>
+                            <td>
+                              ----------------------------------------------
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    }
+                    return null;
                   })}{" "}
                   <br />
                   <br />

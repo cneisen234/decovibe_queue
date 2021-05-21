@@ -311,6 +311,9 @@ class Complete extends Component {
             </div>
           )}
           {/* start table */}
+          <br />
+          <br />
+          <br />
           <MUITable
             data={data} //brings in data as an array, in this case, list of admins
             columns={[

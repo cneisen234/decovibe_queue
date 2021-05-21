@@ -156,6 +156,9 @@ class History extends Component {
             </Form>
           </center>
           {/* ...and the table will only populate with the info from the selected customer */}
+          <br />
+          <br />
+          <br />
           <MUITable
             data={data}
             columns={[
@@ -290,86 +293,85 @@ class History extends Component {
                   </td>
                 </tr>
                 {this.props.detailslist.map((item, index) => {
-                    let itemname = item.name;
-                    let itemsku = item.sku;
-                    let itemqty = item.quantity;
-                    return (
-                      <>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>Name:</b> {itemname}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>Sku:</b> {itemsku}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>QTY:</b> {itemqty}
-                          </td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        {item.product_options.map((product, index) => {
-                          let display_name = product.display_name;
-                          let display_value = product.display_value;
-                         let new_display_name = display_name.slice(0, 10);
-                         return (
-                           <>
-                             {new_display_name === "Sheet Size" ? (
-                               <tr>
-                                 <td
-                                   style={{
-                                     marginLeft: "3%",
-                                     padding: "10px",
-                                     width: "25%",
-                                   }}
-                                 >
-                                   <b>{new_display_name}:</b> {display_value}
-                                 </td>
-                               </tr>
-                             ) : display_name === "Transfer Count" ? (
-                               <span></span>
-                             ) : (
-                               <tr>
-                                 <td
-                                   style={{
-                                     marginLeft: "3%",
-                                     padding: "10px",
-                                     width: "25%",
-                                   }}
-                                 >
-                                   <b>{display_name}:</b> {display_value}
-                                 </td>
-                               </tr>
-                             )}
-                           </>
-                         );
-                        })}{" "}
-                        <br />
-                        <br />
-                      </>
-                    );
+                  let itemname = item.name;
+                  let itemsku = item.sku;
+                  let itemqty = item.quantity;
+                  return (
+                    <>
+                      <tr>
+                        <td
+                          style={{
+                            marginLeft: "3%",
+                            padding: "10px",
+                            width: "25%",
+                          }}
+                        >
+                          <b>Name:</b> {itemname}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            marginLeft: "3%",
+                            padding: "10px",
+                            width: "25%",
+                          }}
+                        >
+                          <b>Sku:</b> {itemsku}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            marginLeft: "3%",
+                            padding: "10px",
+                            width: "25%",
+                          }}
+                        >
+                          <b>QTY:</b> {itemqty}
+                        </td>
+                      </tr>
+                      <tr></tr>
+                      {item.product_options.map((product, index) => {
+                        let display_name = product.display_name;
+                        let display_value = product.display_value;
+                        let new_display_name = display_name.slice(0, 10);
+                        return (
+                          <>
+                            {new_display_name === "Sheet Size" ? (
+                              <tr>
+                                <td
+                                  style={{
+                                    marginLeft: "3%",
+                                    padding: "10px",
+                                    width: "25%",
+                                  }}
+                                >
+                                  <b>{new_display_name}:</b> {display_value}
+                                </td>
+                              </tr>
+                            ) : display_name === "Transfer Count" ? (
+                              <span></span>
+                            ) : (
+                              <tr>
+                                <td
+                                  style={{
+                                    marginLeft: "3%",
+                                    padding: "10px",
+                                    width: "25%",
+                                  }}
+                                >
+                                  <b>{display_name}:</b> {display_value}
+                                </td>
+                              </tr>
+                            )}
+                          </>
+                        );
+                      })}{" "}
+                      <br />
+                      <br />
+                    </>
+                  );
                 })}{" "}
                 <br />
                 {/* toggles display window back to not displaying */}

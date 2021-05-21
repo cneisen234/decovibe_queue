@@ -579,6 +579,9 @@ class New extends Component {
               </Button>
             </div>
           )}
+          <br />
+          <br />
+          <br />
           <MUITable
             data={data} //brings in data as an array, in this case, list of items
             columns={[

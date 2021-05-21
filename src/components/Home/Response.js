@@ -466,6 +466,9 @@ class Response extends Component {
               </Button>
             </div>
           )}
+          <br />
+          <br />
+          <br />
           <MUITable
             data={data}
             columns={[
