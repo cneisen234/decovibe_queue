@@ -184,6 +184,15 @@ function* addNewItem(action){
       }
     }
 
+          function* needToRun(action) {
+            try {
+              yield axios.put("/api/item/run", action.payload);
+              yield put({ type: "GET_ITEM_LIST" });
+            } catch (error) {
+              console.log("Error with editing an item:", error);
+            }
+          }
+
       function* markPriority(action) {
         try {
           yield axios.put("/api/item/priority", action.payload);
@@ -545,6 +554,7 @@ function* itemSaga() {
      yield takeLatest('CUSTOMER_RESPONSE', customerResponse);
    yield takeLatest('MARK_COMPLETE', markComplete);
     yield takeLatest('ADD_NEW', goBackNew);
+     yield takeLatest('NEED_TO_RUN', needToRun);
     yield takeLatest('MARK_PRIORITY', markPriority);
       yield takeLatest('MARK_PRIORITY_PROGRESS', markPriorityProgress);
       yield takeLatest('MARK_PRIORITY_CUSTOM', markPriorityCustom);

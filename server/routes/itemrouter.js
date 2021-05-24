@@ -317,6 +317,22 @@ router.delete("/canneddelete/:canned", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.put("/run", rejectUnauthenticated, (req, res) => {
+  //api to set priority of new stock items
+  const { need_to_run, id } = req.body;
+  const queryText = 'UPDATE "item" SET need_to_run=$1 WHERE id=$2';
+
+  pool
+    .query(queryText, [need_to_run, id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
 router.put("/priority", rejectUnauthenticated, (req, res) => {
   //api to set priority of new stock items
   const { priority, id } = req.body;

@@ -775,6 +775,111 @@ class New extends Component {
               { name: "Created At" },
               { name: "Priority" },
               {
+                name: "Need To Run",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (this.props.itemlist[dataIndex] &&
+                        this.props.itemlist[dataIndex].need_to_run === "no") ||
+                      (this.props.itemlist[dataIndex] &&
+                        this.props.itemlist[dataIndex].need_to_run ===
+                          null) ? (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.itemlist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "NEED_TO_RUN",
+                            payload: {
+                              id: item.id,
+                              need_to_run: "yes",
+                            },
+                          });
+
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        No
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.itemlist;
+                          const item = itemArray[dataIndex];
+
+                          this.props.dispatch({
+                            type: "NEED_TO_RUN",
+                            payload: {
+                              id: item.id,
+                              need_to_run: "no",
+                            },
+                          });
+
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        Yes
+                      </Button>
+                    );
+                  },
+                },
+              },
+              {
                 name: "Assign",
                 options: {
                   filter: false,
