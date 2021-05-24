@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
 import MUITable from "../MUITable/MUITable";
-import { Paper } from "@material-ui/core";
+import { Paper, TextField } from "@material-ui/core";
 import Form from "react-bootstrap/Form";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import FlagIcon from "@material-ui/icons/Flag";
+import QueueIcon from "@material-ui/icons/Queue";
 import swal from "sweetalert";
 //import { response } from "express";
 
@@ -18,6 +19,9 @@ class New extends Component {
     toggle: false,
     toggle3: false,
     toggle4: false,
+    toggle5: false,
+    toggle6: false,
+    need_to_run: "",
     email: "",
     first_name: "",
     last_name: "",
@@ -35,21 +39,21 @@ class New extends Component {
     this.props.dispatch({
       type: "GET_ITEM_LIST",
     });
-      this.props.dispatch({
-        type: "GET_PROGRESS_LIST",
-      });
-      this.props.dispatch({
-        type: "GET_CUSTOM_ITEM_LIST",
-      });
-       this.props.dispatch({
-         type: "GET_CONFIRM_LIST",
-       });
-         this.props.dispatch({
-           type: "GET_RESPOND_LIST",
-         });
-             this.props.dispatch({
-               type: "GET_COMPLETE_LIST",
-             });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST",
+    });
     //get count of everything
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
@@ -118,59 +122,118 @@ class New extends Component {
     this.setState({
       toggle2: !this.state.toggle2,
     });
-        this.props.dispatch({
-          type: "GET_ITEM_LIST",
-        });
-        this.props.dispatch({
-          type: "GET_ITEM_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_RESPOND_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_APPROVE_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_CONFIRM_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_CUSTOM_ITEM_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_PROGRESS_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_COMPLETE_LIST_COUNT",
-        });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
   };
   toggle4 = () => {
     this.setState({
       toggle4: !this.state.toggle4,
     });
-        this.props.dispatch({
-          type: "GET_ITEM_LIST",
-        });
-        this.props.dispatch({
-          type: "GET_ITEM_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_RESPOND_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_APPROVE_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_CONFIRM_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_CUSTOM_ITEM_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_PROGRESS_LIST_COUNT",
-        });
-        this.props.dispatch({
-          type: "GET_COMPLETE_LIST_COUNT",
-        });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
+  };
+
+  toggle5 = () => {
+    this.setState({
+      toggle5: !this.state.toggle5,
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
+  };
+  toggle6 = () => {
+    this.setState({
+      toggle6: !this.state.toggle6,
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
   };
   assignTask = (event) => {
     //assigns the task to a decovibe worker
@@ -211,6 +274,45 @@ class New extends Component {
       type: "GET_COMPLETE_LIST_COUNT",
     });
   };
+  needToRun = (event) => {
+    //assigns the task to a decovibe worker
+    event.preventDefault();
+    const { id, need_to_run } = this.state;
+    this.props.dispatch({
+      type: "NEED_TO_RUN",
+      payload: {
+        id: id,
+        need_to_run: need_to_run,
+      },
+    });
+    this.setState({
+      toggle5: false,
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
+  };
 
   //This function handles storing input values into state on change
   handleInputChangeFor = (propertyName) => (event) => {
@@ -222,16 +324,17 @@ class New extends Component {
   render() {
     //defines the dataselector to know which items to preform actions on
     let dataSelector = this.state.dataSelector;
-    let decoSku5 = ""
-    let decoSku7 = ""
-    let decoSku6 = ""
-    let descrip = ""
+    let decoSku5 = "";
+    let decoSku7 = "";
+    let decoSku6 = "";
+    let descrip = "";
     const data = this.props.itemlist.map((item) => [
       item.order_number,
       item.sku,
       item.description,
       item.product_length,
       item.qty,
+      item.need_to_run,
       item.assigned,
       item.created_at,
       item.priority,
@@ -258,6 +361,17 @@ class New extends Component {
                 }}
               >
                 <AssignmentIndIcon></AssignmentIndIcon>
+              </Button>
+              <Button
+                variant="success"
+                onClick={(event) => {
+                  this.setState({
+                    toggle6: !this.state.toggle6,
+                    toggle3: false,
+                  });
+                }}
+              >
+                <QueueIcon></QueueIcon>
               </Button>
               <Button
                 variant="success"
@@ -771,6 +885,7 @@ class New extends Component {
               },
               { name: "Length" },
               { name: "QTY" },
+              { name: "Number to Run" },
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
@@ -783,97 +898,20 @@ class New extends Component {
                   customBodyRenderLite: (dataIndex, rowIndex) => {
                     return this.props.user.role === "csr" ? (
                       <span></span>
-                    ) : (this.props.itemlist[dataIndex] &&
-                        this.props.itemlist[dataIndex].need_to_run === "no") ||
-                      (this.props.itemlist[dataIndex] &&
-                        this.props.itemlist[dataIndex].need_to_run ===
-                          null) ? (
+                    ) : (
                       <Button
                         variant="success"
                         onClick={(event) => {
                           event.preventDefault();
                           const itemArray = this.props.itemlist;
                           const item = itemArray[dataIndex];
-
-                          this.props.dispatch({
-                            type: "NEED_TO_RUN",
-                            payload: {
-                              id: item.id,
-                              need_to_run: "yes",
-                            },
-                          });
-
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST",
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_RESPOND_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CONFIRM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
+                          this.setState({
+                            toggle5: !this.state.toggle5,
+                            id: item.id,
                           });
                         }}
                       >
-                        No
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="danger"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-                          const item = itemArray[dataIndex];
-
-                          this.props.dispatch({
-                            type: "NEED_TO_RUN",
-                            payload: {
-                              id: item.id,
-                              need_to_run: "no",
-                            },
-                          });
-
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST",
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_RESPOND_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CONFIRM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
-                          });
-                        }}
-                      >
-                        Yes
+                        <QueueIcon></QueueIcon>
                       </Button>
                     );
                   },
@@ -896,7 +934,7 @@ class New extends Component {
                           const itemArray = this.props.itemlist;
                           const item = itemArray[dataIndex];
                           this.setState({
-                            toggle: !this.state.toggle,
+                            toggle5: !this.state.toggle5,
                             id: item.id,
                           });
                         }}
@@ -1395,6 +1433,198 @@ class New extends Component {
                 <br />
                 <br />
                 <Button onClick={this.toggle4} variant="success" type="submit">
+                  Go Back
+                </Button>
+              </td>
+            </Paper>
+          )}
+
+          {this.state.toggle5 === false ? (
+            //if toggle is false, render nothing. This is the default
+            <span></span>
+          ) : (
+            //else render the assign window
+            <Paper
+              style={{
+                right: 0,
+                bottom: 0,
+                position: "fixed",
+                borderRadius: "10%",
+                height: "600px",
+                width: "400px",
+                zIndex: "1000000000",
+                border: "50px",
+                overflow: "scroll",
+                fontSize: "15px",
+                backgroundColor: "white",
+              }}
+              elevation="24"
+              className="loginBox"
+            >
+              <td
+                style={{
+                  backgroundColor: "white",
+                  padding: "5%",
+                }}
+              >
+                <br />
+                <br />{" "}
+                <form onSubmit={this.needToRun}>
+                  <TextField
+                    style={{
+                      width: "150%",
+                    }}
+                    variant="outlined"
+                    label="Enter amount to run"
+                    name="edit"
+                    placeholder="...enter number"
+                    // value of local state as text value
+                    value={this.state.need_to_run}
+                    type="text"
+                    maxLength={10}
+                    //runs handleChange on input change
+                    onChange={(event) =>
+                      this.handleChange(event, "need_to_run")
+                    }
+                  />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  {/* onClick tied to form element, runs submitInfo on click */}
+                  <Button variant="success" type="submit">
+                    Set Amount
+                  </Button>
+                </form>
+                {/* toggles edit window back to not displaying */}
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <Button onClick={this.toggle5} variant="success" type="submit">
+                  Go Back
+                </Button>
+              </td>
+            </Paper>
+          )}
+          {this.state.toggle6 === false ? (
+            //if toggle is false, render nothing. This is the default
+            <span></span>
+          ) : (
+            //another assign window for the selected checkboxes. Needed it's own window because the functionality needed to be altered a bit for this feature
+            <Paper
+              style={{
+                right: 0,
+                bottom: 0,
+                position: "fixed",
+                borderRadius: "10%",
+                height: "600px",
+                width: "400px",
+                zIndex: "1000000000",
+                border: "50px",
+                overflow: "scroll",
+                fontSize: "15px",
+                backgroundColor: "white",
+              }}
+              elevation="24"
+              className="loginBox"
+            >
+              <td
+                style={{
+                  backgroundColor: "white",
+                  padding: "5%",
+                }}
+              >
+                <br />
+                <br />{" "}
+                <form
+                  onSubmit={(event) => {
+                    //prevents default action
+                    event.preventDefault();
+                    const { need_to_run } = this.state;
+                    for (let index = 0; index < dataSelector.length; index++) {
+                      const element = dataSelector[index];
+                      this.props.dispatch({
+                        type: "NEED_TO_RUN",
+                        payload: {
+                          id: element.id,
+                          need_to_run: need_to_run,
+                        },
+                      });
+                      this.setState({
+                        toggle6: false,
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST",
+                      });
+                      this.props.dispatch({
+                        type: "GET_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_RESPOND_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_APPROVE_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_CONFIRM_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_PROGRESS_LIST_COUNT",
+                      });
+                      this.props.dispatch({
+                        type: "GET_COMPLETE_LIST_COUNT",
+                      });
+                    }
+                    let checkInput = document.getElementsByTagName("input");
+                    for (let index = 0; index < checkInput.length; index++) {
+                      const element = checkInput[index];
+                      console.log(element.checked);
+                      element.checked = false;
+                    }
+                    dataSelector = [];
+                    this.setState({
+                      dataSelector: [],
+                    });
+                  }}
+                >
+                  <TextField
+                    style={{
+                      width: "150%",
+                    }}
+                    variant="outlined"
+                    label="Enter amount to run"
+                    name="edit"
+                    placeholder="...enter number"
+                    // value of local state as text value
+                    value={this.state.need_to_run}
+                    type="text"
+                    maxLength={10}
+                    //runs handleChange on input change
+                    onChange={(event) =>
+                      this.handleChange(event, "need_to_run")
+                    }
+                  />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  {/* onClick tied to form element, runs submitInfo on click */}
+                  <Button variant="success" type="submit">
+                    Set Amount
+                  </Button>
+                </form>
+                {/* toggles edit window back to not displaying */}
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <Button onClick={this.toggle6} variant="success" type="submit">
                   Go Back
                 </Button>
               </td>
