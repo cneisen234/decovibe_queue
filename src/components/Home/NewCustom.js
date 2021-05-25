@@ -1375,6 +1375,7 @@ class NewCustom extends Component {
                     <option value="Levi">Levi </option>{" "}
                     <option value="Heather">Heather </option>{" "}
                     <option value="Sasha">Sasha </option>{" "}
+                    <option value="Emily">Emily </option>{" "}
                   </Form.Control>
                   <br />
                   <Button variant="success" type="submit">
@@ -1598,17 +1599,29 @@ class NewCustom extends Component {
                           )}
                           {this.state[pic] !== "" ||
                           this.props.user.role === "csr" ? (
-                            <tr>
-                              <td>
-                                <a
-                                  href={this.state[pic]}
-                                  rel="noopener noreferrer"
-                                  target="_blank"
-                                >
-                                  <b>{this.state[filename]}</b>
-                                </a>
-                              </td>
-                            </tr>
+                            <>
+                              <tr>
+                                <td>
+                                  <a
+                                    href={this.state[pic]}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                  >
+                                    <b>{this.state[filename]}</b>
+                                  </a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <img
+                                    src={this.state[pic]}
+                                    alt="Upload File"
+                                    width="150"
+                                    height="150"
+                                  ></img>
+                                </td>
+                              </tr>
+                            </>
                           ) : (
                             <span></span>
                           )}
@@ -2031,6 +2044,7 @@ class NewCustom extends Component {
                     <option value="Levi">Levi </option>{" "}
                     <option value="Heather">Heather </option>{" "}
                     <option value="Sasha">Sasha </option>{" "}
+                    <option value="Emily">Emily </option>{" "}
                   </Form.Control>
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}

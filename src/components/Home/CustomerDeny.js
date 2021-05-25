@@ -493,17 +493,29 @@ class CustomerPage extends Component {
                               </td>
                             </tr>
                             {this.state[pic] !== "" ? (
-                              <tr>
-                                <td>
-                                  <a
-                                    href={this.state[pic]}
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                  >
-                                    <b>{this.state[filename]}</b>
-                                  </a>
-                                </td>
-                              </tr>
+                              <>
+                                <tr>
+                                  <td>
+                                    <a
+                                      href={this.state[pic]}
+                                      rel="noopener noreferrer"
+                                      target="_blank"
+                                    >
+                                      <b>{this.state[filename]}</b>
+                                    </a>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <img
+                                      src={this.state[pic]}
+                                      alt="Upload File"
+                                      width="150"
+                                      height="150"
+                                    ></img>
+                                  </td>
+                                </tr>
+                              </>
                             ) : (
                               <span></span>
                             )}

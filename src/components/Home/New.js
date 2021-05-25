@@ -885,7 +885,29 @@ class New extends Component {
               },
               { name: "Length" },
               { name: "QTY" },
-              { name: "Number to Run" },
+              {
+                name: "Number to Run",
+                options: {
+                  filter: true,
+                  sort: true,
+                  // empty: true,
+                  customBodyRender: (value, tableMeta, updateValue) => {
+                    return (
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          backgroundColor: "#BE93D4",
+                          color: "black",
+                          textAlign: "center",
+                        }}
+                      >
+                        {value}
+                      </div>
+                    );
+                  },
+                },
+              },
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
@@ -934,7 +956,7 @@ class New extends Component {
                           const itemArray = this.props.itemlist;
                           const item = itemArray[dataIndex];
                           this.setState({
-                            toggle5: !this.state.toggle5,
+                            toggle: !this.state.toggle,
                             id: item.id,
                           });
                         }}
@@ -1302,6 +1324,7 @@ class New extends Component {
                     <option value="Levi">Levi </option>{" "}
                     <option value="Heather">Heather </option>{" "}
                     <option value="Sasha">Sasha </option>{" "}
+                    <option value="Emily">Emily </option>{" "}
                   </Form.Control>
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}
@@ -1419,6 +1442,7 @@ class New extends Component {
                     <option value="Levi">Levi </option>{" "}
                     <option value="Heather">Heather </option>{" "}
                     <option value="Sasha">Sasha </option>{" "}
+                    <option value="Emily">Emily </option>{" "}
                   </Form.Control>
                   <br />
                   {/* onClick tied to form element, runs submitInfo on click */}
