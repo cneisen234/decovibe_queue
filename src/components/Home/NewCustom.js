@@ -94,9 +94,9 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -116,7 +116,18 @@ class NewCustom extends Component {
       type: "DELETE_HISTORY_RANGE",
     });
   }
-
+  checkHistory = (event) => {
+    const { email } = this.state;
+    this.props.dispatch({
+      type: "CHECK_HISTORY",
+      payload: {
+        email: email,
+      },
+    });
+    this.setState({
+      email: email,
+    })
+  };
   handleChange = (event, fieldName) => {
     this.setState({ [fieldName]: event.target.value }); //sets to value of targeted event
   }; //end handleChange
@@ -134,9 +145,9 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -163,9 +174,9 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -192,9 +203,9 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -231,9 +242,9 @@ class NewCustom extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -849,6 +860,9 @@ class NewCustom extends Component {
                             this.props.dispatch({
                               type: "GET_REPLIES",
                             });
+                            setTimeout(() => {
+                              this.checkHistory();
+                            }, 1000);
                           }}
                         >
                           <ViewListIcon></ViewListIcon>
@@ -1926,6 +1940,47 @@ class NewCustom extends Component {
                     </>
                   )}
                   <tr>
+                    <td><b>Communication History:</b></td>
+                  </tr>
+                  {this.props.historylisttable.map((history, index) => {
+                    let admincomments = history.admincomments;
+                    let customercomments = history.customercomments;
+                    return (
+                      <>
+                        {typeof admincomments === "string" ? (
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>Artist Comments:</b> {admincomments}
+                            </td>
+                          </tr>
+                        ) : (
+                          <span></span>
+                        )}
+                        {typeof customercomments === "string" ? (
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>Customer Comments:</b> {customercomments}
+                            </td>
+                          </tr>
+                        ) : (
+                          <span></span>
+                        )}
+                      </>
+                    );
+                  })}{" "}
+                  <tr>
                     <td>
                       {" "}
                       <Button
@@ -2078,5 +2133,7 @@ const mapStateToProps = (state) => ({
   customitemlist: state.item.customitemlist,
   detailslist: state.item.detailslist,
   replieslist: state.item.replieslist,
+  historylist: state.item.historylist,
+  historylisttable: state.item.historylisttable,
 });
 export default connect(mapStateToProps)(NewCustom);

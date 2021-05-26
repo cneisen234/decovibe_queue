@@ -593,6 +593,8 @@ class CustomerPage extends Component {
 const mapStateToProps = (state) => ({
   confirmlist: state.item.confirmlist,
   detailslist: state.item.detailslist,
+  historylist: state.item.historylist,
+  historylisttable: state.item.historylisttable,
 });
 
 export default withRouter(connect(mapStateToProps)(CustomerPage));

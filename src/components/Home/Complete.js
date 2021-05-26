@@ -42,9 +42,9 @@ class Complete extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_COMPLETE_LIST_COUNT",
     });
@@ -52,11 +52,22 @@ class Complete extends Component {
     this.props.dispatch({
       type: "DELETE_COMPLETE_RANGE",
     });
-     this.props.dispatch({
-       type: "DELETE_HISTORY_RANGE",
-     });
+    this.props.dispatch({
+      type: "DELETE_HISTORY_RANGE",
+    });
   }
-
+  checkHistory = (event) => {
+    const { email } = this.state;
+    this.props.dispatch({
+      type: "CHECK_HISTORY",
+      payload: {
+        email: email,
+      },
+    });
+    this.setState({
+      email: email,
+    });
+  };
   toggle2 = () => {
     this.setState({
       toggle2: !this.state.toggle2,
@@ -89,10 +100,10 @@ class Complete extends Component {
 
   render() {
     let dataSelector = this.state.dataSelector;
-      let decoSku5 = "";
-      let decoSku7 = "";
-      let decoSku6 = "";
-      let descrip = "";
+    let decoSku5 = "";
+    let decoSku7 = "";
+    let decoSku6 = "";
+    let descrip = "";
     const data = this.props.completelist.map((complete) => [
       complete.order_number,
       complete.item_type,
@@ -102,7 +113,7 @@ class Complete extends Component {
       complete.qty,
       complete.assigned,
       complete.created_at,
-      complete.priority
+      complete.priority,
     ]);
     return (
       <div>
@@ -551,6 +562,9 @@ class Complete extends Component {
                               order_number: order_number,
                             },
                           });
+                          setTimeout(() => {
+                            this.checkHistory();
+                          }, 1000);
                         }}
                       >
                         <ViewListIcon></ViewListIcon>
@@ -1106,6 +1120,49 @@ class Complete extends Component {
                   }
                   return null;
                 })}{" "}
+                <tr>
+                  <td>
+                    <b>Communication History:</b>
+                  </td>
+                </tr>
+                {this.props.historylisttable.map((history, index) => {
+                  let admincomments = history.admincomments;
+                  let customercomments = history.customercomments;
+                  return (
+                    <>
+                      {typeof admincomments === "string" ? (
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Artist Comments:</b> {admincomments}
+                          </td>
+                        </tr>
+                      ) : (
+                        <span></span>
+                      )}
+                      {typeof customercomments === "string" ? (
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Customer Comments:</b> {customercomments}
+                          </td>
+                        </tr>
+                      ) : (
+                        <span></span>
+                      )}
+                    </>
+                  );
+                })}{" "}
                 <Button onClick={this.toggle2} variant="success" type="submit">
                   Close
                 </Button>
@@ -1131,6 +1188,7 @@ const mapStateToProps = (state) => ({
   user: state.user,
   completelist: state.item.completelist,
   detailslist: state.item.detailslist,
-  
+  historylist: state.item.historylist,
+  historylisttable: state.item.historylisttable,
 });
 export default connect(mapStateToProps)(Complete);

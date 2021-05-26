@@ -76,13 +76,25 @@ class Response extends Component {
     payment_link: null,
     item_type: "",
   };
+  checkHistory = (event) => {
+    const { email } = this.state;
+    this.props.dispatch({
+      type: "CHECK_HISTORY",
+      payload: {
+        email: email,
+      },
+    });
+    this.setState({
+      email: email,
+    });
+  };
   componentDidMount() {
     this.props.dispatch({
       type: "GET_RESPOND_LIST",
     });
-      this.props.dispatch({
-        type: "GET_REPLIES",
-      });
+    this.props.dispatch({
+      type: "GET_REPLIES",
+    });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
@@ -92,9 +104,9 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST_COUNT",
     });
@@ -123,9 +135,9 @@ class Response extends Component {
     this.setState({
       toggle: !this.state.toggle,
     });
-      this.props.dispatch({
-        type: "GET_RESPOND_LIST",
-      });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
@@ -135,9 +147,9 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -155,9 +167,9 @@ class Response extends Component {
     this.setState({
       toggle2: !this.state.toggle2,
     });
-      this.props.dispatch({
-        type: "GET_RESPOND_LIST",
-      });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
@@ -167,9 +179,9 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -187,9 +199,9 @@ class Response extends Component {
     this.setState({
       toggle4: !this.state.toggle4,
     });
-      this.props.dispatch({
-        type: "GET_RESPOND_LIST",
-      });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
@@ -199,9 +211,9 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -232,18 +244,18 @@ class Response extends Component {
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST",
     });
-      this.props.dispatch({
-        type: "GET_RESPOND_LIST",
-      });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST",
+    });
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -572,6 +584,9 @@ class Response extends Component {
                                 order_number: order_number,
                               },
                             });
+                            setTimeout(() => {
+                              this.checkHistory();
+                            }, 1000);
                           }}
                         >
                           <ViewListIcon></ViewListIcon>
@@ -1558,6 +1573,49 @@ class Response extends Component {
                 )}
                 <tr>
                   <td>
+                    <b>Communication History:</b>
+                  </td>
+                </tr>
+                {this.props.historylisttable.map((history, index) => {
+                  let admincomments = history.admincomments;
+                  let customercomments = history.customercomments;
+                  return (
+                    <>
+                      {typeof admincomments === "string" ? (
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Artist Comments:</b> {admincomments}
+                          </td>
+                        </tr>
+                      ) : (
+                        <span></span>
+                      )}
+                      {typeof customercomments === "string" ? (
+                        <tr>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>Customer Comments:</b> {customercomments}
+                          </td>
+                        </tr>
+                      ) : (
+                        <span></span>
+                      )}
+                    </>
+                  );
+                })}{" "}
+                <tr>
+                  <td>
                     {" "}
                     <Button
                       onClick={this.toggle2}
@@ -1590,5 +1648,7 @@ const mapStateToProps = (state) => ({
   respondlist: state.item.respondlist,
   detailslist: state.item.detailslist,
   replieslist: state.item.replieslist,
+  historylist: state.item.historylist,
+  historylisttable: state.item.historylisttable,
 });
 export default connect(mapStateToProps)(Response);

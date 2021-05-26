@@ -29,9 +29,9 @@ class SentCustomer extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CUSTOM_ITEM_LIST_COUNT",
     });
@@ -51,6 +51,18 @@ class SentCustomer extends Component {
       type: "DELETE_HISTORY_RANGE",
     });
   }
+  checkHistory = (event) => {
+    const { email } = this.state;
+    this.props.dispatch({
+      type: "CHECK_HISTORY",
+      payload: {
+        email: email,
+      },
+    });
+    this.setState({
+      email: email,
+    });
+  };
   toggle2 = () => {
     this.setState({
       toggle2: !this.state.toggle2,
@@ -64,9 +76,9 @@ class SentCustomer extends Component {
     this.props.dispatch({
       type: "GET_RESPOND_LIST_COUNT",
     });
-     this.props.dispatch({
-       type: "GET_APPROVE_LIST_COUNT",
-     });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
     this.props.dispatch({
       type: "GET_CONFIRM_LIST_COUNT",
     });
@@ -166,6 +178,9 @@ class SentCustomer extends Component {
                             this.props.dispatch({
                               type: "GET_REPLIES",
                             });
+                            setTimeout(() => {
+                              this.checkHistory();
+                            }, 1000);
                           }}
                         >
                           <ViewListIcon></ViewListIcon>
@@ -363,6 +378,49 @@ class SentCustomer extends Component {
                     }
                     return null;
                   })}{" "}
+                  <tr>
+                    <td>
+                      <b>Communication History:</b>
+                    </td>
+                  </tr>
+                  {this.props.historylisttable.map((history, index) => {
+                    let admincomments = history.admincomments;
+                    let customercomments = history.customercomments;
+                    return (
+                      <>
+                        {typeof admincomments === "string" ? (
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>Artist Comments:</b> {admincomments}
+                            </td>
+                          </tr>
+                        ) : (
+                          <span></span>
+                        )}
+                        {typeof customercomments === "string" ? (
+                          <tr>
+                            <td
+                              style={{
+                                marginLeft: "3%",
+                                padding: "10px",
+                                width: "25%",
+                              }}
+                            >
+                              <b>Customer Comments:</b> {customercomments}
+                            </td>
+                          </tr>
+                        ) : (
+                          <span></span>
+                        )}
+                      </>
+                    );
+                  })}{" "}
                   <br />
                   <br />
                   <tr>
@@ -401,5 +459,7 @@ const mapStateToProps = (state) => ({
   customitemlist: state.item.customitemlist,
   confirmlist: state.item.confirmlist,
   detailslist: state.item.detailslist,
+  historylist: state.item.historylist,
+  historylisttable: state.item.historylisttable,
 });
 export default connect(mapStateToProps)(SentCustomer);
