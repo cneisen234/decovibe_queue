@@ -1579,6 +1579,7 @@ class Response extends Component {
                 {this.props.historylisttable.map((history, index) => {
                   let admincomments = history.admincomments;
                   let customercomments = history.customercomments;
+                  let datetime = history.comment_made_at;
                   return (
                     <>
                       {typeof admincomments === "string" ? (
@@ -1591,6 +1592,15 @@ class Response extends Component {
                             }}
                           >
                             <b>Artist Comments:</b> {admincomments}
+                          </td>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>{datetime}</b>
                           </td>
                         </tr>
                       ) : (
@@ -1606,6 +1616,15 @@ class Response extends Component {
                             }}
                           >
                             <b>Customer Comments:</b> {customercomments}
+                          </td>
+                          <td
+                            style={{
+                              marginLeft: "3%",
+                              padding: "10px",
+                              width: "25%",
+                            }}
+                          >
+                            <b>{datetime}</b>
                           </td>
                         </tr>
                       ) : (
