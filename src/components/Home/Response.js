@@ -20,6 +20,7 @@ class Response extends Component {
     first_name: "",
     last_name: "",
     order_number: "",
+    details_order_number: "",
     product_options: "",
     qty: "",
     id: "",
@@ -954,6 +955,9 @@ class Response extends Component {
                   let decoSku6 = decoSku.slice(0, 8);
                   let uploadArray = [];
                   let currentOrder = "";
+                    this.setState({
+                      details_order_number: order_id,
+                    });
                   if (
                     //if the sliced skus meet the below conditions
                     decoSku4 === "BL_A3" ||
@@ -1584,8 +1588,7 @@ class Response extends Component {
                   return (
                     <>
                       {typeof admincomments === "string" &&
-                      order_number == this.props.detailslist[0] &&
-                      this.props.detailslist[0].order_id ? (
+                      order_number === this.state.details_order_number ? (
                         <tr>
                           <td
                             style={{
@@ -1610,8 +1613,7 @@ class Response extends Component {
                         <span></span>
                       )}
                       {typeof customercomments === "string" &&
-                      order_number == this.props.detailslist[0] &&
-                      this.props.detailslist[0].order_id ? (
+                      order_number === this.state.details_order_number ? (
                         <tr>
                           <td
                             style={{
