@@ -2117,7 +2117,7 @@ class Approved extends Component {
                         <span></span>
                       )}
                       {typeof customercomments === "string" &&
-                      order_number === details_order_number ? (
+                      order_number === this.state.details_order_number ? (
                         <tr>
                           <td
                             style={{
