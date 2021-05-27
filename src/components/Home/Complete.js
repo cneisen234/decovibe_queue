@@ -13,7 +13,7 @@ class Complete extends Component {
     toggle: false,
     toggle2: false,
     toggle3: false,
-    details_order_number: "",
+    order_number: "",
     qty: "",
     updated_qty: "",
     id: "",
@@ -847,9 +847,6 @@ class Complete extends Component {
                   let decoSku7 = decoSku.slice(0, 7);
                   let decoSku6 = decoSku.slice(0, 8);
                   let uploadArray = [];
-                  this.setState({
-                    details_order_number: order_id,
-                  })
                   if (
                     //if the sliced skus meet the below conditions
                     decoSku4 === "BL_A3" ||
@@ -1137,7 +1134,7 @@ class Complete extends Component {
                   return (
                     <>
                       {typeof admincomments === "string" &&
-                      order_number === this.state.details_order_number ? (
+                      order_number === this.state.order_number ? (
                         <tr>
                           <td
                             style={{
@@ -1162,7 +1159,7 @@ class Complete extends Component {
                         <span></span>
                       )}
                       {typeof customercomments === "string" &&
-                      order_number === this.state.details_order_number ? (
+                      order_number === this.state.order_number ? (
                         <tr>
                           <td
                             style={{

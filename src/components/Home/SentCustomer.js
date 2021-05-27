@@ -10,7 +10,6 @@ class SentCustomer extends Component {
     first_name: "",
     last_name: "",
     order_number: "",
-    details_order_number: "",
     product_options: "",
     qty: "",
     id: "",
@@ -270,9 +269,6 @@ class SentCustomer extends Component {
                     let decoSku4 = decoSku.slice(0, 5);
                     let decoSku7 = decoSku.slice(0, 7);
                     let decoSku6 = decoSku.slice(0, 8);
-                      this.setState({
-                        details_order_number: order_id,
-                      });
                     if (
                       //if the sliced skus meet the below conditions
                       decoSku4 === "BL_A3" ||
@@ -396,7 +392,7 @@ class SentCustomer extends Component {
                     return (
                       <>
                         {typeof admincomments === "string" &&
-                        order_number == this.state.details_order_number ? (
+                        order_number == this.state.order_number ? (
                           <tr>
                             <td
                               style={{
@@ -421,7 +417,7 @@ class SentCustomer extends Component {
                           <span></span>
                         )}
                         {typeof customercomments === "string" &&
-                        order_number == this.state.details_order_number ? (
+                        order_number == this.state.order_number ? (
                           <tr>
                             <td
                               style={{

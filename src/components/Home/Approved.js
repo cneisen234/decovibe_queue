@@ -20,7 +20,6 @@ class Approved extends Component {
     first_name: "",
     last_name: "",
     order_number: "",
-    details_order_number: "",
     product_options: "",
     qty: "",
     id: "",
@@ -1499,9 +1498,6 @@ class Approved extends Component {
                   let decoSku7 = decoSku.slice(0, 7);
                   let decoSku6 = decoSku.slice(0, 8);
                   let uploadArray = [];
-                    this.setState({
-                      details_order_number: order_id,
-                    });
                   if (
                     //if the sliced skus meet the below conditions
                     decoSku4 === "BL_A3" ||
@@ -2092,7 +2088,7 @@ class Approved extends Component {
                   return (
                     <>
                       {typeof admincomments === "string" &&
-                      order_number === this.state.details_order_number ? (
+                      order_number === this.state.order_number ? (
                         <tr>
                           <td
                             style={{
@@ -2117,7 +2113,7 @@ class Approved extends Component {
                         <span></span>
                       )}
                       {typeof customercomments === "string" &&
-                      order_number === this.state.details_order_number ? (
+                      order_number === this.state.order_number ? (
                         <tr>
                           <td
                             style={{
