@@ -586,7 +586,7 @@ class Response extends Component {
                             });
                             setTimeout(() => {
                               this.checkHistory();
-                            }, 1000);
+                            }, 2000);
                           }}
                         >
                           <ViewListIcon></ViewListIcon>
