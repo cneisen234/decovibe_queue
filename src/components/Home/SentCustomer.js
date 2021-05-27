@@ -387,6 +387,7 @@ class SentCustomer extends Component {
                     let admincomments = history.admincomments;
                     let customercomments = history.customercomments;
                     let datetime = history.comment_made_at
+                    let order_number = history.order_number;
                     return (
                       <>
                         {typeof admincomments === "string" &&
