@@ -1940,9 +1940,18 @@ class NewCustom extends Component {
                     </>
                   )}
                   <tr>
-                    <td><b>Communication History:</b></td>
+                    <td>
+                      <b>Communication History:</b>{" "}
+                      {JSON.stringify(
+                        this.props.detailslist[0] &&
+                          this.props.detailslist[0].order_id
+                      )}
+                    </td>
                   </tr>
                   {this.props.historylisttable.map((history, index) => {
+                    let details_order_number =
+                      this.props.detailslist[0] &&
+                      this.props.detailslist[0].order_id;
                     let admincomments = history.admincomments;
                     let customercomments = history.customercomments;
                     let datetime = history.comment_made_at;
@@ -1950,7 +1959,7 @@ class NewCustom extends Component {
                     return (
                       <>
                         {typeof admincomments === "string" &&
-                        order_number === this.props.detailslist[0].order_id ? (
+                        order_number === details_order_number ? (
                           <tr>
                             <td
                               style={{
@@ -1975,7 +1984,7 @@ class NewCustom extends Component {
                           <span></span>
                         )}
                         {typeof customercomments === "string" &&
-                        order_number === this.props.detailslist[0].order_id ? (
+                        order_number === details_order_number ? (
                           <tr>
                             <td
                               style={{

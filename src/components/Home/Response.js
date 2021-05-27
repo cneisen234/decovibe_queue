@@ -1581,10 +1581,13 @@ class Response extends Component {
                   let customercomments = history.customercomments;
                   let datetime = history.comment_made_at;
                   let order_number = history.order_number;
+                  let details_order_number =
+                      this.props.detailslist[0] &&
+                      this.props.detailslist[0].order_id;
                   return (
                     <>
                       {typeof admincomments === "string" &&
-                      order_number === this.props.detailslist[0].order_id ? (
+                      order_number === details_order_number ? (
                         <tr>
                           <td
                             style={{
@@ -1609,7 +1612,7 @@ class Response extends Component {
                         <span></span>
                       )}
                       {typeof customercomments === "string" &&
-                      order_number === this.props.detailslist[0].order_id ? (
+                      order_number === details_order_number ? (
                         <tr>
                           <td
                             style={{
