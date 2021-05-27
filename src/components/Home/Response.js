@@ -584,9 +584,9 @@ class Response extends Component {
                                 order_number: order_number,
                               },
                             });
-                            setTimeout(() => {
+                       
                               this.checkHistory();
-                            }, 2000);
+                        
                           }}
                         >
                           <ViewListIcon></ViewListIcon>

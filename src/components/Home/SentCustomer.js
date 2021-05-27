@@ -178,9 +178,9 @@ class SentCustomer extends Component {
                             this.props.dispatch({
                               type: "GET_REPLIES",
                             });
-                            setTimeout(() => {
+                          
                               this.checkHistory();
-                            }, 2000);
+                          
                           }}
                         >
                           <ViewListIcon></ViewListIcon>
