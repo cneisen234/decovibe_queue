@@ -1946,9 +1946,11 @@ class NewCustom extends Component {
                     let admincomments = history.admincomments;
                     let customercomments = history.customercomments;
                     let datetime = history.comment_made_at;
+                    let order_number = history.order_number;
                     return (
                       <>
-                        {typeof admincomments === "string" ? (
+                        {typeof admincomments === "string" &&
+                        order_number === this.props.detailslist[0].order_id ? (
                           <tr>
                             <td
                               style={{
@@ -1972,7 +1974,8 @@ class NewCustom extends Component {
                         ) : (
                           <span></span>
                         )}
-                        {typeof customercomments === "string" ? (
+                        {typeof customercomments === "string" &&
+                        order_number === this.props.detailslist[0].order_id ? (
                           <tr>
                             <td
                               style={{

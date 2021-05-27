@@ -1582,7 +1582,8 @@ class Response extends Component {
                   let datetime = history.comment_made_at;
                   return (
                     <>
-                      {typeof admincomments === "string" ? (
+                      {typeof admincomments === "string" &&
+                      order_number === this.props.detailslist[0].order_id ? (
                         <tr>
                           <td
                             style={{
@@ -1606,7 +1607,8 @@ class Response extends Component {
                       ) : (
                         <span></span>
                       )}
-                      {typeof customercomments === "string" ? (
+                      {typeof customercomments === "string" &&
+                      order_number === this.props.detailslist[0].order_id ? (
                         <tr>
                           <td
                             style={{
