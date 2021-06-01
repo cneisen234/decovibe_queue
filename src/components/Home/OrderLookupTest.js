@@ -980,8 +980,8 @@ class OrderLookupTest extends Component {
                         >
                           <b>Color/Type:</b>{" "}
                           <i>
-                            {item.product_options[3].display_value}{" "}
-                            {item.product_options[2].display_value}
+                            {item.product_options[6].display_value}{" "}
+                            {item.product_options[5].display_value}
                           </i>
                         </td>
                       </tr>

@@ -298,13 +298,6 @@ class Nav extends Component {
                         });
                       }}
                     >
-                      <Link
-                        className={this.state.backgroundcolorclass}
-                        to="/orderlookup"
-                      >
-                        <ViewListIcon></ViewListIcon>
-                        Order Lookup{" "}
-                      </Link>
                     </div>
                   </Grid>
                   <Grid
@@ -598,13 +591,6 @@ class Nav extends Component {
                         });
                       }}
                     >
-                      <Link
-                        className={this.state.backgroundcolorclass}
-                        to="/orderlookup"
-                      >
-                        <ViewListIcon></ViewListIcon>
-                        Order Lookup{" "}
-                      </Link>
                     </div>
                   </Grid>
                   <Grid
