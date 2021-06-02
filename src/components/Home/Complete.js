@@ -800,7 +800,7 @@ class Complete extends Component {
                   marginLeft: "200px",
                   marginRight: "auto",
                   marginTop: "20px",
-                  width: "100%",
+                  width: "50%",
                 }}
               >
                 <tr>
@@ -822,7 +822,7 @@ class Complete extends Component {
                     </Button>
                   </td>
                 </tr>
-                <tr>
+                <tr className="borderBottom">
                   <td
                     style={{
                       marginLeft: "3%",
@@ -831,6 +831,8 @@ class Complete extends Component {
                     }}
                   >
                     <b>Order Number: </b>{" "}
+                  </td>
+                  <td>
                     {this.props.detailslist[0] &&
                       this.props.detailslist[0].order_id}
                   </td>
@@ -1021,7 +1023,7 @@ class Complete extends Component {
                             }
                           }
                         })}
-                        <tr>
+                        <tr className="borderBottom">
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1029,10 +1031,11 @@ class Complete extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Name:</b> {itemname}
+                            <b>Name:</b>
                           </td>
+                          <td> {itemname}</td>
                         </tr>
-                        <tr>
+                        <tr className="borderBottom">
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1040,30 +1043,20 @@ class Complete extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Sku:</b> {itemsku}
+                            <b>QTY:</b>
                           </td>
+                          <td> {itemqty}</td>
                         </tr>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>QTY:</b> {itemqty}
-                          </td>
-                        </tr>
-                        <tr></tr>
                         {item.product_options.map((product, index) => {
                           //map the product options of that sku to show the details
                           let display_name = product.display_name;
                           let display_value = product.display_value;
                           let new_display_name = display_name.slice(0, 10);
+                          let reorder_display_name = display_name.slice(0, 18);
                           return (
                             <>
                               {new_display_name === "Sheet Size" ? (
-                                <tr>
+                                <tr className="borderBottom">
                                   <td
                                     style={{
                                       marginLeft: "3%",
@@ -1071,13 +1064,16 @@ class Complete extends Component {
                                       width: "25%",
                                     }}
                                   >
-                                    <b>{new_display_name}:</b> {display_value}
+                                    <b>{new_display_name}:</b>
                                   </td>
+                                  <td> {display_value}</td>
                                 </tr>
-                              ) : display_name === "Transfer Count" ? (
+                              ) : display_name === "Transfer Count" ||
+                                new_display_name === "Supacolor " ? (
                                 <span></span>
-                              ) : (
-                                <tr>
+                              ) : reorder_display_name ===
+                                "Is this a reorder?" ? (
+                                <tr className="borderBottom">
                                   <td
                                     style={{
                                       marginLeft: "3%",
@@ -1085,8 +1081,22 @@ class Complete extends Component {
                                       width: "25%",
                                     }}
                                   >
-                                    <b>{display_name}:</b> {display_value}
+                                    <b>{reorder_display_name}:</b>
                                   </td>
+                                  <td> {display_value}</td>
+                                </tr>
+                              ) : (
+                                <tr className="borderBottom">
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                  >
+                                    <b>{display_name}:</b>
+                                  </td>
+                                  <td> {display_value}</td>
                                 </tr>
                               )}
                             </>
@@ -1111,16 +1121,20 @@ class Complete extends Component {
                         )}
                         <br />
                         <br />
-                        <tr>
-                          <td>
-                            ----------------------------------------------
-                          </td>
-                        </tr>
                       </>
                     );
                   }
                   return null;
                 })}{" "}
+              </table>
+              <table
+                style={{
+                  marginLeft: "200px",
+                  marginRight: "auto",
+                  marginTop: "20px",
+                  width: "80%",
+                }}
+              >
                 <tr>
                   <td>
                     <b>Communication History:</b>
@@ -1135,7 +1149,7 @@ class Complete extends Component {
                     <>
                       {typeof admincomments === "string" &&
                       order_number === this.state.order_number ? (
-                        <tr>
+                        <tr className="borderBottom">
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1143,8 +1157,9 @@ class Complete extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Artist Comments:</b> {admincomments}
+                            <b>Artist Comments:</b>
                           </td>
+                          <td> {admincomments}</td>
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1152,7 +1167,7 @@ class Complete extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>{datetime}</b>
+                            {datetime}
                           </td>
                         </tr>
                       ) : (
@@ -1160,7 +1175,7 @@ class Complete extends Component {
                       )}
                       {typeof customercomments === "string" &&
                       order_number === this.state.order_number ? (
-                        <tr>
+                        <tr className="borderBottom">
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1168,8 +1183,9 @@ class Complete extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Customer Comments:</b> {customercomments}
+                            <b>Customer Comments:</b>
                           </td>
+                          <td> {customercomments}</td>
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1177,7 +1193,7 @@ class Complete extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>{datetime}</b>
+                            {datetime}
                           </td>
                         </tr>
                       ) : (

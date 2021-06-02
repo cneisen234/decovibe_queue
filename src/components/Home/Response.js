@@ -904,7 +904,7 @@ class Response extends Component {
                   marginLeft: "200px",
                   marginRight: "auto",
                   marginTop: "20px",
-                  width: "100%",
+                  width: "50%",
                 }}
               >
                 <tr>
@@ -925,7 +925,7 @@ class Response extends Component {
                     </Button>
                   </td>
                 </tr>
-                <tr>
+                <tr className="borderBottom">
                   <td
                     style={{
                       marginLeft: "3%",
@@ -934,6 +934,8 @@ class Response extends Component {
                     }}
                   >
                     <b>Order Number: </b>{" "}
+                  </td>
+                  <td>
                     {this.props.detailslist[0] &&
                       this.props.detailslist[0].order_id}
                   </td>
@@ -1129,7 +1131,7 @@ class Response extends Component {
                             }
                           }
                         })}
-                        <tr>
+                        <tr className="borderBottom">
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1137,10 +1139,11 @@ class Response extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Name:</b> {itemname}{" "}
+                            <b>Name:</b>
                           </td>
+                          <td> {itemname} </td>
                         </tr>
-                        <tr>
+                        <tr className="borderBottom">
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1148,28 +1151,19 @@ class Response extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Sku:</b> {itemsku}
+                            <b>QTY:</b>
                           </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{
-                              marginLeft: "3%",
-                              padding: "10px",
-                              width: "25%",
-                            }}
-                          >
-                            <b>QTY:</b> {itemqty}
-                          </td>
+                          <td> {itemqty}</td>
                         </tr>
                         {item.product_options.map((product, index) => {
                           let display_name = product.display_name;
                           let display_value = product.display_value;
                           let new_display_name = display_name.slice(0, 10);
+                          let reorder_display_name = display_name.slice(0, 18);
                           return (
                             <>
                               {new_display_name === "Sheet Size" ? (
-                                <tr>
+                                <tr className="borderBottom">
                                   <td
                                     style={{
                                       marginLeft: "3%",
@@ -1177,13 +1171,16 @@ class Response extends Component {
                                       width: "25%",
                                     }}
                                   >
-                                    <b>{new_display_name}:</b> {display_value}
+                                    <b>{new_display_name}:</b>
                                   </td>
+                                  <td> {display_value}</td>
                                 </tr>
-                              ) : display_name === "Transfer Count" ? (
+                              ) : display_name === "Transfer Count" ||
+                                new_display_name === "Supacolor " ? (
                                 <span></span>
-                              ) : (
-                                <tr>
+                              ) : reorder_display_name ===
+                                "Is this a reorder?" ? (
+                                <tr className="borderBottom">
                                   <td
                                     style={{
                                       marginLeft: "3%",
@@ -1191,8 +1188,22 @@ class Response extends Component {
                                       width: "25%",
                                     }}
                                   >
-                                    <b>{display_name}:</b> {display_value}
+                                    <b>{reorder_display_name}:</b>
                                   </td>
+                                  <td> {display_value}</td>
+                                </tr>
+                              ) : (
+                                <tr className="borderBottom">
+                                  <td
+                                    style={{
+                                      marginLeft: "3%",
+                                      padding: "10px",
+                                      width: "25%",
+                                    }}
+                                  >
+                                    <b>{display_name}:</b>
+                                  </td>
+                                  <td> {display_value}</td>
                                 </tr>
                               )}
                             </>
@@ -1205,7 +1216,7 @@ class Response extends Component {
                         ) : (
                           <>
                             <tr>
-                              <td>
+                              <td colspan={2}>
                                 {/* filestack for photo uploads */}
                                 <ReactFilestack
                                   apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
@@ -1231,7 +1242,7 @@ class Response extends Component {
                         this.props.user.role === "csr" ? (
                           <>
                             <tr>
-                              <td>
+                              <td colspan={2}>
                                 <a
                                   href={this.state[pic]}
                                   rel="noopener noreferrer"
@@ -1242,12 +1253,11 @@ class Response extends Component {
                               </td>
                             </tr>
                             <tr>
-                              <td>
+                              <td colspan={2}>
                                 <img
                                   src={this.state[pic]}
                                   alt="Upload File"
-                                  width="150"
-                                  height="150"
+                                  height="200"
                                 ></img>
                               </td>
                             </tr>
@@ -1272,11 +1282,6 @@ class Response extends Component {
                             </Button>
                           </tr>
                         )}
-                        <tr>
-                          <td>
-                            ----------------------------------------------
-                          </td>
-                        </tr>
                       </>
                     );
                   }
@@ -1289,11 +1294,11 @@ class Response extends Component {
                 ) : (
                   <>
                     <tr>
-                      <td>
+                      <td colspan={2}>
                         {""}
                         <TextField
                           style={{
-                            width: "50%",
+                            width: "100%",
                           }}
                           variant="outlined"
                           label="Customer email"
@@ -1313,11 +1318,11 @@ class Response extends Component {
                     <br />
                     <br />
                     <tr>
-                      <td>
+                      <td colspan={2}>
                         {" "}
                         <TextField
                           style={{
-                            width: "50%",
+                            width: "100%",
                           }}
                           variant="outlined"
                           label="Payment link"
@@ -1337,7 +1342,7 @@ class Response extends Component {
                     <br />
                     <br />
                     <tr>
-                      <td>
+                      <td colspan={2}>
                         <Form.Control
                           as="select"
                           onChange={(event) =>
@@ -1347,7 +1352,7 @@ class Response extends Component {
                             })
                           }
                           style={{
-                            width: "50%",
+                            width: "100%",
                           }}
                         >
                           <option value="">Canned Responses</option>{" "}
@@ -1365,10 +1370,10 @@ class Response extends Component {
                     <br />
                     <br />
                     <tr>
-                      <td>
+                      <td colspan={2}>
                         <TextField
                           style={{
-                            width: "50%",
+                            width: "100%",
                           }}
                           //per material UI changes textfield to act like a textarea tag
                           multiline
@@ -1394,7 +1399,7 @@ class Response extends Component {
                     <br />
                     <br />
                     <tr>
-                      <td>
+                      <td colspan={2}>
                         <Button
                           variant="success"
                           onClick={(event) => {
@@ -1466,7 +1471,7 @@ class Response extends Component {
                     <br />
                     <br />
                     <tr>
-                      <td>
+                      <td colspan={2}>
                         <Button
                           variant="success"
                           onClick={(event) => {
@@ -1571,6 +1576,15 @@ class Response extends Component {
                     <br />
                   </>
                 )}
+              </table>
+              <table
+                style={{
+                  marginLeft: "200px",
+                  marginRight: "auto",
+                  marginTop: "20px",
+                  width: "80%",
+                }}
+              >
                 <tr>
                   <td>
                     <b>Communication History:</b>
@@ -1585,7 +1599,7 @@ class Response extends Component {
                     <>
                       {typeof admincomments === "string" &&
                       order_number === this.state.order_number ? (
-                        <tr>
+                        <tr className="borderBottom">
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1593,8 +1607,9 @@ class Response extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Artist Comments:</b> {admincomments}
+                            <b>Artist Comments:</b>
                           </td>
+                          <td> {admincomments}</td>
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1602,7 +1617,7 @@ class Response extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>{datetime}</b>
+                            {datetime}
                           </td>
                         </tr>
                       ) : (
@@ -1610,7 +1625,7 @@ class Response extends Component {
                       )}
                       {typeof customercomments === "string" &&
                       order_number === this.state.order_number ? (
-                        <tr>
+                        <tr className="borderBottom">
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1618,8 +1633,9 @@ class Response extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>Customer Comments:</b> {customercomments}
+                            <b>Customer Comments:</b>
                           </td>
+                          <td> {customercomments}</td>
                           <td
                             style={{
                               marginLeft: "3%",
@@ -1627,7 +1643,7 @@ class Response extends Component {
                               width: "25%",
                             }}
                           >
-                            <b>{datetime}</b>
+                            {datetime}
                           </td>
                         </tr>
                       ) : (

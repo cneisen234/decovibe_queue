@@ -1439,7 +1439,7 @@ class NewCustom extends Component {
                     marginLeft: "200px",
                     marginRight: "auto",
                     marginTop: "20px",
-                    width: "100%",
+                    width: "50%",
                   }}
                 >
                   <tr>
@@ -1460,7 +1460,7 @@ class NewCustom extends Component {
                       </Button>
                     </td>
                   </tr>
-                  <tr>
+                  <tr className="borderBottom">
                     <td
                       style={{
                         marginLeft: "3%",
@@ -1469,6 +1469,8 @@ class NewCustom extends Component {
                       }}
                     >
                       <b>Order Number: </b>{" "}
+                    </td>
+                    <td>
                       {this.props.detailslist[0] &&
                         this.props.detailslist[0].order_id}
                     </td>
@@ -1514,7 +1516,7 @@ class NewCustom extends Component {
                     ) {
                       return (
                         <>
-                          <tr>
+                          <tr className="borderBottom">
                             <td
                               style={{
                                 marginLeft: "3%",
@@ -1522,10 +1524,11 @@ class NewCustom extends Component {
                                 width: "25%",
                               }}
                             >
-                              <b>Name:</b> {itemname}
+                              <b>Name:</b>
                             </td>
+                            <td> {itemname}</td>
                           </tr>
-                          <tr>
+                          <tr className="borderBottom">
                             <td
                               style={{
                                 marginLeft: "3%",
@@ -1533,30 +1536,20 @@ class NewCustom extends Component {
                                 width: "25%",
                               }}
                             >
-                              <b>Sku:</b> {itemsku}
+                              <b>QTY:</b>
                             </td>
+                            <td> {itemqty}</td>
                           </tr>
-                          <tr>
-                            <td
-                              style={{
-                                marginLeft: "3%",
-                                padding: "10px",
-                                width: "25%",
-                              }}
-                            >
-                              <b>QTY:</b> {itemqty}
-                            </td>
-                          </tr>
-                          <tr></tr>
                           {item.product_options.map((product, index) => {
                             let display_name = product.display_name;
                             let display_value = product.display_value;
                             let new_display_name = display_name.slice(0, 10);
+                            let reorder_display_name = display_name.slice(0, 18);
                             return (
                               <>
                                 {new_display_name === "Sheet Size" ? (
                                   //if sheet size, cut off extra text
-                                  <tr>
+                                  <tr className="borderBottom">
                                     <td
                                       style={{
                                         marginLeft: "3%",
@@ -1564,13 +1557,16 @@ class NewCustom extends Component {
                                         width: "25%",
                                       }}
                                     >
-                                      <b>{new_display_name}:</b> {display_value}
+                                      <b>{new_display_name}:</b>
                                     </td>
+                                    <td> {display_value}</td>
                                   </tr>
-                                ) : display_name === "Transfer Count" ? (
+                                ) : display_name === "Transfer Count" ||
+                                  new_display_name === "Supacolor " ? (
                                   <span></span>
-                                ) : (
-                                  <tr>
+                                ) : reorder_display_name ===
+                                  "Is this a reorder?" ? (
+                                  <tr className="borderBottom">
                                     <td
                                       style={{
                                         marginLeft: "3%",
@@ -1578,8 +1574,22 @@ class NewCustom extends Component {
                                         width: "25%",
                                       }}
                                     >
-                                      <b>{display_name}:</b> {display_value}
+                                      <b>{reorder_display_name}:</b>
                                     </td>
+                                    <td> {display_value}</td>
+                                  </tr>
+                                ) : (
+                                  <tr className="borderBottom">
+                                    <td
+                                      style={{
+                                        marginLeft: "3%",
+                                        padding: "10px",
+                                        width: "25%",
+                                      }}
+                                    >
+                                      <b>{display_name}:</b>
+                                    </td>
+                                    <td> {display_value}</td>
                                   </tr>
                                 )}
                               </>
@@ -1590,8 +1600,8 @@ class NewCustom extends Component {
                           {this.props.user.role === "csr" ? (
                             <span></span>
                           ) : (
-                            <tr>
-                              <td>
+                            <tr className="borderBottom">
+                              <td colspan={2}>
                                 {/* filestack for photo uploads */}
                                 <ReactFilestack
                                   apikey={"AkS9hL8R9Tu1Pep8RcLwEz"}
@@ -1626,25 +1636,17 @@ class NewCustom extends Component {
                                   </a>
                                 </td>
                               </tr>
-                              <tr>
-                                <td>
+                              <div>
                                   <img
                                     src={this.state[pic]}
                                     alt="Upload File"
-                                    width="150"
-                                    height="150"
+                                    height="200"
                                   ></img>
-                                </td>
-                              </tr>
+                              </div>
                             </>
                           ) : (
                             <span></span>
                           )}
-                          <tr>
-                            <td>
-                              ----------------------------------------------
-                            </td>
-                          </tr>
                         </>
                       );
                     }
@@ -1657,11 +1659,11 @@ class NewCustom extends Component {
                   ) : (
                     <>
                       <tr>
-                        <td>
+                        <td colspan={2}>
                           {" "}
                           <TextField
                             style={{
-                              width: "50%",
+                              width: "100%",
                             }}
                             variant="outlined"
                             label="Customer email"
@@ -1681,11 +1683,11 @@ class NewCustom extends Component {
                       <br />
                       <br />
                       <tr>
-                        <td>
+                        <td colspan={2}>
                           {" "}
                           <TextField
                             style={{
-                              width: "50%",
+                              width: "100%",
                             }}
                             variant="outlined"
                             label="Payment link"
@@ -1705,7 +1707,7 @@ class NewCustom extends Component {
                       <br />
                       <br />
                       <tr>
-                        <td>
+                        <td colspan={2}>
                           <Form.Control
                             as="select"
                             onChange={(event) =>
@@ -1715,7 +1717,7 @@ class NewCustom extends Component {
                               })
                             }
                             style={{
-                              width: "50%",
+                              width: "100%",
                             }}
                           >
                             <option value="">Canned Responses</option>{" "}
@@ -1733,10 +1735,10 @@ class NewCustom extends Component {
                       <br />
                       <br />
                       <tr>
-                        <td>
+                        <td colspan={2}>
                           <TextField
                             style={{
-                              width: "50%",
+                              width: "100%",
                             }}
                             //per material UI changes textfield to act like a textarea tag
                             multiline
@@ -1762,7 +1764,7 @@ class NewCustom extends Component {
                       <br />
                       <br />
                       <tr>
-                        <td>
+                        <td colspan={2}>
                           <Button
                             variant="success"
                             onClick={(event) => {
@@ -1835,7 +1837,7 @@ class NewCustom extends Component {
                       <br />
                       <br />
                       <tr>
-                        <td>
+                        <td colspan={2}>
                           <Button
                             variant="success"
                             onClick={(event) => {
@@ -1940,6 +1942,15 @@ class NewCustom extends Component {
                       <br />
                     </>
                   )}
+                </table>
+                <table
+                  style={{
+                    marginLeft: "200px",
+                    marginRight: "auto",
+                    marginTop: "20px",
+                    width: "80%",
+                  }}
+                >
                   <tr>
                     <td>
                       <b>Communication History:</b>{" "}
@@ -1954,14 +1965,15 @@ class NewCustom extends Component {
                       <>
                         {typeof admincomments === "string" &&
                         order_number === this.state.order_number ? (
-                          <tr>
+                          <tr className="borderBottom">
                             <td
                               style={{
                                 marginLeft: "3%",
                                 padding: "10px",
                                 width: "25%",
                               }}
-                            >
+                            ></td>
+                            <td>
                               <b>Artist Comments:</b> {admincomments}
                             </td>
                             <td
@@ -1971,7 +1983,7 @@ class NewCustom extends Component {
                                 width: "25%",
                               }}
                             >
-                              <b>{datetime}</b>
+                              {datetime}
                             </td>
                           </tr>
                         ) : (
@@ -1979,14 +1991,15 @@ class NewCustom extends Component {
                         )}
                         {typeof customercomments === "string" &&
                         order_number === this.state.order_number ? (
-                          <tr>
+                          <tr className="borderBottom">
                             <td
                               style={{
                                 marginLeft: "3%",
                                 padding: "10px",
                                 width: "25%",
                               }}
-                            >
+                            ></td>
+                            <td>
                               <b>Customer Comments:</b> {customercomments}
                             </td>
                             <td
@@ -1996,7 +2009,7 @@ class NewCustom extends Component {
                                 width: "25%",
                               }}
                             >
-                              <b>{datetime}</b>
+                              {datetime}
                             </td>
                           </tr>
                         ) : (
