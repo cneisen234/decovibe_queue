@@ -433,7 +433,7 @@ class SentCustomer extends Component {
                         )}
                         {typeof customercomments === "string" &&
                         order_number == this.state.order_number ? (
-                          <tr>
+                          <tr className="borderBottom">
                             <td
                               style={{
                                 marginLeft: "3%",
