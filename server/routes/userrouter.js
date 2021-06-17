@@ -912,9 +912,9 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
           pic20 === "") {
             //defines the html being sent in the email
             let titleString = `  <div><img
-        src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
-       width="150"
-      /></div>
+        src="https://cdn11.bigcommerce.com/s-et4qthkygq/product_images/uploaded_images/custom-transfers-email-banner-01.png?t=1623860610&_ga=2.54689192.22532363.1623675567-885995832.1599745631"
+       width="100%"
+      /></div><br>
                      <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>New Message from the Art Department below</i></div><br><br>
 <table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
 <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Sku:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${sku} </td></tr>`;
@@ -1056,9 +1056,9 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
           } else {
         //defines the html being sent in the email
         let titleString = `  <div><img
-        src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
-       width="150"
-      /></div>
+        src="https://cdn11.bigcommerce.com/s-et4qthkygq/product_images/uploaded_images/custom-transfers-email-banner-01.png?t=1623860610&_ga=2.54689192.22532363.1623675567-885995832.1599745631"
+       width="100%"
+      /></div><br>
                      <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>Please confirm the details below for your recent custom order</i></div><br><br>
 <table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
 <tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Sku:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${sku} </td></tr>`;
