@@ -384,6 +384,8 @@ class CustomerPage extends Component {
                         decoSku4 === "WE_A5" ||
                         decoSku4 === "WE_A4" ||
                         decoSku4 === "WE_A3" ||
+                        decoSku4 === "WE_SQ" ||
+                        decoSku4 === "WE_XS" ||
                         decoSku7 === "DYESUB-" ||
                         decoSku4 === "FINAL" ||
                         decoSku6 === "FEE-VECT"

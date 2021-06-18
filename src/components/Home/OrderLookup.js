@@ -817,7 +817,9 @@ class OrderLookup extends Component {
                             item.sku.slice(0, 5) === "WE_LC" ||
                             item.sku.slice(0, 5) === "WE_A5" ||
                             item.sku.slice(0, 5) === "WE_A4" ||
-                            item.sku.slice(0, 5) === "WE_A3" ? (
+                            item.sku.slice(0, 5) === "WE_A3" ||
+                            item.sku.slice(0, 5) === "WE_SQ" ||
+                            item.sku.slice(0, 5) === "WE_XS" ? (
                               <>
                                 <tr>
                                   <td

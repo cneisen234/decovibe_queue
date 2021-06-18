@@ -1510,6 +1510,8 @@ class NewCustom extends Component {
                       decoSku4 === "WE_A5" ||
                       decoSku4 === "WE_A4" ||
                       decoSku4 === "WE_A3" ||
+                      decoSku4 === "WE_SQ" ||
+                      decoSku4 === "WE_XS" ||
                       decoSku7 === "DYESUB-" ||
                       decoSku4 === "FINAL" ||
                       decoSku6 === "FEE-VECT"
@@ -1544,7 +1546,10 @@ class NewCustom extends Component {
                             let display_name = product.display_name;
                             let display_value = product.display_value;
                             let new_display_name = display_name.slice(0, 10);
-                            let reorder_display_name = display_name.slice(0, 18);
+                            let reorder_display_name = display_name.slice(
+                              0,
+                              18
+                            );
                             return (
                               <>
                                 {new_display_name === "Sheet Size" ? (
@@ -1637,11 +1642,11 @@ class NewCustom extends Component {
                                 </td>
                               </tr>
                               <div>
-                                  <img
-                                    src={this.state[pic]}
-                                    alt="Upload File"
-                                    height="200"
-                                  ></img>
+                                <img
+                                  src={this.state[pic]}
+                                  alt="Upload File"
+                                  height="200"
+                                ></img>
                               </div>
                             </>
                           ) : (
