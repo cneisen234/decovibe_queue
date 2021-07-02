@@ -397,12 +397,14 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                   decoSku4 === "WE_XS"
                                                 ) {
                                                   item_type = "SupaColor";
+                                                } else if (decoSku6 === "FEE-VECT") {
+                                                  item_type = "Artwork Redraws";
                                                 }
-                                                //...place in the custom queue
-                                                console.log(
-                                                  orderID,
-                                                  "goes into custom queue"
-                                                );
+                                                  //...place in the custom queue
+                                                  console.log(
+                                                    orderID,
+                                                    "goes into custom queue"
+                                                  );
                                                 const query2Text =
                                                   'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, created_at, description, item_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id';
                                                 pool.query(query2Text, [
