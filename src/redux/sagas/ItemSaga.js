@@ -19,7 +19,14 @@ function* deleteCustomItem(action) {
     console.log("Error with adding a new item:", error);
   }
 }
-
+function* deleteSentCustomer(action) {
+  try {
+    yield axios.delete(`/api/item/deletesentcustomer/${action.payload}`);
+    yield put({ type: "GET_CONFIRM_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
 function* deleteRespond(action) {
   try {
     yield axios.delete(`/api/item/deleterespond/${action.payload}`);
@@ -581,6 +588,7 @@ function* itemSaga() {
     yield takeLatest('GET_REPLIES', getreplies);
     yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('DELETE_CUSTOM_ITEM', deleteCustomItem);
+    yield takeLatest('DELETE_SENT_CUSTOMER', deleteSentCustomer);
      yield takeLatest('DELETE_RESPOND', deleteRespond);
      yield takeLatest('DELETE_APPROVE', deleteApprove);
     yield takeLatest('DELETE_PROGRESS', deleteProgress);

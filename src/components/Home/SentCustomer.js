@@ -4,6 +4,9 @@ import MUITable from "../MUITable/MUITable";
 import { Paper} from "@material-ui/core";
 import Button from "react-bootstrap/Button";
 import ViewListIcon from "@material-ui/icons/ViewList";
+import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
+import DeleteIcon from "@material-ui/icons/Delete";
+import swal from "sweetalert";
 class SentCustomer extends Component {
   state = {
     email: "",
@@ -186,6 +189,344 @@ class SentCustomer extends Component {
                           <ViewListIcon></ViewListIcon>
                         </Button>
                       </>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Mark Complete",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
+                      this.props.confirmlist[dataIndex] && (
+                        <Button
+                          variant="success"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const itemArray = this.props.confirmlist;
+                            const item = itemArray[dataIndex];
+                            let order_id = item.order_number;
+                            let uploadArray = [];
+                            {
+                              this.props.confirmlist.map((orderItem) => {
+                                order_id = String(order_id);
+                                if (orderItem.order_number === order_id) {
+                                  if (
+                                    orderItem.upload_url1 !== "" &&
+                                    orderItem.upload_url1 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url1);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url2 !== "" &&
+                                    orderItem.upload_url2 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url2);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url3 !== "" &&
+                                    orderItem.upload_url3 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url3);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url4 !== "" &&
+                                    orderItem.upload_url4 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url4);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url5 !== "" &&
+                                    orderItem.upload_url5 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url5);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url6 !== "" &&
+                                    orderItem.upload_url6 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url1);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url7 !== "" &&
+                                    orderItem.upload_url7 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url7);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url8 !== "" &&
+                                    orderItem.upload_url8 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url8);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url9 !== "" &&
+                                    orderItem.upload_url9 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url9);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url10 !== "" &&
+                                    orderItem.upload_url10 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url10);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url11 !== "" &&
+                                    orderItem.upload_url11 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url11);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url12 !== "" &&
+                                    orderItem.upload_url12 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url12);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url13 !== "" &&
+                                    orderItem.upload_url13 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url13);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url14 !== "" &&
+                                    orderItem.upload_url14 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url14);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url15 !== "" &&
+                                    orderItem.upload_url15 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url15);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url16 !== "" &&
+                                    orderItem.upload_url16 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url16);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url17 !== "" &&
+                                    orderItem.upload_url17 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url17);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url18 !== "" &&
+                                    orderItem.upload_url18 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url18);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url19 !== "" &&
+                                    orderItem.upload_url19 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url19);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                  if (
+                                    orderItem.upload_url20 !== "" &&
+                                    orderItem.upload_url20 !== null
+                                  ) {
+                                    uploadArray.push(orderItem.upload_url20);
+                                  } else {
+                                    uploadArray.push("");
+                                  }
+                                }
+                              });
+                            }
+                            swal({
+                              title: "Mark Complete?",
+                              text:
+                                "The customer has approved this order! Click 'ok' to mark as complete",
+                              icon: "warning",
+                              buttons: true,
+                              dangerMode: true,
+                            }).then((willDelete) => {
+                              if (willDelete) {
+                                this.props.dispatch({
+                                  type: "MARK_COMPLETE",
+                                  payload: {
+                                    id: item.id,
+                                    email: item.email,
+                                    first_name: item.first_name,
+                                    last_name: item.last_name,
+                                    item_type: item.item_type,
+                                    order_number: item.order_number,
+                                    sku: item.sku,
+                                    description: item.description,
+                                    qty: item.qty,
+                                    assigned: item.assigned,
+                                    pic1: uploadArray[0],
+                                    pic2: uploadArray[1],
+                                    pic3: uploadArray[2],
+                                    pic4: uploadArray[3],
+                                    pic5: uploadArray[4],
+                                    pic6: uploadArray[5],
+                                    pic7: uploadArray[6],
+                                    pic8: uploadArray[7],
+                                    pic9: uploadArray[8],
+                                    pic10: uploadArray[9],
+                                    pic11: uploadArray[10],
+                                    pic12: uploadArray[11],
+                                    pic13: uploadArray[12],
+                                    pic14: uploadArray[13],
+                                    pic15: uploadArray[14],
+                                    pic16: uploadArray[15],
+                                    pic17: uploadArray[16],
+                                    pic18: uploadArray[17],
+                                    pic19: uploadArray[18],
+                                    pic20: uploadArray[19],
+                                    created_at: item.created_at,
+                                    priority: item.priority,
+                                  },
+                                });
+                                this.props.dispatch({
+                                  type: "DELETE_SENT_CUSTOMER",
+                                  payload: item.id,
+                                });
+                                this.props.dispatch({
+                                  type: "GET_PROGRESS_LIST",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_ITEM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_RESPOND_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_APPROVE_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_CONFIRM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_PROGRESS_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_COMPLETE_LIST_COUNT",
+                                });
+                              } else {
+                                console.log("action canceled");
+                              }
+                            });
+                          }}
+                        >
+                          <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+                        </Button>
+                      )
+                    );
+                  },
+                },
+              },
+              {
+                name: "Delete",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
+                      <Button
+                        variant="danger"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.confirmlist;
+                          const item = itemArray[dataIndex];
+                          swal({
+                            title: "Are you sure?",
+                            text:
+                              "Once deleted, you will not be able to recover the sku on this order!",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                          }).then((willDelete) => {
+                            if (willDelete) {
+                              this.props.dispatch({
+                                type: "DELETE_SENT_CUSTOMER",
+                                payload: item.id,
+                              });
+                              this.props.dispatch({
+                                type: "GET_CUSTOM_ITEM_LIST",
+                              });
+                              this.props.dispatch({
+                                type: "GET_ITEM_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_RESPOND_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_APPROVE_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_CONFIRM_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_PROGRESS_LIST_COUNT",
+                              });
+                              this.props.dispatch({
+                                type: "GET_COMPLETE_LIST_COUNT",
+                              });
+                            } else {
+                              console.log("deletion canceled");
+                            }
+                          });
+                        }}
+                      >
+                        <DeleteIcon></DeleteIcon>
+                      </Button>
                     );
                   },
                 },
@@ -500,7 +841,7 @@ class SentCustomer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  customitemlist: state.item.customitemlist,
+  user: state.user,
   confirmlist: state.item.confirmlist,
   detailslist: state.item.detailslist,
   historylist: state.item.historylist,

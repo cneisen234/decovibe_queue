@@ -195,6 +195,19 @@ router.delete("/deletecustomitem/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.delete("/deletesentcustomer/:id", rejectUnauthenticated, (req, res) => {
+  //api to delete new custom items
+  pool
+    .query('DELETE FROM "customerconfirm" WHERE id=$1', [req.params.id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error DELETE ", error);
+      res.sendStatus(500);
+    });
+});
+
 router.delete("/deleterespond/:id", rejectUnauthenticated, (req, res) => {
   //api to delete items customers have responded to
   pool
