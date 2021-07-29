@@ -390,7 +390,7 @@ class SentCustomer extends Component {
                             }).then((willDelete) => {
                               if (willDelete) {
                                 this.props.dispatch({
-                                  type: "MARK_COMPLETE_CUSTOM",
+                                  type: "MARK_COMPLETE",
                                   payload: {
                                     id: item.id,
                                     email: item.email,
@@ -487,7 +487,7 @@ class SentCustomer extends Component {
                             swal({
                               title: "Go Back?",
                               text:
-                                "Confirming will place the order back in the start of the queue",
+                                "This will place the order at the start of the queue",
                               icon: "warning",
                               buttons: true,
                               dangerMode: true,
