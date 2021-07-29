@@ -23,7 +23,6 @@ class Nav extends Component {
     backgroundcolorclass: "nav-link",
     activebackgroundcolorclass: "active-nav-link",
     order_number: "",
-    currentRoute: useHistory().location.pathname.toLowerCase(),
   };
 
   componentDidMount() {
@@ -59,7 +58,7 @@ class Nav extends Component {
   }; //end handleChange
 
   render() {
-    let {currentRoute} = this.state;
+    let currentRoute = this.props.history
     return (
       <Grid container style={{}}>
         <Grid
