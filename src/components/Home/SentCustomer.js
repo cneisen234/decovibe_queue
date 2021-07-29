@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import DeleteIcon from "@material-ui/icons/Delete";
+import RestoreIcon from "@material-ui/icons/Restore";
 import swal from "sweetalert";
 class SentCustomer extends Component {
   state = {
@@ -484,9 +485,9 @@ class SentCustomer extends Component {
                             const itemArray = this.props.confirmlist;
                             const item = itemArray[dataIndex];
                             swal({
-                              title: "Mark Complete?",
+                              title: "Go Back?",
                               text:
-                                "The customer has approved this order! Click 'ok' to mark as complete",
+                                "Confirming will place the order back in the start of the queue",
                               icon: "warning",
                               buttons: true,
                               dangerMode: true,
@@ -543,7 +544,7 @@ class SentCustomer extends Component {
                             });
                           }}
                         >
-                          <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+                          <RestoreIcon></RestoreIcon>
                         </Button>
                       )
                     );

@@ -397,7 +397,7 @@ class Nav extends Component {
                   </Link>
                   <Link
                     className={this.state.backgroundcolorclass}
-                    to="/customcomplete"
+                    to="/Customcomplete"
                   >
                     <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
                     Complete{" "}
