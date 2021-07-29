@@ -71,7 +71,14 @@ function* deleteComplete(action) {
     console.log("Error with adding a new item:", error);
   }
 }
-
+function* deleteCustomComplete(action) {
+  try {
+    yield axios.delete(`/api/item/deletecustomcomplete/${action.payload}`);
+    yield put({ type: "GET_CUSTOM_COMPLETE_LIST" });
+  } catch (error) {
+    console.log("Error with adding a new item:", error);
+  }
+}
 function* deleteCompleteAll(action) {
   try {
     yield axios.delete(`/api/item/deletecompleteall`);
@@ -181,6 +188,24 @@ function* addNewItem(action){
       console.log("Error with adding a new item:", error);
     }
   }
+    function* markCompleteCustom(action) {
+      try {
+        yield axios.post("/api/user/markcompletecustom", action.payload);
+        yield put({ type: "GET_COMPLETE_CUSTOM_LIST" });
+        yield put({ type: "GET_COMPLETE_CUSTOM_LIST_COUNT" });
+      } catch (error) {
+        console.log("Error with adding a new item:", error);
+      }
+    }
+    function* backToNew(action) {
+      try {
+        yield axios.post("/api/user/backtonew", action.payload);
+        yield put({ type: "GET_CUSTOM_ITEM_LIST" });
+        yield put({ type: "GET_CUSTOM_ITEM_LIST_COUNT" });
+      } catch (error) {
+        console.log("Error with adding a new item:", error);
+      }
+    }
 
     function* goBackNew(action) {
       try {
@@ -463,11 +488,35 @@ function* getcompletelist(action) {
   }
 }
 
+function* getcustomcompletelist(action) {
+  try {
+    const response = yield axios.get(`/api/item/customcompletelist`);
+    yield put({
+      type: "SET_CUSTOM_COMPLETE",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 function* getcompletelistcount(action) {
   try {
     const response = yield axios.get(`/api/item/completelistcount`);
     yield put({
       type: "SET_COMPLETE_COUNT",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
+function* getcustomcompletelistcount(action) {
+  try {
+    const response = yield axios.get(`/api/item/customcompletelistcount`);
+    yield put({
+      type: "SET_CUSTOM_COMPLETE_COUNT",
       payload: response.data,
     });
   } catch (error) {
@@ -560,6 +609,8 @@ function* itemSaga() {
       yield takeLatest('CANNED_DELETE', cannedDelete);
      yield takeLatest('CUSTOMER_RESPONSE', customerResponse);
    yield takeLatest('MARK_COMPLETE', markComplete);
+    yield takeLatest('MARK_COMPLETE_CUSTOM', markCompleteCustom);
+      yield takeLatest('BACK_TO_NEW', backToNew);
     yield takeLatest('ADD_NEW', goBackNew);
      yield takeLatest('NEED_TO_RUN', needToRun);
     yield takeLatest('MARK_PRIORITY', markPriority);
@@ -585,6 +636,8 @@ function* itemSaga() {
     yield takeLatest('GET_APPROVE_LIST_COUNT', getapprovelistcount);
     yield takeLatest('GET_COMPLETE_LIST', getcompletelist);
     yield takeLatest('GET_COMPLETE_LIST_COUNT', getcompletelistcount);
+    yield takeLatest('GET_CUSTOM_COMPLETE_LIST', getcustomcompletelist);
+    yield takeLatest('GET_CUSTOM_COMPLETE_LIST_COUNT', getcustomcompletelistcount);
     yield takeLatest('GET_REPLIES', getreplies);
     yield takeLatest('DELETE_ITEM', deleteItem);
     yield takeLatest('DELETE_CUSTOM_ITEM', deleteCustomItem);
@@ -594,6 +647,7 @@ function* itemSaga() {
     yield takeLatest('DELETE_PROGRESS', deleteProgress);
      yield takeLatest('DELETE_HISTORY', deleteHistory);
     yield takeLatest('DELETE_COMPLETE', deleteComplete);
+      yield takeLatest('DELETE_CUSTOM_COMPLETE', deleteCustomComplete);
      yield takeLatest('DELETE_COMPLETE_ALL', deleteCompleteAll);
      yield takeLatest('DELETE_COMPLETE_RANGE', deleteCompleteRange);
      yield takeLatest('DELETE_HISTORY_RANGE', deleteHistoryRange);

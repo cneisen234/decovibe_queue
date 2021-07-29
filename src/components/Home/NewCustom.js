@@ -490,7 +490,7 @@ class NewCustom extends Component {
                           });
                         }
                         this.props.dispatch({
-                          type: "MARK_COMPLETE",
+                          type: "MARK_COMPLETE_CUSTOM",
                           payload: {
                             id: element.id,
                             email: element.email,
@@ -500,8 +500,6 @@ class NewCustom extends Component {
                             order_number: element.order_number,
                             sku: element.sku,
                             description: element.description,
-                            product_length: element.product_length,
-                            product_options: element.product_options,
                             qty: element.qty,
                             assigned: element.assigned,
                             pic1: uploadArray[0],
@@ -1096,7 +1094,7 @@ class NewCustom extends Component {
                             }).then((willDelete) => {
                               if (willDelete) {
                                 this.props.dispatch({
-                                  type: "MARK_COMPLETE",
+                                  type: "MARK_COMPLETE_CUSTOM",
                                   payload: {
                                     id: item.id,
                                     email: item.email,

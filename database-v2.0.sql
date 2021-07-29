@@ -156,6 +156,44 @@ CREATE TABLE "complete"
 	"priority" VARCHAR(5)
 );
 
+CREATE TABLE "customcomplete"
+(
+	"id" serial NOT NULL,
+	"email" varchar(320),
+	"first_name" varchar(255),
+	"last_name" varchar(255),
+	"order_number" varchar(255) NOT NULL,
+	"sku" varchar(255) NOT NULL,
+	"qty" DECIMAL,
+	"assigned" VARCHAR(255),
+	"upload_url1" TEXT,
+	"upload_url2" TEXT,
+	"upload_url3" TEXT,
+	"upload_url4" TEXT,
+	"upload_url5" TEXT,
+	"upload_url6" TEXT,
+	"upload_url7" TEXT,
+	"upload_url8" TEXT,
+	"upload_url9" TEXT,
+	"upload_url10" TEXT,
+	"upload_url11" TEXT,
+	"upload_url12" TEXT,
+	"upload_url13" TEXT,
+	"upload_url14" TEXT,
+	"upload_url15" TEXT,
+	"upload_url16" TEXT,
+	"upload_url17" TEXT,
+	"upload_url18" TEXT,
+	"upload_url19" TEXT,
+	"upload_url20" TEXT,
+	"comments" TEXT,
+	"created_at" TEXT,
+	"token" TEXT,
+	"description" TEXT,
+	"priority" VARCHAR(5),
+	"payment_link" TEXT
+);
+
 CREATE TABLE "replies" (
 	"id" serial NOT NULL,
 	"reply" TEXT

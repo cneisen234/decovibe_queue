@@ -397,13 +397,13 @@ class Nav extends Component {
                   </Link>
                   <Link
                     className={this.state.backgroundcolorclass}
-                    to="/complete"
+                    to="/customcomplete"
                   >
                     <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
                     Complete{" "}
                     {`(${
-                      this.props.completelistcount[0] &&
-                      this.props.completelistcount[0].count
+                      this.props.customcompletelistcount[0] &&
+                      this.props.customcompletelistcount[0].count
                     })`}
                   </Link>
                   <Link
@@ -643,6 +643,7 @@ const mapStateToProps = (state) => ({
   confirmlist: state.item.confirmlist,
   respondlist: state.item.respondlist,
   completelist: state.item.completelist,
+  customcompletelist: state.item.customcompletelist,
   itemlistcount: state.item.itemlistcount,
   customitemlistcount: state.item.customitemlistcount,
   progresslistcount: state.item.progresslistcount,
@@ -650,6 +651,7 @@ const mapStateToProps = (state) => ({
   respondlistcount: state.item.respondlistcount,
   approvelistcount: state.item.approvelistcount,
   completelistcount: state.item.completelistcount,
+  customcompletelistcount: state.item.customcompletelistcount,
 });
 
 export default connect(mapStateToProps)(Nav);

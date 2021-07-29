@@ -260,6 +260,19 @@ router.delete("/deletecomplete/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.delete("/deletecustomcomplete/:id", rejectUnauthenticated, (req, res) => {
+  //api to delete completed orders
+  pool
+    .query('DELETE FROM "customcomplete" WHERE id=$1', [req.params.id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error DELETE ", error);
+      res.sendStatus(500);
+    });
+});
+
 router.put("/customassign", rejectUnauthenticated, (req, res) => {
   //api to assign custom orders to decovibe workers
   const { assigned, id } = req.body;
@@ -639,6 +652,20 @@ router.get("/completelist", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.get("/customcompletelist", rejectUnauthenticated, (req, res) => {
+  //gets all of the completed items
+  const queryText = `SELECT * FROM "customcomplete" ORDER BY id DESC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
 router.get("/replies", rejectUnauthenticated, (req, res) => {
   //gets a list of all of the canned responses
   const queryText = `SELECT * FROM "replies" ORDER BY id DESC;`;
@@ -656,6 +683,20 @@ router.get("/replies", rejectUnauthenticated, (req, res) => {
 router.get("/completelistcount", rejectUnauthenticated, (req, res) => {
 //gets a total count of all of the completed items
   const queryText = `SELECT count(*) FROM "complete";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/customcompletelistcount", rejectUnauthenticated, (req, res) => {
+  //gets a total count of all of the completed items
+  const queryText = `SELECT count(*) FROM "customcomplete";`;
   pool
     .query(queryText)
     .then((result) => {

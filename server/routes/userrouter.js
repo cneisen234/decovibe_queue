@@ -1308,7 +1308,49 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
   const created_at = req.body.created_at;
   const priority = req.body.priority;
   const item_type = req.body.item_type;
-  const pic1 = req.body.pic1
+  const query2Text =
+    'INSERT INTO "complete" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at, description, priority, item_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id';
+  pool
+    .query(query2Text, [
+      email,
+      first_name,
+      last_name,
+      order_number,
+      sku,
+      product_length,
+      product_options,
+      qty,
+      assigned,
+      created_at,
+      description,
+      priority,
+      item_type,
+    ])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
+
+    .catch(function (error) {
+      console.log("Sorry, there is an error", error);
+      res.sendStatus(500);
+    });
+});
+router.post("/markcompletecustom", rejectUnauthenticated, (req, res, next) => {
+  // marks orders as complete and places them in the complete table
+  const email = req.body.email;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const order_number = req.body.order_number;
+  const sku = req.body.sku;
+  const description = req.body.description;
+  const qty = req.body.qty;
+  const assigned = req.body.assigned;
+  const created_at = req.body.created_at;
+  const priority = req.body.priority;
+  const item_type = req.body.item_type;
+  const pic1 = req.body.pic1;
   const pic2 = req.body.pic2;
   const pic3 = req.body.pic3;
   const pic4 = req.body.pic4;
@@ -1329,7 +1371,7 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
   const pic19 = req.body.pic19;
   const pic20 = req.body.pic20;
   const query2Text =
-    'INSERT INTO "complete" (email, first_name, last_name, order_number, sku, product_length, product_options, qty, assigned, created_at, description, priority, item_type, upload_url1, upload_url2, upload_url3, upload_url4, upload_url5, upload_url6, upload_url7, upload_url8, upload_url9, upload_url10, upload_url11, upload_url12, upload_url13, upload_url14, upload_url15, upload_url16, upload_url17, upload_url18, upload_url19, upload_url20) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33) RETURNING id';
+    'INSERT INTO "customcomplete" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, description, priority, item_type, upload_url1, upload_url2, upload_url3, upload_url4, upload_url5, upload_url6, upload_url7, upload_url8, upload_url9, upload_url10, upload_url11, upload_url12, upload_url13, upload_url14, upload_url15, upload_url16, upload_url17, upload_url18, upload_url19, upload_url20) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31) RETURNING id';
   pool
     .query(query2Text, [
       email,
@@ -1337,8 +1379,6 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
       last_name,
       order_number,
       sku,
-      product_length,
-      product_options,
       qty,
       assigned,
       created_at,
@@ -1365,6 +1405,47 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
       pic18,
       pic19,
       pic20,
+    ])
+    .then((result) => res.status(201).send(result.rows))
+    .catch(function (error) {
+      console.log("Sorry, there was an error with your query: ", error);
+      res.sendStatus(500); // HTTP SERVER ERROR
+    })
+
+    .catch(function (error) {
+      console.log("Sorry, there is an error", error);
+      res.sendStatus(500);
+    });
+});
+
+router.post("/backtonew", rejectUnauthenticated, (req, res, next) => {
+  // marks orders as complete and places them in the complete table
+  const email = req.body.email;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const order_number = req.body.order_number;
+  const sku = req.body.sku;
+  const description = req.body.description;
+  const qty = req.body.qty;
+  const assigned = req.body.assigned;
+  const created_at = req.body.created_at;
+  const priority = req.body.priority;
+  const item_type = req.body.item_type;
+  const query2Text =
+    'INSERT INTO "customitem" (email, first_name, last_name, order_number, sku, qty, assigned, created_at, description, priority, item_type) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id';
+  pool
+    .query(query2Text, [
+      email,
+      first_name,
+      last_name,
+      order_number,
+      sku,
+      qty,
+      assigned,
+      created_at,
+      description,
+      priority,
+      item_type,
     ])
     .then((result) => res.status(201).send(result.rows))
     .catch(function (error) {

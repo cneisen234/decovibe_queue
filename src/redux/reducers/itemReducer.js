@@ -134,9 +134,27 @@ const completelist = (state = [], action) => {
   }
 };
 
+const customcompletelist = (state = [], action) => {
+  switch (action.type) {
+    case "SET_CUSTOM_COMPLETE":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const completelistcount = (state = [], action) => {
   switch (action.type) {
     case "SET_COMPLETE_COUNT":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const customcompletelistcount = (state = [], action) => {
+  switch (action.type) {
+    case "SET_CUSTOM_COMPLETE_COUNT":
       return action.payload;
     default:
       return state;
@@ -206,6 +224,8 @@ export default combineReducers({
   approvelistcount,
   completelist,
   completelistcount,
+  customcompletelist,
+  customcompletelistcount,
   replieslist,
   detailslist,
   orderlist,

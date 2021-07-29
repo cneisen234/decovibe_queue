@@ -389,7 +389,7 @@ class SentCustomer extends Component {
                             }).then((willDelete) => {
                               if (willDelete) {
                                 this.props.dispatch({
-                                  type: "MARK_COMPLETE",
+                                  type: "MARK_COMPLETE_CUSTOM",
                                   payload: {
                                     id: item.id,
                                     email: item.email,
@@ -421,6 +421,90 @@ class SentCustomer extends Component {
                                     pic18: uploadArray[17],
                                     pic19: uploadArray[18],
                                     pic20: uploadArray[19],
+                                    created_at: item.created_at,
+                                    priority: item.priority,
+                                  },
+                                });
+                                this.props.dispatch({
+                                  type: "DELETE_SENT_CUSTOMER",
+                                  payload: item.id,
+                                });
+                                this.props.dispatch({
+                                  type: "GET_PROGRESS_LIST",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_ITEM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_RESPOND_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_APPROVE_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_CONFIRM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_PROGRESS_LIST_COUNT",
+                                });
+                                this.props.dispatch({
+                                  type: "GET_COMPLETE_LIST_COUNT",
+                                });
+                              } else {
+                                console.log("action canceled");
+                              }
+                            });
+                          }}
+                        >
+                          <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+                        </Button>
+                      )
+                    );
+                  },
+                },
+              },
+              {
+                name: "Go Back to New",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
+                      this.props.confirmlist[dataIndex] && (
+                        <Button
+                          variant="success"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const itemArray = this.props.confirmlist;
+                            const item = itemArray[dataIndex];
+                            swal({
+                              title: "Mark Complete?",
+                              text:
+                                "The customer has approved this order! Click 'ok' to mark as complete",
+                              icon: "warning",
+                              buttons: true,
+                              dangerMode: true,
+                            }).then((willDelete) => {
+                              if (willDelete) {
+                                this.props.dispatch({
+                                  type: "BACK_TO_NEW",
+                                  payload: {
+                                    id: item.id,
+                                    email: item.email,
+                                    first_name: item.first_name,
+                                    last_name: item.last_name,
+                                    item_type: item.item_type,
+                                    order_number: item.order_number,
+                                    sku: item.sku,
+                                    description: item.description,
+                                    qty: item.qty,
+                                    assigned: item.assigned,
                                     created_at: item.created_at,
                                     priority: item.priority,
                                   },

@@ -23,6 +23,7 @@ import Response from "../Home/Response";
 import Approved from "../Home/Approved";
 import History from "../Home/History";
 import Complete from "../Home/Complete";
+import CustomComplete from "../Home/CustomComplete";
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: "FETCH_USER" });
@@ -73,6 +74,7 @@ class App extends Component {
             <ProtectedRoute exact path="/Approved" component={Approved} />
             <ProtectedRoute exact path="/History" component={History} />
             <ProtectedRoute exact path="/Complete" component={Complete} />
+            <ProtectedRoute exact path="/Customcomplete" component={CustomComplete} />
 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
