@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import swal from "sweetalert";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
@@ -21,6 +21,7 @@ class Nav extends Component {
     //changes colors of navbar when toggled, used to identify which queue we are in
     backgroundcolor: "#000080",
     backgroundcolorclass: "nav-link",
+    activebackgroundcolorclass: "active-nav-link",
     order_number: "",
   };
 
@@ -88,17 +89,22 @@ class Nav extends Component {
                     float: "left",
                   }}
                 >
-                  <Link className={this.state.backgroundcolorclass} to="/home">
+                  <NavLink
+                    className={this.state.backgroundcolorclass}
+                    to="/home"
+                    activeClassName={this.state.activebackgroundcolorclass}
+                  >
                     <EditIcon></EditIcon>New{" "}
                     {/*used to display the count of all items in the new queue*/}
                     {`(${
                       this.props.itemlistcount[0] &&
                       this.props.itemlistcount[0].count
                     })`}
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     className={this.state.backgroundcolorclass}
                     to="/progress"
+                    activeClassName={this.state.activebackgroundcolorclass}
                   >
                     <FormatListBulletedIcon></FormatListBulletedIcon>
                     In Progress{" "}
@@ -106,10 +112,11 @@ class Nav extends Component {
                       this.props.progresslistcount[0] &&
                       this.props.progresslistcount[0].count
                     })`}
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     className={this.state.backgroundcolorclass}
                     to="/complete"
+                    activeClassName={this.state.activebackgroundcolorclass}
                   >
                     <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
                     Complete{" "}
@@ -117,7 +124,7 @@ class Nav extends Component {
                       this.props.completelistcount[0] &&
                       this.props.completelistcount[0].count
                     })`}
-                  </Link>
+                  </NavLink>
                   <>
                     <TextField
                       style={{
@@ -221,6 +228,7 @@ class Nav extends Component {
                           toggle: !this.state.toggle,
                           backgroundcolor: "#8B008B",
                           backgroundcolorclass: "nav-link2",
+                          activebackgroundcolorclass: "active-nav-link2",
                         });
                         this.props.dispatch({
                           type: "GET_ITEM_LIST",
@@ -231,9 +239,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_RESPOND_LIST_COUNT",
                         });
-                         this.props.dispatch({
-                           type: "GET_APPROVE_LIST_COUNT",
-                         });
+                        this.props.dispatch({
+                          type: "GET_APPROVE_LIST_COUNT",
+                        });
                         this.props.dispatch({
                           type: "GET_CONFIRM_LIST_COUNT",
                         });
@@ -248,13 +256,14 @@ class Nav extends Component {
                         });
                       }}
                     >
-                      <Link
+                      <NavLink
                         className={this.state.backgroundcolorclass}
                         to="/newcustom"
+                        activeClassName={this.state.activebackgroundcolorclass}
                       >
                         <LoopIcon></LoopIcon>
                         Switch Queues{" "}
-                      </Link>
+                      </NavLink>
                     </div>
                   </Grid>
                   <Grid
@@ -281,9 +290,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_RESPOND_LIST_COUNT",
                         });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
+                        this.props.dispatch({
+                          type: "GET_APPROVE_LIST_COUNT",
+                        });
                         this.props.dispatch({
                           type: "GET_CONFIRM_LIST_COUNT",
                         });
@@ -297,8 +306,7 @@ class Nav extends Component {
                           type: "GET_COMPLETE_LIST_COUNT",
                         });
                       }}
-                    >
-                    </div>
+                    ></div>
                   </Grid>
                   <Grid
                     item
@@ -352,19 +360,21 @@ class Nav extends Component {
                     float: "left",
                   }}
                 >
-                  <Link
+                  <NavLink
                     className={this.state.backgroundcolorclass}
                     to="/newcustom"
+                    activeClassName={this.state.activebackgroundcolorclass}
                   >
                     <EditIcon></EditIcon>New{" "}
                     {`(${
                       this.props.customitemlistcount[0] &&
                       this.props.customitemlistcount[0].count
                     })`}
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     className={this.state.backgroundcolorclass}
                     to="/SentCustomer"
+                    activeClassName={this.state.activebackgroundcolorclass}
                   >
                     <EmailIcon></EmailIcon>
                     Sent to Customer{" "}
@@ -372,10 +382,11 @@ class Nav extends Component {
                       this.props.confirmlistcount[0] &&
                       this.props.confirmlistcount[0].count
                     })`}
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     className={this.state.backgroundcolorclass}
                     to="/Response"
+                    activeClassName={this.state.activebackgroundcolorclass}
                   >
                     <ReplyIcon></ReplyIcon>
                     Customer response{" "}
@@ -383,10 +394,11 @@ class Nav extends Component {
                       this.props.respondlistcount[0] &&
                       this.props.respondlistcount[0].count
                     })`}
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     className={this.state.backgroundcolorclass}
                     to="/Approved"
+                    activeClassName={this.state.activebackgroundcolorclass}
                   >
                     <ThumbUpIcon></ThumbUpIcon>
                     Approved{" "}
@@ -394,10 +406,11 @@ class Nav extends Component {
                       this.props.approvelistcount[0] &&
                       this.props.approvelistcount[0].count
                     })`}
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     className={this.state.backgroundcolorclass}
                     to="/Customcomplete"
+                    activeClassName={this.state.activebackgroundcolorclass}
                   >
                     <PlaylistAddCheckIcon></PlaylistAddCheckIcon>
                     Complete{" "}
@@ -405,14 +418,15 @@ class Nav extends Component {
                       this.props.customcompletelistcount[0] &&
                       this.props.customcompletelistcount[0].count
                     })`}
-                  </Link>
-                  <Link
+                  </NavLink>
+                  <NavLink
                     className={this.state.backgroundcolorclass}
                     to="/History"
+                    activeClassName={this.state.activebackgroundcolorclass}
                   >
                     <HistoryIcon></HistoryIcon>
                     History{" "}
-                  </Link>
+                  </NavLink>
                   <>
                     <TextField
                       style={{
@@ -514,6 +528,7 @@ class Nav extends Component {
                           toggle: !this.state.toggle,
                           backgroundcolor: "#000080",
                           backgroundcolorclass: "nav-link",
+                          activebackgroundcolorclass: "active-nav-link",
                         });
                         this.props.dispatch({
                           type: "GET_ITEM_LIST",
@@ -524,9 +539,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_RESPOND_LIST_COUNT",
                         });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
+                        this.props.dispatch({
+                          type: "GET_APPROVE_LIST_COUNT",
+                        });
                         this.props.dispatch({
                           type: "GET_CONFIRM_LIST_COUNT",
                         });
@@ -544,6 +559,7 @@ class Nav extends Component {
                       <Link
                         className={this.state.backgroundcolorclass}
                         to="/home"
+                        activeClassName={this.state.activebackgroundcolorclass}
                       >
                         <LoopIcon></LoopIcon>
                         Switch Queues{" "}
@@ -574,9 +590,9 @@ class Nav extends Component {
                         this.props.dispatch({
                           type: "GET_RESPOND_LIST_COUNT",
                         });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
+                        this.props.dispatch({
+                          type: "GET_APPROVE_LIST_COUNT",
+                        });
                         this.props.dispatch({
                           type: "GET_CONFIRM_LIST_COUNT",
                         });
@@ -590,8 +606,7 @@ class Nav extends Component {
                           type: "GET_COMPLETE_LIST_COUNT",
                         });
                       }}
-                    >
-                    </div>
+                    ></div>
                   </Grid>
                   <Grid
                     item
