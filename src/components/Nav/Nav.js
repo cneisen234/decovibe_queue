@@ -58,7 +58,7 @@ class Nav extends Component {
   }; //end handleChange
 
   render() {
-    let currentRoute = this.props.history
+    let currentRoute = this.props.history.location
     return (
       <Grid container style={{}}>
         <Grid
