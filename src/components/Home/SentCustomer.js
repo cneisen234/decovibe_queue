@@ -390,7 +390,7 @@ class SentCustomer extends Component {
                             }).then((willDelete) => {
                               if (willDelete) {
                                 this.props.dispatch({
-                                  type: "MARK_COMPLETE",
+                                  type: "MARK_COMPLETE_CUSTOM",
                                   payload: {
                                     id: item.id,
                                     email: item.email,
