@@ -107,7 +107,6 @@ class Complete extends Component {
     let descrip = "";
     const data = this.props.completelist.map((complete) => [
       complete.order_number,
-      complete.item_type,
       complete.sku,
       complete.description,
       complete.product_length,
@@ -377,7 +376,6 @@ class Complete extends Component {
               },
 
               { name: "Order Number" },
-              { name: "Item Type" },
               {
                 name: "SKU",
                 options: {
