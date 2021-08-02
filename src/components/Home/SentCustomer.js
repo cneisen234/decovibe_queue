@@ -4,6 +4,7 @@ import MUITable from "../MUITable/MUITable";
 import { Paper} from "@material-ui/core";
 import Button from "react-bootstrap/Button";
 import ViewListIcon from "@material-ui/icons/ViewList";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import DeleteIcon from "@material-ui/icons/Delete";
 import RestoreIcon from "@material-ui/icons/Restore";
@@ -21,6 +22,7 @@ class SentCustomer extends Component {
     assigned: "",
     created_at: "",
     item_type: "",
+    toggle: false,
     toggle2: false,
   };
   componentDidMount() {
@@ -55,6 +57,45 @@ class SentCustomer extends Component {
       type: "DELETE_HISTORY_RANGE",
     });
   }
+  assignTask = (event) => {
+    //prevents default action
+    event.preventDefault();
+    const { id, assigned } = this.state;
+    this.props.dispatch({
+      type: "ASSIGN_SENT_CUSTOMER",
+      payload: {
+        id: id,
+        assigned: assigned,
+      },
+    });
+    this.setState({
+      toggle: false,
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST",
+    });
+    this.props.dispatch({
+      type: "GET_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_RESPOND_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_APPROVE_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CONFIRM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_CUSTOM_ITEM_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_PROGRESS_LIST_COUNT",
+    });
+    this.props.dispatch({
+      type: "GET_COMPLETE_LIST_COUNT",
+    });
+  };
   checkHistory = (event) => {
     const { email } = this.state;
     this.props.dispatch({
@@ -190,6 +231,34 @@ class SentCustomer extends Component {
                           <ViewListIcon></ViewListIcon>
                         </Button>
                       </>
+                    );
+                  },
+                },
+              },
+              {
+                name: "Assign",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.confirmlist;
+                          const item = itemArray[dataIndex];
+                          this.setState({
+                            toggle: !this.state.toggle,
+                            id: item.id,
+                          });
+                        }}
+                      >
+                        <AssignmentIndIcon></AssignmentIndIcon>
+                      </Button>
                     );
                   },
                 },
@@ -619,6 +688,69 @@ class SentCustomer extends Component {
             ]}
             title={"Items Sent to Customer"} //give the table a name
           />
+          {this.state.toggle === false ? (
+            //if toggle is false, render nothing. This is the default
+            <span></span>
+          ) : (
+            //...else render the assign window
+            <Paper
+              style={{
+                right: 0,
+                bottom: 0,
+                position: "fixed",
+                borderRadius: "10%",
+                height: "600px",
+                width: "400px",
+                zIndex: "1000000000",
+                border: "50px",
+                overflow: "scroll",
+                fontSize: "15px",
+                backgroundColor: "white",
+              }}
+              elevation="24"
+              className="loginBox"
+            >
+              <td
+                style={{
+                  backgroundColor: "white",
+                  padding: "5%",
+                }}
+              >
+                <br />
+                <br />{" "}
+                <form onSubmit={this.assignTask}>
+                  <Form.Control
+                    style={{ width: "300px" }}
+                    as="select"
+                    onChange={(event) =>
+                      this.setState({ assigned: event.target.value })
+                    }
+                  >
+                    <option value="">Pick From Below </option>{" "}
+                    <option value="Maggi">Maggi </option>{" "}
+                    <option value="Zach">Zach </option>{" "}
+                    <option value="Levi">Levi </option>{" "}
+                    <option value="Heather">Heather </option>{" "}
+                    <option value="Sasha">Sasha </option>{" "}
+                    <option value="Emily">Emily </option>{" "}
+                  </Form.Control>
+                  <br />
+                  <Button variant="success" type="submit">
+                    Assign
+                  </Button>
+                </form>
+                {/* toggles assign window back to not displaying */}
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <Button onClick={this.toggle} variant="success" type="submit">
+                  Go Back
+                </Button>
+              </td>
+            </Paper>
+          )}
           {this.state.toggle2 === false ? (
             //if toggle is false, render nothing. This is the default
             <span></span>

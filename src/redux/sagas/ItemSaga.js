@@ -286,6 +286,15 @@ function* addNewItem(action){
     }
   }
 
+    function* assignSentCustomer(action) {
+      try {
+        yield axios.put("/api/item/assignsentcustomer", action.payload);
+        yield put({ type: "GET_CUSTOM_ITEM_LIST" });
+      } catch (error) {
+        console.log("Error with editing an item:", error);
+      }
+    }
+
 
 function* getUser (action){
     try {
@@ -620,6 +629,7 @@ function* itemSaga() {
             yield takeLatest('MARK_PRIORITY_APPROVE', markPriorityApprove);
     yield takeLatest('ASSIGN_TASK', assignTask);
     yield takeLatest('ASSIGN_CUSTOM_TASK', assignCustomTask);
+        yield takeLatest('ASSIGN_SENT_CUSTOMER', assignSentCustomer);
     yield takeLatest('GET_USER', getUser);
     yield takeLatest('GET_ITEM_LIST', getitemlist);
        yield takeLatest('GET_HISTORY_LIST', gethistorylist);

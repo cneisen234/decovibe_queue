@@ -290,6 +290,23 @@ router.put("/customassign", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.put("/assignsentcustomer", rejectUnauthenticated, (req, res) => {
+  //api to assign custom orders to decovibe workers
+  const { assigned, id } = req.body;
+  // setting query text to update the username
+  const queryText = 'UPDATE "customerconfirm" SET assigned=$1 WHERE id=$2';
+
+  pool
+    .query(queryText, [assigned, id])
+    .then((result) => {
+      res.sendStatus(204); //No Content
+    })
+    .catch((error) => {
+      console.log("Error UPDATE ", error);
+      res.sendStatus(500);
+    });
+});
+
 router.put("/assign", rejectUnauthenticated, (req, res) => {
 //api to assign stock orders to decovibe workers
     const {assigned, id} = req.body;
