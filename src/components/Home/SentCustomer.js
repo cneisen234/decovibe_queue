@@ -72,9 +72,9 @@ class SentCustomer extends Component {
     this.setState({
       toggle: false,
     });
-    this.props.dispatch({
-      type: "GET_CUSTOM_ITEM_LIST",
-    });
+   this.props.dispatch({
+     type: "GET_CONFIRM_LIST",
+   });
     this.props.dispatch({
       type: "GET_ITEM_LIST_COUNT",
     });
