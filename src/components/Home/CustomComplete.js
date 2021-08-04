@@ -296,7 +296,7 @@ class CustomComplete extends Component {
                             width: "100%",
                             height: "100%",
                             backgroundColor: "#8164AB",
-                            color: "black",
+                            color: "white",
                           }}
                         >
                           {value}
