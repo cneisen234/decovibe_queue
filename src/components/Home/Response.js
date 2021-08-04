@@ -531,7 +531,71 @@ class Response extends Component {
               { name: "Last Name" },
               { name: "Item Type" },
               { name: "Approved" },
-              { name: "Assigned" },
+              {
+                name: "Assigned",
+                options: {
+                  filter: true,
+                  sort: true,
+                  // empty: true,
+                  customBodyRender: (value, tableMeta, updateValue) => {
+                    if (value === "Levi") {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#5D82C1",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (value === "Emily") {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#8164AB",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (value === "Maggi") {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#F9E986",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (value === "Zach") {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#68C28F",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else {
+                      return <div>{value}</div>;
+                    }
+                  },
+                },
+              },
               { name: "Comments" },
               { name: "Created At" },
               { name: "Priority" },

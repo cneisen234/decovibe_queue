@@ -191,7 +191,8 @@ CREATE TABLE "customcomplete"
 	"token" TEXT,
 	"description" TEXT,
 	"priority" VARCHAR(5),
-	"payment_link" TEXT
+	"payment_link" TEXT,
+	"item_type" TEXT
 );
 
 CREATE TABLE "replies" (
