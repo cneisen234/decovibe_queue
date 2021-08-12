@@ -16,8 +16,8 @@ require("dotenv").config();
 let storeHash = process.env.STORE_HASH
 
 //defines dates to auto delete certain things from the database.
-let daterange = moment().subtract(6, "hours").subtract(30, "days");
-let daterange2 = moment().subtract(6, "hours").subtract(2, "years");
+let daterange = moment().subtract(5, "hours").subtract(30, "days");
+let daterange2 = moment().subtract(5, "hours").subtract(2, "years");
 let globalOrderNumber = ""
 
 //BigCommerce API tokens and keys
@@ -63,12 +63,12 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
   setInterval(() => {
     //defines the dates to be used for the timestamp
-      let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
-      let nowYear = Number(moment().subtract(6, "hours").year());
-      let nowDay = Number(moment().subtract(6, "hours").date());
-      let hour = Number(moment().subtract(6, "hours").hour());
-      let min = Number(moment().subtract(6, "hours").minute());
-      let sec = Number(moment().subtract(6, "hours").second());
+      let nowMonth = Number(moment().subtract(5, "hours").month()) + 1;
+      let nowYear = Number(moment().subtract(5, "hours").year());
+      let nowDay = Number(moment().subtract(5, "hours").date());
+      let hour = Number(moment().subtract(5, "hours").hour());
+      let min = Number(moment().subtract(5, "hours").minute());
+      let sec = Number(moment().subtract(5, "hours").second());
       //make sure all numbers come in as a double digit
       if (hour < 10) {
         hour = "0" + String(hour);
@@ -587,19 +587,19 @@ router.post("/customerresponse", (req, res, next) => {
   let token = req.body.token;
   //define date
                        let nowMonth =
-                         Number(moment().subtract(6, "hours").month()) + 1;
+                         Number(moment().subtract(5, "hours").month()) + 1;
                        let nowYear = Number(
-                         moment().subtract(6, "hours").year()
+                         moment().subtract(5, "hours").year()
                        );
                        let prevYear = Number(
-                         moment().subtract(6, "hours").year()
+                         moment().subtract(5, "hours").year()
                        );
                        let nowDay = Number(
-                         moment().subtract(6, "hours").date()
+                         moment().subtract(5, "hours").date()
                        );
-                       let hour = Number(moment().subtract(6, "hours").hour());
-                       let min = Number(moment().subtract(6, "hours").minute());
-                       let sec = Number(moment().subtract(6, "hours").second());
+                       let hour = Number(moment().subtract(5, "hours").hour());
+                       let min = Number(moment().subtract(5, "hours").minute());
+                       let sec = Number(moment().subtract(5, "hours").second());
                        if (hour < 10) {
                          hour = "0" + String(hour);
                        }
@@ -832,12 +832,12 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
   //generates unique customer identifer
   let token = crypto.randomBytes(16).toString("hex");
   //defines the date
-  let nowMonth = Number(moment().subtract(6, "hours").month()) + 1;
-  let nowYear = Number(moment().subtract(6, "hours").year());
-  let nowDay = Number(moment().subtract(6, "hours").date());
-  let hour = Number(moment().subtract(6, "hours").hour());
-  let min = Number(moment().subtract(6, "hours").minute());
-  let sec = Number(moment().subtract(6, "hours").second());
+  let nowMonth = Number(moment().subtract(5, "hours").month()) + 1;
+  let nowYear = Number(moment().subtract(5, "hours").year());
+  let nowDay = Number(moment().subtract(5, "hours").date());
+  let hour = Number(moment().subtract(5, "hours").hour());
+  let min = Number(moment().subtract(5, "hours").minute());
+  let sec = Number(moment().subtract(5, "hours").second());
   let proofString = ``
   if (hour < 10) {
     hour = "0" + String(hour);
