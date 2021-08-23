@@ -101,6 +101,7 @@ class Complete extends Component {
 
   render() {
     let dataSelector = this.state.dataSelector;
+    let decoSku3 = "";
     let decoSku5 = "";
     let decoSku7 = "";
     let decoSku6 = "";
@@ -383,6 +384,7 @@ class Complete extends Component {
                   sort: true,
                   // empty: true,
                   customBodyRender: (value, tableMeta, updateValue) => {
+                    decoSku3 = value.slice(0, 6);
                     decoSku5 = value.slice(0, 3);
                     decoSku7 = value.slice(0, 7);
                     decoSku6 = value.slice(0, 8);
@@ -395,7 +397,7 @@ class Complete extends Component {
                       decoSku5 === "SD6" ||
                       decoSku5 === "SD7" ||
                       decoSku5 === "SD8" ||
-                      decoSku5 === "SD9" ||
+                      decoSku5 === "SD9" ||  
                       decoSku6 === "SETUPFEE"
                     ) {
                       return (
@@ -479,6 +481,21 @@ class Complete extends Component {
                           {value}
                         </div>
                       );
+                    } else if (
+                      decoSku3 === "SUBPAT"
+                    ) {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#7AD7F0",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      ); 
                     } else {
                       return <div>{value}</div>;
                     }

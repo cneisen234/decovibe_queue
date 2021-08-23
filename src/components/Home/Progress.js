@@ -59,6 +59,7 @@ class Progress extends Component {
 
   render() {
     let dataSelector = this.state.dataSelector;
+      let decoSku3 = "";
       let decoSku5 = "";
       let decoSku7 = "";
       let decoSku6 = "";
@@ -460,6 +461,7 @@ class Progress extends Component {
                   sort: true,
                   // empty: true,
                   customBodyRender: (value, tableMeta, updateValue) => {
+                    decoSku3 = value.slice(0, 6);
                     decoSku5 = value.slice(0, 3);
                     decoSku7 = value.slice(0, 7);
                     decoSku6 = value.slice(0, 8);
@@ -550,6 +552,19 @@ class Progress extends Component {
                             width: "100%",
                             height: "100%",
                             backgroundColor: "#EEB7D2",
+                            color: "black",
+                          }}
+                        >
+                          {value}
+                        </div>
+                      );
+                    } else if (decoSku3 === "SUBPAT") {
+                      return (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#7AD7F0",
                             color: "black",
                           }}
                         >
