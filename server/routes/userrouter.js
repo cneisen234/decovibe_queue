@@ -1041,7 +1041,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                   bcc: [
                     //bcc me for testing purposes for emails
                     {
-                      email: "tre@heattransferwarehouse.com",
+                      email: "developer@heattransferwarehouse.com",
                     },
                   ],
                 },
@@ -1205,7 +1205,7 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
               bcc: [
                 //bcc me for testing purposes for emails
                 {
-                  email: "tre@heattransferwarehouse.com",
+                  email: "developer@heattransferwarehouse.com",
                 },
               ],
             },
