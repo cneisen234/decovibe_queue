@@ -1038,12 +1038,12 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                       email: email,
                     },
                   ],
-                  bcc: [
-                    //bcc me for testing purposes for emails
-                    {
-                      email: "developer@heattransferwarehouse.com",
-                    },
-                  ],
+                  // bcc: [
+                  //   //bcc me for testing purposes for emails
+                  //   {
+                  //     email: "developer@heattransferwarehouse.com",
+                  //   },
+                  // ],
                 },
               ],
               from: "Transfers@heattransferwarehouse.com", // Use the email address or domain you verified above
@@ -1202,12 +1202,12 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
                   email: email,
                 },
               ],
-              bcc: [
-                //bcc me for testing purposes for emails
-                {
-                  email: "developer@heattransferwarehouse.com",
-                },
-              ],
+              // bcc: [
+              //   //bcc me for testing purposes for emails
+              //   {
+              //     email: "developer@heattransferwarehouse.com",
+              //   },
+              // ],
             },
           ],
           from: "Transfers@heattransferwarehouse.com", // Use the email address or domain you verified above
