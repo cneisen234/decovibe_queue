@@ -27,6 +27,7 @@ let config = {
     "X-Auth-Token": process.env.BG_AUTH_TOKEN,
   },
 };
+
 router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
   //deletes any completed orders after 30 days
  pool
@@ -39,6 +40,7 @@ router.delete("/deletecompleterange", rejectUnauthenticated, (req, res) => {
      res.sendStatus(500);
    });
 })
+
 router.delete("/deletehistoryrange", rejectUnauthenticated, (req, res) => {
   //deletes any customer coraspondance after 2 years
   pool
@@ -1338,6 +1340,7 @@ router.post("/markcomplete", rejectUnauthenticated, (req, res, next) => {
       res.sendStatus(500);
     });
 });
+
 router.post("/markcompletecustom", rejectUnauthenticated, (req, res, next) => {
   // marks orders as complete and places them in the complete table
   const email = req.body.email;
@@ -1480,6 +1483,7 @@ router.post("/canned", rejectUnauthenticated, (req, res, next) => {
       res.sendStatus(500);
     });
 });
+
 router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
   // used to reset user logins. It's on a permenent restricted path, only accessesable by manaully changing the code. Extremely secure and protected
   const first_name = req.body.first_name;
@@ -1505,12 +1509,6 @@ router.post("/addadmin", rejectUnauthenticated, (req, res, next) => {
     });
 });
 
-
-
-// Handles login form authenticate/login POST
-// userStrategy.authenticate('local') is middleware that we run on this route
-// this middleware will run our POST if successful
-// this middleware will send a 404 if not successful
 router.post("/login", userStrategy.authenticate("local"), (req, res) => {
   console.log("logging body", req.body.username)
   const email = req.body.username;
@@ -1523,7 +1521,6 @@ router.post("/login", userStrategy.authenticate("local"), (req, res) => {
   });
 });
 
-// clear all server session information about this user
 router.post("/logout", (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();
