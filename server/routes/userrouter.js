@@ -1187,14 +1187,17 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
          let buttonsJoined = buttonsArray.join("");
         let joinedArray = newArray.join("");
         //then define the final string to be sent
-        let lastString = `<div style="color:#DCDCDC; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
+        let locationInfo2 = 'Heat Transfer Warehouse Company. 1501 21st Avenue North Fargo, North Dakota 58102';
+        let lastString = `<div style="color:#DCDCDC; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;">${locationInfo2}</div>`;
         let finalArray =
+          `<html>` +
           `<div>` +
           titleString +
           joinedArray +
           buttonsJoined +
           lastString +
-          `</div>`;
+          `</div>` +
+          `</html>`;
           //empty newArray for next order
         newArray = [];
         console.log(finalArray);
