@@ -921,8 +921,9 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
           pic20 === "") {
             //defines the html being sent in the email
             let titleString = `  <div><img
-        src="https://cdn11.bigcommerce.com/s-et4qthkygq/product_images/uploaded_images/custom-transfers-email-banner-01.png?t=1623860610&_ga=2.54689192.22532363.1623675567-885995832.1599745631"
+       src="https://cdn11.bigcommerce.com/s-et4qthkygq/product_images/uploaded_images/custom-transfers-email-banner-01.png?t=1623860610&_ga=2.54689192.22532363.1623675567-885995832.1599745631"
        width="100%"
+       alt=""
       /></div><br>
                      <div style="color:black; padding-left: 30px; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;"><i>New Message from the Art Department below</i></div><br><br>
 <table style="border-collapse: collapse; font-family:Arial Narrow, sans-serif;"><tr><td style="width: 20%; border: 1px solid white; padding: 5px; margin: 5px; background-color: #006bd6; color: white;">Order number:</td><td style="width: 80%; border: 1px solid #909090; padding: 5px; margin: 5px;"> ${order_number} </td></tr>
@@ -1019,14 +1020,17 @@ router.post("/customerconfirm", rejectUnauthenticated, (req, res, next) => {
             let buttonsJoined = buttonsArray.join("");
             let joinedArray = newArray.join("");
             //then define the final string to be sent
-            let lastString = `<br><br><br><br><br><br><div style="color:#DCDCDC; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;">placeholder</div>`;
+            let locationInfo = 'Heat Transfer Warehouse Company. 1501 21st Avenue North Fargo, North Dakota 58102';
+            let lastString = `<br><br><br><br><br><br><div style="color:#DCDCDC; background-color:#DCDCDC; font-family:Arial Narrow, sans-serif; opacity:0.5;">${locationInfo}</div>`;
             let finalArray =
+              `<html>` +
               `<div>` +
               titleString +
               joinedArray +
               buttonsJoined +
               lastString +
-              `</div>`;
+              `</div>` +
+              `</html>`;
             //empty newArray for next order
             newArray = [];
             console.log(finalArray);
