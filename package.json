@@ -1,8 +1,9 @@
 {
-  "name": "prime-solo-project",
+  "name": "htw-decoqueue",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "homepage": "https://decoqueue.heattransferwarehouse.com/",
+  "repository": "git://github.com/cneisen234/decovibe_queue.git",
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@material-ui/core": "^4.11.1",
@@ -55,6 +56,9 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "browserslist": [
     ">0.2%",
