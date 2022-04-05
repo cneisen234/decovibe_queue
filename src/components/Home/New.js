@@ -343,6 +343,10 @@ class New extends Component {
     return (
       <div>
         <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <div className="navbuttonscontainer"></div>
         <div style={{ padding: "1.5%" }}>
           {this.props.user.role === "csr" ? (

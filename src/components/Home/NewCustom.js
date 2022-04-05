@@ -282,7 +282,11 @@ class NewCustom extends Component {
     ]);
     return (
       <div>
-        <br />
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <div className="navbuttonscontainer"></div>
 
         <div style={{ padding: "1.5%" }}>

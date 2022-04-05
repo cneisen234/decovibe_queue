@@ -76,10 +76,11 @@ class Progress extends Component {
     ]);
     return (
       <div>
-        <br />
-        <center>
-          <h1>In Progress</h1>
-        </center>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <div style={{ padding: "1.5%" }}>
           {this.props.user.role === "csr" ? (
             <span></span>
