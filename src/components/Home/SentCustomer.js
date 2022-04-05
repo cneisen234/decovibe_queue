@@ -152,9 +152,6 @@ class SentCustomer extends Component {
     return (
       <div>
         <br />
-        <center>
-          <h1>Sent To Customer</h1>
-        </center>
         <div style={{ padding: "1.5%" }}>
           <br />
           <br />

@@ -151,7 +151,7 @@ class Progress extends Component {
                   });
                 }}
               >
-                <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+                <AssignmentTurnedInIcon/><p>Complete</p>
               </Button>
               <Button
                 variant="success"
@@ -225,7 +225,7 @@ class Progress extends Component {
                   });
                 }}
               >
-                <RestoreIcon></RestoreIcon>
+                <RestoreIcon/><p>Send Back</p>
               </Button>
               <Button
                 variant="danger"
@@ -279,7 +279,7 @@ class Progress extends Component {
                   });
                 }}
               >
-                <FlagIcon></FlagIcon>
+                <FlagIcon/><p>High Priority</p>
               </Button>
               <Button
                 variant="success"
@@ -333,7 +333,7 @@ class Progress extends Component {
                   });
                 }}
               >
-                <FlagIcon></FlagIcon>
+                <FlagIcon/><p>Low Priority</p>
               </Button>
               <Button
                 variant="danger"
@@ -401,7 +401,7 @@ class Progress extends Component {
                   });
                 }}
               >
-                <DeleteIcon></DeleteIcon>
+                <DeleteIcon/><p>Delete</p>
               </Button>
             </div>
           )}

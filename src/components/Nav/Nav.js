@@ -80,9 +80,9 @@ class Nav extends Component {
               <>
                 <Grid
                   item
-                  xs={6}
-                  sm={6}
-                  md={7}
+                  xs={7}
+                  sm={7}
+                  md={8}
                   style={{
                     backgroundColor: this.state.backgroundcolor,
                     width: "15%",
@@ -202,9 +202,9 @@ class Nav extends Component {
                 </Grid>
                 <Grid
                   item
-                  xs={3}
-                  sm={3}
-                  md={3}
+                  xs={2}
+                  sm={2}
+                  md={2}
                   style={{
                     backgroundColor: this.state.backgroundcolor,
                     width: "30%",
@@ -213,9 +213,9 @@ class Nav extends Component {
                 >
                   <Grid
                     item
-                    xs={3}
-                    sm={3}
-                    md={3}
+                    xs={1}
+                    sm={1}
+                    md={1}
                     style={{
                       backgroundColor: this.state.backgroundcolor,
                       width: "50%",
@@ -269,7 +269,7 @@ class Nav extends Component {
                       </NavLink>
                     </div>
                   </Grid>
-                  <Grid
+                  {/*<Grid
                     item
                     xs={3}
                     sm={3}
@@ -329,7 +329,7 @@ class Nav extends Component {
                       }}
                       className={this.state.backgroundcolorclass}
                     />
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </>
             ) : (
@@ -354,9 +354,9 @@ class Nav extends Component {
               <>
                 <Grid
                   item
-                  xs={6}
-                  sm={6}
-                  md={7}
+                  xs={7}
+                  sm={7}
+                  md={8}
                   style={{
                     backgroundColor: this.state.backgroundcolor,
                     width: "15%",
@@ -507,9 +507,9 @@ class Nav extends Component {
                 </Grid>
                 <Grid
                   item
-                  xs={3}
-                  sm={3}
-                  md={3}
+                  xs={2}
+                  sm={2}
+                  md={2}
                   style={{
                     backgroundColor: this.state.backgroundcolor,
                     width: "30%",
@@ -518,9 +518,9 @@ class Nav extends Component {
                 >
                   <Grid
                     item
-                    xs={3}
-                    sm={3}
-                    md={3}
+                    xs={1}
+                    sm={1}
+                    md={1}
                     style={{
                       backgroundColor: this.state.backgroundcolor,
                       width: "50%",
@@ -573,7 +573,7 @@ class Nav extends Component {
                       </Link>
                     </div>
                   </Grid>
-                  <Grid
+                  {/*<Grid
                     item
                     xs={3}
                     sm={3}
@@ -630,7 +630,7 @@ class Nav extends Component {
                       style={{ float: "left" }}
                       className={this.state.backgroundcolorclass}
                     />
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </>
             ) : (

@@ -116,10 +116,6 @@ class CustomComplete extends Component {
     return (
       <div>
         <br />
-        <center>
-          <h1>Complete</h1>
-        </center>
-
         <div style={{ padding: "1.5%" }}>
           {/* start table */}
           <br />

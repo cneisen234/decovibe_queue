@@ -293,10 +293,6 @@ class Response extends Component {
     return (
       <div>
         <br />
-        <center>
-          <h1>Customer Response</h1>
-        </center>
-
         <div style={{ padding: "1.5%" }}>
           {this.props.user.role === "csr" ? (
             <span></span>
@@ -354,7 +350,7 @@ class Response extends Component {
                   });
                 }}
               >
-                <FlagIcon></FlagIcon>
+                <FlagIcon/><p>High Priority</p>
               </Button>
               <Button
                 variant="success"
@@ -406,7 +402,7 @@ class Response extends Component {
                   });
                 }}
               >
-                <FlagIcon></FlagIcon>
+                <FlagIcon/><p>Low Priority</p>
               </Button>
               <Button
                 variant="danger"
@@ -474,7 +470,7 @@ class Response extends Component {
                   });
                 }}
               >
-                <DeleteIcon></DeleteIcon>
+                <DeleteIcon/><p>Delete</p>
               </Button>
             </div>
           )}

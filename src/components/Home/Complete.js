@@ -248,7 +248,7 @@ class Complete extends Component {
                   });
                 }}
               >
-                <RestoreIcon></RestoreIcon>
+                <RestoreIcon/><p>Send Back</p>
               </Button>
               {/* button to delete selected items */}
               <Button
@@ -318,7 +318,7 @@ class Complete extends Component {
                   });
                 }}
               >
-                <DeleteIcon></DeleteIcon>
+                <DeleteIcon/><p>Delete</p>
               </Button>
             </div>
           )}

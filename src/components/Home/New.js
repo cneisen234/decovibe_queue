@@ -34,6 +34,7 @@ class New extends Component {
     created_at: "",
     dataSelector: [],
   };
+
   componentDidMount() {
     //get all new stock items
     this.props.dispatch({
@@ -176,7 +177,6 @@ class New extends Component {
       type: "GET_COMPLETE_LIST_COUNT",
     });
   };
-
   toggle5 = () => {
     this.setState({
       toggle5: !this.state.toggle5,
@@ -342,10 +342,7 @@ class New extends Component {
     ]);
     return (
       <div>
-        <br />
-        <center>
-          <h1>New</h1>
-        </center>
+        <br/>
         <div className="navbuttonscontainer"></div>
         <div style={{ padding: "1.5%" }}>
           {this.props.user.role === "csr" ? (
@@ -361,7 +358,7 @@ class New extends Component {
                   });
                 }}
               >
-                <AssignmentIndIcon></AssignmentIndIcon>
+                <AssignmentIndIcon/><p>Assign</p>
               </Button>
               <Button
                 variant="success"
@@ -372,7 +369,7 @@ class New extends Component {
                   });
                 }}
               >
-                <QueueIcon></QueueIcon>
+                <QueueIcon/><p>Run</p>
               </Button>
               <Button
                 variant="success"
@@ -443,7 +440,7 @@ class New extends Component {
                   });
                 }}
               >
-                <PlayArrowIcon></PlayArrowIcon>
+                <PlayArrowIcon/><p>Start</p>
               </Button>
               {/* mark the selected items complete */}
               <Button
@@ -512,7 +509,7 @@ class New extends Component {
                   });
                 }}
               >
-                <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
+                <AssignmentTurnedInIcon/><p>Finish</p>
               </Button>
               {/* mark selected items high priority */}
               <Button
@@ -566,7 +563,7 @@ class New extends Component {
                   });
                 }}
               >
-                <FlagIcon></FlagIcon>
+                <FlagIcon/><p>High Priority</p>
               </Button>
               {/* mark selected items low priority */}
               <Button
@@ -621,7 +618,7 @@ class New extends Component {
                   });
                 }}
               >
-                <FlagIcon></FlagIcon>
+                <FlagIcon/><p>Low Priority</p>
               </Button>
               {/* deleted selected items */}
               <Button
@@ -690,7 +687,7 @@ class New extends Component {
                   });
                 }}
               >
-                <DeleteIcon></DeleteIcon>
+                <DeleteIcon/><p>Delete</p>
               </Button>
             </div>
           )}
@@ -703,7 +700,7 @@ class New extends Component {
               //names the columns found on MUI table
               //col with the checkboxes
               {
-                name: "Select",
+                name: "",
                 options: {
                   filter: false,
                   sort: false,
@@ -880,7 +877,9 @@ class New extends Component {
                   sort: true,
                   // empty: true,
                   customBodyRender: (value, tableMeta, updateValue) => {
+                    if (value) {
                     descrip = value.slice(value.length - 4);
+                    }
                     if (descrip === "Pack" || descrip === "pack") {
                       return (
                         <div
@@ -894,8 +893,10 @@ class New extends Component {
                           {value}
                         </div>
                       );
-                    } else {
+                    } else if (value) {
                       return <div>{value}</div>;
+                    } else {
+                      return <div>No Desc</div>;
                     }
                   },
                 },
@@ -928,372 +929,6 @@ class New extends Component {
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
-              {
-                name: "Need To Run",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-                          const item = itemArray[dataIndex];
-                          this.setState({
-                            toggle5: !this.state.toggle5,
-                            id: item.id,
-                          });
-                        }}
-                      >
-                        <QueueIcon></QueueIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Assign",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-                          const item = itemArray[dataIndex];
-                          this.setState({
-                            toggle: !this.state.toggle,
-                            id: item.id,
-                          });
-                        }}
-                      >
-                        <AssignmentIndIcon></AssignmentIndIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Start",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-                          const item = itemArray[dataIndex];
-                          this.props.dispatch({
-                            type: "START_ITEM",
-                            payload: {
-                              id: item.id,
-                              email: item.email,
-                              first_name: item.first_name,
-                              last_name: item.last_name,
-                              order_number: item.order_number,
-                              sku: item.sku,
-                              description: item.description,
-                              product_length: item.product_length,
-                              product_options: item.product_options,
-                              qty: item.qty,
-                              assigned: item.assigned,
-                              created_at: item.created_at,
-                              priority: item.priority,
-                            },
-                          });
-                          this.props.dispatch({
-                            type: "DELETE_ITEM",
-                            payload: item.id,
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST",
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_RESPOND_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CONFIRM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
-                          });
-                        }}
-                      >
-                        <PlayArrowIcon></PlayArrowIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Mark Complete",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-                          const item = itemArray[dataIndex];
-
-                          this.props.dispatch({
-                            type: "MARK_COMPLETE",
-                            payload: {
-                              id: item.id,
-                              email: item.email,
-                              first_name: item.first_name,
-                              last_name: item.last_name,
-                              order_number: item.order_number,
-                              sku: item.sku,
-                              description: item.description,
-                              product_length: item.product_length,
-                              product_options: item.product_options,
-                              qty: item.qty,
-                              assigned: item.assigned,
-                              created_at: item.created_at,
-                              priority: item.priority,
-                            },
-                          });
-                          this.props.dispatch({
-                            type: "DELETE_ITEM",
-                            payload: item.id,
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST",
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_RESPOND_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CONFIRM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
-                          });
-                        }}
-                      >
-                        <AssignmentTurnedInIcon></AssignmentTurnedInIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Mark Priority",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : this.props.itemlist[dataIndex] &&
-                      this.props.itemlist[dataIndex].priority === "low" ? (
-                      <Button
-                        variant="success"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-                          const item = itemArray[dataIndex];
-
-                          this.props.dispatch({
-                            type: "MARK_PRIORITY",
-                            payload: {
-                              id: item.id,
-                              priority: "high",
-                            },
-                          });
-
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST",
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_RESPOND_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CONFIRM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
-                          });
-                        }}
-                      >
-                        <FlagIcon></FlagIcon>
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="danger"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-                          const item = itemArray[dataIndex];
-
-                          this.props.dispatch({
-                            type: "MARK_PRIORITY",
-                            payload: {
-                              id: item.id,
-                              priority: "low",
-                            },
-                          });
-
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST",
-                          });
-                          this.props.dispatch({
-                            type: "GET_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_RESPOND_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_APPROVE_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CONFIRM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_PROGRESS_LIST_COUNT",
-                          });
-                          this.props.dispatch({
-                            type: "GET_COMPLETE_LIST_COUNT",
-                          });
-                        }}
-                      >
-                        <FlagIcon></FlagIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
-              {
-                name: "Delete",
-                options: {
-                  filter: false,
-                  sort: false,
-                  empty: true,
-                  customBodyRenderLite: (dataIndex, rowIndex) => {
-                    return this.props.user.role === "csr" ? (
-                      <span></span>
-                    ) : (
-                      <Button
-                        variant="danger"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          const itemArray = this.props.itemlist;
-
-                          const item = itemArray[dataIndex];
-                          //sweetalerts to warn of irreversable action
-                          swal({
-                            title: "Are you sure?",
-                            text:
-                              "Once deleted, you will not be able to recover the sku on this order!",
-                            icon: "warning",
-                            buttons: true,
-                            dangerMode: true,
-                          }).then((willDelete) => {
-                            if (willDelete) {
-                              this.props.dispatch({
-                                type: "DELETE_ITEM",
-                                payload: item.id,
-                              });
-                              this.props.dispatch({
-                                type: "GET_ITEM_LIST",
-                              });
-                              this.props.dispatch({
-                                type: "GET_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_RESPOND_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_APPROVE_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CONFIRM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_CUSTOM_ITEM_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_PROGRESS_LIST_COUNT",
-                              });
-                              this.props.dispatch({
-                                type: "GET_COMPLETE_LIST_COUNT",
-                              });
-                            } else {
-                              console.log("delete canceled");
-                            }
-                          });
-                        }}
-                      >
-                        <DeleteIcon></DeleteIcon>
-                      </Button>
-                    );
-                  },
-                },
-              },
             ]}
             title={"New Items"} //give the table a name
           />

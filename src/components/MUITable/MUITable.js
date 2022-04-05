@@ -19,10 +19,10 @@ class MUITable extends Component {
       filter: true,
       filterType: "dropdown",
       responsive: "vertical",
-      tableBodyHeight: "7400px",
+      tableBodyHeight: "550px",
       tableBodyMaxHeight: " ",
       rowsPerPage: 100,
-      rowsPerPageOptions: [100, 500, 1000],
+      rowsPerPageOptions: [10, 50, 100],
       selectableRows: false, //false means checkboxes are hidden, I created my own checkbox functionality so this is turned off
     },
   };
@@ -31,7 +31,7 @@ class MUITable extends Component {
     return (
       <React.Fragment>
         <MUIDataTable
-          title={this.props.title}
+          title=""
           data={this.props.data}
           columns={this.props.columns}
           options={this.state.options}

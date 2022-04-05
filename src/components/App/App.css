@@ -70,10 +70,15 @@ input {
 }
 
 .multiButtons {
+  margin: 50px;
   position: fixed;
-  left: 0;
-  top: 10%;
+  left: 8%;
+  top: 6.5%;
   z-index: 100000;
+}
+
+.multiButtons Button {
+  margin: 5px;
 }
 
 /* Used for tooltips */
