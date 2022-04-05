@@ -120,3 +120,7 @@ input {
 .borderBottom {
   border-bottom: solid black 1px;
 }
+
+.nav-link {
+  margin-right: 10px;
+}

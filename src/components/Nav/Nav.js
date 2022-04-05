@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import swal from "sweetalert";
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { Grid, TextField, Button } from "@material-ui/core";
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
@@ -12,7 +11,6 @@ import EmailIcon from "@material-ui/icons/Email";
 import ReplyIcon from "@material-ui/icons/Reply";
 import HistoryIcon from "@material-ui/icons/History";
 import EditIcon from "@material-ui/icons/Edit";
-import ViewListIcon from "@material-ui/icons/ViewList";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
 class Nav extends Component {
@@ -87,6 +85,7 @@ class Nav extends Component {
                     backgroundColor: this.state.backgroundcolor,
                     width: "15%",
                     float: "left",
+                    borderRadius: "30px",
                   }}
                 >
                   <NavLink
@@ -361,6 +360,7 @@ class Nav extends Component {
                     backgroundColor: this.state.backgroundcolor,
                     width: "15%",
                     float: "left",
+                    borderRadius: "30px",
                   }}
                 >
                   <NavLink

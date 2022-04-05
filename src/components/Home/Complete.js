@@ -133,6 +133,7 @@ class Complete extends Component {
               <Button
                 variant="success"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   console.log(dataSelector);
 
@@ -247,6 +248,9 @@ class Complete extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <RestoreIcon/><p>Send Back</p>
@@ -255,6 +259,7 @@ class Complete extends Component {
               <Button
                 variant="danger"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   //sweet alerts, this actions can't be undone
                   swal({
@@ -317,6 +322,9 @@ class Complete extends Component {
                       console.log("delete canceled");
                     }
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <DeleteIcon/><p>Delete</p>

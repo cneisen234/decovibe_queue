@@ -317,6 +317,7 @@ class Approved extends Component {
               <Button
                 variant="success"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   console.log(dataSelector);
                   swal({
@@ -584,6 +585,9 @@ class Approved extends Component {
                       console.log("action canceled");
                     }
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <AssignmentTurnedInIcon/><p>Complete</p>
@@ -591,6 +595,7 @@ class Approved extends Component {
               <Button
                 variant="danger"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   console.log(dataSelector);
                   for (let index = 0; index < dataSelector.length; index++) {
@@ -641,6 +646,9 @@ class Approved extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <FlagIcon/><p>High Priority</p>
@@ -648,6 +656,7 @@ class Approved extends Component {
               <Button
                 variant="success"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
@@ -693,6 +702,9 @@ class Approved extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <FlagIcon/><p>Low Priority</p>
@@ -700,6 +712,7 @@ class Approved extends Component {
               <Button
                 variant="danger"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   console.log(dataSelector);
                   swal({
@@ -764,6 +777,9 @@ class Approved extends Component {
                       console.log("delete canceled");
                     }
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <DeleteIcon/><p>Delete</p>

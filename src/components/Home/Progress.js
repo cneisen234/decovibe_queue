@@ -89,6 +89,7 @@ class Progress extends Component {
               <Button
                 variant="success"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
@@ -150,6 +151,9 @@ class Progress extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <AssignmentTurnedInIcon/><p>Complete</p>
@@ -157,6 +161,7 @@ class Progress extends Component {
               <Button
                 variant="success"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   for (let index = 0; index < dataSelector.length; index++) {
                     const element = dataSelector[index];
@@ -224,6 +229,9 @@ class Progress extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <RestoreIcon/><p>Send Back</p>
@@ -231,6 +239,7 @@ class Progress extends Component {
               <Button
                 variant="danger"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   console.log(dataSelector);
                   for (let index = 0; index < dataSelector.length; index++) {
@@ -278,6 +287,9 @@ class Progress extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <FlagIcon/><p>High Priority</p>
@@ -285,6 +297,7 @@ class Progress extends Component {
               <Button
                 variant="success"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   console.log(dataSelector);
                   for (let index = 0; index < dataSelector.length; index++) {
@@ -332,6 +345,9 @@ class Progress extends Component {
                     dataSelector: [],
                     toggle3: false,
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <FlagIcon/><p>Low Priority</p>
@@ -339,6 +355,7 @@ class Progress extends Component {
               <Button
                 variant="danger"
                 onClick={(event) => {
+                  if (dataSelector[0]) {
                   event.preventDefault();
                   console.log(dataSelector);
                   swal({
@@ -400,6 +417,9 @@ class Progress extends Component {
                       console.log("delete canceled");
                     }
                   });
+                  } else {
+                    swal('Select some orders first!');
+                  }
                 }}
               >
                 <DeleteIcon/><p>Delete</p>
