@@ -783,7 +783,7 @@ class NewCustom extends Component {
             columns={[
               //names the columns found on MUI table
               {
-                name: "Select",
+                name: "",
                 options: {
                   filter: false,
                   sort: false,
