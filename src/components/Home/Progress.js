@@ -81,6 +81,7 @@ class Progress extends Component {
         <br/>
         <br/>
         <br/>
+        <br/>
         <div style={{ padding: "1.5%" }}>
           {this.props.user.role === "csr" ? (
             <span></span>

@@ -125,6 +125,7 @@ class History extends Component {
         <br/>
         <br/>
         <br/>
+        <br/>
         <div style={{ padding: "1.5%" }}>
           <center>
             <Form.Control
