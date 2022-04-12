@@ -11,9 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FlagIcon from "@material-ui/icons/Flag";
 import ReactFilestack from "filestack-react";
 import swal from "sweetalert";
-// import { Alert } from "@material-ui/lab";
 
-// This component is for NewCustom
 class NewCustom extends Component {
   state = {
     toggle: false,

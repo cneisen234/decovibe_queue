@@ -3,13 +3,11 @@ import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
 import MUITable from "../MUITable/MUITable";
 import swal from "sweetalert";
-import ReactFilestack from "filestack-react";
 import { Paper, TextField } from "@material-ui/core";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FlagIcon from "@material-ui/icons/Flag";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import Form from "react-bootstrap/Form";
 
 class Approved extends Component {

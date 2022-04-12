@@ -11,9 +11,7 @@ import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import FlagIcon from "@material-ui/icons/Flag";
 import QueueIcon from "@material-ui/icons/Queue";
 import swal from "sweetalert";
-//import { response } from "express";
 
-// This component is for new
 class New extends Component {
   state = {
     toggle: false,
@@ -962,6 +960,76 @@ class New extends Component {
               { name: "Assigned" },
               { name: "Created At" },
               { name: "Priority" },
+              {
+                name: "Start",
+                options: {
+                  filter: false,
+                  sort: false,
+                  empty: true,
+                  customBodyRenderLite: (dataIndex, rowIndex) => {
+                    return this.props.user.role === "csr" ? (
+                      <span></span>
+                    ) : (
+                      <Button
+                        variant="success"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          const itemArray = this.props.itemlist;
+                          const item = itemArray[dataIndex];
+                          this.props.dispatch({
+                            type: "START_ITEM",
+                            payload: {
+                              id: item.id,
+                              email: item.email,
+                              first_name: item.first_name,
+                              last_name: item.last_name,
+                              order_number: item.order_number,
+                              sku: item.sku,
+                              description: item.description,
+                              product_length: item.product_length,
+                              product_options: item.product_options,
+                              qty: item.qty,
+                              assigned: item.assigned,
+                              created_at: item.created_at,
+                              priority: item.priority,
+                            },
+                          });
+                          this.props.dispatch({
+                            type: "DELETE_ITEM",
+                            payload: item.id,
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST",
+                          });
+                          this.props.dispatch({
+                            type: "GET_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_RESPOND_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_APPROVE_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CUSTOM_ITEM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_CONFIRM_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_PROGRESS_LIST_COUNT",
+                          });
+                          this.props.dispatch({
+                            type: "GET_COMPLETE_LIST_COUNT",
+                          });
+                        }}
+                      >
+                        <PlayArrowIcon></PlayArrowIcon>
+                      </Button>
+                    );
+                  },
+                },
+              },
             ]}
             title={"New Items"} //give the table a name
           />
