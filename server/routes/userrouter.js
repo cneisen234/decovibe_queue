@@ -100,6 +100,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
           let email = order.billing_address.email;
           let first_name = order.billing_address.first_name;
           let last_name = order.billing_address.last_name;
+          let cartId = order.cart_id;
+          let orderProducts = order.products;
           let payment_status = order.payment_status;
           let item_type = "";
           const queryText = `SELECT * from "item" where order_number=$1;`;
@@ -424,6 +426,13 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                   name,
                                                   item_type,
                                                 ]);
+                                              } else if (
+                                                //if the sliced skus meet the below conditions
+                                                decoSku7 === "INKSOFT"
+                                              ) {
+                                                console.log('Sending an order to Inksoft..');
+                                                console.log('Cart ID: ', cartId);
+                                                console.log('Cart Products: ', orderProducts);
                                               } else {
                                                 //...ignore everything else
                                                 console.log(
