@@ -423,6 +423,9 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 //if the sliced skus meet the below conditions
                                                 decoSku7 === "INKSOFT"
                                               ) {
+
+                                                async function sendToInksoft () {
+
                                                 console.log('Sending an order to Inksoft..');
 
                                                 let inksoft = await axios
@@ -528,9 +531,11 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    }
                                                  });
 
-
+                                                 }
 
                                                }
+
+                                              sendToInksoft();
                                                 
                                               } else {
                                                 //...ignore everything else
