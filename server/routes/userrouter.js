@@ -434,7 +434,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                      config
                                                    )
 
-                                                console.log('Get Products: ', inksoft);
+                                                console.log('Get Products: ', inksoft.data);
 
                                                 let designsToSend = [];
                                                 let inksoftCart = []; 
@@ -447,19 +447,17 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                 console.log('Token and Name: ', inksoftToken, inksoftName);
 
-                                                await $.ajax({
-                                                  type: 'GET',
-                                                  url: `https://stores.inksoft.com/DS350156262/Api2/GetCartPackage?SessionToken=${inksoftToken}&Format=JSON`,
+                                                inksoftCart = await axios .get(
+                                                  `https://stores.inksoft.com/DS350156262/Api2/GetCartPackage?SessionToken=${inksoftToken}&Format=JSON`,
+                                                  {
                                                   dataType: 'text',
                                                   data: '',
                                                   processData: false,
                                                   crossDomain: true,
-                                                  success: function (res) {
-                                                    console.log('Get Cart: ', res);
-                                                    res = JSON.parse(res);
-                                                    inksoftCart = res.Data;
                                                   }
-                                                });
+                                                )
+
+                                                console.log('Get Cart: ', res);
 
                                                 let inksoftItems = inksoftCart.Cart.Items;
                                                 let inksoftDesigns = inksoftCart.DesignSummaries;
@@ -500,36 +498,26 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', inksoftCart.Cart.Items);
 
-                                                 await $.ajax({
-                                                   type: 'POST',
-                                                   url: 'https://stores.inksoft.com/DS350156262/Api2/SetCart',
+                                                 await axios .post(
+                                                   'https://stores.inksoft.com/DS350156262/Api2/SetCart',
+                                                   {
                                                    dataType: 'text',
                                                    data: `Cart=${inksoftCart}&Format=JSON&SessionToken=${mainToken}`,
                                                    processData: false,
                                                    crossDomain: true,
-                                                   success: function (res) {
-                                                     console.log('Set Cart: ', res.Data);
-                                                   },
-                                                   error: function (jqXHR, textStatus, ex) {
-                                                     console.log(jqXHR, textStatus, ex);
                                                    }
-                                                 });
+                                                 )
 
 
-                                                 await $.ajax({
-                                                   type: 'POST',
-                                                   url: 'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder',
+                                                 await axios .post(
+                                                   'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder',
+                                                   {
                                                    dataType: 'text',
                                                    data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}`,
                                                    processData: false,
                                                    crossDomain: true,
-                                                   success: function (res) {
-                                                     console.log('Post Cart: ', res.Data);
-                                                   },
-                                                   error: function (jqXHR, textStatus, ex) {
-                                                     console.log(jqXHR, textStatus, ex);
                                                    }
-                                                 });
+                                                 )
 
                                                  }
 
