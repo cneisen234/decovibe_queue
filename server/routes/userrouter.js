@@ -18,7 +18,6 @@ let storeHash = process.env.STORE_HASH
 //defines dates to auto delete certain things from the database.
 let daterange = moment().subtract(5, "hours").subtract(30, "days");
 let daterange2 = moment().subtract(5, "hours").subtract(2, "years");
-let globalOrderNumber = ""
 
 //BigCommerce API tokens and keys
 let config = {
@@ -53,9 +52,6 @@ router.delete("/deletehistoryrange", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
-//used to check if the current order is a new order.
-let orderID = 0
-let prevOrderID = 0
 
 // Handles Ajax request for user information if user is authenticated
 router.get("/", rejectUnauthenticated, (req, res) => {
@@ -102,7 +98,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
           let last_name = order.billing_address.last_name;
           let cartId = order.cart_id;
           let orderProducts = order.products;
-          let payment_status = order.payment_status;
           let item_type = "";
           const queryText = `SELECT * from "item" where order_number=$1;`;
           pool
@@ -143,7 +138,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                     rows6 === "[]" &&
                                     rows7 === "[]"
                                   ) {
-                                    console.log(orderID, "checking order");
+                                    //console.log(orderID, "checking order");
                                     //converts to am/pm time
                                     if (
                                       element !== []
@@ -433,14 +428,15 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 console.log('Sending an order to Inksoft..');
                                                 console.log('Cart ID: ', cartId);
                                                 console.log('Cart Products: ', orderProducts);
+                                                console.log('Entire Order: ', order);
                                               } else {
                                                 //...ignore everything else
-                                                console.log(
-                                                  "not a decovibe sku",
-                                                  decoSku,
-                                                  "for order",
-                                                  orderID
-                                                );
+                                                // console.log(
+                                                //   "not a decovibe sku",
+                                                //   decoSku,
+                                                //   "for order",
+                                                //   orderID
+                                                // );
                                               }
                                             }
                                           }
@@ -453,10 +449,10 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                       console.log(`${orderID} not authorized`);
                                     }
                                   } else {
-                                    console.log(
-                                      orderID,
-                                      "already in the database"
-                                    );
+                                    // console.log(
+                                    //   orderID,
+                                    //   "already in the database"
+                                    // );
                                   }
                                 })
                                 .catch((error) => {

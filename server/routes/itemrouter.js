@@ -589,14 +589,14 @@ router.get("/customcompletelistcount", rejectUnauthenticated, (req, res) => {
 router.post("/orderdetails", (req, res) => {
   //grabs all of the details for a specific order with the BigCommerce API
   let order_number = req.body.order_number;
-  console.log("this is the payload before it reaches the get", order_number);
+  //console.log("this is the payload before it reaches the get", order_number);
   axios
     .get(
       `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
       config
     )
     .then(function (response) {
-      console.log("this is the response", response.data);
+      //console.log("this is the response", response.data);
 
       res.send(response.data);
     })
@@ -609,14 +609,14 @@ router.post("/orderdetails", (req, res) => {
 router.post("/orderlookup", (req, res) => {
   //grabs all of the details for a specific order with the BigCommerce API
   let order_number = req.body.order_number;
-  console.log("this is the payload before it reaches the get", order_number);
+  //console.log("this is the payload before it reaches the get", order_number);
   axios
     .get(
       `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}`,
       config
     )
     .then(function (response) {
-      console.log("this is the response", response.data);
+      //console.log("this is the response", response.data);
 
       res.send(response.data);
     })
@@ -629,14 +629,14 @@ router.post("/orderlookup", (req, res) => {
 router.post("/shippinglookup", (req, res) => {
   //grabs all of the details for a specific order with the BigCommerce API
   let order_number = req.body.order_number;
-  console.log("this is the payload before it reaches the get", order_number);
+  //console.log("this is the payload before it reaches the get", order_number);
   axios
     .get(
       `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/shipping_addresses`,
       config
     )
     .then(function (response) {
-      console.log("this is the response", response.data);
+      //console.log("this is the response", response.data);
 
       res.send(response.data);
     })
@@ -649,14 +649,14 @@ router.post("/shippinglookup", (req, res) => {
 router.post("/productlookup", (req, res) => {
   //grabs all of the details for a specific order with the BigCommerce API
   let order_number = req.body.order_number;
-  console.log("this is the payload before it reaches the get", order_number);
+  //console.log("this is the payload before it reaches the get", order_number);
   axios
     .get(
       `https://api.bigcommerce.com/stores/et4qthkygq/v2/orders/${order_number}/products`,
       config
     )
     .then(function (response) {
-      console.log("this is the response", response.data);
+      //console.log("this is the response", response.data);
 
       res.send(response.data);
     })
