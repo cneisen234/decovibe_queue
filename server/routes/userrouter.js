@@ -96,8 +96,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
           let email = order.billing_address.email;
           let first_name = order.billing_address.first_name;
           let last_name = order.billing_address.last_name;
-          let cartId = order.cart_id;
-          let orderProducts = order.products;
           let item_type = "";
           const queryText = `SELECT * from "item" where order_number=$1;`;
           pool
@@ -426,9 +424,114 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 decoSku7 === "INKSOFT"
                                               ) {
                                                 console.log('Sending an order to Inksoft..');
-                                                console.log('Cart ID: ', cartId);
-                                                console.log('Cart Products: ', orderProducts);
-                                                console.log('Entire Order: ', order);
+
+                                                let inksoft = await axios
+                                                   .get(
+                                                     `https://api.bigcommerce.com/stores/${storeHash}/v2/orders/${orderID}/products`,
+                                                     config
+                                                   )
+
+                                                console.log('Get Products: ', inksoft);
+
+                                                let designsToSend = [];
+                                                let inksoftCart = []; 
+                                                let mainToken = inksoft.data[0].product_options[1].value;
+
+                                                for (const i of inksoft.data) {
+
+                                                let inksoftToken = i.product_options[1].value;
+                                                let inksoftName = i.product_options[2].value;
+
+                                                console.log('Token and Name: ', inksoftToken, inksoftName);
+
+                                                await $.ajax({
+                                                  type: 'GET',
+                                                  url: `https://stores.inksoft.com/DS350156262/Api2/GetCartPackage?SessionToken=${inksoftToken}&Format=JSON`,
+                                                  dataType: 'text',
+                                                  data: '',
+                                                  processData: false,
+                                                  crossDomain: true,
+                                                  success: function (res) {
+                                                    console.log('Get Cart: ', res);
+                                                    res = JSON.parse(res);
+                                                    inksoftCart = res.Data;
+                                                  }
+                                                });
+
+                                                let inksoftItems = inksoftCart.Cart.Items;
+                                                let inksoftDesigns = inksoftCart.DesignSummaries;
+                                                let linkedId = 0;
+                                                let foundDesign = {};
+
+                                                for (const d of inksoftDesigns) {
+                                                  if (d.Name === inksoftName) {
+                                                    linkedId = d.DesignID;
+                                                  }
+                                                }
+
+                                                if (linkedId === 0) {
+                                                  return;
+                                                } else {
+                                                  for (const i of inksoftItems) {
+                                                    if (i.DesignId === linkedId) {
+                                                      foundDesign = i;
+                                                    }
+                                                  }
+                                                }
+
+                                                if (foundDesign === {}) {
+                                                  return;
+                                                } else {
+                                                  designsToSend.push(foundDesign);
+                                                }
+                                                
+                                               }
+
+                                               if (designsToSend === []) {
+                                                 return;
+                                               } else {
+
+                                                 console.log('New Designs: ', designsToSend);
+
+                                                 inksoftCart.Cart.Items = designsToSend;
+
+                                                 console.log('New Cart Items: ', inksoftCart.Cart.Items);
+
+                                                 await $.ajax({
+                                                   type: 'POST',
+                                                   url: 'https://stores.inksoft.com/DS350156262/Api2/SetCart',
+                                                   dataType: 'text',
+                                                   data: `Cart=${inksoftCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                   processData: false,
+                                                   crossDomain: true,
+                                                   success: function (res) {
+                                                     console.log('Set Cart: ', res.Data);
+                                                   },
+                                                   error: function (jqXHR, textStatus, ex) {
+                                                     console.log(jqXHR, textStatus, ex);
+                                                   }
+                                                 });
+
+
+                                                 await $.ajax({
+                                                   type: 'POST',
+                                                   url: 'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder',
+                                                   dataType: 'text',
+                                                   data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}`,
+                                                   processData: false,
+                                                   crossDomain: true,
+                                                   success: function (res) {
+                                                     console.log('Post Cart: ', res.Data);
+                                                   },
+                                                   error: function (jqXHR, textStatus, ex) {
+                                                     console.log(jqXHR, textStatus, ex);
+                                                   }
+                                                 });
+
+
+
+                                               }
+                                                
                                               } else {
                                                 //...ignore everything else
                                                 // console.log(
