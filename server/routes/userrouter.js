@@ -447,20 +447,21 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                 console.log('Token and Name: ', inksoftToken, inksoftName);
 
-                                                inksoftCart = await axios .get(
-                                                  `https://stores.inksoft.com/DS350156262/Api2/GetCartPackage?SessionToken=${inksoftToken}&Format=JSON`,
-                                                  {
-                                                  dataType: 'text',
-                                                  data: '',
-                                                  processData: false,
-                                                  crossDomain: true,
-                                                  }
+                                                inksoftCart = await axios 
+                                                  .get(
+                                                   `https://stores.inksoft.com/DS350156262/Api2/GetCartPackage?SessionToken=${inksoftToken}&Format=JSON`,
+                                                   {
+                                                   dataType: 'text',
+                                                   data: '',
+                                                   processData: false,
+                                                   crossDomain: true,
+                                                   }
                                                 )
 
-                                                console.log('Get Cart: ', res);
+                                                console.log('Get Cart: ', inksoftCart.data);
 
-                                                let inksoftItems = inksoftCart.Cart.Items;
-                                                let inksoftDesigns = inksoftCart.DesignSummaries;
+                                                let inksoftItems = inksoftCart.data.Cart.Items;
+                                                let inksoftDesigns = inksoftCart.data.DesignSummaries;
                                                 let linkedId = 0;
                                                 let foundDesign = {};
 
@@ -494,22 +495,24 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Designs: ', designsToSend);
 
-                                                 inksoftCart.Cart.Items = designsToSend;
+                                                 inksoftCart.data.Cart.Items = designsToSend;
 
-                                                 console.log('New Cart Items: ', inksoftCart.Cart.Items);
+                                                 console.log('New Cart Items: ', inksoftCart.data.Cart.Items);
 
-                                                 await axios .post(
+                                                 await axios 
+                                                  .post(
                                                    'https://stores.inksoft.com/DS350156262/Api2/SetCart',
                                                    {
                                                    dataType: 'text',
-                                                   data: `Cart=${inksoftCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                   data: `Cart=${inksoftCart.data}&Format=JSON&SessionToken=${mainToken}`,
                                                    processData: false,
                                                    crossDomain: true,
                                                    }
                                                  )
 
 
-                                                 await axios .post(
+                                                 await axios 
+                                                  .post(
                                                    'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder',
                                                    {
                                                    dataType: 'text',
