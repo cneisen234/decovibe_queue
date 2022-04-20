@@ -501,6 +501,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
+
+                                                try {
                                                  await axios 
                                                   .post(
                                                    'https://stores.inksoft.com/DS350156262/Api2/SetCart',
@@ -511,8 +513,12 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    crossDomain: true,
                                                    }
                                                  )
+                                                  } catch (err) {
+                                                    console.log('Error on Set Cart: ', err);
+                                                  }
 
 
+                                                try {
                                                  await axios 
                                                   .post(
                                                    'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder',
@@ -523,6 +529,9 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    crossDomain: true,
                                                    }
                                                  )
+                                                  } catch (err) {
+                                                    console.log('Error on Post Cart: ', err);
+                                                  }
 
                                                  }
 
