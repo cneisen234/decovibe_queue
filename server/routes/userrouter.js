@@ -439,6 +439,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 let designsToSend = [];
                                                 let inksoftCart = []; 
                                                 let mainToken = inksoft.data[0].product_options[1].value;
+                                                let currentCart = [];
 
                                                 for (const i of inksoft.data) {
 
@@ -458,7 +459,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    }
                                                 )
 
-                                                let currentCart = inksoftCart.data.Data;
+                                                currentCart = inksoftCart.data.Data;
                                                 console.log('Get Cart: ', currentCart);
 
                                                 let inksoftItems = currentCart.Cart.Items;
