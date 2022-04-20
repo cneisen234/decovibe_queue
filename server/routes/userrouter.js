@@ -458,10 +458,11 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    }
                                                 )
 
-                                                console.log('Get Cart: ', inksoftCart.data);
+                                                let currentCart = inksoftCart.data.Data;
+                                                console.log('Get Cart: ', currentCart);
 
-                                                let inksoftItems = inksoftCart.data.Cart.Items;
-                                                let inksoftDesigns = inksoftCart.data.DesignSummaries;
+                                                let inksoftItems = currentCart.Cart.Items;
+                                                let inksoftDesigns = currentCart.DesignSummaries;
                                                 let linkedId = 0;
                                                 let foundDesign = {};
 
@@ -495,16 +496,16 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Designs: ', designsToSend);
 
-                                                 inksoftCart.data.Cart.Items = designsToSend;
+                                                 currentCart.Cart.Items = designsToSend;
 
-                                                 console.log('New Cart Items: ', inksoftCart.data.Cart.Items);
+                                                 console.log('New Cart Items: ', currentCart.Cart.Items);
 
                                                  await axios 
                                                   .post(
                                                    'https://stores.inksoft.com/DS350156262/Api2/SetCart',
                                                    {
                                                    dataType: 'text',
-                                                   data: `Cart=${inksoftCart.data}&Format=JSON&SessionToken=${mainToken}`,
+                                                   data: `Cart=${currentCart}&Format=JSON&SessionToken=${mainToken}`,
                                                    processData: false,
                                                    crossDomain: true,
                                                    }

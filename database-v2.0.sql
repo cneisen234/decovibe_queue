@@ -33,7 +33,7 @@ CREATE TABLE "customitem"
 	"email" varchar(320),
 	"first_name" varchar(255),
 	"last_name" varchar(255),
-	"order_number" varchar(255) NOT NULL UNIQUE,
+	"order_number" varchar(255) NOT NULL,
 	"sku" varchar(255) NOT NULL,
 	"qty" DECIMAL,
 	"assigned" VARCHAR(255),
