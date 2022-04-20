@@ -501,6 +501,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
+                                                 let newCart = JSON.stringify(currentCart);
 
                                                 try {
                                                  await axios 
@@ -508,7 +509,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    'https://stores.inksoft.com/DS350156262/Api2/SetCart',
                                                    {
                                                    dataType: 'text',
-                                                   data: `Cart=${currentCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                   data: `Cart=${newCart}&Format=JSON&SessionToken=${mainToken}`,
                                                    processData: false,
                                                    crossDomain: true,
                                                    }
