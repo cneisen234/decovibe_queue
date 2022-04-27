@@ -37,46 +37,23 @@ class App extends Component {
             <Nav />
           </div>
           <Switch>
-            {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/home" />
 
-            <Route //customer path to confirm order, not in protected route, but verified by admin generated token followed by unique customer token
-              exact
-              path="/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/:token"
-              component={CustomerPage}
-            />
-            <Route //customer path to confirm order, not in protected route, but verified by admin generated token followed by unique customer token
-              exact
-              path="/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/:token"
-              component={CustomerDeny}
-            />
-            {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/home will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the 'Login' page.
-            Even though it seems like they are different pages, the user is always on localhost:3000/home */}
+            <Route exact path="/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kqF/:token" component={CustomerPage} />
+            <Route exact path="/vS1pfTQrIAm5Gi771xdHIDmbrsez0Yzbj17bYhBvcKwUAYisUaLk3liJlMieIZ3qFJTPLSZxBpyzakbE6SWNA6xWgAUun5Gj2kNo/:token" component={CustomerDeny} />
+            
             <ProtectedRoute exact path="/orderlookup" component={OrderLookup} />
-            <ProtectedRoute
-              exact
-              path="/orderlookuptest"
-              component={OrderLookupTest}
-            />
+            <ProtectedRoute exact path="/orderlookuptest" component={OrderLookupTest} />
             <ProtectedRoute exact path="/home" component={New} />
             <ProtectedRoute exact path="/newcustom" component={NewCustom} />
-            {/* This works the same as the other protected route, except that if the user is logged in,
-            they will see the info page instead. */}
             <ProtectedRoute exact path="/Progress" component={Progress} />
-            <ProtectedRoute
-              exact
-              path="/SentCustomer"
-              component={SentCustomer}
-            />
+            <ProtectedRoute exact path="/SentCustomer" component={SentCustomer} />
             <ProtectedRoute exact path="/Response" component={Response} />
             <ProtectedRoute exact path="/Approved" component={Approved} />
             <ProtectedRoute exact path="/History" component={History} />
             <ProtectedRoute exact path="/Complete" component={Complete} />
             <ProtectedRoute exact path="/Customcomplete" component={CustomComplete} />
 
-            {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
           <Footer />
@@ -90,5 +67,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-// this allows us to use <App /> in index.js
 export default connect(mapStateToProps)(App);
