@@ -502,11 +502,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
-                                                 const sanitizer = new Sanitizer();
-
-                                                 let newCart = sanitizer.sanitize(currentCart);
-
-                                                 //let newCart = JSON.stringify(currentCart);
+                                                 let newCart = JSON.stringify(currentCart);
 
                                                 try {
                                                  await axios 
