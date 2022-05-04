@@ -502,14 +502,17 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
-                                                 let newCart = JSON.stringify(currentCart);
+                                                 const sanitizer = new Sanitizer();
+
+                                                 let newCart = sanitizer.sanitize(currentCart);
+
+                                                 //let newCart = JSON.stringify(currentCart);
 
                                                 try {
                                                  await axios 
                                                   .post(
                                                    'https://stores.inksoft.com/DS350156262/Api2/SetCart',
                                                    {
-                                                   dataType: 'text',
                                                    data: `Cart=${newCart}&Format=JSON&SessionToken=${mainToken}`,
                                                    processData: false,
                                                    crossDomain: true,
@@ -519,23 +522,22 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                     console.log('Error on Set Cart: ', err);
                                                   }
 
-                                                const inksoftCreditCart = {
-                                                  Number: 11100001111,
-                                                  ExpirationMonth: 01,
-                                                  ExpirationYear: 2025,
-                                                  CVV: 123
-                                                }
+                                                // const inksoftCreditCart = {
+                                                //   Number: 11100001111,
+                                                //   ExpirationMonth: 01,
+                                                //   ExpirationYear: 2025,
+                                                //   CVV: 123
+                                                // }
 
-                                                const fileData = 'file';
-
+                                                //const fileData = 'file';
+                                                //&PaymentMethod=Bolt&CreditCard=${inksoftCreditCart}&FileData=${fileData}
 
                                                 try {
                                                  await axios 
                                                   .post(
                                                    'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder',
                                                    {
-                                                   dataType: 'text',
-                                                   data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}&PaymentMethod=Bolt&CreditCard=${inksoftCreditCart}&FileData=${fileData}`,
+                                                   data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}`,
                                                    processData: false,
                                                    crossDomain: true,
                                                    }
