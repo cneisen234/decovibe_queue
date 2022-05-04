@@ -526,7 +526,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                   CVV: 123
                                                 }
 
-                                                const fileData = Path.GetFileName('file');
+                                                const fileData = 'file';
 
 
                                                 try {
