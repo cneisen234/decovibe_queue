@@ -502,7 +502,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
-                                                 //let newCart = JSON.stringify(currentCart);
+                                                 let newCart = JSON.stringify(currentCart);
 
                                                 try {
                                                  await axios 
@@ -510,7 +510,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    'https://stores.inksoft.com/DS350156262/Api2/SetCart',
                                                    {
                                                    dataType: 'text',
-                                                   data: `Cart=${currentCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                   data: `Cart=${newCart}&Format=JSON&SessionToken=${mainToken}`,
                                                    processData: false,
                                                    crossDomain: true,
                                                    }
@@ -519,6 +519,15 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                     console.log('Error on Set Cart: ', err);
                                                   }
 
+                                                const inksoftCreditCart = {
+                                                  Number: 11100001111,
+                                                  ExpirationMonth: 01,
+                                                  ExpirationYear: 2025,
+                                                  CVV: 123
+                                                }
+
+                                                const fileData = Path.GetFileName('file');
+
 
                                                 try {
                                                  await axios 
@@ -526,7 +535,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder',
                                                    {
                                                    dataType: 'text',
-                                                   data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}`,
+                                                   data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}&PaymentMethod=Bolt&CreditCard=${inksoftCreditCart}&FileData=${fileData}`,
                                                    processData: false,
                                                    crossDomain: true,
                                                    }
