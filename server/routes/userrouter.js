@@ -515,8 +515,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                   let config = 
                                                   {
                                                     headers: {
-                                                      "Content-Type": "x-www-form-urlencoded",
-                                                      Accept: "x-www-form-urlencoded"
+                                                      "Content-Type": "application/x-www-form-urlencoded",
+                                                      Accept: "application/x-www-form-urlencoded"
                                                     }
                                                   }
 
@@ -547,8 +547,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                   let config = 
                                                   {
                                                     headers: {
-                                                      "Content-Type": "x-www-form-urlencoded",
-                                                      Accept: "x-www-form-urlencoded"
+                                                      "Content-Type": "application/x-www-form-urlencoded",
+                                                      Accept: "application/x-www-form-urlencoded"
                                                     }
                                                   }
 
