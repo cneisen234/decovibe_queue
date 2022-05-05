@@ -504,7 +504,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
-                                                 let newCart = JSON.stringify(currentCart.Cart);
+                                                 let newCart = JSON.stringify(currentCart.Cart.replaceAll('\\', ""));
 
                                                 try {
                                                   let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SetCart';
