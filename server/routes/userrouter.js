@@ -505,19 +505,23 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                  //let newCart = JSON.stringify(currentCart);
 
                                                 try {
-                                                 await axios 
-                                                  .post(
-                                                   'https://stores.inksoft.com/DS350156262/Api2/SetCart',
-                                                   {
-                                                   data: `Cart=${currentCart.Cart}&Format=JSON&SessionToken=${mainToken}`,
-                                                   processData: false,
-                                                   crossDomain: true,
-                                                   headers: {
-                                                    'Content-Type': 'x-www-form-urlencoded',
-                                                    Accept: 'x-www-form-urlencoded'
+                                                  let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SetCart';
+
+                                                  let data = 
+                                                  {
+                                                    data: `Cart=${currentCart.Cart}&Format=JSON&SessionToken=${mainToken}`,
+                                                  }
+
+                                                  let config = 
+                                                  {
+                                                    headers: {
+                                                      "Content-Type": "x-www-form-urlencoded",
+                                                      Accept: "x-www-form-urlencoded"
                                                     }
-                                                   }
-                                                 )
+                                                  }
+
+                                                 await axios.post(axiosUrl, data, config)
+
                                                   } catch (err) {
                                                     console.log('Error on Set Cart: ', err);
                                                   }
@@ -533,15 +537,23 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 //&PaymentMethod=Bolt&CreditCard=${inksoftCreditCart}&FileData=${fileData}
 
                                                 try {
-                                                 await axios 
-                                                  .post(
-                                                   'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder',
-                                                   {
-                                                   data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}`,
-                                                   processData: false,
-                                                   crossDomain: true,
-                                                   }
-                                                 )
+                                                  let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SaveCartOrder';
+
+                                                  let data = 
+                                                  {
+                                                    data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}`,
+                                                  }
+
+                                                  let config = 
+                                                  {
+                                                    headers: {
+                                                      "Content-Type": "x-www-form-urlencoded",
+                                                      Accept: "x-www-form-urlencoded"
+                                                    }
+                                                  }
+
+                                                 await axios.post(axiosUrl, data, config)
+
                                                   } catch (err) {
                                                     console.log('Error on Post Cart: ', err);
                                                   }
