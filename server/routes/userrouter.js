@@ -500,16 +500,18 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  currentCart.Cart.Items = designsToSend;
 
+                                                 currentCart.Cart.ShippingMethod = 'BrightPearl';
+
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
-                                                 //let newCart = JSON.stringify(currentCart);
+                                                 let newCart = JSON.stringify(currentCart.Cart);
 
                                                 try {
                                                   let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SetCart';
 
                                                   let data = 
                                                   {
-                                                    data: `Cart=${currentCart.Cart}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart=${newCart}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
