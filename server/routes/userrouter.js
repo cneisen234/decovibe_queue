@@ -504,14 +504,16 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
-                                                 let newCart = JSON.stringify(currentCart.Cart.replace(/\\/g, ""));
+                                                 let newCart = JSON.stringify(currentCart.Cart);
+                                                  
+                                                 let newNewCart = newCart.replace(/\\/g, "");
 
                                                 try {
                                                   let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SetCart';
 
                                                   let data = 
                                                   {
-                                                    data: `Cart=${newCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart=${newNewCart}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
@@ -622,7 +624,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
         console.log(error);
       });
       //...check for new orders every 2 min
-  }, 120000);
+  }, 1000 * 60 * 2);
 
 router.post("/starttask", rejectUnauthenticated, (req, res, next) => {
   // places items from the new col in the stock queue to in process
