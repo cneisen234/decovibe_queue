@@ -498,22 +498,25 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Designs: ', designsToSend);
 
-                                                 currentCart.Cart.Items = designsToSend;
-
-                                                 currentCart.Cart.ShippingMethod = 'BrightPearl';
-
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
-
-                                                 let newCart = JSON.stringify(currentCart.Cart);
                                                   
-                                                 let newNewCart = newCart.replace(/\\/g, ' ');
+                                                 let newCart =
+                                                 {
+                                                   "ID": currentCart.Cart.ID,
+                                                   "CartItemWeight": currentCart.Cart.CartItemWeight,
+                                                   "ItemCount": currentCart.Cart.ItemCount,
+                                                   "ItemTotal": currentCart.Cart.ItemTotal,
+                                                   "Items": designsToSend,
+                                                   "ShippingMethod": 'BrightPearl',
+                                                   "TotalDue": currentCart.Cart.TotalDue
+                                                 }
 
                                                 try {
                                                   let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SetCart';
 
                                                   let data = 
                                                   {
-                                                    data: `Cart=${newNewCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart=${newCart}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
