@@ -514,7 +514,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                   let data = 
                                                   {
-                                                    data: `Cart={"ID":${currentCart.Cart.ID},"CartItemWeight":${currentCart.Cart.CartItemWeight},"ItemCount":${currentCart.Cart.ItemCount},"ItemTotal":${currentCart.Cart.ItemTotal},"Items":${JSON.stringify(designsToSend)},"ShippingMethod":"BrightPearl","TotalDue":${currentCart.Cart.TotalDue}}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart={'ID':${currentCart.Cart.ID},'CartItemWeight':${currentCart.Cart.CartItemWeight},'ItemCount':${currentCart.Cart.ItemCount},'ItemTotal':${currentCart.Cart.ItemTotal},'Items':${JSON.stringify(designsToSend)},'ShippingMethod':'BrightPearl','TotalDue':${currentCart.Cart.TotalDue}}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
