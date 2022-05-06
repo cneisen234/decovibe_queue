@@ -497,8 +497,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                } else {
 
                                                  console.log('New Designs: ', designsToSend);
-
-                                                 console.log('New Cart Items: ', currentCart.Cart.Items);
                                                   
                                                  let newCart =
                                                  {
@@ -516,7 +514,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                   let data = 
                                                   {
-                                                    data: `Cart=${newCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart={"ID":${currentCart.Cart.ID},"CartItemWeight":${currentCart.Cart.CartItemWeight},"ItemCount":${currentCart.Cart.ItemCount},"ItemTotal":${currentCart.Cart.ItemTotal},"Items":${designsToSend},"ShippingMethod":"BrightPearl","TotalDue":${currentCart.Cart.TotalDue}}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
