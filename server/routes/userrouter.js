@@ -531,6 +531,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                   } catch (err) {
                                                     console.log('Error on Set Cart: ', err);
+                                                    console.log('Set Cart Error Messgae: ', err.data.Messages);
                                                   }
 
                                                 // const inksoftCreditCart = {
