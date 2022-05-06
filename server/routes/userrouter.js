@@ -527,6 +527,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                     }
                                                   }
 
+                                                  console.log('Data being sent: ', data);
+
                                                  await axios.post(axiosUrl, data, config)
 
                                                   } catch (err) {
