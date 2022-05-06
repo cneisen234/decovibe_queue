@@ -498,27 +498,22 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Designs: ', designsToSend);
 
-                                                 let newItems = JSON.stringify(designsToSend);
+                                                 currentCart.Cart.Items = designsToSend;
 
-                                                 let newNewItems = newItems.replace(/"/g, "'");
+                                                 currentCart.Cart.ShippingMethod = 'BrightPearl';
+
+                                                 console.log('New Cart Items: ', currentCart.Cart.Items);
+
+                                                 let newCart = JSON.stringify(currentCart.Cart);
                                                   
-                                                 let newCart =
-                                                 {
-                                                   "ID": currentCart.Cart.ID,
-                                                   "CartItemWeight": currentCart.Cart.CartItemWeight,
-                                                   "ItemCount": currentCart.Cart.ItemCount,
-                                                   "ItemTotal": currentCart.Cart.ItemTotal,
-                                                   "Items": designsToSend,
-                                                   "ShippingMethod": 'BrightPearl',
-                                                   "TotalDue": currentCart.Cart.TotalDue
-                                                 }
+                                                 let newNewCart = newCart.replace(/"/g, "'");
 
                                                 try {
                                                   let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SetCart';
 
                                                   let data = 
                                                   {
-                                                    data: `Cart={'ID':${currentCart.Cart.ID},'CartItemWeight':${currentCart.Cart.CartItemWeight},'ItemCount':${currentCart.Cart.ItemCount},'ItemTotal':${currentCart.Cart.ItemTotal},'Items':${newNewItems},'ShippingMethod':'BrightPearl','TotalDue':${currentCart.Cart.TotalDue}}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart=${newNewCart}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
@@ -529,15 +524,10 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                     }
                                                   }
 
-                                                  console.log('Data being sent: ', data);
-
                                                  await axios.post(axiosUrl, data, config)
 
                                                   } catch (err) {
                                                     console.log('Error on Set Cart: ', err);
-                                                    if (err.response.data.Messages) {
-                                                    console.log('Set Cart Error Messgae: ', err.response.data.Messages);
-                                                    }
                                                   }
 
                                                 // const inksoftCreditCart = {
