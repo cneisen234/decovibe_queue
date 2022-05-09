@@ -502,6 +502,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  currentCart.Cart.ShippingMethod = 'BrightPearl';
 
+                                                 currentCart.Cart.GuestEmail = '';
+
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
                                                  let newCart = JSON.stringify(currentCart.Cart);
