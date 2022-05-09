@@ -506,18 +506,19 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
-                                                 let newCart1 = {
-                                                   "ID": currentCart.Cart.ID,
-                                                   "CartItemWeight": currentCart.Cart.CartItemWeight,
-                                                   "ItemCount": currentCart.Cart.ItemCount,
-                                                   "ItemTotal": currentCart.Cart.ItemTotal,
-                                                   "ShippingMethod": 'BrightPearl',
-                                                   "TotalDue": currentCart.Cart.TotalDue
-                                                 }
+                                                //  let newCart1 = {
+                                                //    "ID": currentCart.Cart.ID,
+                                                //    "CartItemWeight": currentCart.Cart.CartItemWeight,
+                                                //    "ItemCount": currentCart.Cart.ItemCount,
+                                                //    "ItemTotal": currentCart.Cart.ItemTotal,
+                                                //    "Items": designsToSend,
+                                                //    "ShippingMethod": 'BrightPearl',
+                                                //    "TotalDue": currentCart.Cart.TotalDue
+                                                //  }
 
-                                                 let newCart2 = JSON.stringify(newCart1);
+                                                //  let newCart2 = JSON.stringify(newCart1);
 
-                                                 let newCart3 = newCart2.replace(/"/g, "'");
+                                                //  let newCart3 = newCart2.replace(/"/g, "'");
 
                                                  let newCart = JSON.stringify(currentCart.Cart);
                                                   
@@ -528,7 +529,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                   let data = 
                                                   {
-                                                    data: `Cart=${newCart3}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart=${newNewCart}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
