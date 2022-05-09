@@ -506,6 +506,20 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                  console.log('New Cart Items: ', currentCart.Cart.Items);
 
+                                                 let newCart1 = {
+                                                   "ID": currentCart.Cart.ID,
+                                                   "CartItemWeight": currentCart.Cart.CartItemWeight,
+                                                   "ItemCount": currentCart.Cart.ItemCount,
+                                                   "ItemTotal": currentCart.Cart.ItemTotal,
+                                                   "Items": designsToSend,
+                                                   "ShippingMethod": 'BrightPearl',
+                                                   "TotalDue": currentCart.Cart.TotalDue
+                                                 }
+
+                                                 let newCart2 = JSON.stringify(newCart1);
+
+                                                 let newCart3 = newCart2.replace(/"/g, "'");
+
                                                  let newCart = JSON.stringify(currentCart.Cart);
                                                   
                                                  let newNewCart = newCart.replace(/"/g, "'");
@@ -515,7 +529,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                   let data = 
                                                   {
-                                                    data: `Cart=${newNewCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart=${newCart3}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
@@ -530,6 +544,9 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                   } catch (err) {
                                                     console.log('Error on Set Cart: ', err);
+                                                    if (err.response.data.Messages) {
+                                                      console.log('Set Cart Error Messgae: ', err.response.data.Messages);
+                                                    }
                                                   }
 
                                                 // const inksoftCreditCart = {
