@@ -511,7 +511,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                    "CartItemWeight": currentCart.Cart.CartItemWeight,
                                                    "ItemCount": currentCart.Cart.ItemCount,
                                                    "ItemTotal": currentCart.Cart.ItemTotal,
-                                                   "Items": designsToSend,
                                                    "ShippingMethod": 'BrightPearl',
                                                    "TotalDue": currentCart.Cart.TotalDue
                                                  }
