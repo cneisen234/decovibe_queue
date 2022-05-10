@@ -277,6 +277,12 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                       opt.display_value;
                                                   } else if (
                                                     display_name ===
+                                                    "Tone"
+                                                  ) {
+                                                    //if display name is "Order Comments", push the name and value of that product option
+                                                    name = `${name} - ${opt.display_value}`;
+                                                  } else if (
+                                                    display_name ===
                                                     "Order Comments"
                                                   ) {
                                                     //if display name is "Order Comments", push the name and value of that product option
