@@ -530,12 +530,16 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                   
                                                  let newNewCart = newCart.replace(/"/g, "'");
 
+                                                 let setCartResponse = [];
+
                                                 try {
                                                   let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SetCart';
 
+                                                  //&Format=JSON&SessionToken=${mainToken}
+
                                                   let data = 
                                                   {
-                                                    data: `Cart=${newNewCart}&Format=JSON&SessionToken=${mainToken}`,
+                                                    data: `Cart=${newNewCart}`,
                                                   }
 
                                                   let config = 
@@ -546,7 +550,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                     }
                                                   }
 
-                                                 await axios.post(axiosUrl, data, config)
+                                                 setCartResponse = await axios.post(axiosUrl, data, config)
 
                                                   } catch (err) {
                                                     console.log('Error on Set Cart: ', err);
@@ -554,6 +558,8 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                       console.log('Set Cart Error Messgae: ', err.response.data.Messages);
                                                     }
                                                   }
+
+                                                  console.log('SetCart Response: ', setCartResponse);
 
                                                 // const inksoftCreditCart = {
                                                 //   Number: 11100001111,
@@ -570,7 +576,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                   let data = 
                                                   {
-                                                    data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}`,
+                                                    data: `ExternalOrderId=${orderID}&SessionToken=${setCartResponse.data.SessionToken}&Email=${email}`,
                                                   }
 
                                                   let config = 
