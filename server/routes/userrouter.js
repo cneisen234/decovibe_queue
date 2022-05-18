@@ -1723,7 +1723,7 @@ router.get("/inksoft", (req, res) => {
     )
     return inksoft;
   }
-  const response = await get();
+  const response = get();
   res.send(response);
 });
 
