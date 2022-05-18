@@ -1714,6 +1714,7 @@ router.post("/logout", (req, res) => {
 
 router.get("/inksoft", (req, res) => {
   const orderID = req.body.orderId;
+  console.log('Fetching products for inksoft..');
   // Use passport's built-in method to log out the user
   async function get () {
   let inksoft = await axios
