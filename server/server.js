@@ -8,6 +8,13 @@ const sessionMiddleware = require('./modules/session-middleware');
 
 const passport = require('./strategies/user.strategy');
 
+const corsOptions = {
+  origin: 'https://heattransferwarehouse.com',
+  optionsSuccessStatus: 200 // For legacy browser support
+}
+
+app.use(cors(corsOptions));
+
 
 // Route includes
 const userRouter = require('./routes/userrouter');
