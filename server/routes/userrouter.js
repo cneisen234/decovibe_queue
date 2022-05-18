@@ -223,6 +223,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 decoSku3 === "SUBKIT" ||
                                                 decoSku3 === "SUBPAT" ||
                                                 decoSku6 === "SETUPFEE" ||
+                                                decoSku6 === "PRIDE-" ||
                                                 decoSku8 === "SKULLS-R" ||
                                                 decoSku8 === "AUTISM-R" ||
                                                 decoSku8 === "SPIRITUA" ||
@@ -535,11 +536,9 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 try {
                                                   let axiosUrl = 'https://stores.inksoft.com/DS350156262/Api2/SetCart';
 
-                                                  //&Format=JSON&SessionToken=${mainToken}
-
                                                   let data = 
                                                   {
-                                                    data: `Cart=${newNewCart}`,
+                                                    data: `Cart=${newNewCart}&Format=JSON&SessionToken=${mainToken}`,
                                                   }
 
                                                   let config = 
@@ -576,7 +575,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                   let data = 
                                                   {
-                                                    data: `ExternalOrderId=${orderID}&SessionToken=${setCartResponse.data.SessionToken}&Email=${email}`,
+                                                    data: `ExternalOrderId=${orderID}&SessionToken=${mainToken}&Email=${email}`,
                                                   }
 
                                                   let config = 
