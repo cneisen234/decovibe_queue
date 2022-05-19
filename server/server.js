@@ -10,7 +10,7 @@ const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 
 const corsOptions = {
-  origin: '*',
+  origin: 'https://www.heattransferwarehouse.com',
   methods: ['GET', 'POST'],
   optionsSuccessStatus: 200 // For legacy browser support
 }

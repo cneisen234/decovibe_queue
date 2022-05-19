@@ -596,7 +596,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
                                                }
 
-                                              sendToInksoft();
+                                              //sendToInksoft();
                                                 
                                               } else {
                                                 //...ignore everything else
@@ -1713,8 +1713,8 @@ router.post("/logout", (req, res) => {
 });
 
 router.post("/inksoft", async function (req, res) {
-  const orderID = req.body;
-  console.log('Fetching products for inksoft: ', orderID);
+  const orderID = req.body.orderId;
+  console.log('Fetching products for inksoft: ', req.body);
 
   let inksoft = await axios
     .get(
