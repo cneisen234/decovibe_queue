@@ -1725,6 +1725,7 @@ router.get("/inksoft", (req, res) => {
     return inksoft;
   }
   const response = get();
+  console.log('SENDING BACK TO SITE: ', response);
   res.send(response);
 });
 
