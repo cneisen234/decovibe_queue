@@ -1712,21 +1712,18 @@ router.post("/logout", (req, res) => {
   res.sendStatus(200);
 });
 
-router.get("/inksoft", (req, res) => {
+router.get("/inksoft", async function (req, res) {
   const orderID = req.body.orderId;
-  console.log('Fetching products for inksoft..');
-  // Use passport's built-in method to log out the user
-  async function get () {
+  console.log('Fetching products for inksoft: ', orderID);
+
   let inksoft = await axios
     .get(
       `https://api.bigcommerce.com/stores/${storeHash}/v2/orders/${orderID}/products`,
       config
     )
-    return inksoft;
-  }
-  const response = get();
-  console.log('SENDING BACK TO SITE: ', response);
-  res.send(response);
+
+  console.log('SENDING BACK TO SITE: ', inksoft);
+  res.send(inksoft);
 });
 
 
