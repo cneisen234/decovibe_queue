@@ -1714,7 +1714,7 @@ router.post("/logout", (req, res) => {
 
 router.post("/inksoft", async function (req, res) {
   const orderID = req.body.orderId;
-  console.log('Fetching products for inksoft: ', req.body);
+  console.log('Fetching products for inksoft: ', orderID);
 
   let inksoft = await axios
     .get(
@@ -1722,8 +1722,8 @@ router.post("/inksoft", async function (req, res) {
       config
     )
 
-  console.log('SENDING BACK TO SITE: ', inksoft);
-  res.send(inksoft);
+  console.log(`SENDING BACK TO SITE: ${inksoft.data} WITH STATUS: ${inksoft.status}`);
+  res.send(inksoft.data).status(inksoft.status);
 });
 
 
