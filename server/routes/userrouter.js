@@ -1712,7 +1712,7 @@ router.post("/logout", (req, res) => {
   res.sendStatus(200);
 });
 
-router.get("/inksoft", async function (req, res) {
+router.post("/inksoft", async function (req, res) {
   const orderID = req.body;
   console.log('Fetching products for inksoft: ', orderID);
 
