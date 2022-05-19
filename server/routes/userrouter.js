@@ -1713,7 +1713,7 @@ router.post("/logout", (req, res) => {
 });
 
 router.get("/inksoft", async function (req, res) {
-  const orderID = req.body.orderId;
+  const orderID = req.body;
   console.log('Fetching products for inksoft: ', orderID);
 
   let inksoft = await axios
