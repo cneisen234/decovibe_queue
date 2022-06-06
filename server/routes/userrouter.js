@@ -219,6 +219,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 decoSku5 === "SD7" ||
                                                 decoSku5 === "SD8" ||
                                                 decoSku5 === "SD9" ||
+                                                decoSku5 === "SDW" ||
                                                 decoSku3 === "CUSTOM" ||
                                                 decoSku3 === "SUBKIT" ||
                                                 decoSku3 === "SUBPAT" ||
