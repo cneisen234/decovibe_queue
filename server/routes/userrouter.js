@@ -225,9 +225,9 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 decoSku3 === "SUBPAT" ||
                                                 decoSku6 === "SETUPFEE" ||
                                                 decoSku6 === "PRIDE-" ||
-                                                decoSku8 === "SKULLS-R" ||
-                                                decoSku8 === "AUTISM-R" ||
-                                                decoSku8 === "SPIRITUA" ||
+                                                decoSku6 === "SKULLS-R" ||
+                                                decoSku6 === "AUTISM-R" ||
+                                                decoSku6 === "SPIRITUA" ||
                                                 decoSku7 === "SISER-1" ||
                                                 decoSku7 === "SISER-2" ||
                                                 decoSku7 === "SISER-3" ||
