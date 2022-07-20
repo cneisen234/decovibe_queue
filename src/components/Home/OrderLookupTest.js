@@ -1035,7 +1035,7 @@ class OrderLookupTest extends Component {
                           <b>QTY:</b> <i>{item.quantity}</i>
                         </td>
                       </tr>
-                      <tr>
+                      {/* <tr>
                         <td
                           style={{
                             marginLeft: "3%",
@@ -1046,10 +1046,11 @@ class OrderLookupTest extends Component {
                         >
                           <b>Color/Type:</b>{" "}
                           <i>
+                            {item.product_options[4].display_value}{" - "}
                             {item.product_options[3].display_value}
                           </i>
                         </td>
-                      </tr>
+                      </tr> */}
                     </>
                   ) : (
                     <span></span>
