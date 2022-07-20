@@ -848,6 +848,11 @@ class OrderLookupTest extends Component {
                   item.sku.slice(0, 5) === "WE_SU" ||
                   item.sku.slice(0, 5) === "BL_SU" ||
                   item.sku.slice(0, 5) === "SB_SU" ||
+                  item.sku.slice(0, 10) === "INKSOFT-WE" ||
+                  item.sku.slice(0, 10) === "INKSOFT-SU" ||
+                  item.sku.slice(0, 10) === "INKSOFT-SO" ||
+                  item.sku.slice(0, 10) === "INKSOFT-PR" ||
+                  item.sku.slice(0, 10) === "INKSOFT-HE" ||
                   item.sku.slice(0, 5) === "WE_XS" ? (
                     <>
                       <tr>
@@ -864,31 +869,65 @@ class OrderLookupTest extends Component {
                             {" "}
                             {item.sku.slice(0, 5) === "BL_A3"
                               ? (skuHolder = "BL_A3")
+                              : item.sku === "INKSOFT-SUB-BLOCKER-8"
+                              ? (skuHolder = "BL_A3")
                               : item.sku.slice(0, 7) === "BL_A4-1"
+                              ? (skuHolder = 'BL_A4:SubBlock-A4 16.5" 5.85"')
+                              : item.sku === "INKSOFT-SUB-BLOCKER-6"
                               ? (skuHolder = 'BL_A4:SubBlock-A4 16.5" 5.85"')
                               : item.sku.slice(0, 7) === "BL_A4-8"
                               ? (skuHolder = 'BL_A4:SubBlock-A4 8.3" 11.7"')
+                              : item.sku === "INKSOFT-SUB-BLOCKER-5"
+                              ? (skuHolder = 'BL_A4:SubBlock-A4 8.3" 11.7"')
                               : item.sku.slice(0, 7) === "BL_A5-1"
+                              ? (skuHolder = 'BL_A5:SubBlock-A5 11.7" 4.25"')
+                              : item.sku === "INKSOFT-SUB-BLOCKER-4"
                               ? (skuHolder = 'BL_A5:SubBlock-A5 11.7" 4.25"')
                               : item.sku.slice(0, 7) === "BL_A5-5"
                               ? (skuHolder = 'BL_A5:SubBlock-A5 5.8" 8.3"')
+                              : item.sku === "INKSOFT-SUB-BLOCKER-3"
+                              ? (skuHolder = 'BL_A5:SubBlock-A5 5.8" 8.3"')
                               : item.sku.slice(0, 5) === "BL_LC"
                               ? (skuHolder = "BL_LC")
+                              : item.sku === "INKSOFT-SUB-BLOCKER-2"
+                              ? (skuHolder = "BL_LC")
+                              : item.sku === "INKSOFT-SUB-BLOCKER-9"
+                              ? (skuHolder = "BL_XS")
                               : item.sku.slice(0, 5) === "BL_SM"
+                              ? (skuHolder = "BL_SM")
+                              : item.sku === "INKSOFT-SUB-BLOCKER-7"
+                              ? (skuHolder = "BL_SQ")
+                              : item.sku === "INKSOFT-SUB-BLOCKER-1"
                               ? (skuHolder = "BL_SM")
                               : item.sku.slice(0, 8) === "HW_CAP_L"
                               ? (skuHolder = "HW_CAP_L")
+                              : item.sku === "INKSOFT-HEAD-2"
+                              ? (skuHolder = "HW_CAP_L")
                               : item.sku.slice(0, 8) === "HW_CAP_S"
+                              ? (skuHolder = "HW_CAP_S")
+                              : item.sku === "INKSOFT-HEAD-1"
                               ? (skuHolder = "HW_CAP_S")
                               : item.sku.slice(0, 11) === "PR_BAG_A4-1"
                               ? (skuHolder = "PR_BAG_A4:BAG-A4 16.5")
+                              : item.sku === "INKSOFT-PROMO-5"
+                              ? (skuHolder = "PR_BAG_A4:BAG-A4 16.5")
                               : item.sku.slice(0, 11) === "PR_BAG_A4-8"
                               ? (skuHolder = "PR_BAG_A4:BAG-A4 8.3")
+                              : item.sku === "INKSOFT-PROMO-4"
+                              ? (skuHolder = "PR_BAG_A4:BAG-A4 8.3")
+                              : item.sku === "INKSOFT-PROMO-6"
+                              ? (skuHolder = "PR_BAG_A3:Bag-A3 11.7")
                               : item.sku.slice(0, 11) === "PR_BAG_A5-1"
+                              ? (skuHolder = "PR_BAG_A5:Bag-A5 11.7")
+                              : item.sku === "INKSOFT-PROMO-3"
                               ? (skuHolder = "PR_BAG_A5:Bag-A5 11.7")
                               : item.sku.slice(0, 11) === "PR_BAG_A5-5"
                               ? (skuHolder = "PR_BAG_A5:Bag-A5 5.8")
+                              : item.sku === "INKSOFT-PROMO-2"
+                              ? (skuHolder = "PR_BAG_A5:Bag-A5 5.8")
                               : item.sku.slice(0, 11) === "PR_BAG_A6-4"
+                              ? (skuHolder = "PR_BAG_A6:Bag-A6 4.1")
+                              : item.sku === "INKSOFT-PROMO-1"
                               ? (skuHolder = "PR_BAG_A6:Bag-A6 4.1")
                               : item.sku.slice(0, 8) === "PR_UM_A3"
                               ? (skuHolder = "PR_UM_A3")
@@ -902,41 +941,83 @@ class OrderLookupTest extends Component {
                               ? (skuHolder = "PR_UM_A5 5.8")
                               : item.sku.slice(0, 5) === "SB_A3"
                               ? (skuHolder = "SB_A3")
+                              : item.sku === "INKSOFT-SOFT-SHELL-8"
+                              ? (skuHolder = "SB_A3")
                               : item.sku.slice(0, 7) === "SB_A4-1"
+                              ? (skuHolder = "SB_A4 16.5")
+                              : item.sku === "INKSOFT-SOFT-SHELL-6"
                               ? (skuHolder = "SB_A4 16.5")
                               : item.sku.slice(0, 7) === "SB_A4-8"
                               ? (skuHolder = "SB_A4 8.3")
+                              : item.sku === "INKSOFT-SOFT-SHELL-5"
+                              ? (skuHolder = "SB_A4 8.3")
                               : item.sku.slice(0, 8) === "SB_A5-11"
+                              ? (skuHolder = "SB_A5 11.7")
+                              : item.sku === "INKSOFT-SOFT-SHELL-4"
                               ? (skuHolder = "SB_A5 11.7")
                               : item.sku.slice(0, 7) === "SB_A5-5"
                               ? (skuHolder = "SB_A5 5.8")
+                              : item.sku === "INKSOFT-SOFT-SHELL-3"
+                              ? (skuHolder = "SB_A5 5.8")
                               : item.sku.slice(0, 5) === "SB_LC"
+                              ? (skuHolder = "SB_LC")
+                              : item.sku === "INKSOFT-SOFT-SHELL-2"
                               ? (skuHolder = "SB_LC")
                               : item.sku.slice(0, 5) === "SB_SM"
                               ? (skuHolder = "SB_SM")
+                              : item.sku === "INKSOFT-SOFT-SHELL-1"
+                              ? (skuHolder = "SB_SM")
+                              : item.sku === "INKSOFT-SOFT-SHELL-9"
+                              ? (skuHolder = "SB_XS")
+                              : item.sku === "INKSOFT-SOFT-SHELL-7"
+                              ? (skuHolder = "SB_SQ")
                               : item.sku.slice(0, 5) === "WE_A3"
+                              ? (skuHolder = "WE_A3")
+                              : item.sku === "INKSOFT-WEARABLES-9"
                               ? (skuHolder = "WE_A3")
                               : item.sku.slice(0, 8) === "WE_A4-16"
                               ? (skuHolder = "WE_A4 16.5")
+                              : item.sku === "INKSOFT-WEARABLES-7"
+                              ? (skuHolder = "WE_A4 16.5")
                               : item.sku.slice(0, 7) === "WE_A4-8"
+                              ? (skuHolder = "WE_A4 8.3")
+                              : item.sku === "INKSOFT-WEARABLES-6"
                               ? (skuHolder = "WE_A4 8.3")
                               : item.sku.slice(0, 8) === "WE_A5-11"
                               ? (skuHolder = "WE_A5 11.7")
+                              : item.sku === "INKSOFT-WEARABLES-5"
+                              ? (skuHolder = "WE_A5 11.7")
                               : item.sku.slice(0, 7) === "WE_A5-5"
+                              ? (skuHolder = "WE_A5 5.8")
+                              : item.sku === "INKSOFT-WEARABLES-4"
                               ? (skuHolder = "WE_A5 5.8")
                               : item.sku.slice(0, 5) === "WE_LC"
                               ? (skuHolder = "WE_LC")
+                              : item.sku === "INKSOFT-WEARABLES-3"
+                              ? (skuHolder = "WE_LC")
                               : item.sku.slice(0, 5) === "WE_SM"
+                              ? (skuHolder = "WE_SM")
+                              : item.sku === "INKSOFT-WEARABLES-2"
                               ? (skuHolder = "WE_SM")
                               : item.sku.slice(0, 5) === "WE_SQ"
                               ? (skuHolder = "WE_SQ")
+                              : item.sku === "INKSOFT-WEARABLES-8"
+                              ? (skuHolder = "WE_SQ")
                               : item.sku.slice(0, 5) === "WE_XS"
+                              ? (skuHolder = "WE_XS")
+                              : item.sku === "INKSOFT-WEARABLES-1"
                               ? (skuHolder = "WE_XS")
                               : item.sku.slice(0, 11) === "WE_SUPAGANG"
                               ? (skuHolder = "WE_SUPAGANG")
+                              : item.sku === "INKSOFT-WEARABLES-10"
+                              ? (skuHolder = "WE_SUPAGANG")
                               : item.sku.slice(0, 11) === "BL_SUPAGANG" 
                               ? (skuHolder = "BL_SUPAGANG")
+                              : item.sku === "INKSOFT-SUB-BLOCKER-10"
+                              ? (skuHolder = "BL_SUPAGANG")
                               : item.sku.slice(0, 11) === "SB_SUPAGANG" 
+                              ? (skuHolder = "SB_SUPAGANG")
+                              : item.sku === "INKSOFT-SOFT-SHELL-10"
                               ? (skuHolder = "SB_SUPAGANG")
                               : (skuHolder = "SB_SM")}
                           </i>
