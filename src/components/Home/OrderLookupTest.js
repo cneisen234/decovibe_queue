@@ -958,7 +958,7 @@ class OrderLookupTest extends Component {
                               : item.sku.slice(0, 7) === "SB_A5-5"
                               ? (skuHolder = "SB_A5 5.8")
                               : item.sku === "INKSOFT-SOFT-SHELL-3"
-                              ? (skuHolder = "SB_A5 5.8")
+                              ? (skuHolder = 'SB_A5:Soft Shell Blocker-A5 5.8" x 8.3"')
                               : item.sku.slice(0, 5) === "SB_LC"
                               ? (skuHolder = "SB_LC")
                               : item.sku === "INKSOFT-SOFT-SHELL-2"
@@ -1002,23 +1002,23 @@ class OrderLookupTest extends Component {
                               : item.sku.slice(0, 5) === "WE_SQ"
                               ? (skuHolder = "WE_SQ")
                               : item.sku === "INKSOFT-WEARABLES-8"
-                              ? (skuHolder = "WE_SQ")
+                              ? (skuHolder = 'WE_SQ:Wearable-11.7" x 11.7"')
                               : item.sku.slice(0, 5) === "WE_XS"
                               ? (skuHolder = "WE_XS")
                               : item.sku === "INKSOFT-WEARABLES-1"
-                              ? (skuHolder = "WE_XS")
+                              ? (skuHolder = 'WE_XS:Wearable-1.5" x 1.5"')
                               : item.sku.slice(0, 11) === "WE_SUPAGANG"
                               ? (skuHolder = "WE_SUPAGANG")
                               : item.sku === "INKSOFT-WEARABLES-10"
-                              ? (skuHolder = "WE_SUPAGANG")
+                              ? (skuHolder = 'WE_SUPAGANG:Wearable-11.7" x 16.5"')
                               : item.sku.slice(0, 11) === "BL_SUPAGANG" 
                               ? (skuHolder = "BL_SUPAGANG")
                               : item.sku === "INKSOFT-SUB-BLOCKER-10"
-                              ? (skuHolder = "BL_SUPAGANG")
+                              ? (skuHolder = 'BL_SUPAGANG:Blocker-11.7" x 16.5"')
                               : item.sku.slice(0, 11) === "SB_SUPAGANG" 
                               ? (skuHolder = "SB_SUPAGANG")
                               : item.sku === "INKSOFT-SOFT-SHELL-10"
-                              ? (skuHolder = "SB_SUPAGANG")
+                              ? (skuHolder = 'SB_SUPAGANG:Soft Shell Blocker-11.7" x 16.5"')
                               : (skuHolder = "SB_SM")}
                           </i>
                         </td>
