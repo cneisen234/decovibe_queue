@@ -1045,12 +1045,6 @@ class OrderLookupTest extends Component {
                           className={"qty" + index}
                         >
                           <b>Color/Type:</b>{" "}
-                          ?
-                          <i>
-                            {item.product_options[4].display_value}{" - "}
-                            {item.product_options[3].display_value}
-                          </i>
-                          :
                           <i>
                             {item.product_options[3].display_value}
                           </i>
