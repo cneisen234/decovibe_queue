@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import swal from "sweetalert";
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import './Nav.css';
 import { Grid, TextField, Button } from "@material-ui/core";
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
