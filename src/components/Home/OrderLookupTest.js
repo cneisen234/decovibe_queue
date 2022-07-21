@@ -874,19 +874,19 @@ class OrderLookupTest extends Component {
                               : item.sku.slice(0, 7) === "BL_A4-1"
                               ? (skuHolder = 'BL_A4:SubBlock-A4 16.5" 5.85"')
                               : item.sku === "INKSOFT-SUB-BLOCKER-6"
-                              ? (skuHolder = 'BL_A4:SubBlock-A4 16.5" 5.85"')
+                              ? (skuHolder = 'BL_A4 16.5')
                               : item.sku.slice(0, 7) === "BL_A4-8"
                               ? (skuHolder = 'BL_A4:SubBlock-A4 8.3" 11.7"')
                               : item.sku === "INKSOFT-SUB-BLOCKER-5"
-                              ? (skuHolder = 'BL_A4:SubBlock-A4 8.3" 11.7"')
+                              ? (skuHolder = 'BL_A4 8.3')
                               : item.sku.slice(0, 7) === "BL_A5-1"
                               ? (skuHolder = 'BL_A5:SubBlock-A5 11.7" 4.25"')
                               : item.sku === "INKSOFT-SUB-BLOCKER-4"
-                              ? (skuHolder = 'BL_A5:SubBlock-A5 11.7" 4.25"')
+                              ? (skuHolder = 'BL_A5 11.7')
                               : item.sku.slice(0, 7) === "BL_A5-5"
                               ? (skuHolder = 'BL_A5:SubBlock-A5 5.8" 8.3"')
                               : item.sku === "INKSOFT-SUB-BLOCKER-3"
-                              ? (skuHolder = 'BL_A5:SubBlock-A5 5.8" 8.3"')
+                              ? (skuHolder = 'BL_A5 5.8')
                               : item.sku.slice(0, 5) === "BL_LC"
                               ? (skuHolder = "BL_LC")
                               : item.sku === "INKSOFT-SUB-BLOCKER-2"
