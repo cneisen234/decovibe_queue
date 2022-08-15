@@ -172,6 +172,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                               let decoSku5 = "";
                                               let decoSku6 = "";
                                               let decoSku7 = "";
+                                              let decoSku8 = "";
 
                                               const element2 = data[index];
                                               let options =
@@ -219,6 +220,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
                                                 decoSku5 === "SD7" ||
                                                 decoSku5 === "SD8" ||
                                                 decoSku5 === "SD9" ||
+                                                decoSku5 === "SDC" ||
                                                 decoSku5 === "SDW" ||
                                                 decoSku3 === "CUSTOM" ||
                                                 decoSku3 === "SUBKIT" ||
